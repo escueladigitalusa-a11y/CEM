@@ -20,34 +20,43 @@ El sidebar es idéntico y totalmente enlazado en las 9 páginas (Dashboard, Task
 
 ## Panel de contenido (Cursos, Diplomados, Masterclasses)
 
-`courses.html`, `diplomas.html` y `masterclasses.html` son paneles de gestión de
-contenido: sirven para **crear y estructurar** los programas educativos, no para
-mostrarlos al público. Cada página gestiona su propio tipo de programa de forma
-independiente.
+`courses.html`, `diplomas.html` y `masterclasses.html` son paneles para **crear y
+escribir** el contenido de los programas educativos. Cada página gestiona su propio
+tipo, con su propio almacén, y tiene dos pantallas:
 
-Navegación en tres niveles:
+### 1. Registro
 
-1. **Lista de programas** — tarjetas con imagen, título, descripción y contadores
-   de módulos/submódulos. El botón `+` crea uno nuevo.
-2. **Programa** — al entrar en una tarjeta: título, descripción e imagen
-   referencial (16:9) editables, más la lista de sus módulos. `+ Nuevo módulo`.
-3. **Módulo** — al entrar en un módulo: su título y descripción, más la lista de
-   submódulos. `+ Nuevo submódulo`.
+Grid de tarjetas con el tipo, título, descripción, nº de módulos y estado
+(*Live · En producción · Planificación*). El botón flotante **`+`** crea un programa
+nuevo. En cada tarjeta: **★** la destaca (pasa a mostrar el % de documentos
+escritos), el **estado** se cicla al pulsarlo, y **⋮** permite duplicar o eliminar.
+Las píldoras superiores filtran por estado.
 
-Cada **submódulo** tiene: título, duración, imagen 16:9, texto, guión y nota extra.
-Todo se edita haciendo clic directamente sobre el campo. Las migas de pan
-(*Cursos › Programa › Módulo*) permiten volver a cualquier nivel, y la `×` de cada
-tarjeta elimina ese elemento.
+### 2. Programa (editor de documentos)
 
-**Guardado automático:** cada cambio se guarda solo en `localStorage`, con un aviso
-`✓ Guardado` abajo a la izquierda. No hay botón de guardar manual.
+Al entrar en una tarjeta:
+
+- **Migas de pan** `Cursos › Programa › Documento` para volver.
+- **Título y descripción** del programa, editables en línea.
+- **Panel izquierdo:** tarjeta de *Avance* (% de documentos con contenido, calculado
+  automáticamente) y el árbol de **Módulos → Submódulos**, con `+ Nuevo módulo` y
+  `+ Submódulo`, duración por submódulo y `×` para eliminar.
+- **Panel derecho:** el **documento** del submódulo seleccionado — título, duración,
+  botones *Guardar* y *Video*, barra de formato (negrita, cursiva, subrayado, H1, H2,
+  cita, lista, insertar imagen) y el área de escritura.
+
+Cada submódulo es un documento independiente: ahí escribes el guión y el contenido
+de esa clase. Cambiar de submódulo conserva lo escrito en el anterior.
+
+**Guardado automático** en cada cambio (aviso `✓ Guardado`), más un volcado inmediato
+al cerrar u ocultar la pestaña para no perder lo último escrito.
 
 **Importante:** el guardado es **local, por navegador**. No hay backend ni base de
-datos, así que los cambios no se comparten entre dispositivos ni con otras
-personas, y se pierden si borras los datos del navegador. Las imágenes se guardan
-incrustadas como data URL, y `localStorage` ronda los 5–10 MB por sitio: si cargas
-muchas imágenes pesadas puede llenarse (el aviso lo indicará). Para persistencia
-real y compartida haría falta conectar una base de datos (ej. Firebase/Supabase).
+datos, así que el contenido no se comparte entre dispositivos ni con otras personas,
+y se pierde si borras los datos del navegador. Las imágenes insertadas se guardan
+incrustadas y `localStorage` ronda los 5–10 MB por sitio: si lo llenas, el aviso te
+lo dirá. Para persistencia real y compartida haría falta un backend (ej.
+Firebase/Supabase).
 
 ## Edición en vivo del resto de páginas (✏️ Editar / 💾 Guardar)
 

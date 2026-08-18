@@ -1,61 +1,81 @@
 /* CEM Workspace — Panel de Contenido
- * Navegación por niveles: Programa -> Módulo -> Submódulo.
- * Los datos viven en localStorage como JSON estructurado (uno por tipo de
- * programa). Local, de un solo usuario, sin backend.
+ * Dos pantallas:
+ *   1) Registro  — grid de tarjetas de programas (+ para crear uno nuevo)
+ *   2) Programa  — editor de documentos: módulos/submódulos a la izquierda,
+ *                  documento enriquecido a la derecha.
+ * Estado en localStorage (un almacén por tipo de programa). Sin backend.
  */
 (function () {
   "use strict";
 
-  var CFG = window.CEM_BUILDER || {};
-  var TYPE = CFG.type || "programa";
+  var C = window.CEM_BUILDER || {};
+  var KIND = C.kind || "Course";
   var LBL = {
-    one: CFG.one || "programa",
-    many: CFG.many || "programas",
-    newOne: CFG.newOne || "Nuevo programa",
-    titlePh: CFG.titlePh || "Nombre del programa",
-    heading: CFG.heading || "Programas",
-    intro: CFG.intro || ""
+    one: C.one || "programa",
+    many: C.many || "programas",
+    newOne: C.newOne || "Nuevo programa",
+    titlePh: C.titlePh || "Nombre del programa",
+    heading: C.heading || "Registro de Programas",
+    intro: C.intro || "",
+    crumb: C.crumb || "Programas"
   };
-  var KEY = "cem-builder:" + TYPE;
+  var KEY = "cem-builder:" + (C.type || "programa");
+  var STATUS = [
+    { id: "live", label: "Live", icon: "", cls: "st-live" },
+    { id: "prod", label: "En producción", icon: "build", cls: "st-prod" },
+    { id: "plan", label: "Planificación", icon: "schedule", cls: "st-plan" }
+  ];
 
   var state = load();
-  var route = { view: "list", p: null, m: null };
-  var open = {};
-  var root;
+  var route = { view: "registry", p: null, s: null };
+  var filter = "all";
+  var openMods = {};
+  var savedRange = null;
+  var root, tick;
 
-  /* ---------------- almacenamiento ---------------- */
+  /* ------------------------------------------------ almacenamiento */
 
   function load() {
     try {
-      var raw = localStorage.getItem(KEY);
-      if (raw) {
-        var d = JSON.parse(raw);
-        if (d && Array.isArray(d.programs)) return d;
-      }
+      var d = JSON.parse(localStorage.getItem(KEY));
+      if (d && Array.isArray(d.programs)) return d;
     } catch (e) {}
     return { programs: [] };
   }
 
-  var saveTimer = null;
+  var t = null;
   function save(now) {
-    clearTimeout(saveTimer);
-    function commit() {
+    clearTimeout(t);
+    function go() {
       try {
         localStorage.setItem(KEY, JSON.stringify(state));
-        flash("Guardado", false);
+        toast("Guardado");
       } catch (e) {
-        flash("Sin espacio para guardar. Borra imágenes pesadas.", true);
+        toast("Sin espacio para guardar. Quita imágenes pesadas.", true);
       }
     }
-    if (now) commit();
-    else saveTimer = setTimeout(commit, 500);
+    if (now) go(); else t = setTimeout(go, 600);
   }
 
   function uid() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
   }
 
-  /* ---------------- utilidades ---------------- */
+  // Vuelca cualquier guardado pendiente al instante: al cerrar/ocultar la
+  // pestaña no se puede esperar al debounce de 600 ms.
+  function flush() {
+    if (!t) return;
+    clearTimeout(t);
+    t = null;
+    var doc = root && root.querySelector("#cem-doc");
+    if (doc) {
+      var f = findSub(prog(), doc.getAttribute("data-id"));
+      if (f) f.sub.doc = doc.innerHTML;
+    }
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  /* ------------------------------------------------ utilidades */
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -63,449 +83,750 @@
     });
   }
 
-  var flashTimer = null;
-  function flash(msg, isError) {
+  var tt = null;
+  function toast(msg, bad) {
     var el = document.getElementById("cem-toast");
     if (!el) return;
-    el.textContent = (isError ? "⚠ " : "✓ ") + msg;
-    el.className = "cem-toast" + (isError ? " cem-toast-error" : "") + " cem-toast-on";
-    clearTimeout(flashTimer);
-    flashTimer = setTimeout(function () {
-      el.className = "cem-toast" + (isError ? " cem-toast-error" : "");
-    }, isError ? 4000 : 1400);
+    el.textContent = (bad ? "⚠ " : "✓ ") + msg;
+    el.className = "cem-toast" + (bad ? " bad" : "") + " on";
+    clearTimeout(tt);
+    tt = setTimeout(function () {
+      el.className = "cem-toast" + (bad ? " bad" : "");
+    }, bad ? 4500 : 1300);
   }
 
-  function program() {
+  function ago(ts) {
+    if (!ts) return "sin cambios aún";
+    var s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 60) return "hace instantes";
+    var m = Math.floor(s / 60);
+    if (m < 60) return "hace " + m + " min";
+    var h = Math.floor(m / 60);
+    if (h < 24) return "hace " + h + " h";
+    return "hace " + Math.floor(h / 24) + " d";
+  }
+
+  function prog() {
     for (var i = 0; i < state.programs.length; i++)
       if (state.programs[i].id === route.p) return state.programs[i];
     return null;
   }
 
-  function moduleOf(p) {
+  function findSub(p, id) {
     if (!p) return null;
     for (var i = 0; i < p.modules.length; i++)
-      if (p.modules[i].id === route.m) return p.modules[i];
+      for (var j = 0; j < p.modules[i].submodules.length; j++)
+        if (p.modules[i].submodules[j].id === id)
+          return { mod: p.modules[i], sub: p.modules[i].submodules[j], mi: i, si: j };
     return null;
   }
 
-  function countSubs(p) {
-    return p.modules.reduce(function (a, m) { return a + m.submodules.length; }, 0);
+  function allSubs(p) {
+    return p.modules.reduce(function (a, m) { return a.concat(m.submodules); }, []);
   }
 
-  /* ---------------- campos editables ---------------- */
+  function written(s) {
+    return !!(s.doc && s.doc.replace(/<[^>]*>/g, "").trim().length);
+  }
 
-  function field(value, ph, path, cls, tag) {
+  function pct(p) {
+    var all = allSubs(p);
+    if (!all.length) return 0;
+    return Math.round(all.filter(written).length * 100 / all.length);
+  }
+
+  function statusOf(id) {
+    for (var i = 0; i < STATUS.length; i++) if (STATUS[i].id === id) return STATUS[i];
+    return STATUS[0];
+  }
+
+  function ed(val, ph, path, cls, tag) {
     tag = tag || "div";
-    return "<" + tag + ' class="cem-ed ' + (cls || "") + '" contenteditable="true" ' +
-      'data-path="' + esc(path) + '" data-ph="' + esc(ph) + '">' + esc(value || "") + "</" + tag + ">";
+    return "<" + tag + ' class="ced ' + (cls || "") + '" contenteditable="true" ' +
+      'data-path="' + esc(path) + '" data-ph="' + esc(ph) + '">' + esc(val || "") + "</" + tag + ">";
   }
 
-  function imageBox(src, path, extraCls) {
-    return '<label class="cem-img ' + (extraCls || "") + '" data-path="' + esc(path) + '">' +
-      '<input type="file" accept="image/*" class="hidden cem-img-input">' +
-      (src
-        ? '<img src="' + esc(src) + '" alt="">' +
-          '<span class="cem-img-swap"><span class="material-symbols-outlined text-[18px]">edit</span> Cambiar</span>'
-        : '<span class="cem-img-ph"><span class="material-symbols-outlined text-3xl">add_photo_alternate</span>' +
-          '<span class="font-label-sm">Imagen 16:9</span></span>') +
-      "</label>";
-  }
+  /* ------------------------------------------------ vista 1: registro */
 
-  /* ---------------- vistas ---------------- */
+  function renderRegistry() {
+    var list = state.programs.filter(function (p) {
+      return filter === "all" || (p.status || "live") === filter;
+    });
 
-  function renderList() {
-    var cards = state.programs.map(function (p) {
-      return '<article class="cem-card glass-panel" data-act="open-program" data-id="' + p.id + '">' +
-        '<button class="cem-del" data-act="del-program" data-id="' + p.id + '" title="Eliminar">&times;</button>' +
-        '<div class="cem-card-media">' +
-          (p.image ? '<img src="' + esc(p.image) + '" alt="">'
-                   : '<span class="material-symbols-outlined">image</span>') +
-        "</div>" +
-        '<div class="cem-card-body">' +
-          '<h3 class="cem-card-title">' + esc(p.title || LBL.titlePh) + "</h3>" +
-          '<p class="cem-card-desc">' + esc(p.description || "Sin descripción") + "</p>" +
-          '<div class="cem-card-meta">' +
-            '<span><span class="material-symbols-outlined text-[16px]">folder</span>' +
-              p.modules.length + " módulo" + (p.modules.length === 1 ? "" : "s") + "</span>" +
-            '<span><span class="material-symbols-outlined text-[16px]">play_lesson</span>' +
-              countSubs(p) + " submódulo" + (countSubs(p) === 1 ? "" : "s") + "</span>" +
+    var pills = [{ id: "all", label: "Todos los " + LBL.many }]
+      .concat(STATUS.map(function (s) { return { id: s.id, label: s.label }; }))
+      .map(function (f) {
+        return '<button class="pill' + (filter === f.id ? " on" : "") +
+          '" data-act="filter" data-id="' + f.id + '">' + esc(f.label) + "</button>";
+      }).join("");
+
+    var cards = list.map(function (p) {
+      var st = statusOf(p.status);
+      var pc = pct(p);
+      return '<article class="pcard ' + (p.featured ? "feat" : "kind") + '" data-act="open" data-id="' + p.id + '">' +
+        '<div class="pcard-top">' +
+          '<span class="badge">' + esc(KIND) + "</span>" +
+          '<button class="icobtn star' + (p.featured ? " on" : "") + '" data-act="star" data-id="' + p.id + '" title="Destacar">' +
+            '<span class="material-symbols-outlined">star</span></button>' +
+          '<button class="icobtn" data-act="menu" data-id="' + p.id + '" title="Opciones">' +
+            '<span class="material-symbols-outlined">more_vert</span></button>' +
+          '<div class="menu" id="menu-' + p.id + '">' +
+            '<button data-act="dup" data-id="' + p.id + '">Duplicar</button>' +
+            '<button class="danger" data-act="del" data-id="' + p.id + '">Eliminar</button>' +
           "</div>" +
+        "</div>" +
+        '<h3 class="pcard-title">' + esc(p.title || LBL.titlePh) + "</h3>" +
+        '<p class="pcard-desc">' + esc(p.description || "Sin descripción todavía.") + "</p>" +
+        '<div class="pcard-foot">' +
+          (p.featured
+            ? '<div class="bar"><i style="width:' + pc + '%"></i></div>' +
+              '<div class="foot-row"><span>Documentos escritos</span><b>' + pc + "%</b></div>"
+            : '<div><p class="foot-k">Módulos</p><p class="foot-v">' + p.modules.length + "</p></div>" +
+              '<button class="status ' + st.cls + '" data-act="status" data-id="' + p.id + '" title="Cambiar estado">' +
+                (st.icon ? '<span class="material-symbols-outlined">' + st.icon + "</span>" : '<i class="dot"></i>') +
+                esc(st.label) + "</button>") +
         "</div>" +
       "</article>";
     }).join("");
 
-    var addCard = '<button class="cem-card cem-card-add" data-act="add-program">' +
-      '<span class="material-symbols-outlined">add</span>' +
-      "<span>" + esc(LBL.newOne) + "</span></button>";
+    var empty = list.length ? "" :
+      '<p class="empty">' + (state.programs.length
+        ? "Ningún " + esc(LBL.one) + " con ese estado."
+        : "Aún no has creado ningún " + esc(LBL.one) + ". Pulsa el botón + para empezar.") + "</p>";
 
-    var empty = state.programs.length ? "" :
-      '<p class="cem-empty">Aún no has creado ningún ' + esc(LBL.one) +
-      '. Empieza con el botón de la derecha.</p>';
-
-    return '<header class="cem-head">' +
-        "<div>" +
-          '<h2 class="cem-h1">' + esc(LBL.heading) + "</h2>" +
-          '<p class="cem-lead">' + esc(LBL.intro) + "</p>" +
-        "</div>" +
-        '<span class="cem-count">' + state.programs.length + " " +
-          esc(state.programs.length === 1 ? LBL.one : LBL.many) + "</span>" +
+    return '<header class="reg-head">' +
+        "<div><h2>" + esc(LBL.heading) + "</h2><p>" + esc(LBL.intro) + "</p></div>" +
+        '<div class="pills">' + pills + "</div>" +
       "</header>" + empty +
-      '<div class="cem-grid">' + cards + addCard + "</div>";
+      '<div class="pgrid">' + cards + "</div>" +
+      '<button class="fab" data-act="new" title="' + esc(LBL.newOne) + '">' +
+        '<span class="material-symbols-outlined">add</span></button>';
   }
+
+  /* ------------------------------------------------ vista 2: programa */
 
   function renderProgram() {
-    var p = program();
-    if (!p) { route.view = "list"; return renderList(); }
+    var p = prog();
+    if (!p) { route.view = "registry"; return renderRegistry(); }
 
-    var mods = p.modules.map(function (m, i) {
-      return '<article class="cem-row glass-panel" data-act="open-module" data-id="' + m.id + '">' +
-        '<button class="cem-del" data-act="del-module" data-id="' + m.id + '" title="Eliminar">&times;</button>' +
-        '<span class="cem-row-num">' + (i + 1) + "</span>" +
-        '<div class="cem-row-body">' +
-          '<h3 class="cem-row-title">' + esc(m.title || "Módulo sin nombre") + "</h3>" +
-          '<p class="cem-row-desc">' + esc(m.description || "Sin descripción") + "</p>" +
+    var found = findSub(p, route.s);
+    if (!found) {
+      var first = allSubs(p)[0];
+      if (first) { route.s = first.id; found = findSub(p, route.s); }
+    }
+    if (found) openMods[found.mod.id] = true;
+
+    /* --- columna izquierda: avance + módulos --- */
+    var pc = pct(p);
+    var mods = p.modules.map(function (m, mi) {
+      var isOpen = openMods[m.id];
+      var done = m.submodules.length && m.submodules.every(written);
+      var here = found && found.mod.id === m.id;
+      var icon = done
+        ? '<span class="material-symbols-outlined ok">check_circle</span>'
+        : here
+          ? '<span class="ring"><i></i></span>'
+          : '<span class="material-symbols-outlined off">radio_button_unchecked</span>';
+
+      var subs = m.submodules.map(function (s, si) {
+        var on = found && found.sub.id === s.id;
+        return '<div class="sitem' + (on ? " on" : "") + '" data-act="open-sub" data-id="' + s.id + '">' +
+          '<span class="sdot"></span>' +
+          '<span class="stxt">' + esc(s.title || "Submódulo sin título") + "</span>" +
+          '<span class="sdur">' + esc(s.duration || "—") + "</span>" +
+          '<button class="xbtn" data-act="del-sub" data-id="' + s.id + '" title="Eliminar">&times;</button>' +
+        "</div>";
+      }).join("");
+
+      return '<div class="mod' + (isOpen ? " open" : "") + '">' +
+        '<div class="mhead" data-act="toggle" data-id="' + m.id + '">' +
+          icon +
+          ed(m.title, "Nombre del módulo", "mod." + m.id + ".title", "mtitle") +
+          '<button class="xbtn" data-act="del-mod" data-id="' + m.id + '" title="Eliminar">&times;</button>' +
+          '<span class="material-symbols-outlined chev">' + (isOpen ? "expand_more" : "chevron_right") + "</span>" +
         "</div>" +
-        '<span class="cem-row-meta">' + m.submodules.length + " submódulo" +
-          (m.submodules.length === 1 ? "" : "s") + "</span>" +
-        '<span class="material-symbols-outlined cem-row-go">chevron_right</span>' +
-      "</article>";
+        '<div class="msubs">' + subs +
+          '<button class="miniadd" data-act="add-sub" data-id="' + m.id + '">+ Submódulo</button>' +
+        "</div>" +
+      "</div>";
     }).join("");
 
-    var empty = p.modules.length ? "" :
-      '<p class="cem-empty">Este ' + esc(LBL.one) + " todavía no tiene módulos.</p>";
-
-    return crumbs([{ label: LBL.heading, act: "go-list" }, { label: p.title || LBL.titlePh }]) +
-      '<section class="cem-hero glass-panel">' +
-        imageBox(p.image, "program.image", "cem-img-hero") +
-        '<div class="cem-hero-body">' +
-          '<span class="cem-tag">' + esc(LBL.one) + "</span>" +
-          field(p.title, LBL.titlePh, "program.title", "cem-h1", "h2") +
-          field(p.description, "Descripción breve…", "program.description", "cem-lead") +
+    var left =
+      '<div class="card prog-card">' +
+        '<div class="prog-row"><div>' +
+          "<p class=\"k\">Avance del " + esc(LBL.one) + "</p><p class=\"v\">" + pc + "%</p></div>" +
+          '<span class="prog-ico"><span class="material-symbols-outlined">trending_up</span></span>' +
         "</div>" +
-      "</section>" +
-      '<div class="cem-section-head"><h3>Módulos</h3>' +
-        '<button class="cem-btn" data-act="add-module">' +
-        '<span class="material-symbols-outlined text-[18px]">add</span> Nuevo módulo</button></div>' +
-      empty + '<div class="cem-rows">' + mods + "</div>";
-  }
+        '<div class="bar"><i style="width:' + pc + '%"></i></div>' +
+        '<p class="hint">' + allSubs(p).filter(written).length + " de " + allSubs(p).length + " documentos con contenido</p>" +
+      "</div>" +
+      '<div class="card mods-card">' +
+        '<h3 class="mods-h"><span class="material-symbols-outlined">list</span> Módulos</h3>' +
+        (p.modules.length ? mods : '<p class="empty sm">Sin módulos todavía.</p>') +
+        '<button class="addbtn" data-act="add-mod"><span class="material-symbols-outlined">add</span> Nuevo módulo</button>' +
+      "</div>";
 
-  function renderModule() {
-    var p = program();
-    var m = moduleOf(p);
-    if (!m) { route.view = "program"; return renderProgram(); }
-
-    var subs = m.submodules.map(function (s, i) {
-      var isOpen = open[s.id] !== false;
-      return '<article class="cem-sub glass-panel' + (isOpen ? " is-open" : "") + '">' +
-        '<header class="cem-sub-head" data-act="toggle-sub" data-id="' + s.id + '">' +
-          '<span class="cem-row-num">' + (i + 1) + "</span>" +
-          '<h4 class="cem-sub-title">' + esc(s.title || "Submódulo sin nombre") + "</h4>" +
-          '<span class="cem-sub-dur"><span class="material-symbols-outlined text-[15px]">timer</span>' +
-            esc(s.duration || "—") + "</span>" +
-          '<span class="material-symbols-outlined cem-sub-chev">expand_more</span>' +
-          '<button class="cem-del cem-del-inline" data-act="del-sub" data-id="' + s.id + '" title="Eliminar">&times;</button>' +
-        "</header>" +
-        '<div class="cem-sub-body">' +
-          '<div class="cem-sub-top">' +
-            '<div class="cem-f cem-f-grow"><label>Título del submódulo</label>' +
-              field(s.title, "Nombre del submódulo", "sub." + s.id + ".title", "cem-in") + "</div>" +
-            '<div class="cem-f cem-f-dur"><label>Duración</label>' +
-              field(s.duration, "15 min", "sub." + s.id + ".duration", "cem-in") + "</div>" +
+    /* --- columna derecha: documento --- */
+    var right;
+    if (!found) {
+      right = '<div class="card doc-empty">' +
+        '<span class="material-symbols-outlined">description</span>' +
+        "<h3>Sin documentos todavía</h3>" +
+        "<p>Crea un módulo y dentro un submódulo. Cada submódulo es un documento donde escribes el guión de esa clase.</p>" +
+        '<button class="addbtn solid" data-act="add-mod"><span class="material-symbols-outlined">add</span> Crear primer módulo</button>' +
+      "</div>";
+    } else {
+      var s = found.sub;
+      right =
+        '<div class="card doc-head">' +
+          "<div class=\"dh-left\">" +
+            ed(s.title, "Título del documento", "sub." + s.id + ".title", "dh-title", "h3") +
+            '<div class="dh-meta">' +
+              '<span class="material-symbols-outlined">timer</span>' +
+              ed(s.duration, "20 mins", "sub." + s.id + ".duration", "dh-dur", "span") +
+              '<span class="sep">•</span>' +
+              '<span class="material-symbols-outlined">visibility</span>' +
+              "<span>Submódulo " + (found.mi + 1) + "." + (found.si + 1) + "</span>" +
+            "</div>" +
           "</div>" +
-          '<div class="cem-sub-grid">' +
-            '<div class="cem-f"><label>Imagen (16:9)</label>' +
-              imageBox(s.image, "sub." + s.id + ".image") + "</div>" +
-            '<div class="cem-f"><label>Texto</label>' +
-              field(s.texto, "Contenido de este submódulo…", "sub." + s.id + ".texto", "cem-ta") + "</div>" +
-          "</div>" +
-          '<div class="cem-sub-grid">' +
-            '<div class="cem-f"><label class="cem-l-script">Guión</label>' +
-              field(s.guion, "Palabra por palabra lo que dirás en cámara…", "sub." + s.id + ".guion", "cem-ta cem-ta-script") + "</div>" +
-            '<div class="cem-f"><label class="cem-l-note">Nota extra</label>' +
-              field(s.nota, "Recordatorios, materiales, referencias…", "sub." + s.id + ".nota", "cem-ta cem-ta-note") + "</div>" +
+          '<div class="dh-actions">' +
+            '<button class="btn ghost" data-act="save-now"><span class="material-symbols-outlined">bookmark</span> Guardar</button>' +
+            '<button class="btn solid" data-act="video"><span class="material-symbols-outlined">play_circle</span> Video</button>' +
           "</div>" +
         "</div>" +
-      "</article>";
-    }).join("");
+        '<div class="card doc-card">' +
+          '<div class="tools">' +
+            '<div class="tgrp">' +
+              '<button data-cmd="bold" title="Negrita"><span class="material-symbols-outlined">format_bold</span></button>' +
+              '<button data-cmd="italic" title="Cursiva"><span class="material-symbols-outlined">format_italic</span></button>' +
+              '<button data-cmd="underline" title="Subrayado"><span class="material-symbols-outlined">format_underlined</span></button>' +
+            "</div>" +
+            '<div class="tgrp">' +
+              '<button data-block="H1" title="Título 1"><span class="material-symbols-outlined">format_h1</span></button>' +
+              '<button data-block="H2" title="Título 2"><span class="material-symbols-outlined">format_h2</span></button>' +
+              '<button data-block="BLOCKQUOTE" title="Cita"><span class="material-symbols-outlined">format_quote</span></button>' +
+              '<button data-cmd="insertUnorderedList" title="Lista"><span class="material-symbols-outlined">format_list_bulleted</span></button>' +
+            "</div>" +
+            '<div class="tgrp">' +
+              '<button class="wide" data-act="insert-media">' +
+                '<span class="material-symbols-outlined">add_photo_alternate</span> Insertar imagen</button>' +
+            "</div>" +
+            '<span class="edited">Editado ' + esc(ago(s.edited)) + "</span>" +
+          "</div>" +
+          '<div class="doc" id="cem-doc" contenteditable="true" data-id="' + s.id +
+            '" data-ph="Escribe aquí el guión y el contenido de esta clase…">' + (s.doc || "") + "</div>" +
+        "</div>";
+    }
 
-    var empty = m.submodules.length ? "" :
-      '<p class="cem-empty">Este módulo todavía no tiene submódulos.</p>';
-
-    return crumbs([
-        { label: LBL.heading, act: "go-list" },
-        { label: p.title || LBL.titlePh, act: "go-program" },
-        { label: m.title || "Módulo" }
-      ]) +
-      '<section class="cem-hero glass-panel cem-hero-flat">' +
-        '<div class="cem-hero-body">' +
-          '<span class="cem-tag">Módulo</span>' +
-          field(m.title, "Nombre del módulo", "module.title", "cem-h1", "h2") +
-          field(m.description, "Descripción breve del módulo…", "module.description", "cem-lead") +
-        "</div>" +
-      "</section>" +
-      '<div class="cem-section-head"><h3>Submódulos</h3>' +
-        '<button class="cem-btn" data-act="add-sub">' +
-        '<span class="material-symbols-outlined text-[18px]">add</span> Nuevo submódulo</button></div>' +
-      empty + '<div class="cem-subs">' + subs + "</div>";
-  }
-
-  function crumbs(items) {
-    return '<nav class="cem-crumbs">' + items.map(function (it, i) {
-      var last = i === items.length - 1;
-      var sep = i ? '<span class="material-symbols-outlined text-[16px]">chevron_right</span>' : "";
-      return sep + (last
-        ? '<span class="cem-crumb-now">' + esc(it.label) + "</span>"
-        : '<button class="cem-crumb" data-act="' + it.act + '">' + esc(it.label) + "</button>");
-    }).join("") + "</nav>";
+    return '<nav class="crumbs">' +
+        '<button data-act="home">' + esc(LBL.crumb) + "</button>" +
+        '<span class="material-symbols-outlined">chevron_right</span>' +
+        '<span class="now">' + esc(p.title || LBL.titlePh) + "</span>" +
+        (found ? '<span class="material-symbols-outlined">chevron_right</span><span class="now">' +
+                 esc(found.sub.title || "Documento") + "</span>" : "") +
+      "</nav>" +
+      '<header class="prog-head">' +
+        ed(p.title, LBL.titlePh, "program.title", "ptitle", "h1") +
+        ed(p.description, "Descripción del " + LBL.one + "…", "program.description", "pdesc") +
+      "</header>" +
+      '<div class="layout"><aside class="col-l">' + left + "</aside>" +
+      '<section class="col-r">' + right + "</section></div>";
   }
 
   function render() {
-    var html = route.view === "list" ? renderList()
-             : route.view === "program" ? renderProgram()
-             : renderModule();
-    root.innerHTML = html;
+    root.innerHTML = route.view === "registry" ? renderRegistry() : renderProgram();
   }
 
-  /* ---------------- acciones ---------------- */
+  /* ------------------------------------------------ acciones */
 
   function newProgram() {
-    var p = { id: uid(), title: "", description: "", image: "", modules: [] };
-    state.programs.push(p);
+    var p = {
+      id: uid(), title: "", description: "", status: "plan",
+      featured: false, modules: []
+    };
+    state.programs.unshift(p);
     save(true);
-    route = { view: "program", p: p.id, m: null };
+    route = { view: "program", p: p.id, s: null };
     render();
-    focusFirst();
+    focus(".ptitle");
   }
 
-  function newModule() {
-    var p = program();
-    if (!p) return;
-    var m = { id: uid(), title: "", description: "", submodules: [] };
+  function addModule() {
+    var p = prog(); if (!p) return;
+    var m = { id: uid(), title: "", submodules: [] };
     p.modules.push(m);
-    save(true);
-    route = { view: "module", p: p.id, m: m.id };
-    render();
-    focusFirst();
+    openMods[m.id] = true;
+    addSub(m.id, true);
   }
 
-  function newSub() {
-    var m = moduleOf(program());
+  function addSub(modId, silent) {
+    var p = prog(); if (!p) return;
+    var m = null;
+    for (var i = 0; i < p.modules.length; i++) if (p.modules[i].id === modId) m = p.modules[i];
     if (!m) return;
-    var s = { id: uid(), title: "", duration: "", image: "", texto: "", guion: "", nota: "" };
+    var s = { id: uid(), title: "", duration: "", doc: "", edited: 0 };
     m.submodules.push(s);
-    open[s.id] = true;
+    openMods[m.id] = true;
+    route.s = s.id;
     save(true);
     render();
-    var el = root.querySelector('[data-path="sub.' + s.id + '.title"]');
-    if (el) { el.focus(); el.scrollIntoView({ block: "center", behavior: "smooth" }); }
+    focus(silent ? ".mtitle" : ".dh-title");
   }
 
-  function focusFirst() {
-    var el = root.querySelector(".cem-ed");
-    if (el) el.focus();
+  function focus(sel) {
+    var e = root.querySelector(sel);
+    if (e) { e.focus(); placeCaretEnd(e); }
   }
 
-  function setPath(path, value) {
-    var parts = path.split(".");
-    if (parts[0] === "program") {
-      var p = program();
-      if (p) p[parts[1]] = value;
-    } else if (parts[0] === "module") {
-      var m = moduleOf(program());
-      if (m) m[parts[1]] = value;
-    } else if (parts[0] === "sub") {
-      var mm = moduleOf(program());
-      if (!mm) return;
-      for (var i = 0; i < mm.submodules.length; i++) {
-        if (mm.submodules[i].id === parts[1]) { mm.submodules[i][parts[2]] = value; return; }
-      }
+  function placeCaretEnd(el) {
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      r.collapse(false);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+    } catch (e) {}
+  }
+
+  function setPath(path, val) {
+    var a = path.split(".");
+    var p = prog();
+    if (a[0] === "program" && p) p[a[1]] = val;
+    else if (a[0] === "mod" && p) {
+      for (var i = 0; i < p.modules.length; i++)
+        if (p.modules[i].id === a[1]) p.modules[i][a[2]] = val;
+    } else if (a[0] === "sub" && p) {
+      var f = findSub(p, a[1]);
+      if (f) f.sub[a[2]] = val;
     }
   }
 
-  /* ---------------- eventos ---------------- */
+  function closeMenus() {
+    var m = root.querySelectorAll(".menu.on");
+    for (var i = 0; i < m.length; i++) m[i].classList.remove("on");
+  }
+
+  /* ------------------------------------------------ eventos */
 
   function bind() {
-    root.addEventListener("click", function (e) {
-      var del = e.target.closest("[data-act^='del-']");
-      if (del) {
+    root.addEventListener("mousedown", function (e) {
+      // conserva la selección del documento antes de pulsar la barra
+      if (e.target.closest(".tools")) {
+        var sel = window.getSelection();
+        if (sel.rangeCount && root.querySelector("#cem-doc") &&
+            root.querySelector("#cem-doc").contains(sel.anchorNode)) {
+          savedRange = sel.getRangeAt(0).cloneRange();
+        }
         e.preventDefault();
-        e.stopPropagation();
-        var id = del.getAttribute("data-id");
-        var act = del.getAttribute("data-act");
-        if (act === "del-program") {
+      }
+    });
+
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest("button, [data-act]");
+      if (!b) { closeMenus(); return; }
+      var act = b.getAttribute("data-act");
+      var id = b.getAttribute("data-id");
+
+      // barra de formato
+      var cmd = b.getAttribute("data-cmd");
+      var blk = b.getAttribute("data-block");
+      if (cmd || blk) {
+        e.preventDefault();
+        restoreRange();
+        if (cmd) document.execCommand(cmd, false, null);
+        else document.execCommand("formatBlock", false, blk);
+        syncDoc();
+        return;
+      }
+
+      if (act === "insert-media") { e.preventDefault(); pickImage(); return; }
+
+      if (act !== "menu") closeMenus();
+
+      switch (act) {
+        case "new": newProgram(); return;
+        case "filter": filter = id; render(); return;
+        case "open":
+          route = { view: "program", p: id, s: null };
+          render(); window.scrollTo(0, 0); return;
+        case "home":
+          route = { view: "registry", p: null, s: null };
+          render(); window.scrollTo(0, 0); return;
+        case "status": {
+          e.stopPropagation();
+          var ps = byId(id);
+          if (ps) {
+            var i = 0;
+            for (var k = 0; k < STATUS.length; k++) if (STATUS[k].id === (ps.status || "live")) i = k;
+            ps.status = STATUS[(i + 1) % STATUS.length].id;
+          }
+          save(true); render(); return;
+        }
+        case "star": {
+          e.stopPropagation();
+          var pr = byId(id); if (pr) pr.featured = !pr.featured;
+          save(true); render(); return;
+        }
+        case "menu": {
+          e.stopPropagation();
+          var mn = root.querySelector("#menu-" + id);
+          var was = mn && mn.classList.contains("on");
+          closeMenus();
+          if (mn && !was) mn.classList.add("on");
+          return;
+        }
+        case "dup": {
+          e.stopPropagation();
+          var src = byId(id);
+          if (src) {
+            var copy = JSON.parse(JSON.stringify(src));
+            copy.id = uid();
+            copy.title = (src.title || LBL.titlePh) + " (copia)";
+            copy.modules.forEach(function (m) {
+              m.id = uid();
+              m.submodules.forEach(function (s) { s.id = uid(); });
+            });
+            state.programs.splice(state.programs.indexOf(src) + 1, 0, copy);
+            save(true); render();
+          }
+          return;
+        }
+        case "del": {
+          e.stopPropagation();
           if (!confirm("¿Eliminar este " + LBL.one + " y todo su contenido?")) return;
           state.programs = state.programs.filter(function (x) { return x.id !== id; });
-        } else if (act === "del-module") {
-          if (!confirm("¿Eliminar este módulo y sus submódulos?")) return;
-          var p = program();
-          p.modules = p.modules.filter(function (x) { return x.id !== id; });
-        } else {
-          if (!confirm("¿Eliminar este submódulo?")) return;
-          var m = moduleOf(program());
-          m.submodules = m.submodules.filter(function (x) { return x.id !== id; });
+          save(true); render(); return;
         }
-        save(true);
-        render();
-        return;
-      }
-
-      var el = e.target.closest("[data-act]");
-      if (!el || el.closest(".cem-ed")) return;
-      var act = el.getAttribute("data-act");
-
-      if (act === "add-program") { newProgram(); return; }
-      if (act === "add-module") { newModule(); return; }
-      if (act === "add-sub") { newSub(); return; }
-      if (act === "go-list") { route = { view: "list", p: null, m: null }; render(); return; }
-      if (act === "go-program") { route.view = "program"; route.m = null; render(); return; }
-      if (act === "open-program") {
-        route = { view: "program", p: el.getAttribute("data-id"), m: null };
-        render(); window.scrollTo(0, 0); return;
-      }
-      if (act === "open-module") {
-        route.view = "module"; route.m = el.getAttribute("data-id");
-        render(); window.scrollTo(0, 0); return;
-      }
-      if (act === "toggle-sub") {
-        var sid = el.getAttribute("data-id");
-        open[sid] = open[sid] === false;
-        el.parentElement.classList.toggle("is-open", open[sid]);
-        return;
+        case "add-mod": addModule(); return;
+        case "add-sub": e.stopPropagation(); addSub(id); return;
+        case "toggle": {
+          if (e.target.closest(".mtitle")) return;
+          openMods[id] = !openMods[id];
+          render(); return;
+        }
+        case "open-sub": {
+          if (e.target.closest(".xbtn")) return;
+          route.s = id; render(); return;
+        }
+        case "del-mod": {
+          e.stopPropagation();
+          if (!confirm("¿Eliminar este módulo y sus documentos?")) return;
+          var pp = prog();
+          pp.modules = pp.modules.filter(function (m) { return m.id !== id; });
+          save(true); render(); return;
+        }
+        case "del-sub": {
+          e.stopPropagation();
+          if (!confirm("¿Eliminar este submódulo y su documento?")) return;
+          var p2 = prog();
+          p2.modules.forEach(function (m) {
+            m.submodules = m.submodules.filter(function (x) { return x.id !== id; });
+          });
+          if (route.s === id) route.s = null;
+          save(true); render(); return;
+        }
+        case "save-now": syncDoc(); save(true); return;
+        case "video": {
+          var f = findSub(prog(), route.s);
+          if (!f) return;
+          var url = prompt("URL del video de esta clase:", f.sub.video || "");
+          if (url === null) return;
+          f.sub.video = url.trim();
+          save(true);
+          if (f.sub.video) window.open(f.sub.video, "_blank", "noopener");
+          return;
+        }
       }
     });
 
-    // Texto: actualiza el estado sin re-renderizar (mantiene el cursor).
     root.addEventListener("input", function (e) {
-      var f = e.target.closest(".cem-ed");
-      if (!f) return;
-      setPath(f.getAttribute("data-path"), f.textContent.trim());
-      save();
+      var f = e.target.closest(".ced");
+      if (f) {
+        setPath(f.getAttribute("data-path"), f.textContent.trim());
+        save();
+        var live = root.querySelector(".sitem.on .stxt");
+        if (live && f.classList.contains("dh-title")) live.textContent = f.textContent.trim() || "Submódulo sin título";
+        var ld = root.querySelector(".sitem.on .sdur");
+        if (ld && f.classList.contains("dh-dur")) ld.textContent = f.textContent.trim() || "—";
+        return;
+      }
+      if (e.target.id === "cem-doc") syncDoc();
     });
 
-    root.addEventListener("change", function (e) {
-      if (!e.target.classList.contains("cem-img-input")) return;
-      var file = e.target.files && e.target.files[0];
-      if (!file) return;
-      var path = e.target.closest(".cem-img").getAttribute("data-path");
-      var reader = new FileReader();
-      reader.onload = function (ev) {
-        setPath(path, ev.target.result);
-        save(true);
-        render();
-      };
-      reader.readAsDataURL(file);
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".pcard")) closeMenus();
     });
   }
 
-  /* ---------------- estilos ---------------- */
+  function byId(id) {
+    for (var i = 0; i < state.programs.length; i++)
+      if (state.programs[i].id === id) return state.programs[i];
+    return null;
+  }
+
+  function restoreRange() {
+    var doc = root.querySelector("#cem-doc");
+    if (!doc) return;
+    doc.focus();
+    if (savedRange) {
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(savedRange);
+    }
+  }
+
+  function syncDoc() {
+    var doc = root.querySelector("#cem-doc");
+    if (!doc) return;
+    var f = findSub(prog(), doc.getAttribute("data-id"));
+    if (!f) return;
+    f.sub.doc = doc.innerHTML;
+    f.sub.edited = Date.now();
+    save();
+    refreshProgress(f);
+  }
+
+  // Refresca avance / icono de módulo / "Editado…" sin re-renderizar la vista,
+  // para no mover el cursor mientras se escribe.
+  function refreshProgress(f) {
+    var p = prog();
+    if (!p) return;
+    var all = allSubs(p);
+    var done = all.filter(written).length;
+    var pc = all.length ? Math.round(done * 100 / all.length) : 0;
+
+    var v = root.querySelector(".prog-card .v");
+    if (v) v.textContent = pc + "%";
+    var bar = root.querySelector(".prog-card .bar i");
+    if (bar) bar.style.width = pc + "%";
+    var hint = root.querySelector(".prog-card .hint");
+    if (hint) hint.textContent = done + " de " + all.length + " documentos con contenido";
+    var edt = root.querySelector(".edited");
+    if (edt) edt.textContent = "Editado " + ago(f.sub.edited);
+
+    // icono del módulo actual (completo / en curso), sin tocar su título
+    var head = root.querySelector(".sitem.on");
+    head = head && head.closest(".mod");
+    head = head && head.querySelector(".mhead");
+    if (!head) return;
+    var isDone = f.mod.submodules.length && f.mod.submodules.every(written);
+    var cur = head.firstElementChild;
+    var wantDone = cur.classList.contains("ok");
+    if (isDone === wantDone) return;
+    var el = document.createElement("span");
+    if (isDone) {
+      el.className = "material-symbols-outlined ok";
+      el.textContent = "check_circle";
+    } else {
+      el.className = "ring";
+      el.appendChild(document.createElement("i"));
+    }
+    head.replaceChild(el, cur);
+  }
+
+  function pickImage() {
+    var inp = document.createElement("input");
+    inp.type = "file";
+    inp.accept = "image/*";
+    inp.onchange = function () {
+      var file = inp.files && inp.files[0];
+      if (!file) return;
+      var r = new FileReader();
+      r.onload = function (ev) {
+        restoreRange();
+        document.execCommand("insertImage", false, ev.target.result);
+        syncDoc();
+      };
+      r.readAsDataURL(file);
+    };
+    inp.click();
+  }
+
+  /* ------------------------------------------------ estilos */
 
   function styles() {
     var css = [
-      ".cem-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:28px;flex-wrap:wrap}",
-      ".cem-h1{font-family:Poppins;font-size:32px;font-weight:700;line-height:1.2;color:#060607;outline:none}",
-      ".cem-lead{font-family:Poppins;font-size:16px;line-height:1.5;color:#444748;max-width:60ch;outline:none}",
-      ".cem-count{font-family:Poppins;font-size:12px;font-weight:600;color:#0053ce;background:rgba(0,83,206,.1);padding:6px 14px;border-radius:9999px;white-space:nowrap}",
-      ".cem-empty{font-family:Poppins;font-size:14px;color:#747878;margin:8px 0 20px}",
+      "#cem-root{font-family:Poppins,sans-serif;color:#191c1d}",
+      "#cem-root *{box-sizing:border-box}",
+      "#cem-root button{font-family:inherit}",
+      ".card{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);border-top:1px solid rgba(255,255,255,.9);border-left:1px solid rgba(255,255,255,.9);border-right:1px solid rgba(255,255,255,.45);border-bottom:1px solid rgba(255,255,255,.45);box-shadow:0 20px 40px rgba(0,0,0,.04);border-radius:16px}",
+      ".empty{font-size:14px;color:#747878;margin:6px 0 22px}",
+      ".empty.sm{margin:4px 0 10px;font-size:13px}",
 
-      ".cem-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}",
-      ".cem-card{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;text-align:left}",
-      ".cem-card:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(0,0,0,.10)}",
-      ".cem-card-media{aspect-ratio:16/9;background:#f3f4f5;display:flex;align-items:center;justify-content:center;color:#c4c7c7}",
-      ".cem-card-media img{width:100%;height:100%;object-fit:cover}",
-      ".cem-card-media .material-symbols-outlined{font-size:40px}",
-      ".cem-card-body{padding:18px}",
-      ".cem-card-title{font-family:Poppins;font-size:20px;font-weight:700;color:#060607;line-height:1.25;margin-bottom:4px}",
-      ".cem-card-desc{font-family:Poppins;font-size:13px;color:#444748;line-height:1.45;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}",
-      ".cem-card-meta{display:flex;gap:16px;font-family:Poppins;font-size:12px;color:#747878;border-top:1px solid rgba(255,255,255,.5);padding-top:12px}",
-      ".cem-card-meta span{display:flex;align-items:center;gap:4px}",
-      ".cem-card-add{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:220px;border:2px dashed rgba(0,83,206,.35);background:rgba(0,83,206,.04);color:#0053ce;font-family:Poppins;font-weight:600;font-size:14px}",
-      ".cem-card-add:hover{background:rgba(0,83,206,.09)}",
-      ".cem-card-add .material-symbols-outlined{font-size:36px}",
+      /* --- registro --- */
+      ".reg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:26px}",
+      ".reg-head h2{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#060607}",
+      ".reg-head p{font-size:16px;color:#444748;margin-top:4px;max-width:56ch}",
+      ".pills{display:flex;gap:10px;flex-wrap:wrap}",
+      ".pill{background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);box-shadow:0 6px 16px rgba(0,0,0,.05);border-radius:9999px;padding:9px 20px;font-size:14px;font-weight:500;color:#444748;cursor:pointer;white-space:nowrap}",
+      ".pill.on{color:#0053ce;border-color:#0053ce;font-weight:600}",
+      ".pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:26px;align-items:start}",
+      ".pcard{position:relative;border-radius:18px;padding:22px;min-height:300px;display:flex;flex-direction:column;cursor:pointer;border:1px solid rgba(255,255,255,.75);box-shadow:0 18px 38px rgba(0,0,0,.05);transition:transform .2s,box-shadow .2s;text-align:left}",
+      ".pcard:hover{transform:translateY(-4px);box-shadow:0 26px 52px rgba(0,0,0,.09)}",
+      ".pcard.kind{background:linear-gradient(150deg," + (C.g1 || "#e9edfb") + " 0%," + (C.g2 || "#f8f9fe") + " 42%,#fff 100%)}",
+      ".pcard.feat{background:linear-gradient(150deg,#dde8fb 0%,#eaf1fd 50%,#f6f9ff 100%)}",
+      ".pcard-top{display:flex;align-items:center;gap:6px;margin-bottom:16px}",
+      ".badge{background:" + (C.b1 || "#dbe6fb") + ";color:" + (C.b2 || "#2563eb") + ";font-size:13px;font-weight:500;padding:6px 14px;border-radius:8px;margin-right:auto}",
+      ".icobtn{background:none;border:none;color:#9aa0a0;cursor:pointer;padding:2px;display:flex;border-radius:6px}",
+      ".icobtn:hover{color:#191c1d;background:rgba(0,0,0,.05)}",
+      ".icobtn.star{opacity:0}.pcard:hover .icobtn.star,.icobtn.star.on{opacity:1}",
+      ".icobtn.star.on{color:#0053ce}",
+      ".pcard-title{font-size:25px;font-weight:700;line-height:1.18;color:#060607;margin-bottom:10px;word-break:break-word}",
+      ".pcard-desc{font-size:13.5px;line-height:1.5;color:#5c6060;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}",
+      ".pcard-foot{margin-top:auto;padding-top:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}",
+      ".foot-k{font-size:13px;color:#5c6060}",
+      ".foot-v{font-size:21px;font-weight:500;color:#191c1d;margin-top:2px}",
+      ".foot-row{display:flex;justify-content:space-between;width:100%;font-size:13px;color:#5c6060;margin-top:8px}",
+      ".foot-row b{color:#191c1d;font-weight:600}",
+      ".status{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;white-space:nowrap;background:none;border:none;padding:2px 4px;border-radius:7px;cursor:pointer}",
+      "button.status:hover{background:rgba(0,0,0,.06)}",
+      ".status .material-symbols-outlined{font-size:15px}",
+      ".status .dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}",
+      ".st-live{color:#16a34a}.st-prod{color:#ea580c}.st-plan{color:#2563eb}",
+      ".pcard .bar{width:100%}",
+      ".menu{position:absolute;top:52px;right:16px;background:#fff;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,.16);padding:6px;display:none;flex-direction:column;min-width:150px;z-index:20}",
+      ".menu.on{display:flex}",
+      ".menu button{background:none;border:none;text-align:left;padding:9px 12px;font-size:13.5px;border-radius:8px;cursor:pointer;color:#191c1d}",
+      ".menu button:hover{background:#f2f4f5}",
+      ".menu button.danger{color:#ba1a1a}",
+      ".fab{position:fixed;right:34px;bottom:34px;width:58px;height:58px;border-radius:50%;border:none;background:linear-gradient(135deg,#0053ce,#2a6cf0);color:#fff;box-shadow:0 14px 30px rgba(0,83,206,.36);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:60;transition:transform .2s}",
+      ".fab:hover{transform:scale(1.07)}",
+      ".fab .material-symbols-outlined{font-size:30px}",
 
-      ".cem-del{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:9999px;background:rgba(255,255,255,.9);color:#ba1a1a;border:1px solid rgba(186,26,26,.25);font-size:18px;line-height:1;cursor:pointer;opacity:0;transition:opacity .15s ease;z-index:5;font-family:Poppins}",
-      ".cem-card:hover .cem-del,.cem-row:hover .cem-del,.cem-sub:hover .cem-del,.cem-del:focus{opacity:1}",
-      ".cem-del:hover{background:#ba1a1a;color:#fff}",
-      ".cem-del-inline{position:static;opacity:0;flex-shrink:0}",
+      /* --- programa --- */
+      ".crumbs{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:10px;flex-wrap:wrap}",
+      ".crumbs button{background:none;border:none;color:#0053ce;font-size:13px;font-weight:500;cursor:pointer;padding:0}",
+      ".crumbs button:hover{text-decoration:underline}",
+      ".crumbs .now{color:#5c6060}",
+      ".crumbs .material-symbols-outlined{font-size:16px;color:#c4c7c7}",
+      ".prog-head{margin-bottom:26px}",
+      ".ptitle{font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:#060607;outline:none}",
+      ".pdesc{font-size:16px;line-height:1.55;color:#444748;max-width:70ch;margin-top:6px;outline:none}",
+      ".layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:26px;align-items:start}",
+      "@media(max-width:1020px){.layout{grid-template-columns:1fr}}",
+      ".col-l{display:flex;flex-direction:column;gap:22px;position:sticky;top:88px}",
+      "@media(max-width:1020px){.col-l{position:static}}",
+      ".col-r{display:flex;flex-direction:column;gap:22px;min-width:0}",
 
-      ".cem-crumbs{display:flex;align-items:center;gap:6px;margin-bottom:20px;flex-wrap:wrap}",
-      ".cem-crumb{font-family:Poppins;font-size:13px;font-weight:600;color:#0053ce;background:none;border:none;cursor:pointer;padding:4px 2px}",
-      ".cem-crumb:hover{text-decoration:underline}",
-      ".cem-crumb-now{font-family:Poppins;font-size:13px;font-weight:600;color:#444748;padding:4px 2px}",
-      ".cem-crumbs .material-symbols-outlined{color:#c4c7c7}",
+      ".prog-card{padding:20px}",
+      ".prog-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}",
+      ".prog-card .k{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#747878}",
+      ".prog-card .v{font-size:30px;font-weight:700;color:#060607;margin-top:2px}",
+      ".prog-ico{width:40px;height:40px;border-radius:50%;background:rgba(0,83,206,.1);color:#0053ce;display:flex;align-items:center;justify-content:center}",
+      ".bar{height:8px;border-radius:9999px;background:#e1e3e4;overflow:hidden}",
+      ".bar i{display:block;height:100%;border-radius:9999px;background:linear-gradient(90deg,#0053ce,#00b4d8)}",
+      ".prog-card .hint{font-size:12px;color:#747878;margin-top:8px}",
 
-      ".cem-hero{display:flex;gap:24px;padding:20px;border-radius:16px;margin-bottom:32px;flex-wrap:wrap}",
-      ".cem-hero-flat{display:block}",
-      ".cem-hero-body{flex:1;min-width:240px;display:flex;flex-direction:column;gap:6px}",
-      ".cem-tag{align-self:flex-start;font-family:Poppins;font-size:12px;font-weight:600;text-transform:capitalize;color:#0053ce;background:rgba(0,83,206,.12);padding:4px 12px;border-radius:9999px;margin-bottom:2px}",
+      ".mods-card{padding:18px}",
+      ".mods-h{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#060607;margin-bottom:12px}",
+      ".mods-h .material-symbols-outlined{font-size:19px;color:#0053ce}",
+      ".mod{border-radius:12px;margin-bottom:4px}",
+      ".mhead{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;cursor:pointer;border:1px solid transparent}",
+      ".mhead:hover{background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.9)}",
+      ".mod.open>.mhead{background:rgba(255,255,255,.75);border-color:rgba(255,255,255,.95);box-shadow:0 2px 8px rgba(0,0,0,.04)}",
+      ".mtitle{flex:1;min-width:0;font-size:14px;font-weight:600;color:#191c1d;outline:none}",
+      ".mod.open>.mhead .mtitle{color:#060607}",
+      ".mhead .ok{color:#16a34a;font-size:21px}",
+      ".mhead .off{color:#c4c7c7;font-size:21px}",
+      ".ring{width:19px;height:19px;border-radius:50%;border:2px solid #0053ce;display:flex;align-items:center;justify-content:center;flex-shrink:0}",
+      ".ring i{width:9px;height:9px;border-radius:50%;background:#0053ce;display:block}",
+      ".chev{color:#747878;font-size:19px}",
+      ".msubs{display:none;flex-direction:column;gap:2px;margin:2px 0 8px 21px;padding-left:11px;border-left:1px solid #e1e3e4}",
+      ".mod.open .msubs{display:flex}",
+      ".sitem{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;cursor:pointer;color:#5c6060;position:relative}",
+      ".sitem:hover{background:rgba(255,255,255,.7);color:#191c1d}",
+      ".sitem.on{color:#0053ce;font-weight:500}",
+      ".sdot{width:6px;height:6px;border-radius:50%;background:transparent;flex-shrink:0}",
+      ".sitem.on .sdot{background:#0053ce}",
+      ".stxt{flex:1;min-width:0;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
+      ".sdur{font-size:12px;color:#747878;white-space:nowrap}",
+      ".sitem.on .sdur{background:rgba(0,83,206,.1);color:#0053ce;padding:2px 8px;border-radius:6px}",
+      ".xbtn{position:absolute;right:4px;background:rgba(255,255,255,.95);border:1px solid rgba(186,26,26,.25);color:#ba1a1a;width:20px;height:20px;border-radius:50%;font-size:14px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0}",
+      ".sitem:hover .xbtn,.mhead:hover .xbtn{display:flex}",
+      ".mhead .xbtn{position:static;flex-shrink:0}",
+      ".miniadd{background:none;border:none;color:#0053ce;font-size:12.5px;font-weight:600;text-align:left;padding:7px 9px;cursor:pointer;border-radius:8px}",
+      ".miniadd:hover{background:rgba(0,83,206,.08)}",
+      ".addbtn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:10px;border:2px dashed rgba(0,83,206,.35);background:rgba(0,83,206,.05);color:#0053ce;font-size:13px;font-weight:600;border-radius:11px;cursor:pointer}",
+      ".addbtn:hover{background:rgba(0,83,206,.1)}",
+      ".addbtn .material-symbols-outlined{font-size:18px}",
+      ".addbtn.solid{border:none;background:linear-gradient(135deg,#0053ce,#2a6cf0);color:#fff;width:auto;padding:11px 22px;border-radius:9999px;margin-top:16px}",
 
-      ".cem-img{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:2px dashed #c4c7c7;background:#f3f4f5;cursor:pointer;position:relative;color:#747878}",
-      ".cem-img-hero{width:300px;flex-shrink:0}",
-      ".cem-img img{width:100%;height:100%;object-fit:cover}",
-      ".cem-img-ph{display:flex;flex-direction:column;align-items:center;gap:4px;font-family:Poppins}",
-      ".cem-img-swap{position:absolute;inset:auto 0 0 0;display:flex;align-items:center;justify-content:center;gap:4px;padding:6px;font-family:Poppins;font-size:12px;font-weight:600;color:#fff;background:rgba(0,0,0,.55);opacity:0;transition:opacity .15s ease}",
-      ".cem-img:hover .cem-img-swap{opacity:1}",
+      ".doc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 22px;flex-wrap:wrap}",
+      ".dh-title{font-size:23px;font-weight:600;line-height:1.25;color:#060607;outline:none}",
+      ".dh-meta{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#747878;margin-top:6px;flex-wrap:wrap}",
+      ".dh-meta .material-symbols-outlined{font-size:15px}",
+      ".dh-dur{outline:none;min-width:38px}",
+      ".dh-meta .sep{color:#c4c7c7}",
+      ".dh-actions{display:flex;gap:10px;flex-shrink:0}",
+      ".btn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;padding:10px 18px;border-radius:10px;cursor:pointer;border:1px solid transparent;white-space:nowrap}",
+      ".btn .material-symbols-outlined{font-size:18px}",
+      ".btn.ghost{background:rgba(255,255,255,.7);border-color:rgba(255,255,255,.95);color:#191c1d}",
+      ".btn.ghost:hover{background:#fff}",
+      ".btn.solid{background:linear-gradient(135deg,#0053ce,#2a6cf0);color:#fff}",
+      ".btn.solid:hover{box-shadow:0 10px 22px rgba(0,83,206,.3)}",
 
-      ".cem-section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}",
-      ".cem-section-head h3{font-family:Poppins;font-size:20px;font-weight:600;color:#060607}",
-      ".cem-btn{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#0053ce,#2a6cf0);color:#fff;font-family:Poppins;font-size:13px;font-weight:600;padding:9px 18px;border:none;border-radius:9999px;cursor:pointer;transition:box-shadow .2s ease,transform .2s ease}",
-      ".cem-btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(0,83,206,.28)}",
+      ".doc-card{overflow:hidden}",
+      ".tools{display:flex;align-items:center;gap:14px;padding:11px 16px;border-bottom:1px solid #e6e8e9;background:rgba(255,255,255,.5);flex-wrap:wrap}",
+      ".tgrp{display:flex;align-items:center;gap:3px;padding-right:14px;border-right:1px solid #e6e8e9}",
+      ".tgrp:last-of-type{border-right:none;padding-right:0}",
+      ".tools button{background:none;border:none;cursor:pointer;color:#191c1d;padding:6px;border-radius:7px;display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500}",
+      ".tools button:hover{background:rgba(0,0,0,.06)}",
+      ".tools button.wide{background:rgba(225,227,228,.5);padding:6px 13px}",
+      ".tools .material-symbols-outlined{font-size:19px}",
+      ".edited{margin-left:auto;font-size:12px;color:#9aa0a0;white-space:nowrap}",
+      ".doc{padding:34px 40px 60px;min-height:520px;outline:none;font-size:16px;line-height:1.65;color:#2b2f30}",
+      "@media(max-width:700px){.doc{padding:22px 20px 44px}}",
+      ".doc:empty:before{content:attr(data-ph);color:#a9adad}",
+      ".doc h1{font-size:31px;font-weight:700;line-height:1.2;color:#060607;margin:8px 0 18px}",
+      ".doc h2{font-size:22px;font-weight:600;line-height:1.3;color:#060607;margin:30px 0 12px}",
+      ".doc h3{font-size:18px;font-weight:600;color:#060607;margin:22px 0 10px}",
+      ".doc p{margin:0 0 15px}",
+      ".doc ul,.doc ol{margin:0 0 18px;padding-left:26px}",
+      ".doc li{margin-bottom:7px}",
+      ".doc blockquote{margin:22px 0;padding:16px 20px;background:rgba(0,83,206,.06);border-left:4px solid #0053ce;border-radius:0 10px 10px 0;color:#2b2f30}",
+      ".doc img{max-width:100%;height:auto;border-radius:12px;margin:14px 0;display:block}",
+      ".doc a{color:#0053ce}",
 
-      ".cem-rows{display:flex;flex-direction:column;gap:12px}",
-      ".cem-row{position:relative;display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:14px;cursor:pointer;transition:transform .15s ease}",
-      ".cem-row:hover{transform:translateX(3px)}",
-      ".cem-row-num{width:30px;height:30px;flex-shrink:0;border-radius:9999px;background:rgba(0,83,206,.12);color:#0053ce;font-family:Poppins;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}",
-      ".cem-row-body{flex:1;min-width:0}",
-      ".cem-row-title{font-family:Poppins;font-size:16px;font-weight:600;color:#060607}",
-      ".cem-row-desc{font-family:Poppins;font-size:13px;color:#747878;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
-      ".cem-row-meta{font-family:Poppins;font-size:12px;color:#747878;white-space:nowrap}",
-      ".cem-row-go{color:#c4c7c7}",
+      ".doc-empty{padding:70px 30px;text-align:center;display:flex;flex-direction:column;align-items:center}",
+      ".doc-empty .material-symbols-outlined{font-size:52px;color:#c4c7c7;margin-bottom:12px}",
+      ".doc-empty h3{font-size:19px;font-weight:600;color:#060607;margin-bottom:6px}",
+      ".doc-empty p{font-size:14px;color:#747878;max-width:44ch;line-height:1.6}",
 
-      ".cem-subs{display:flex;flex-direction:column;gap:14px}",
-      ".cem-sub{border-radius:14px;overflow:hidden}",
-      ".cem-sub-head{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer}",
-      ".cem-sub-title{flex:1;min-width:0;font-family:Poppins;font-size:15px;font-weight:600;color:#060607;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
-      ".cem-sub-dur{display:flex;align-items:center;gap:4px;font-family:Poppins;font-size:12px;color:#747878;white-space:nowrap}",
-      ".cem-sub-chev{color:#747878;transition:transform .2s ease}",
-      ".cem-sub.is-open .cem-sub-chev{transform:rotate(180deg)}",
-      ".cem-sub-body{display:none;padding:0 18px 18px;flex-direction:column;gap:14px}",
-      ".cem-sub.is-open .cem-sub-body{display:flex}",
-      ".cem-sub-top{display:flex;gap:14px;flex-wrap:wrap}",
-      ".cem-sub-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}",
-      "@media(max-width:820px){.cem-sub-grid{grid-template-columns:1fr}.cem-img-hero{width:100%}}",
-      ".cem-f{display:flex;flex-direction:column;gap:5px;min-width:0}",
-      ".cem-f-grow{flex:1;min-width:200px}",
-      ".cem-f-dur{width:130px}",
-      ".cem-f label{font-family:Poppins;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#747878}",
-      ".cem-f .cem-l-script{color:#0053ce}",
-      ".cem-f .cem-l-note{color:#c2410c}",
-      ".cem-in{font-family:Poppins;font-size:15px;color:#191c1d;background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.85);border-radius:9px;padding:9px 12px;outline:none}",
-      ".cem-ta{font-family:Poppins;font-size:14px;line-height:1.6;color:#191c1d;background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.85);border-radius:9px;padding:11px 13px;min-height:112px;outline:none;white-space:pre-wrap}",
-      ".cem-ta-script{background:rgba(0,83,206,.05);border-color:rgba(0,83,206,.18)}",
-      ".cem-ta-note{background:rgba(249,115,22,.06);border-color:rgba(249,115,22,.2)}",
-      ".cem-in:focus,.cem-ta:focus{border-color:#0053ce;box-shadow:0 0 0 3px rgba(0,83,206,.12)}",
-      ".cem-ed:empty:before{content:attr(data-ph);color:#a9adad;pointer-events:none}",
-
-      ".cem-toast{position:fixed;left:20px;bottom:20px;z-index:9999;font-family:Poppins;font-size:13px;font-weight:600;color:#0f5132;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 32px rgba(0,0,0,.12);border-radius:9999px;padding:10px 20px;opacity:0;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}",
-      ".cem-toast-on{opacity:1;transform:translateY(0)}",
-      ".cem-toast-error{color:#93000a}"
+      ".ced:empty:before{content:attr(data-ph);color:#a9adad;pointer-events:none}",
+      ".cem-toast{position:fixed;left:22px;bottom:22px;z-index:9999;font-family:Poppins,sans-serif;font-size:13px;font-weight:600;color:#0f5132;background:rgba(255,255,255,.95);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 32px rgba(0,0,0,.12);border-radius:9999px;padding:10px 20px;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}",
+      ".cem-toast.on{opacity:1;transform:translateY(0)}",
+      ".cem-toast.bad{color:#93000a}"
     ].join("");
-    var tag = document.createElement("style");
-    tag.textContent = css;
-    document.head.appendChild(tag);
+    var el = document.createElement("style");
+    el.textContent = css;
+    document.head.appendChild(el);
   }
 
-  /* ---------------- arranque ---------------- */
+  /* ------------------------------------------------ arranque */
 
   function init() {
     root = document.getElementById("cem-root");
     if (!root) return;
     styles();
-    var toast = document.createElement("div");
-    toast.id = "cem-toast";
-    toast.className = "cem-toast";
-    document.body.appendChild(toast);
+    var tp = document.createElement("div");
+    tp.id = "cem-toast";
+    tp.className = "cem-toast";
+    document.body.appendChild(tp);
     bind();
     render();
+    window.addEventListener("beforeunload", flush);
+    window.addEventListener("pagehide", flush);
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden") flush();
+    });
+    // refresca el "Editado hace…" sin tocar lo que estás escribiendo
+    tick = setInterval(function () {
+      var e = root.querySelector(".edited");
+      if (!e) return;
+      var f = findSub(prog(), route.s);
+      if (f) e.textContent = "Editado " + ago(f.sub.edited);
+    }, 30000);
   }
 
   if (document.readyState !== "loading") init();
