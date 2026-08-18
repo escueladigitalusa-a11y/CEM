@@ -8,10 +8,15 @@ Sitio estático que replica el prototipo de diseño "CEM Workspace" (sistema de 
 | --- | --- | --- |
 | `index.html` | Dashboard / Overview | Métricas generales, pipeline de producción, actividad reciente y masterclass destacada. |
 | `analytics.html` | Executive Overview / Analytics | Metas académicas, diplomas otorgados, cursos activos, velocidad de producción, reuniones y horas de clase. |
+| `courses.html` | Program Registry | Grid de todos los programas (cursos, diplomas, masterclasses) con estado y métricas. |
+| `course-production.html` | Course Production Tracker | Detalle de producción de un curso ("Marketing Strategy 2024"): timeline, tareas activas, assets y ficha del curso. |
+| `course-lesson.html` | Lesson Editor | Vista de un módulo/lección dentro de un curso ("Advanced SEO Tactics"): progreso, navegación de módulos y editor de contenido. |
 | `diplomas.html` | Detalle de Diploma | Vista de un programa de diploma ("Digital Marketing Mastery") con módulos, instructor y recursos. |
+| `masterclasses.html` | Detalle de Masterclass | Sesión en vivo ("The Future of AI in Design"): video, detalles de sesión, speakers y guión por segmentos. |
+| `ebooks.html` | Ebook Collection | Biblioteca de ebooks descargables con tarjeta destacada y grid de recursos. |
 | `tasks.html` | Content Pipeline (Kanban) | Tablero Kanban arrastrable con las fases de producción de contenido educativo. |
 
-El sidebar es consistente entre las 4 páginas (Dashboard, Tasks, Courses, Diplomas, Masterclasses, Ebooks, Analytics); los enlaces a Dashboard, Tasks, Diplomas y Analytics funcionan entre las páginas incluidas. Courses, Masterclasses y Ebooks quedan como placeholders (`#`) porque no había un mockup para esas pantallas.
+El sidebar es idéntico y totalmente enlazado en las 9 páginas (Dashboard, Tasks, Courses, Diplomas, Masterclasses, Ebooks, Analytics). Desde `courses.html`, las tarjetas de programa enlazan a `course-lesson.html`, `course-production.html`, `diplomas.html` y `masterclasses.html` según corresponda.
 
 ## Uso
 
