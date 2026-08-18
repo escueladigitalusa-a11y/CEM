@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CEM Ebook Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#e1e3e4",
+                    "surface-dim": "#d9dadb",
+                    "primary-container": "#1f1f1f",
+                    "outline": "#747878",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-fixed-variant": "#484645",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#888686",
+                    "on-tertiary-container": "#898685",
+                    "inverse-surface": "#2e3132",
+                    "surface-bright": "#f8f9fa",
+                    "secondary": "#0053ce",
+                    "tertiary-container": "#201f1e",
+                    "tertiary": "#070706",
+                    "secondary-fixed": "#dae2ff",
+                    "on-tertiary-fixed": "#1c1b1a",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#edeeef",
+                    "surface-tint": "#5f5e5e",
+                    "on-secondary-fixed-variant": "#0040a2",
+                    "surface-container-lowest": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface": "#f8f9fa",
+                    "on-primary-fixed": "#1b1b1c",
+                    "on-surface": "#191c1d",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed-dim": "#b2c5ff",
+                    "surface-container-low": "#f3f4f5",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-background": "#191c1d",
+                    "tertiary-fixed-dim": "#c9c6c4",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-fixed": "#e6e2df",
+                    "outline-variant": "#c4c7c7",
+                    "on-primary-fixed-variant": "#474746",
+                    "inverse-primary": "#c8c6c5",
+                    "on-secondary-fixed": "#001848",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "on-secondary-container": "#fefcff",
+                    "background": "#f8f9fa",
+                    "secondary-container": "#2a6cf0",
+                    "primary-fixed": "#e5e2e1",
+                    "on-surface-variant": "#444748",
+                    "primary": "#060607"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "glass-padding": "20px",
+                    "container-padding": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Poppins"],
+                    "body-lg": ["Poppins"],
+                    "headline-lg-mobile": ["Poppins"],
+                    "display": ["Poppins"],
+                    "label-md": ["Poppins"],
+                    "label-sm": ["Poppins"],
+                    "headline-md": ["Poppins"],
+                    "body-md": ["Poppins"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #f8f9fa; /* surface color */
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(0, 83, 206, 0.03) 0%, transparent 50%), /* secondary subtle */
+                radial-gradient(circle at 85% 30%, rgba(42, 108, 240, 0.03) 0%, transparent 50%); /* secondary-container subtle */
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.9);
+            border-left: 1px solid rgba(255, 255, 255, 0.9);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+        }
+
+        .glass-panel-glow-secondary {
+            position: relative;
+        }
+        .glass-panel-glow-secondary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(circle at center, rgba(0, 83, 206, 0.1) 0%, transparent 70%);
+            border-radius: inherit;
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .glass-panel-glow-secondary:hover::before {
+            opacity: 1;
+        }
+
+        /* SideNavBar and TopNavBar Separation Logic applied globally */
+        .nav-border-right { border-right: 1px solid rgba(255,255,255,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
+        .nav-border-bottom { border-bottom: 1px solid rgba(255,255,255,0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
+    </style>
+</head>
+<body class="text-on-background font-body-md bg-background min-h-screen flex antialiased">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-white/70 backdrop-blur-[30px] font-poppins text-label-md font-label-md h-screen w-64 fixed left-0 top-0 nav-border-right flex-col p-glass-padding z-50">
+<div class="mb-8">
+<h1 class="font-display text-headline-md text-primary">CEM Workspace</h1>
+<p class="text-on-surface-variant font-label-sm mt-1">Education Suite</p>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200" href="index.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200" href="tasks.html">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span>Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200" href="courses.html">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span>Courses</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200" href="diplomas.html">
+<span class="material-symbols-outlined" data-icon="workspace_premium">workspace_premium</span>
+<span>Diplomas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200" href="masterclasses.html">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+<span>Masterclasses</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary font-bold bg-secondary/10 hover:bg-white/50 transition-colors duration-200" href="ebooks.html">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Ebooks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200" href="analytics.html">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Analytics</span>
+</a>
+</div>
+<button class="w-full mt-4 bg-gradient-to-r from-secondary to-secondary-container text-on-primary font-label-md py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+            New Entry
+        </button>
+</nav>
+<!-- TopNavBar -->
+<header class="hidden md:flex bg-white/70 backdrop-blur-[30px] font-poppins text-label-md font-label-md fixed top-0 right-0 left-64 h-16 nav-border-bottom justify-between items-center px-container-padding z-40">
+<!-- Search Bar (on_left simulated by flex layout) -->
+<div class="flex-1 max-w-md focus-within:ring-2 ring-secondary/50 rounded-lg overflow-hidden glass-panel bg-white/40">
+<div class="flex items-center px-3 py-2">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder-on-surface-variant/50" placeholder="Search collection..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-secondary transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="bg-gradient-to-r from-secondary to-secondary-container text-on-primary font-label-md py-2 px-4 rounded-lg shadow-sm hover:shadow-md transition-all ml-2">
+                Quick Capture
+            </button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-white ml-2">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjLleBGo6NM3e6O-kA8qsA0ZLn7QHlk1WMTTk1bYfzkNYwrYd3yIpD7LXVPXnthkxUbIcxgIlAw2uGxAPm4tdzv80xBABlVNSMF9s2oZi7Y9cPKR18JsoD9Ovy5JUgYq9yhGwBc5NTBXTk-79sxDnFb8ujVqd_2TrIaT04_u6UCAMB897AwbPOrm0JWMt_MtKFqvjG7jToYkL5h36IvJxRt148nXjN85rGL4ey76DTJNmL5oQqLhl--Q"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-16 md:pt-24 p-gutter md:p-container-padding max-w-[1440px] mx-auto w-full">
+<div class="mb-12">
+<h2 class="font-display text-headline-lg md:text-display text-primary mb-4">Ebook Collection</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl">Access our premium library of educational materials. Discover curated knowledge designed for the modern workspace.</p>
+</div>
+<!-- Bento Grid / Glassmorphism Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter md:gap-container-padding">
+<!-- Featured Card (Spans 2 cols on md+) -->
+<div class="glass-panel glass-panel-glow-secondary rounded-xl p-glass-padding md:col-span-2 flex flex-col md:flex-row gap-6 group cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+<div class="w-full md:w-1/2 aspect-[3/4] md:aspect-auto md:h-full rounded-lg overflow-hidden relative shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Marketing Fundamentals 2024 book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHpvqGrVr1JWNs0k90BOnDp0kkyYWPDWxZEsJmQoE7K2F36GqUhS7FhP1isQjv2dh9hjyKVL843a7QY812fpySSAZjuGhO16NMUFFJ-bgaH8sfx-CDnvum98pE_K2XxNFkgtdgwaJHCTbwXqCy34rrtLenNr72bK_9xman-5efRIPCzhe0QuwIihAE7zPMTy_XzeuCLr7dBrJCYeVD5alRnrieDqiuSSuX_QhOWUTzHQ53a2AqZR_cFw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+<div class="w-full md:w-1/2 flex flex-col justify-center space-y-4">
+<div class="inline-flex px-3 py-1 bg-secondary/15 text-secondary font-label-sm rounded-full w-max">New Release</div>
+<h3 class="font-headline-md text-primary font-bold">Marketing Fundamentals 2024</h3>
+<p class="font-body-md text-on-surface-variant">The essential guide for beginners navigating the complex landscape of modern digital and traditional marketing strategies.</p>
+<div class="mt-auto pt-6 flex gap-3">
+<button class="flex-1 bg-gradient-to-r from-secondary to-secondary-container text-on-primary font-label-md py-3 px-4 rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span> Download
+                        </button>
+<button class="w-12 h-12 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface-variant hover:text-secondary hover:border-secondary/50 transition-colors bg-white/50">
+<span class="material-symbols-outlined text-[18px]">redeem</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Standard Card 1 -->
+<div class="glass-panel glass-panel-glow-secondary rounded-xl p-glass-padding flex flex-col gap-4 group cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+<div class="w-full aspect-[3/4] rounded-lg overflow-hidden relative shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Data Science Essentials book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfA1kbLxpykNa4IvbBErP1frC4AQudqMr13gKgj4bmrm-GYvUV45q68mo0bKmeVNR3U2xua1OWmiW5M33k9h0hL8Cw77g5Tsq8v9CDKQVm7azh5Fwg1psTZzZEM0mbIVPomb_s1qWMS7Mu7_-FJ5LmotnS5CH7QzodbJCtVtHfO2JTXfigC7zxc_eqEOrmHoJOZdgIygUjpvDb9BpYOQbeJBXU56wQxJ7bDx5Ty1PW8-pD_T41eGz8yQ"/>
+</div>
+<div class="flex flex-col flex-1 space-y-2 mt-2">
+<h3 class="font-headline-md text-[20px] text-primary font-bold leading-tight">Data Science Essentials</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant line-clamp-2">Practical approaches to understanding and utilizing big data in enterprise environments.</p>
+<div class="mt-auto pt-4 flex gap-2">
+<button class="flex-1 bg-secondary/10 text-secondary hover:bg-secondary/20 font-label-md py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">download</span> Get
+                        </button>
+</div>
+</div>
+</div>
+<!-- Standard Card 2 -->
+<div class="glass-panel glass-panel-glow-secondary rounded-xl p-glass-padding flex flex-col gap-4 group cursor-pointer transition-transform duration-300 hover:-translate-y-1">
+<div class="w-full aspect-[3/4] rounded-lg overflow-hidden relative shadow-[0_10px_30px_rgba(0,0,0,0.1)]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Leadership Paradigms book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkptmJPOwtHgeGFabeSuSY1IY8e6mazHnK8zeCH1My9IGBJOjjbqI_rdRgeTgAaK8ajgz_ch5h515fehyrsH8CqFBtElw6A-BWUQLyO0MmI71C2HwSdsZQAFEDVS5R-jigp3EG9fBohHKnz-sS-u_bMtgy6SmG8z02HoBzAIen6gALpiJ9J3jDHBFxjlba2dA8qLyfWmaT3zoH8Q0UMH586_GjxRzzU_ZxvvycUPw4MMvyFBkDSIIcTw"/>
+</div>
+<div class="flex flex-col flex-1 space-y-2 mt-2">
+<h3 class="font-headline-md text-[20px] text-primary font-bold leading-tight">Leadership Paradigms</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant line-clamp-2">Evolving management techniques for remote and hybrid teams.</p>
+<div class="mt-auto pt-4 flex gap-2">
+<button class="flex-1 bg-secondary/10 text-secondary hover:bg-secondary/20 font-label-md py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">download</span> Get
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

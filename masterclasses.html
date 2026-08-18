@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CEM Masterclass - The Future of AI in Design</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-variant": "#e1e3e4",
+                        "surface-dim": "#d9dadb",
+                        "primary-container": "#1f1f1f",
+                        "outline": "#747878",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#888686",
+                        "on-tertiary-container": "#898685",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#0053ce",
+                        "tertiary-container": "#201f1e",
+                        "tertiary": "#070706",
+                        "secondary-fixed": "#dae2ff",
+                        "on-tertiary-fixed": "#1c1b1a",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "surface-tint": "#5f5e5e",
+                        "on-secondary-fixed-variant": "#0040a2",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8f9fa",
+                        "on-primary-fixed": "#1b1b1c",
+                        "on-surface": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#b2c5ff",
+                        "surface-container-low": "#f3f4f5",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#c9c6c4",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#e6e2df",
+                        "outline-variant": "#c4c7c7",
+                        "on-primary-fixed-variant": "#474746",
+                        "inverse-primary": "#c8c6c5",
+                        "on-secondary-fixed": "#001848",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-secondary-container": "#fefcff",
+                        "background": "#f8f9fa",
+                        "secondary-container": "#2a6cf0",
+                        "primary-fixed": "#e5e2e1",
+                        "on-surface-variant": "#444748",
+                        "primary": "#060607"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "8px",
+                        "glass-padding": "20px",
+                        "container-padding": "24px",
+                        "gutter": "16px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Poppins"],
+                        "body-lg": ["Poppins"],
+                        "headline-lg-mobile": ["Poppins"],
+                        "display": ["Poppins"],
+                        "label-md": ["Poppins"],
+                        "label-sm": ["Poppins"],
+                        "headline-md": ["Poppins"],
+                        "body-md": ["Poppins"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8f9fa; /* background */
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.9);
+            border-left: 1px solid rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+        }
+
+        .neon-glow-primary {
+            background: radial-gradient(circle, rgba(0,83,206,0.15) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        .neon-glow-accent {
+            background: radial-gradient(circle, rgba(42,108,240,0.15) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #0053ce 0%, #2a6cf0 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gradient:hover {
+            box-shadow: 0 0 20px rgba(0,83,206,0.4);
+            transform: translateY(-2px);
+        }
+
+        .status-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 83, 206, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 83, 206, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 83, 206, 0); }
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased min-h-screen relative">
+<!-- Ambient Glows -->
+<div class="fixed top-[-20%] left-[-10%] w-[60%] h-[60%] neon-glow-primary rounded-full pointer-events-none z-0"></div>
+<div class="fixed bottom-[-20%] right-[-10%] w-[60%] h-[60%] neon-glow-accent rounded-full pointer-events-none z-0"></div>
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 border-r border-white/40 bg-white/70 backdrop-blur-[30px] shadow-[0_20px_40px_rgba(0,0,0,0.04)] z-50 p-unit-glass-padding">
+<div class="mb-8">
+<h1 class="font-display text-headline-md text-primary dark:text-on-primary tracking-tight">CEM Workspace</h1>
+<p class="font-poppins text-label-sm font-label-sm text-on-surface-variant mt-1">Education Suite</p>
+</div>
+<button class="w-full mb-6 btn-gradient text-on-primary font-poppins text-label-md font-label-md py-3 rounded-lg flex justify-center items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+            New Entry
+        </button>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="index.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="tasks.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">assignment</span>
+                    Tasks
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="courses.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">school</span>
+                    Courses
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="diplomas.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">workspace_premium</span>
+                    Diplomas
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-secondary font-bold bg-secondary/10 hover:bg-white/50 transition-colors duration-200 group" href="masterclasses.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform" style="font-variation-settings: 'FILL' 1;">star</span>
+                    Masterclasses
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="ebooks.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">menu_book</span>
+                    Ebooks
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="analytics.html">
+<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">analytics</span>
+                    Analytics
+                </a>
+</li>
+</ul>
+<div class="mt-auto pt-4 border-t border-surface-variant flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw1zVHwPZkLVvr6Rk90fCBAJ1ISO3ksjK3d9TLHOsUs9NhPOwFmtuePNNEKf-1um6s5qAoSj8_E7bYsfIXsy6c9C9inoMaJ-YnfjMZd0CDrgb3CyHzP5sxKkS-YiEeUfyThFMs7RzlZP4Rl3utqqrVqraHo8VpuSmDxZY1aKepIfTqDUUUeDKJIhqURn35E-OKuW6GbK62DgKzxxVExiot394hOpyzFENy11aJ5ofJMsltiKIyzyHuoA"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-poppins text-label-md font-label-md text-primary truncate">Alex Morgan</p>
+<p class="font-poppins text-label-sm font-label-sm text-on-surface-variant truncate">Premium Member</p>
+</div>
+</div>
+</nav>
+<!-- TopNavBar (Shared Component) -->
+<header class="hidden md:flex justify-between items-center px-container-padding h-16 fixed top-0 right-0 left-64 border-b border-white/40 bg-white/70 backdrop-blur-[30px] shadow-[0_20px_40px_rgba(0,0,0,0.04)] z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-64 focus-within:ring-2 ring-secondary/50 rounded-lg transition-all">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size: 20px;">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-white/50 border border-white/60 rounded-lg font-poppins text-label-md font-label-md text-primary focus:outline-none focus:border-secondary transition-colors" placeholder="Search Masterclasses..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-secondary transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<button class="font-poppins text-label-md font-label-md text-secondary hover:text-secondary-container transition-colors">
+                Quick Capture
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 md:pt-24 pb-12 px-gutter md:px-container-padding md:ml-64 relative z-10 max-w-[1440px] mx-auto">
+<!-- Header Section -->
+<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<span class="px-3 py-1 bg-secondary/15 text-secondary font-poppins text-label-sm font-label-sm rounded-full backdrop-blur-sm border border-secondary/20">Masterclass</span>
+<span class="flex items-center gap-1 font-poppins text-label-sm font-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary status-pulse inline-block"></span>
+                        Live Session
+                    </span>
+</div>
+<h1 class="font-poppins text-headline-lg-mobile md:text-display font-display text-primary mb-2 max-w-2xl">The Future of AI in Design</h1>
+<p class="font-poppins text-body-lg font-body-lg text-on-surface-variant max-w-xl">90-minute intensive with industry leaders exploring generative workflows, ethical boundaries, and the new creative baseline.</p>
+</div>
+<div class="flex gap-4">
+<button class="glass-panel px-6 py-3 rounded-lg font-poppins text-label-md font-label-md text-primary hover:bg-white/80 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">calendar_add_on</span>
+                    Add to Calendar
+                </button>
+<button class="btn-gradient px-8 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-primary flex items-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                    Join Room
+                </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Video/Hero Card (Spans 8 cols) -->
+<div class="glass-panel rounded-xl p-glass-padding col-span-1 md:col-span-8 relative overflow-hidden min-h-[400px] flex flex-col justify-end">
+<div class="absolute inset-0 bg-surface-variant -z-10">
+<img alt="AI in Design Abstract" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLx5rej5dbFwMyXFR_Y5LndHoljtY8U-IQBJURIEyJMr5CFn4VTcScOIr0S7kFr1M93Gs5b_Gu5K6GIc__WUNyQrVL6Vhirqx6yQouGiLzjZ7e6KUf8TnM0xP0vVP84XK8MmCCn6S1B3PXpuxYImgNTN8WyEd2FofRkmYgOp7VfxISRKrSgjTCwbclVDVy2YpziVCDYHA99lbWdlkfSnu70k_gp-NzbCNEFEupdml5TEtEB3kF916JHA"/>
+</div>
+<div class="bg-white/40 backdrop-blur-md p-6 rounded-lg border border-white/50 w-full max-w-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-poppins text-label-sm font-label-sm text-primary uppercase tracking-wider">Next Segment</span>
+<span class="font-poppins text-label-sm font-label-sm text-secondary bg-secondary/10 px-2 py-1 rounded">Starts in 05:00</span>
+</div>
+<h3 class="font-poppins text-headline-md font-headline-md text-primary mb-1">Generative Foundations</h3>
+<p class="font-poppins text-label-md font-label-md text-on-surface-variant">Speaker: Dr. Elena Rostova</p>
+</div>
+</div>
+<!-- Details Sidebar (Spans 4 cols) -->
+<div class="flex flex-col gap-6 col-span-1 md:col-span-4">
+<!-- Meta Info Card -->
+<div class="glass-panel rounded-xl p-glass-padding flex-1">
+<h3 class="font-poppins text-headline-md font-headline-md text-primary mb-6">Session Details</h3>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div>
+<p class="font-poppins text-label-md font-label-md text-primary">Duration</p>
+<p class="font-poppins text-body-md font-body-md text-on-surface-variant">90 Minutes total</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div>
+<p class="font-poppins text-label-md font-label-md text-primary">Attendance</p>
+<p class="font-poppins text-body-md font-body-md text-on-surface-variant">1,240 Participants</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<p class="font-poppins text-label-md font-label-md text-primary">Certification</p>
+<p class="font-poppins text-body-md font-body-md text-on-surface-variant">0.5 CEM Credits awarded</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Speakers Mini-Card -->
+<div class="glass-panel rounded-xl p-glass-padding">
+<h4 class="font-poppins text-label-md font-label-md text-primary mb-4">Featured Speakers</h4>
+<div class="flex -space-x-3">
+<img alt="Speaker 1" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSxTL1IfXFPx9I7x_UVHQvLqE5s8_zBWmOxk5Xl3-j8A3LjX9wQb4t35a6FMHnPdYijQbOinNyb2U0rcL-cFCKfC-s3bLr6lgX_hLdBTP3vuej2vEZ_3YbJsIu-GpPyTLyE1aU4JjFM78RzXQZ1imM1-krHT2Y5UsKFoHS9CjGnZvm-dzLA7xpm49GnauW68Sj-W1ygCx30X53N7PIO4LZ3Dewokq-r85823Uq3Xxv-4amkuitUqkE9A"/>
+<img alt="Speaker 2" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5Ayt8y9hJnkyeqRpgkZoCA1CLHjUDSCASpGzem7yfmVXMQFvjXORjOAG5gvRDTteR5HK_ZxGobNXXnoiruc7HXXaAK_rLc3mduqv-jPXWIOt0i8W6udBY8h_8K9zRb0pA_p-KAZq5Qo66MguwDfz5JB9Lm9J2S48iPWwrulzNAJ7jLKlw_W9Xm9hFEUUfyDs7G0DwXCxGFp9tSgsho8BjlJvqQmfXhTVIJ2JTmcK_gfhWfipJi3fCnw"/>
+<img alt="Speaker 3" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAvlnFTk2Mk5d-Tg65EyYsgRePDWVeFTUUL5SlwAr0tIV1_nhswe-tlvZfN4gwxtMj3eXG6taOM4MiVclz1SVcAeJX5KVTaaMAAKw75XV6SaVjYBuWiNpvdc9Y5HJWSMeJg7aKrfTbk8SVU9A_LtqsHPdL9SP5DgWvpIKreJI7GupeXjqXuKbX16sMwzrj45smgEJZl5yMxQIDxZbQzX4KNyFDHdF-cEk5v4jg39Lx1lwpUB_1a6H8A"/>
+<div class="w-10 h-10 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center font-poppins text-label-sm font-label-sm text-on-surface-variant">+2</div>
+</div>
+</div>
+</div>
+<!-- Content Breakdown & Script (Spans 12 cols) -->
+<div class="col-span-1 md:col-span-12 glass-panel rounded-xl p-glass-padding mt-4">
+<h3 class="font-poppins text-headline-md font-headline-md text-primary mb-8">Content Breakdown &amp; Script</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Segment 1 -->
+<div class="relative pl-6 border-l-2 border-secondary/30">
+<div class="absolute w-3 h-3 bg-secondary rounded-full -left-[7px] top-1"></div>
+<span class="font-poppins text-label-sm font-label-sm text-secondary mb-1 block">00:00 - 30:00</span>
+<h4 class="font-poppins text-label-md font-label-md text-primary mb-2">Part 1: The New Baseline</h4>
+<ul class="space-y-2 font-poppins text-body-md font-body-md text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary/60" style="font-size: 18px;">check</span>
+                                Defining AI's role in modern tooling.
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary/60" style="font-size: 18px;">check</span>
+                                Case study: Generative vs. Iterative workflows.
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary/60" style="font-size: 18px;">check</span>
+                                Q&amp;A: Addressing replacement anxieties.
+                            </li>
+</ul>
+</div>
+<!-- Segment 2 -->
+<div class="relative pl-6 border-l-2 border-surface-variant">
+<div class="absolute w-3 h-3 bg-surface-variant rounded-full -left-[7px] top-1"></div>
+<span class="font-poppins text-label-sm font-label-sm text-on-surface-variant mb-1 block">30:00 - 60:00</span>
+<h4 class="font-poppins text-label-md font-label-md text-primary mb-2">Part 2: Ethical Boundaries</h4>
+<ul class="space-y-2 font-poppins text-body-md font-body-md text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
+                                Navigating copyright in a generated world.
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
+                                Bias in training sets and design output.
+                            </li>
+</ul>
+</div>
+<!-- Segment 3 -->
+<div class="relative pl-6 border-l-2 border-surface-variant">
+<div class="absolute w-3 h-3 bg-surface-variant rounded-full -left-[7px] top-1"></div>
+<span class="font-poppins text-label-sm font-label-sm text-on-surface-variant mb-1 block">60:00 - 90:00</span>
+<h4 class="font-poppins text-label-md font-label-md text-primary mb-2">Part 3: Practical Application</h4>
+<ul class="space-y-2 font-poppins text-body-md font-body-md text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
+                                Live demonstration of prompt engineering.
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
+                                Integrating outputs into Figma/Adobe.
+                            </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
+                                Final wrap-up and resource distribution.
+                            </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile BottomNavBar (Minimal representation for mobile layout intent) -->
+<nav class="md:hidden fixed bottom-0 w-full bg-white/80 backdrop-blur-[30px] border-t border-white/40 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-50 flex justify-around items-center h-16 pb-safe">
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-secondary relative" href="masterclasses.html">
+<span class="absolute top-1 w-1 h-1 bg-secondary rounded-full"></span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="courses.html">
+<span class="material-symbols-outlined">school</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+</a>
+</nav>
+</body></html>
