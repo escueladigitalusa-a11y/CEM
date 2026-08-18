@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CEM Education Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#e1e3e4",
+                      "surface-container-high": "#e7e8e9",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "tertiary-fixed": "#e6e2df",
+                      "on-secondary-fixed-variant": "#0040a2",
+                      "on-primary-fixed": "#1b1b1c",
+                      "inverse-surface": "#2e3132",
+                      "surface-bright": "#f8f9fa",
+                      "inverse-on-surface": "#f0f1f2",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed": "#dae2ff",
+                      "on-secondary-fixed": "#001848",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-dim": "#d9dadb",
+                      "secondary-fixed-dim": "#b2c5ff",
+                      "outline": "#747878",
+                      "surface-container-low": "#f3f4f5",
+                      "primary-fixed": "#e5e2e1",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#5f5e5e",
+                      "tertiary-container": "#201f1e",
+                      "secondary-container": "#2a6cf0",
+                      "on-tertiary-container": "#898685",
+                      "on-surface": "#191c1d",
+                      "tertiary": "#070706",
+                      "surface-container": "#edeeef",
+                      "on-error": "#ffffff",
+                      "on-background": "#191c1d",
+                      "on-error-container": "#93000a",
+                      "secondary": "#0053ce",
+                      "outline-variant": "#c4c7c7",
+                      "on-surface-variant": "#444748",
+                      "surface": "#f8f9fa",
+                      "on-tertiary-fixed": "#1c1b1a",
+                      "on-secondary-container": "#fefcff",
+                      "on-primary-container": "#888686",
+                      "background": "#f8f9fa",
+                      "on-primary-fixed-variant": "#474746",
+                      "error": "#ba1a1a",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed-dim": "#c9c6c4",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#1f1f1f",
+                      "inverse-primary": "#c8c6c5",
+                      "surface-container-highest": "#e1e3e4",
+                      "on-tertiary-fixed-variant": "#484645",
+                      "primary": "#060607"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "gutter": "16px",
+                      "glass-padding": "20px",
+                      "unit": "8px"
+              },
+              "fontFamily": {
+                      "display": [
+                              "Poppins"
+                      ],
+                      "headline-lg-mobile": [
+                              "Poppins"
+                      ],
+                      "label-sm": [
+                              "Poppins"
+                      ],
+                      "headline-md": [
+                              "Poppins"
+                      ],
+                      "body-md": [
+                              "Poppins"
+                      ],
+                      "label-md": [
+                              "Poppins"
+                      ],
+                      "headline-lg": [
+                              "Poppins"
+                      ],
+                      "body-lg": [
+                              "Poppins"
+                      ]
+              },
+              "fontSize": {
+                      "display": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.8);
+            border-left: 1px solid rgba(255, 255, 255, 0.8);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+        }
+
+        .glow-cyan {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0,255,255,0.2) 0%, rgba(0,255,255,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            top: -20px;
+            left: -20px;
+            filter: blur(20px);
+        }
+
+        .glow-purple {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(147,51,234,0.15) 0%, rgba(147,51,234,0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            bottom: -20px;
+            right: -20px;
+            filter: blur(20px);
+        }
+
+        body {
+            background-color: #e1e3e4; /* surface-variant as matte light grey */
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,0.03) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.03) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,0.03) 0, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Fluid Grid Setup */
+        .layout-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .layout-grid {
+                gap: 24px;
+                grid-template-columns: repeat(8, 1fr);
+                padding: 24px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .layout-grid {
+                gap: 32px;
+                grid-template-columns: repeat(12, 1fr);
+                padding: 32px;
+            }
+        }
+
+        .bento-item {
+            border-radius: 0.75rem; /* xl */
+            position: relative;
+            overflow: hidden;
+        }
+      </style>
+</head>
+<body class="text-on-surface font-body-md">
+<!-- TopNavBar -->
+<nav aria-label="Top Navigation" class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-white/70 backdrop-blur-[30px] border-b border-white/40 shadow-sm flex justify-between items-center px-gutter z-50 transition-all duration-300 hidden md:flex">
+<div class="flex items-center gap-4">
+<!-- Search on left -->
+<div class="relative focus-within:ring-2 focus-within:ring-secondary/50 rounded-full bg-white/50 border border-white/60 px-4 py-2 flex items-center transition-all duration-300">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" style="font-size: 20px;">search</span>
+<input class="bg-transparent border-none focus:ring-0 p-0 text-body-md text-on-surface placeholder:text-on-surface-variant/70 w-64" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-gradient-to-r from-secondary to-teal-500 text-white font-label-md px-6 py-2 rounded-full hover:opacity-80 transition-opacity shadow-sm shadow-secondary/20">
+                Quick Capture
+            </button>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:opacity-80 transition-opacity flex items-center justify-center relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-pink-500 rounded-full animate-pulse"></span>
+</button>
+<button class="hover:opacity-80 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-white shadow-sm ml-2">
+<img alt="User Profile Image" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgfhHJ-OCe6Dnnpv3xqefDIihZG0h1Rm_QjZlSer5M6YCDponoY6WBE63S9cRMTw_Z6Yx1jzw5MXBKJcogOC8CkJWlNHbOckf46IWJINlX3smrrpnElARBJL8J7gxFT36fj0pGZ0FKfihuKKgLuVVixTQs2Crudz18Jx4aUsLmL98OXOa5UxO40moBQLDbLM88Jf2uZ6ypy9JpC2z2q3ltDNyu9WoePzxUSWJCPoSfkrK2M7qyHCj6OQ"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside aria-label="Sidebar Navigation" class="h-screen w-64 fixed left-0 top-0 bg-white/70 backdrop-blur-[30px] border-r border-white/40 shadow-[0_20px_40px_rgba(0,0,0,0.04)] flex flex-col py-6 px-4 z-50 hidden md:flex">
+<div class="mb-10 px-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-secondary to-teal-400 p-[1px] shadow-sm">
+<div class="w-full h-full bg-white/90 rounded-[11px] flex items-center justify-center">
+<span class="font-display text-headline-md font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-teal-500">C</span>
+</div>
+</div>
+<div>
+<h1 class="font-display text-label-md font-bold text-primary tracking-tight">CEM Workspace</h1>
+<p class="font-label-sm text-on-surface-variant">Hillary OS Unified</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary font-bold border-r-4 border-secondary bg-white/40 shadow-sm transition-all duration-300" href="index.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-white/40 transition-all duration-300 group" href="tasks.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">assignment</span>
+<span class="font-label-md">Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-white/40 transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">school</span>
+<span class="font-label-md">Courses</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-white/40 transition-all duration-300 group" href="diplomas.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">workspace_premium</span>
+<span class="font-label-md">Diplomas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-white/40 transition-all duration-300 group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">local_library</span>
+<span class="font-label-md">Masterclasses</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-white/40 transition-all duration-300 group" href="analytics.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">analytics</span>
+<span class="font-label-md">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/40">
+<button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-surface-container-high text-on-surface font-label-md hover:bg-white/50 transition-all shadow-sm border border-white/50">
+<span class="material-symbols-outlined" style="font-size: 18px;">bolt</span>
+                Upgrade Plan
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 md:pt-16 min-h-screen">
+<div class="layout-grid">
+<!-- Header Section -->
+<div class="col-span-4 md:col-span-8 lg:col-span-12 mb-2">
+<h2 class="font-display text-headline-lg font-bold text-primary mb-1">Overview</h2>
+<p class="font-body-md text-on-surface-variant">Track academic progress and production status across the CEM network.</p>
+</div>
+<!-- Metrics Bento Row -->
+<div class="col-span-4 md:col-span-4 lg:col-span-3 bento-item glass-panel p-glass-padding">
+<div class="glow-cyan"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 rounded-lg bg-teal-500/10 text-teal-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<span class="flex items-center text-teal-600 font-label-sm bg-teal-500/10 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined mr-1" style="font-size: 14px;">trending_up</span> +12%
+                    </span>
+</div>
+<h3 class="font-display text-headline-md font-bold text-primary mb-1">24,592</h3>
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Total Students</p>
+</div>
+<div class="col-span-4 md:col-span-4 lg:col-span-3 bento-item glass-panel p-glass-padding">
+<div class="glow-purple"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 rounded-lg bg-purple-500/10 text-purple-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+</div>
+</div>
+<h3 class="font-display text-headline-md font-bold text-primary mb-1">142</h3>
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Active Courses</p>
+</div>
+<div class="col-span-4 md:col-span-4 lg:col-span-3 bento-item glass-panel p-glass-padding">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 rounded-lg bg-blue-500/10 text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+</div>
+<h3 class="font-display text-headline-md font-bold text-primary mb-1">78.4%</h3>
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider">Completion Rate</p>
+<div class="w-full bg-surface-variant h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-gradient-to-r from-teal-400 to-secondary h-full rounded-full" style="width: 78.4%"></div>
+</div>
+</div>
+<div class="col-span-4 md:col-span-4 lg:col-span-3 bento-item glass-panel p-glass-padding relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-purple-500/5 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="p-2 rounded-lg bg-orange-500/10 text-orange-600">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+</div>
+<h3 class="font-display text-headline-md font-bold text-primary mb-1 relative z-10">$1.2M</h3>
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider relative z-10">MRR Revenue</p>
+</div>
+<!-- Central Content Area -->
+<!-- Course Production Pipeline -->
+<div class="col-span-4 md:col-span-8 lg:col-span-8 bento-item glass-panel flex flex-col h-[500px]">
+<div class="p-glass-padding border-b border-white/30 flex justify-between items-center bg-white/20">
+<h3 class="font-display text-label-md font-bold text-primary">In Progress Production</h3>
+<button class="text-secondary font-label-sm hover:underline">View Pipeline</button>
+</div>
+<div class="p-glass-padding flex-1 overflow-y-auto space-y-4">
+<!-- Production Item 1 -->
+<div class="bg-white/40 border border-white/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-[10px] font-bold rounded uppercase tracking-wide">Masterclass</span>
+<h4 class="font-label-md text-primary">Advanced Quantum Computing</h4>
+</div>
+<p class="font-label-sm text-on-surface-variant">Dr. Alan Stern • Recording Phase</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 text-red-700 font-bold text-sm shadow-inner">
+                                    9
+                                </span>
+<span class="text-[10px] text-on-surface-variant mt-1 uppercase">Priority</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-4">
+<div class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-teal-500" style="font-size: 16px;">check_circle</span>
+<span class="text-on-surface-variant font-label-sm">Scripting</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-secondary animate-pulse" style="font-size: 16px;">radio_button_checked</span>
+<span class="text-primary font-label-sm font-medium">Recording</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-surface-variant" style="font-size: 16px;">radio_button_unchecked</span>
+<span class="text-on-surface-variant font-label-sm opacity-50">Editing</span>
+</div>
+</div>
+</div>
+<!-- Production Item 2 -->
+<div class="bg-white/40 border border-white/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-3">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded uppercase tracking-wide">Diploma</span>
+<h4 class="font-label-md text-primary">Sustainable Architecture Fundamentals</h4>
+</div>
+<p class="font-label-sm text-on-surface-variant">Prof. Elena Rostova • Scripting Phase</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-700 font-bold text-sm shadow-inner">
+                                    7
+                                </span>
+<span class="text-[10px] text-on-surface-variant mt-1 uppercase">Priority</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-4">
+<div class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-secondary animate-pulse" style="font-size: 16px;">radio_button_checked</span>
+<span class="text-primary font-label-sm font-medium">Scripting</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-surface-variant" style="font-size: 16px;">radio_button_unchecked</span>
+<span class="text-on-surface-variant font-label-sm opacity-50">Recording</span>
+</div>
+<div class="flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-surface-variant" style="font-size: 16px;">radio_button_unchecked</span>
+<span class="text-on-surface-variant font-label-sm opacity-50">Editing</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Area -->
+<div class="col-span-4 md:col-span-8 lg:col-span-4 space-y-6">
+<!-- Recent Activity Feed -->
+<div class="bento-item glass-panel h-[238px] flex flex-col">
+<div class="p-4 border-b border-white/30 bg-white/20">
+<h3 class="font-display text-label-md font-bold text-primary">Recent Activity</h3>
+</div>
+<div class="p-4 flex-1 overflow-y-auto space-y-4">
+<div class="flex gap-3 items-start">
+<div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined" style="font-size: 16px;">person_add</span>
+</div>
+<div>
+<p class="font-label-sm text-primary">New Cohort Enrollment</p>
+<p class="text-[12px] text-on-surface-variant">145 students joined 'Data Science 101'</p>
+<span class="text-[10px] text-on-surface-variant/70 mt-1 block">10 mins ago</span>
+</div>
+</div>
+<div class="flex gap-3 items-start">
+<div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined" style="font-size: 16px;">workspace_premium</span>
+</div>
+<div>
+<p class="font-label-sm text-primary">Certificates Issued</p>
+<p class="text-[12px] text-on-surface-variant">Batch 4 completed 'UI/UX Mastery'</p>
+<span class="text-[10px] text-on-surface-variant/70 mt-1 block">2 hours ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Masterclasses -->
+<div class="bento-item glass-panel h-[238px] flex flex-col overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-teal-500/10 pointer-events-none z-0"></div>
+<div class="p-4 border-b border-white/30 bg-white/20 z-10">
+<h3 class="font-display text-label-md font-bold text-primary">Featured Masterclass</h3>
+</div>
+<div class="p-4 flex-1 flex flex-col justify-center relative z-10">
+<div class="w-full h-24 rounded-lg overflow-hidden mb-3 relative group cursor-pointer shadow-sm">
+<img alt="Masterclass Cover" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDunb688mLoIOmb326-n-UuUZsecaa1P91EtDdMQHGW3lQCLg_oB8TseoE1n4KNkOFJBCj-s1fyDH8njdQq9_ONkG3gF8n3X2WtVpiXQy-rgVDLyHaeC4WauvVGm5XP2mTK_BtmKh7qY8Ky2bWXQynbcEcsiOJL3vVS7WKfaIR5-t5DCVLbOt2dxLvPJHkijiFK5NVPnZj5EQRYnkrecZaqSz0uYseLLy1ftz0zloHIDDij9k8D9a3FwA"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl drop-shadow-md" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+</div>
+</div>
+<h4 class="font-label-md text-primary truncate">AI in Modern Business Strategy</h4>
+<div class="flex justify-between items-center mt-1">
+<p class="text-[12px] text-on-surface-variant">Dr. Sarah Jenkins</p>
+<span class="flex items-center text-[10px] text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded font-bold">
+<span class="material-symbols-outlined mr-0.5" style="font-size: 12px; font-variation-settings: 'FILL' 1;">star</span> 4.9
+                            </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

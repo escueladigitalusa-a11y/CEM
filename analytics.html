@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CEM Workspace - Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e1e3e4",
+                        "surface-dim": "#d9dadb",
+                        "primary-container": "#1f1f1f",
+                        "outline": "#747878",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#484645",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-container": "#888686",
+                        "on-tertiary-container": "#898685",
+                        "inverse-surface": "#2e3132",
+                        "surface-bright": "#f8f9fa",
+                        "secondary": "#0053ce",
+                        "tertiary-container": "#201f1e",
+                        "tertiary": "#070706",
+                        "secondary-fixed": "#dae2ff",
+                        "on-tertiary-fixed": "#1c1b1a",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#edeeef",
+                        "surface-tint": "#5f5e5e",
+                        "on-secondary-fixed-variant": "#0040a2",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8f9fa",
+                        "on-primary-fixed": "#1b1b1c",
+                        "on-surface": "#191c1d",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#b2c5ff",
+                        "surface-container-low": "#f3f4f5",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed-dim": "#c9c6c4",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#e6e2df",
+                        "outline-variant": "#c4c7c7",
+                        "on-primary-fixed-variant": "#474746",
+                        "inverse-primary": "#c8c6c5",
+                        "on-secondary-fixed": "#001848",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-secondary-container": "#fefcff",
+                        "background": "#f8f9fa",
+                        "secondary-container": "#2a6cf0",
+                        "primary-fixed": "#e5e2e1",
+                        "on-surface-variant": "#444748",
+                        "primary": "#060607"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "glass-padding": "20px",
+                        "container-padding": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Poppins"],
+                        "body-lg": ["Poppins"],
+                        "headline-lg-mobile": ["Poppins"],
+                        "display": ["Poppins"],
+                        "label-md": ["Poppins"],
+                        "label-sm": ["Poppins"],
+                        "headline-md": ["Poppins"],
+                        "body-md": ["Poppins"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.9);
+            border-left: 1px solid rgba(255, 255, 255, 0.9);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        .glow-accent-turquoise {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(64,224,208,0.4) 0%, rgba(64,224,208,0) 70%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(20px);
+        }
+        .glow-accent-purple {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(160,32,240,0.3) 0%, rgba(160,32,240,0) 70%);
+            z-index: -1;
+            border-radius: 50%;
+            filter: blur(20px);
+        }
+
+        .progress-gradient {
+            background: linear-gradient(90deg, #4ade80, #facc15, #f97316);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #0053ce, #40e0d0);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        .multicolor-border-focus:focus-within {
+            border-image: linear-gradient(to right, #0053ce, #40e0d0, #a020f0) 1;
+        }
+
+        body {
+            background-color: #f8f9fa; /* surface color */
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md bg-surface min-h-screen">
+<!-- Decorative Background Elements -->
+<div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
+<div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-secondary-fixed/30 filter blur-[100px]"></div>
+<div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] rounded-full bg-blue-200/20 filter blur-[120px]"></div>
+</div>
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 border-r border-white/40 bg-white/70 backdrop-blur-[30px] shadow-[0_20px_40px_rgba(0,0,0,0.04)] p-unit-glass-padding z-50">
+<div class="mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-display font-bold text-xl">
+                C
+            </div>
+<div>
+<h1 class="font-display text-headline-md text-primary dark:text-on-primary whitespace-nowrap">CEM Workspace</h1>
+<p class="font-poppins text-label-sm font-label-sm text-on-surface-variant">Education Suite</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-secondary font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-secondary font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200" href="tasks.html">
+<span class="material-symbols-outlined">assignment</span>
+                    Tasks
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-secondary font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">school</span>
+                    Courses
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-secondary font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200" href="diplomas.html">
+<span class="material-symbols-outlined">workspace_premium</span>
+                    Diplomas
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-secondary font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">star</span>
+                    Masterclasses
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:text-secondary font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+                    Ebooks
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 p-3 text-secondary font-bold bg-secondary/10 rounded-lg font-poppins text-label-md font-label-md hover:bg-white/50 transition-colors duration-200 scale-[0.98] transition-transform" href="analytics.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                    Analytics
+                </a>
+</li>
+</ul>
+<div class="mt-auto">
+<button class="w-full btn-gradient text-white rounded-lg py-3 font-poppins text-label-md font-label-md flex justify-center items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                New Entry
+            </button>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-0 md:left-64 h-16 bg-white/70 backdrop-blur-[30px] border-b border-white/40 shadow-[0_20px_40px_rgba(0,0,0,0.04)] z-40 flex justify-between items-center px-container-padding transition-all focus-within:ring-2 ring-secondary/50">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="hidden md:flex items-center gap-2 bg-surface-variant/50 rounded-full px-4 py-2 border border-white/50 multicolor-border-focus">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none outline-none text-label-sm font-label-sm text-on-surface placeholder-on-surface-variant focus:ring-0 w-64" placeholder="Search..." type="text"/>
+</div>
+<!-- Mobile Brand -->
+<div class="md:hidden flex items-center gap-2">
+<div class="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-on-primary font-display font-bold text-sm">C</div>
+<span class="font-display text-label-md font-label-md text-primary">CEM Workspace</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden lg:flex btn-gradient text-white px-4 py-1.5 rounded-full font-poppins text-label-sm font-label-sm items-center gap-1">
+                Quick Capture
+            </button>
+<button class="text-on-surface-variant hover:text-secondary transition-all w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-secondary transition-all w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center overflow-hidden border-2 border-white cursor-pointer shadow-sm">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP5DDtJ3GCNsR5Mb4KbPxl-ftdNTKbHuiq9PT5vv1JDPIhS0NDVAkVI6aZWauOQ_--GcEB6rtZ0rg256MTVHuRN19sWSknB4fBcIn4eSF1uA2lAfkd2gX8GZR6sP1FP9EVhIX52dJNgpzDABB-mlZ44j32W_bJQK-Nvlfmijico1miDLcCCf-Q5erPbGwbOj-XyCGHvpQ8KVzt8UpNbo_ojSDCT274Ii2BtG_EUvlk27UlCES8t-sVXQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 px-gutter md:px-container-padding md:ml-64 max-w-[1440px] mx-auto min-h-screen">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 relative">
+<div class="glow-accent-turquoise top-0 left-0"></div>
+<div>
+<h2 class="font-display text-display text-primary">Executive Overview</h2>
+<p class="font-poppins text-body-lg font-body-lg text-on-surface-variant mt-2">Welcome back. Here is the latest academic performance data.</p>
+</div>
+<div class="flex items-center gap-2 glass-panel px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-secondary text-sm">calendar_today</span>
+<span class="font-poppins text-label-sm font-label-sm text-on-surface">Oct 24, 2023 - Today</span>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-gutter md:gap-[24px] lg:gap-[32px] auto-rows-[minmax(180px,auto)]">
+<!-- Global Academic Goals (Strategic Cards) - Span 8 -->
+<div class="col-span-4 md:col-span-8 lg:col-span-8 glass-panel rounded-xl p-glass-padding relative overflow-hidden flex flex-col">
+<div class="glow-accent-purple -bottom-10 -right-10"></div>
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-headline-md text-headline-md text-primary">Global Academic Goals</h3>
+<button class="text-on-surface-variant hover:text-secondary"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 flex-grow">
+<!-- Goal Card 1 -->
+<div class="bg-white/50 border border-white/60 rounded-lg p-4 flex flex-col justify-between hover:bg-white/80 transition-colors">
+<div>
+<div class="w-10 h-10 rounded-full bg-blue-100/50 flex items-center justify-center text-secondary mb-3">
+<span class="material-symbols-outlined text-sm">public</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">International Reach</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Expand masterclasses to EU.</p>
+</div>
+<div class="mt-4">
+<div class="flex justify-between text-xs mb-1">
+<span class="font-label-sm text-on-surface-variant">Progress</span>
+<span class="font-label-sm text-secondary">65%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 65%;"></div>
+</div>
+</div>
+</div>
+<!-- Goal Card 2 -->
+<div class="bg-white/50 border border-white/60 rounded-lg p-4 flex flex-col justify-between hover:bg-white/80 transition-colors">
+<div>
+<div class="w-10 h-10 rounded-full bg-green-100/50 flex items-center justify-center text-green-600 mb-3">
+<span class="material-symbols-outlined text-sm">workspace_premium</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Certification Rate</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Increase diploma completion.</p>
+</div>
+<div class="mt-4">
+<div class="flex justify-between text-xs mb-1">
+<span class="font-label-sm text-on-surface-variant">Progress</span>
+<span class="font-label-sm text-green-600">82%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-green-500 rounded-full" style="width: 82%;"></div>
+</div>
+</div>
+</div>
+<!-- Goal Card 3 -->
+<div class="bg-white/50 border border-white/60 rounded-lg p-4 flex flex-col justify-between hover:bg-white/80 transition-colors">
+<div>
+<div class="w-10 h-10 rounded-full bg-purple-100/50 flex items-center justify-center text-purple-600 mb-3">
+<span class="material-symbols-outlined text-sm">groups</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Cohort Engagement</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Boost forum participation.</p>
+</div>
+<div class="mt-4">
+<div class="flex justify-between text-xs mb-1">
+<span class="font-label-sm text-on-surface-variant">Progress</span>
+<span class="font-label-sm text-purple-600">40%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-purple-500 rounded-full" style="width: 40%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Total Diplomas (Progress Circle) - Span 4 -->
+<div class="col-span-4 md:col-span-4 lg:col-span-4 glass-panel rounded-xl p-glass-padding flex flex-col justify-center items-center relative text-center">
+<div class="glow-accent-turquoise top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-50"></div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2 z-10">Total Diplomas</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mb-6 z-10">Awarded this semester</p>
+<div class="relative w-40 h-40 flex items-center justify-center z-10">
+<!-- Fake SVG Circle for layout -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="rgba(225, 227, 228, 0.5)" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="none" r="45" stroke="url(#multicolor-grad)" stroke-dasharray="282.7" stroke-dashoffset="70" stroke-linecap="round" stroke-width="8"></circle>
+<defs>
+<lineargradient id="multicolor-grad" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#4ade80"></stop>
+<stop offset="50%" stop-color="#facc15"></stop>
+<stop offset="100%" stop-color="#f97316"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-display text-display text-primary leading-none">842</span>
+<span class="font-label-sm text-label-sm text-green-600 flex items-center mt-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 12%
+                        </span>
+</div>
+</div>
+</div>
+<!-- Active Courses & Status Badges - Span 4 -->
+<div class="col-span-4 md:col-span-4 lg:col-span-4 glass-panel rounded-xl p-glass-padding">
+<h3 class="font-headline-md text-headline-md text-primary mb-4">Active Courses</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between p-3 bg-white/40 rounded-lg border border-white/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">code</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Advanced UI Eng.</span>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-green-100 text-green-700">Live</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/40 rounded-lg border border-white/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md bg-purple-100 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined text-[18px]">brush</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Design Systems 101</span>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-yellow-100 text-yellow-700">Drafting</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-white/40 rounded-lg border border-white/50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Cognitive UX</span>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-blue-100 text-blue-700">Review</span>
+</div>
+</div>
+</div>
+<!-- Content Production Velocity (Gauge) & Tasks - Span 4 -->
+<div class="col-span-4 md:col-span-4 lg:col-span-4 grid grid-rows-2 gap-gutter md:gap-[24px]">
+<div class="glass-panel rounded-xl p-glass-padding flex flex-col justify-center relative overflow-hidden">
+<div class="glow-accent-purple -top-10 -right-10 opacity-40"></div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-1">Velocity</h3>
+<div class="flex items-end gap-2">
+<span class="font-display text-headline-lg text-primary">High</span>
+<span class="font-body-md text-body-md text-green-600 mb-1">+4 modules/wk</span>
+</div>
+<div class="mt-4 h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-glass-padding flex items-center justify-between">
+<div>
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-1">Tasks To-Do</h3>
+<span class="font-display text-display text-primary">24</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
+<span class="material-symbols-outlined">assignment_late</span>
+</div>
+</div>
+</div>
+<!-- Upcoming Meetings - Span 4 -->
+<div class="col-span-4 md:col-span-4 lg:col-span-4 glass-panel rounded-xl p-glass-padding flex flex-col">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-md text-headline-md text-primary">Meetings</h3>
+<button class="text-secondary font-label-sm text-label-sm hover:underline">View All</button>
+</div>
+<div class="flex-grow flex flex-col gap-0 overflow-y-auto pr-2">
+<!-- Meeting Item -->
+<div class="flex gap-4 py-3 border-b border-surface-variant/50 last:border-0 relative">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-secondary rounded-r-md"></div>
+<div class="flex flex-col items-center justify-center min-w-[50px] pl-2">
+<span class="font-label-md text-label-md text-primary">10:00</span>
+<span class="text-[10px] text-on-surface-variant uppercase">AM</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Curriculum Review</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-xs flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[12px]">videocam</span> Zoom Room A
+                            </p>
+</div>
+</div>
+<!-- Meeting Item -->
+<div class="flex gap-4 py-3 border-b border-surface-variant/50 last:border-0">
+<div class="flex flex-col items-center justify-center min-w-[50px] pl-2 opacity-60">
+<span class="font-label-md text-label-md text-primary">01:30</span>
+<span class="text-[10px] text-on-surface-variant uppercase">PM</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Instructor Onboarding</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-xs flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[12px]">location_on</span> Office 4B
+                            </p>
+</div>
+</div>
+<!-- Meeting Item -->
+<div class="flex gap-4 py-3 border-b border-surface-variant/50 last:border-0">
+<div class="flex flex-col items-center justify-center min-w-[50px] pl-2 opacity-60">
+<span class="font-label-md text-label-md text-primary">03:00</span>
+<span class="text-[10px] text-on-surface-variant uppercase">PM</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Q3 Strategy Sync</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-xs flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[12px]">videocam</span> Meets Link
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Class Hours (Trend Line placeholder) & Finished Tasks (Bar) - Span 12 -->
+<div class="col-span-4 md:col-span-8 lg:col-span-12 glass-panel rounded-xl p-glass-padding flex flex-col lg:flex-row gap-8">
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Class Hours Logged</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mb-4">Total platform engagement over 30 days</p>
+<div class="h-48 w-full bg-white/30 rounded-lg border border-white/50 flex items-center justify-center relative overflow-hidden">
+<!-- Abstract representation of a chart -->
+<div class="absolute bottom-0 left-0 w-full h-[80%] bg-gradient-to-t from-secondary/20 to-transparent opacity-50"></div>
+<svg class="absolute bottom-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,100 L0,70 Q10,50 20,65 T40,40 T60,60 T80,30 T100,20 L100,100 Z" fill="rgba(0, 83, 206, 0.1)"></path>
+<path d="M0,70 Q10,50 20,65 T40,40 T60,60 T80,30 T100,20" fill="none" stroke="#0053ce" stroke-width="2"></path>
+</svg>
+<span class="font-display text-display text-primary/20 absolute">12.4k hrs</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Weekly Task Completion</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mb-4">Finished vs Pending</p>
+<div class="flex flex-col gap-4 mt-6">
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-label-sm text-on-surface">Content Review</span>
+<span class="font-label-sm text-on-surface-variant">42/50</span>
+</div>
+<div class="h-3 w-full bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-secondary" style="width: 84%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-label-sm text-on-surface">Student Feedback</span>
+<span class="font-label-sm text-on-surface-variant">15/20</span>
+</div>
+<div class="h-3 w-full bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-turquoise-400 bg-teal-400" style="width: 75%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm mb-1">
+<span class="font-label-sm text-on-surface">Platform Updates</span>
+<span class="font-label-sm text-on-surface-variant">3/10</span>
+</div>
+<div class="h-3 w-full bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-purple-500" style="width: 30%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
