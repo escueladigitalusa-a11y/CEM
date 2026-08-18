@@ -18,6 +18,17 @@ Sitio estático que replica el prototipo de diseño "CEM Workspace" (sistema de 
 
 El sidebar es idéntico y totalmente enlazado en las 9 páginas (Dashboard, Tasks, Courses, Diplomas, Masterclasses, Ebooks, Analytics). Desde `courses.html`, las tarjetas de programa enlazan a `course-lesson.html`, `course-production.html`, `diplomas.html` y `masterclasses.html` según corresponda.
 
+## Edición en vivo (✏️ Editar / 💾 Guardar)
+
+Cada página incluye una barra flotante abajo a la izquierda con tres botones:
+
+- **✏️ Editar** — activa el modo edición: todo el contenido principal de la página se vuelve editable haciendo clic y escribiendo directamente (como un documento).
+- **➕ Agregar…** — aparece dentro de las listas/grillas del sitio (producciones, actividad reciente, cursos activos, programas, tareas, módulos, tarjetas Kanban, columnas, segmentos, ebooks…) al activar el modo edición. Duplica el último elemento de esa lista para que lo edites.
+- **💾 Guardar** — guarda el contenido actual de la página en el `localStorage` del navegador. Al volver a abrir esa página en el mismo navegador, tus cambios se restauran automáticamente.
+- **↺ Restablecer** — borra lo guardado y vuelve a la versión original del archivo.
+
+**Importante:** el guardado es **solo local, por navegador y por página** — no hay backend ni base de datos. Si abres el sitio en otro dispositivo, otro navegador, o borras el caché/localStorage, no verás esos cambios. Para persistencia real compartida entre dispositivos/usuarios haría falta conectar una base de datos (ej. Firebase/Supabase) — no está implementado.
+
 ## Uso
 
 No requiere instalación ni build. Simplemente abre `index.html` en un navegador, o sirve la carpeta con cualquier servidor estático:

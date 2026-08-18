@@ -384,14 +384,14 @@
 <h3 class="font-display text-label-md font-bold text-primary">In Progress Production</h3>
 <button class="text-secondary font-label-sm hover:underline">View Pipeline</button>
 </div>
-<div class="p-glass-padding flex-1 overflow-y-auto space-y-4">
+<div class="p-glass-padding flex-1 overflow-y-auto space-y-4" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Agregar producción">
 <!-- Production Item 1 -->
-<div class="bg-white/40 border border-white/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="cem-item bg-white/40 border border-white/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 <div class="flex justify-between items-start mb-3">
 <div>
 <div class="flex items-center gap-2 mb-1">
 <span class="px-2 py-0.5 bg-purple-100 text-purple-700 text-[10px] font-bold rounded uppercase tracking-wide">Masterclass</span>
-<h4 class="font-label-md text-primary">Advanced Quantum Computing</h4>
+<h4 class="font-label-md text-primary" data-clear-on-add="Nueva producción">Advanced Quantum Computing</h4>
 </div>
 <p class="font-label-sm text-on-surface-variant">Dr. Alan Stern • Recording Phase</p>
 </div>
@@ -418,7 +418,7 @@
 </div>
 </div>
 <!-- Production Item 2 -->
-<div class="bg-white/40 border border-white/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+<div class="cem-item bg-white/40 border border-white/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
 <div class="flex justify-between items-start mb-3">
 <div>
 <div class="flex items-center gap-2 mb-1">
@@ -458,23 +458,23 @@
 <div class="p-4 border-b border-white/30 bg-white/20">
 <h3 class="font-display text-label-md font-bold text-primary">Recent Activity</h3>
 </div>
-<div class="p-4 flex-1 overflow-y-auto space-y-4">
-<div class="flex gap-3 items-start">
+<div class="p-4 flex-1 overflow-y-auto space-y-4" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Agregar actividad">
+<div class="cem-item flex gap-3 items-start">
 <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center flex-shrink-0 mt-0.5">
 <span class="material-symbols-outlined" style="font-size: 16px;">person_add</span>
 </div>
 <div>
-<p class="font-label-sm text-primary">New Cohort Enrollment</p>
+<p class="font-label-sm text-primary" data-clear-on-add="Nueva actividad">New Cohort Enrollment</p>
 <p class="text-[12px] text-on-surface-variant">145 students joined 'Data Science 101'</p>
 <span class="text-[10px] text-on-surface-variant/70 mt-1 block">10 mins ago</span>
 </div>
 </div>
-<div class="flex gap-3 items-start">
+<div class="cem-item flex gap-3 items-start">
 <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0 mt-0.5">
 <span class="material-symbols-outlined" style="font-size: 16px;">workspace_premium</span>
 </div>
 <div>
-<p class="font-label-sm text-primary">Certificates Issued</p>
+<p class="font-label-sm text-primary" data-clear-on-add="Nueva actividad">Certificates Issued</p>
 <p class="text-[12px] text-on-surface-variant">Batch 4 completed 'UI/UX Mastery'</p>
 <span class="text-[10px] text-on-surface-variant/70 mt-1 block">2 hours ago</span>
 </div>
@@ -506,4 +506,5 @@
 </div>
 </div>
 </main>
+<script defer="" src="editable.js"></script>
 </body></html>

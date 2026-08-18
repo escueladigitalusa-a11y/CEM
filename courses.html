@@ -229,15 +229,15 @@
 </div>
 </header>
 <!-- Bento Grid Layout for Programs -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Agregar programa">
 <!-- Card 1 -->
-<a class="glass-panel rounded-xl p-glass-padding relative overflow-hidden group cursor-pointer hover:-translate-y-1 transition-transform duration-300 block" href="course-lesson.html">
+<a class="cem-item glass-panel rounded-xl p-glass-padding relative overflow-hidden group cursor-pointer hover:-translate-y-1 transition-transform duration-300 block" href="course-lesson.html">
 <div class="glow-bg bg-secondary top-[-20px] right-[-20px]"></div>
 <div class="flex justify-between items-start mb-4">
 <span class="bg-secondary/15 text-secondary font-label-sm px-2 py-1 rounded-md">Course</span>
 <button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">more_vert</span></button>
 </div>
-<h3 class="font-display font-bold text-headline-md text-primary leading-tight mb-2">Advanced UX Research</h3>
+<h3 class="font-display font-bold text-headline-md text-primary leading-tight mb-2" data-clear-on-add="Nuevo programa">Advanced UX Research</h3>
 <p class="text-label-sm text-on-surface-variant mb-6 line-clamp-2">Methodologies for deep user insights and behavioral analysis.</p>
 <div class="flex justify-between items-end border-t border-white/40 pt-4">
 <div>
@@ -334,7 +334,14 @@
 </div>
 </main>
 <!-- Floating Action Button -->
-<button aria-label="New Program" class="fixed bottom-8 right-8 w-14 h-14 rounded-full gradient-button text-white shadow-[0_10px_20px_rgba(0,83,206,0.3)] flex items-center justify-center z-50 hover:scale-105 transition-transform">
+<button aria-label="New Program" class="fixed bottom-8 right-8 w-14 h-14 rounded-full gradient-button text-white shadow-[0_10px_20px_rgba(0,83,206,0.3)] flex items-center justify-center z-50 hover:scale-105 transition-transform" id="cem-fab-add-program" type="button">
 <span class="material-symbols-outlined text-3xl">add</span>
 </button>
+<script defer="" src="editable.js"></script>
+<script>
+  document.getElementById('cem-fab-add-program').addEventListener('click', function () {
+    var grid = document.querySelector('[data-repeat-container]');
+    if (grid) grid.querySelector(':scope > .cem-add-btn')?.click();
+  });
+</script>
 </body></html>
