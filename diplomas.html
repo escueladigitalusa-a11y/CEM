@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>CEM Workspace - Diploma Detail</title>
+<title>CEM Workspace - Diplomados</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -268,82 +268,19 @@
 </div>
 </aside>
 <!-- Main Content -->
-<main class="pt-24 pb-24 md:pb-12 md:pl-[280px] pr-4 md:pr-8 min-h-screen max-w-[1200px] mx-auto">
-<!-- Header Section -->
-<header class="mb-8 relative">
-<div class="absolute -top-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl -z-10"></div>
-<h1 class="font-display text-headline-lg text-primary mb-2 text-glow">Diplomados</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Estructura aquí lo que vas a enseñar en cada diplomado: módulos y submódulos, con texto, guión, notas e imagen de referencia. Es privado — solo se guarda en este navegador.</p>
-</header>
-<!-- Diplomas list -->
-<div data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo diplomado" id="cem-diplomados">
-<!-- Diploma 1 -->
-<section class="cem-item glass-panel rounded-2xl p-glass-padding mb-8">
-<div class="flex flex-col md:flex-row gap-6 mb-6">
-<label class="cem-image-upload aspect-video w-full md:w-72 shrink-0 rounded-xl overflow-hidden border-2 border-dashed border-outline-variant bg-surface-container-low items-center justify-center cursor-pointer relative group" contenteditable="false">
-<input accept="image/*" class="hidden cem-image-input" type="file"/>
-<img alt="Imagen referencial 16:9" class="w-full h-full object-cover hidden"/>
-<div class="cem-image-placeholder flex flex-col items-center text-on-surface-variant pointer-events-none">
-<span class="material-symbols-outlined text-3xl mb-1">add_photo_alternate</span>
-<span class="font-label-sm">Imagen referencial (16:9)</span>
-</div>
-</label>
-<div class="flex-1">
-<span class="inline-block px-3 py-1 rounded-full bg-secondary/15 text-secondary font-label-sm mb-2">Diplomado</span>
-<h2 class="font-display text-headline-lg text-primary mb-2" data-clear-on-add="Nombre del diplomado">Digital Marketing Mastery</h2>
-<p class="font-body-md text-on-surface-variant" data-clear-on-add="Descripción breve del diplomado...">Ruta completa hacia la excelencia profesional en el ecosistema digital moderno.</p>
-</div>
-</div>
-<!-- Modules -->
-<div class="flex flex-col gap-6" data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo módulo">
-<!-- Module 1 -->
-<div class="cem-item bg-white/50 border border-white/60 rounded-xl p-glass-padding">
-<div class="flex items-center gap-2 mb-4">
-<span class="px-2 py-1 rounded bg-secondary/15 text-secondary font-label-sm shrink-0">Módulo</span>
-<h3 class="font-headline-md text-primary" data-clear-on-add="Nombre del módulo">Módulo 1: Fundamentos Estratégicos</h3>
-</div>
-<!-- Submodules -->
-<div class="flex flex-col gap-4" data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo submódulo">
-<!-- Submodule 1.1 -->
-<div class="cem-item glass-panel rounded-xl p-glass-padding relative">
-<div class="flex justify-between items-start gap-4 mb-4 pr-8">
-<h4 class="font-label-md text-primary text-lg" data-clear-on-add="Nombre del submódulo">Submódulo 1.1: Arquitectura del ecosistema digital</h4>
-<div class="flex items-center gap-1 bg-white/50 border border-white/60 rounded-lg px-3 py-1.5 text-on-surface-variant font-label-sm shrink-0">
-<span class="material-symbols-outlined text-[16px]">timer</span>
-<span data-clear-on-add="45 min">45 min</span>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-<label class="cem-image-upload aspect-video w-full rounded-lg overflow-hidden border-2 border-dashed border-outline-variant bg-surface-container-low items-center justify-center cursor-pointer relative group" contenteditable="false">
-<input accept="image/*" class="hidden cem-image-input" type="file"/>
-<img alt="Vista previa 16:9" class="w-full h-full object-cover hidden"/>
-<div class="cem-image-placeholder flex flex-col items-center text-on-surface-variant pointer-events-none">
-<span class="material-symbols-outlined text-3xl mb-1">add_photo_alternate</span>
-<span class="font-label-sm">Subir imagen (16:9)</span>
-</div>
-</label>
-<div>
-<p class="font-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Texto</p>
-<p class="font-body-md text-on-surface" data-clear-on-add="Escribe aquí el contenido de este submódulo...">Marcos de análisis de mercado y segmentación de audiencia como base de toda estrategia.</p>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-<div class="bg-surface-container-lowest/50 rounded-lg p-3 border border-white/50">
-<p class="font-label-sm text-secondary uppercase tracking-wider mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">movie</span> Guión</p>
-<p class="font-body-md text-on-surface" data-clear-on-add="Escribe aquí el guión de esta clase...">"Bienvenidos al Módulo 1 del diplomado. Hoy vamos a construir los fundamentos de..." — desarrollar palabra por palabra.</p>
-</div>
-<div class="bg-orange-50/60 rounded-lg p-3 border border-orange-200/60">
-<p class="font-label-sm text-orange-700 uppercase tracking-wider mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sticky_note_2</span> Nota extra</p>
-<p class="font-body-md text-on-surface" data-clear-on-add="Nota adicional...">Tener a la mano el caso de estudio de la campaña X para mostrarlo en vivo.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-</div>
-</main>
+<main class="pt-24 pb-24 md:pb-12 md:pl-[280px] pr-4 md:pr-8 min-h-screen max-w-[1280px] mx-auto" id="cem-root"></main>
+<script>
+  window.CEM_BUILDER = {
+    type: "diplomado",
+    one: "diplomado",
+    many: "diplomados",
+    newOne: "Nuevo diplomado",
+    titlePh: "Nombre del diplomado",
+    heading: "Diplomados",
+    intro: "Crea y estructura cada diplomado: módulos, submódulos, guiones y material de apoyo."
+  };
+</script>
+<script defer="" src="builder.js"></script>
 <!-- Bottom Navigation (Mobile) -->
 <nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-[30px] border-t border-white/40 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-50 px-6">
 <ul class="flex items-center justify-between h-full">
@@ -376,5 +313,4 @@
 </li>
 </ul>
 </nav>
-<script defer="" src="editable.js"></script>
 </body></html>
