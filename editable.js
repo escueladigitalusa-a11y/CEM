@@ -1,5 +1,6 @@
 /* CEM Workspace — in-browser editing layer.
- * Adds an "Editar" toggle, "+" add buttons on marked list sections, and a
+ * Adds an "Editar" toggle, "+" add buttons on marked list sections (supports
+ * nesting), optional "×" remove buttons, image-upload previews, and a
  * "Guardar" button that persists the page's <main> content to localStorage
  * (per page, per browser — no backend involved).
  */
@@ -93,21 +94,41 @@
       "body.cem-editing main{outline:2px dashed rgba(0,83,206,0.35);outline-offset:8px;border-radius:8px;}" +
       "body.cem-editing [contenteditable] :focus{outline:2px solid #0053ce;outline-offset:2px;border-radius:4px;}" +
       ".cem-add-btn{display:none;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;padding:10px;border:2px dashed rgba(0,83,206,0.4);border-radius:12px;background:rgba(0,83,206,0.05);color:#0053ce;font-weight:600;font-size:13px;cursor:pointer;font-family:'Poppins',sans-serif;}" +
-      ".cem-add-btn:hover{background:rgba(0,83,206,0.1);}";
+      ".cem-add-btn:hover{background:rgba(0,83,206,0.1);}" +
+      ".cem-remove-btn{display:none;position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:9999px;background:rgba(186,26,26,0.1);color:#ba1a1a;border:1px solid rgba(186,26,26,0.3);font-size:16px;line-height:1;cursor:pointer;z-index:30;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;}" +
+      "body.cem-editing .cem-remove-btn{display:flex;}" +
+      ".cem-remove-btn:hover{background:rgba(186,26,26,0.2);}" +
+      ".cem-image-upload{display:flex;}" +
+      ".cem-image-upload img.cem-has-image{display:block;}";
     document.head.appendChild(style);
   }
 
   function injectAddButtons() {
     document.querySelectorAll("[data-repeat-container]").forEach(function (container) {
-      if (container.querySelector(":scope > .cem-add-btn")) return;
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "cem-add-btn";
-      btn.textContent = "+ " + (container.getAttribute("data-repeat-label") || "Agregar");
-      btn.addEventListener("click", function () {
-        addItem(container);
-      });
-      container.appendChild(btn);
+      if (!container.querySelector(":scope > .cem-add-btn")) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "cem-add-btn";
+        btn.textContent = "+ " + (container.getAttribute("data-repeat-label") || "Agregar");
+        btn.addEventListener("click", function () {
+          addItem(container);
+        });
+        container.appendChild(btn);
+      }
+      if (container.hasAttribute("data-removable")) {
+        Array.prototype.forEach.call(container.children, function (item) {
+          if (item.classList.contains("cem-add-btn")) return;
+          if (item.querySelector(":scope > .cem-remove-btn")) return;
+          var rm = document.createElement("button");
+          rm.type = "button";
+          rm.className = "cem-remove-btn";
+          rm.setAttribute("contenteditable", "false");
+          rm.setAttribute("aria-label", "Eliminar");
+          rm.textContent = "×";
+          item.style.position = item.style.position || "relative";
+          item.insertBefore(rm, item.firstChild);
+        });
+      }
     });
   }
 
@@ -120,13 +141,60 @@
     var template = items[items.length - 1];
     if (!template) return;
     var clone = template.cloneNode(true);
+    // Strip any buttons cloned along with the template — cloneNode does not
+    // carry over JS listeners, so these are re-created below.
+    clone.querySelectorAll(".cem-add-btn, .cem-remove-btn").forEach(function (el) {
+      el.remove();
+    });
     clone.querySelectorAll("[data-clear-on-add]").forEach(function (el) {
       el.textContent = el.getAttribute("data-clear-on-add");
     });
+    clone.querySelectorAll("img.cem-has-image").forEach(function (img) {
+      img.classList.remove("cem-has-image");
+      img.classList.add("hidden");
+      img.removeAttribute("src");
+    });
+    clone.querySelectorAll(".cem-image-placeholder").forEach(function (ph) {
+      ph.classList.remove("hidden");
+    });
     container.insertBefore(clone, addBtn);
+    injectAddButtons();
     if (!editing) setEditing(true);
     var focusTarget = clone.querySelector("[data-clear-on-add]") || clone;
     if (focusTarget && focusTarget.focus) focusTarget.focus();
+  }
+
+  function bindDelegatedEvents() {
+    document.addEventListener("click", function (e) {
+      var rm = e.target.closest(".cem-remove-btn");
+      if (rm) {
+        e.preventDefault();
+        e.stopPropagation();
+        var item = rm.parentElement;
+        if (item && confirm("¿Eliminar este elemento?")) item.remove();
+        return;
+      }
+    });
+
+    document.addEventListener("change", function (e) {
+      if (!e.target.classList || !e.target.classList.contains("cem-image-input")) return;
+      var file = e.target.files && e.target.files[0];
+      if (!file) return;
+      var wrap = e.target.closest(".cem-image-upload");
+      if (!wrap) return;
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        var img = wrap.querySelector("img");
+        if (img) {
+          img.src = ev.target.result;
+          img.classList.remove("hidden");
+          img.classList.add("cem-has-image");
+        }
+        var ph = wrap.querySelector(".cem-image-placeholder");
+        if (ph) ph.classList.add("hidden");
+      };
+      reader.readAsDataURL(file);
+    });
   }
 
   ready(function () {
@@ -134,6 +202,7 @@
     injectStyles();
     injectControls();
     injectAddButtons();
+    bindDelegatedEvents();
     setEditing(false);
   });
 
