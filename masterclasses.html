@@ -201,12 +201,6 @@
                     Analytics
                 </a>
 </li>
-<li>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 group" href="content-builder.html">
-<span class="material-symbols-outlined group-active:scale-[0.98] transition-transform">edit_note</span>
-                    Planificador
-                </a>
-</li>
 </ul>
 <div class="mt-auto pt-4 border-t border-surface-variant flex items-center gap-3">
 <div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
@@ -241,155 +235,79 @@
 </div>
 </header>
 <!-- Main Content Canvas -->
-<main class="pt-20 md:pt-24 pb-12 px-gutter md:px-container-padding md:ml-64 relative z-10 max-w-[1440px] mx-auto">
+<main class="pt-20 md:pt-24 pb-12 px-gutter md:px-container-padding md:ml-64 relative z-10 max-w-[1200px] mx-auto">
 <!-- Header Section -->
-<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<header class="mb-8">
+<h1 class="font-poppins text-headline-lg-mobile md:text-display font-display text-primary mb-2 max-w-2xl">Masterclasses</h1>
+<p class="font-poppins text-body-lg font-body-lg text-on-surface-variant max-w-2xl">Estructura aquí lo que vas a enseñar en cada masterclass: módulos y submódulos, con texto, guión, notas e imagen de referencia. Es privado — solo se guarda en este navegador.</p>
+</header>
+<!-- Masterclasses list -->
+<div data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nueva masterclass" id="cem-masterclasses">
+<!-- Masterclass 1 -->
+<section class="cem-item glass-panel rounded-2xl p-glass-padding mb-8">
+<div class="flex flex-col md:flex-row gap-6 mb-6">
+<label class="cem-image-upload aspect-video w-full md:w-72 shrink-0 rounded-xl overflow-hidden border-2 border-dashed border-outline-variant bg-surface-container-low items-center justify-center cursor-pointer relative group" contenteditable="false">
+<input accept="image/*" class="hidden cem-image-input" type="file"/>
+<img alt="Imagen referencial 16:9" class="w-full h-full object-cover hidden"/>
+<div class="cem-image-placeholder flex flex-col items-center text-on-surface-variant pointer-events-none">
+<span class="material-symbols-outlined text-3xl mb-1">add_photo_alternate</span>
+<span class="font-label-sm">Imagen referencial (16:9)</span>
+</div>
+</label>
+<div class="flex-1">
+<span class="inline-block px-3 py-1 rounded-full bg-secondary/15 text-secondary font-label-sm mb-2">Masterclass</span>
+<h2 class="font-display text-headline-lg text-primary mb-2" data-clear-on-add="Nombre de la masterclass">The Future of AI in Design</h2>
+<p class="font-body-md text-on-surface-variant" data-clear-on-add="Descripción breve de la masterclass...">Sesión intensiva de 90 minutos explorando flujos de trabajo generativos y la nueva base creativa.</p>
+</div>
+</div>
+<!-- Modules -->
+<div class="flex flex-col gap-6" data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo módulo">
+<!-- Module 1 -->
+<div class="cem-item bg-white/50 border border-white/60 rounded-xl p-glass-padding">
+<div class="flex items-center gap-2 mb-4">
+<span class="px-2 py-1 rounded bg-secondary/15 text-secondary font-label-sm shrink-0">Módulo</span>
+<h3 class="font-headline-md text-primary" data-clear-on-add="Nombre del módulo">Módulo 1: La Nueva Base Creativa</h3>
+</div>
+<!-- Submodules -->
+<div class="flex flex-col gap-4" data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo submódulo">
+<!-- Submodule 1.1 -->
+<div class="cem-item glass-panel rounded-xl p-glass-padding relative">
+<div class="flex justify-between items-start gap-4 mb-4 pr-8">
+<h4 class="font-label-md text-primary text-lg" data-clear-on-add="Nombre del submódulo">Submódulo 1.1: El rol de la IA en las herramientas modernas</h4>
+<div class="flex items-center gap-1 bg-white/50 border border-white/60 rounded-lg px-3 py-1.5 text-on-surface-variant font-label-sm shrink-0">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+<span data-clear-on-add="30 min">30 min</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<label class="cem-image-upload aspect-video w-full rounded-lg overflow-hidden border-2 border-dashed border-outline-variant bg-surface-container-low items-center justify-center cursor-pointer relative group" contenteditable="false">
+<input accept="image/*" class="hidden cem-image-input" type="file"/>
+<img alt="Vista previa 16:9" class="w-full h-full object-cover hidden"/>
+<div class="cem-image-placeholder flex flex-col items-center text-on-surface-variant pointer-events-none">
+<span class="material-symbols-outlined text-3xl mb-1">add_photo_alternate</span>
+<span class="font-label-sm">Subir imagen (16:9)</span>
+</div>
+</label>
 <div>
-<div class="flex items-center gap-3 mb-4">
-<span class="px-3 py-1 bg-secondary/15 text-secondary font-poppins text-label-sm font-label-sm rounded-full backdrop-blur-sm border border-secondary/20">Masterclass</span>
-<span class="flex items-center gap-1 font-poppins text-label-sm font-label-sm text-on-surface-variant">
-<span class="w-2 h-2 rounded-full bg-secondary status-pulse inline-block"></span>
-                        Live Session
-                    </span>
-</div>
-<h1 class="font-poppins text-headline-lg-mobile md:text-display font-display text-primary mb-2 max-w-2xl">The Future of AI in Design</h1>
-<p class="font-poppins text-body-lg font-body-lg text-on-surface-variant max-w-xl">90-minute intensive with industry leaders exploring generative workflows, ethical boundaries, and the new creative baseline.</p>
-</div>
-<div class="flex gap-4">
-<button class="glass-panel px-6 py-3 rounded-lg font-poppins text-label-md font-label-md text-primary hover:bg-white/80 transition-colors flex items-center gap-2">
-<span class="material-symbols-outlined">calendar_add_on</span>
-                    Add to Calendar
-                </button>
-<button class="btn-gradient px-8 py-3 rounded-lg font-poppins text-label-md font-label-md text-on-primary flex items-center gap-2">
-<span class="material-symbols-outlined">play_arrow</span>
-                    Join Room
-                </button>
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Texto</p>
+<p class="font-body-md text-on-surface" data-clear-on-add="Escribe aquí el contenido de este submódulo...">Caso de estudio: flujos generativos vs. iterativos, y cómo cambia el trabajo creativo.</p>
 </div>
 </div>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-<!-- Video/Hero Card (Spans 8 cols) -->
-<div class="glass-panel rounded-xl p-glass-padding col-span-1 md:col-span-8 relative overflow-hidden min-h-[400px] flex flex-col justify-end">
-<div class="absolute inset-0 bg-surface-variant -z-10">
-<img alt="AI in Design Abstract" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLx5rej5dbFwMyXFR_Y5LndHoljtY8U-IQBJURIEyJMr5CFn4VTcScOIr0S7kFr1M93Gs5b_Gu5K6GIc__WUNyQrVL6Vhirqx6yQouGiLzjZ7e6KUf8TnM0xP0vVP84XK8MmCCn6S1B3PXpuxYImgNTN8WyEd2FofRkmYgOp7VfxISRKrSgjTCwbclVDVy2YpziVCDYHA99lbWdlkfSnu70k_gp-NzbCNEFEupdml5TEtEB3kF916JHA"/>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+<div class="bg-surface-container-lowest/50 rounded-lg p-3 border border-white/50">
+<p class="font-label-sm text-secondary uppercase tracking-wider mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">movie</span> Guión</p>
+<p class="font-body-md text-on-surface" data-clear-on-add="Escribe aquí el guión de esta clase...">"Bienvenidos a esta masterclass. Vamos a explorar cómo la IA está redefiniendo..." — desarrollar palabra por palabra.</p>
 </div>
-<div class="bg-white/40 backdrop-blur-md p-6 rounded-lg border border-white/50 w-full max-w-md">
-<div class="flex items-center justify-between mb-2">
-<span class="font-poppins text-label-sm font-label-sm text-primary uppercase tracking-wider">Next Segment</span>
-<span class="font-poppins text-label-sm font-label-sm text-secondary bg-secondary/10 px-2 py-1 rounded">Starts in 05:00</span>
-</div>
-<h3 class="font-poppins text-headline-md font-headline-md text-primary mb-1">Generative Foundations</h3>
-<p class="font-poppins text-label-md font-label-md text-on-surface-variant">Speaker: Dr. Elena Rostova</p>
-</div>
-</div>
-<!-- Details Sidebar (Spans 4 cols) -->
-<div class="flex flex-col gap-6 col-span-1 md:col-span-4">
-<!-- Meta Info Card -->
-<div class="glass-panel rounded-xl p-glass-padding flex-1">
-<h3 class="font-poppins text-headline-md font-headline-md text-primary mb-6">Session Details</h3>
-<div class="space-y-6">
-<div class="flex items-start gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
-<span class="material-symbols-outlined">schedule</span>
-</div>
-<div>
-<p class="font-poppins text-label-md font-label-md text-primary">Duration</p>
-<p class="font-poppins text-body-md font-body-md text-on-surface-variant">90 Minutes total</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
-<span class="material-symbols-outlined">group</span>
-</div>
-<div>
-<p class="font-poppins text-label-md font-label-md text-primary">Attendance</p>
-<p class="font-poppins text-body-md font-body-md text-on-surface-variant">1,240 Participants</p>
-</div>
-</div>
-<div class="flex items-start gap-4">
-<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
-<span class="material-symbols-outlined">verified</span>
-</div>
-<div>
-<p class="font-poppins text-label-md font-label-md text-primary">Certification</p>
-<p class="font-poppins text-body-md font-body-md text-on-surface-variant">0.5 CEM Credits awarded</p>
+<div class="bg-orange-50/60 rounded-lg p-3 border border-orange-200/60">
+<p class="font-label-sm text-orange-700 uppercase tracking-wider mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sticky_note_2</span> Nota extra</p>
+<p class="font-body-md text-on-surface" data-clear-on-add="Nota adicional...">Dejar tiempo para preguntas sobre ansiedad de reemplazo laboral antes de cerrar el bloque.</p>
 </div>
 </div>
 </div>
 </div>
-<!-- Speakers Mini-Card -->
-<div class="glass-panel rounded-xl p-glass-padding">
-<h4 class="font-poppins text-label-md font-label-md text-primary mb-4">Featured Speakers</h4>
-<div class="flex -space-x-3">
-<img alt="Speaker 1" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSxTL1IfXFPx9I7x_UVHQvLqE5s8_zBWmOxk5Xl3-j8A3LjX9wQb4t35a6FMHnPdYijQbOinNyb2U0rcL-cFCKfC-s3bLr6lgX_hLdBTP3vuej2vEZ_3YbJsIu-GpPyTLyE1aU4JjFM78RzXQZ1imM1-krHT2Y5UsKFoHS9CjGnZvm-dzLA7xpm49GnauW68Sj-W1ygCx30X53N7PIO4LZ3Dewokq-r85823Uq3Xxv-4amkuitUqkE9A"/>
-<img alt="Speaker 2" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5Ayt8y9hJnkyeqRpgkZoCA1CLHjUDSCASpGzem7yfmVXMQFvjXORjOAG5gvRDTteR5HK_ZxGobNXXnoiruc7HXXaAK_rLc3mduqv-jPXWIOt0i8W6udBY8h_8K9zRb0pA_p-KAZq5Qo66MguwDfz5JB9Lm9J2S48iPWwrulzNAJ7jLKlw_W9Xm9hFEUUfyDs7G0DwXCxGFp9tSgsho8BjlJvqQmfXhTVIJ2JTmcK_gfhWfipJi3fCnw"/>
-<img alt="Speaker 3" class="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFAvlnFTk2Mk5d-Tg65EyYsgRePDWVeFTUUL5SlwAr0tIV1_nhswe-tlvZfN4gwxtMj3eXG6taOM4MiVclz1SVcAeJX5KVTaaMAAKw75XV6SaVjYBuWiNpvdc9Y5HJWSMeJg7aKrfTbk8SVU9A_LtqsHPdL9SP5DgWvpIKreJI7GupeXjqXuKbX16sMwzrj45smgEJZl5yMxQIDxZbQzX4KNyFDHdF-cEk5v4jg39Lx1lwpUB_1a6H8A"/>
-<div class="w-10 h-10 rounded-full border-2 border-white bg-surface-variant flex items-center justify-center font-poppins text-label-sm font-label-sm text-on-surface-variant">+2</div>
 </div>
 </div>
-</div>
-<!-- Content Breakdown & Script (Spans 12 cols) -->
-<div class="col-span-1 md:col-span-12 glass-panel rounded-xl p-glass-padding mt-4">
-<h3 class="font-poppins text-headline-md font-headline-md text-primary mb-8">Content Breakdown &amp; Script</h3>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Agregar segmento">
-<!-- Segment 1 -->
-<div class="cem-item relative pl-6 border-l-2 border-secondary/30">
-<div class="absolute w-3 h-3 bg-secondary rounded-full -left-[7px] top-1"></div>
-<span class="font-poppins text-label-sm font-label-sm text-secondary mb-1 block">00:00 - 30:00</span>
-<h4 class="font-poppins text-label-md font-label-md text-primary mb-2" data-clear-on-add="Nuevo segmento">Part 1: The New Baseline</h4>
-<ul class="space-y-2 font-poppins text-body-md font-body-md text-on-surface-variant">
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-secondary/60" style="font-size: 18px;">check</span>
-                                Defining AI's role in modern tooling.
-                            </li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-secondary/60" style="font-size: 18px;">check</span>
-                                Case study: Generative vs. Iterative workflows.
-                            </li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-secondary/60" style="font-size: 18px;">check</span>
-                                Q&amp;A: Addressing replacement anxieties.
-                            </li>
-</ul>
-</div>
-<!-- Segment 2 -->
-<div class="relative pl-6 border-l-2 border-surface-variant">
-<div class="absolute w-3 h-3 bg-surface-variant rounded-full -left-[7px] top-1"></div>
-<span class="font-poppins text-label-sm font-label-sm text-on-surface-variant mb-1 block">30:00 - 60:00</span>
-<h4 class="font-poppins text-label-md font-label-md text-primary mb-2">Part 2: Ethical Boundaries</h4>
-<ul class="space-y-2 font-poppins text-body-md font-body-md text-on-surface-variant">
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
-                                Navigating copyright in a generated world.
-                            </li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
-                                Bias in training sets and design output.
-                            </li>
-</ul>
-</div>
-<!-- Segment 3 -->
-<div class="relative pl-6 border-l-2 border-surface-variant">
-<div class="absolute w-3 h-3 bg-surface-variant rounded-full -left-[7px] top-1"></div>
-<span class="font-poppins text-label-sm font-label-sm text-on-surface-variant mb-1 block">60:00 - 90:00</span>
-<h4 class="font-poppins text-label-md font-label-md text-primary mb-2">Part 3: Practical Application</h4>
-<ul class="space-y-2 font-poppins text-body-md font-body-md text-on-surface-variant">
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
-                                Live demonstration of prompt engineering.
-                            </li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
-                                Integrating outputs into Figma/Adobe.
-                            </li>
-<li class="flex items-start gap-2">
-<span class="material-symbols-outlined text-outline/60" style="font-size: 18px;">check</span>
-                                Final wrap-up and resource distribution.
-                            </li>
-</ul>
-</div>
-</div>
-</div>
+</section>
 </div>
 </main>
 <!-- Mobile BottomNavBar (Minimal representation for mobile layout intent) -->

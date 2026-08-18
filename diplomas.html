@@ -259,10 +259,6 @@
 <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
                 Analytics
             </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 font-poppins text-label-md font-label-md" href="content-builder.html">
-<span class="material-symbols-outlined">edit_note</span>
-                Planificador
-            </a>
 </nav>
 <div class="mt-auto pt-4 border-t border-white/40">
 <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-white/50 transition-colors duration-200 font-poppins text-label-md font-label-md" href="#">
@@ -272,202 +268,80 @@
 </div>
 </aside>
 <!-- Main Content -->
-<main class="pt-24 pb-24 md:pb-12 md:pl-[280px] pr-4 md:pr-8 min-h-screen">
+<main class="pt-24 pb-24 md:pb-12 md:pl-[280px] pr-4 md:pr-8 min-h-screen max-w-[1200px] mx-auto">
 <!-- Header Section -->
-<header class="mb-10 relative">
+<header class="mb-8 relative">
 <div class="absolute -top-10 -left-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl -z-10"></div>
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-<div>
-<div class="flex items-center gap-2 mb-2">
-<span class="px-3 py-1 rounded-full bg-secondary/15 text-secondary font-label-sm text-label-sm">Diploma Program</span>
-<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
-<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
-                            12 Weeks
-                        </span>
-</div>
-<h1 class="font-display text-display text-primary mb-2 text-glow">Digital Marketing Mastery</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Comprehensive path to professional excellence in the modern digital landscape. Master strategic foundations and performance marketing.</p>
-</div>
-<div class="glass-panel p-4 rounded-2xl flex items-center gap-4 min-w-[200px]">
-<div class="relative w-12 h-12 flex items-center justify-center">
-<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
-<path class="text-surface-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
-<path class="text-secondary transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="45, 100" stroke-linecap="round" stroke-width="3"></path>
-</svg>
-<span class="absolute font-label-sm text-label-sm text-primary font-bold">45%</span>
-</div>
-<div>
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Overall Progress</p>
-<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
-<div class="h-full neon-gradient w-[45%] rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-</div>
-</div>
-</div>
-</div>
+<h1 class="font-display text-headline-lg text-primary mb-2 text-glow">Diplomados</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Estructura aquí lo que vas a enseñar en cada diplomado: módulos y submódulos, con texto, guión, notas e imagen de referencia. Es privado — solo se guarda en este navegador.</p>
 </header>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
-<!-- Modules Column -->
-<div class="lg:col-span-8 flex flex-col gap-6" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Agregar módulo">
+<!-- Diplomas list -->
+<div data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo diplomado" id="cem-diplomados">
+<!-- Diploma 1 -->
+<section class="cem-item glass-panel rounded-2xl p-glass-padding mb-8">
+<div class="flex flex-col md:flex-row gap-6 mb-6">
+<label class="cem-image-upload aspect-video w-full md:w-72 shrink-0 rounded-xl overflow-hidden border-2 border-dashed border-outline-variant bg-surface-container-low items-center justify-center cursor-pointer relative group" contenteditable="false">
+<input accept="image/*" class="hidden cem-image-input" type="file"/>
+<img alt="Imagen referencial 16:9" class="w-full h-full object-cover hidden"/>
+<div class="cem-image-placeholder flex flex-col items-center text-on-surface-variant pointer-events-none">
+<span class="material-symbols-outlined text-3xl mb-1">add_photo_alternate</span>
+<span class="font-label-sm">Imagen referencial (16:9)</span>
+</div>
+</label>
+<div class="flex-1">
+<span class="inline-block px-3 py-1 rounded-full bg-secondary/15 text-secondary font-label-sm mb-2">Diplomado</span>
+<h2 class="font-display text-headline-lg text-primary mb-2" data-clear-on-add="Nombre del diplomado">Digital Marketing Mastery</h2>
+<p class="font-body-md text-on-surface-variant" data-clear-on-add="Descripción breve del diplomado...">Ruta completa hacia la excelencia profesional en el ecosistema digital moderno.</p>
+</div>
+</div>
+<!-- Modules -->
+<div class="flex flex-col gap-6" data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo módulo">
 <!-- Module 1 -->
-<article class="cem-item glass-panel rounded-[24px] p-glass-padding relative overflow-hidden group">
-<div class="absolute top-0 right-0 w-32 h-32 bg-[#10b981]/5 rounded-bl-full -z-10 transition-all duration-500 group-hover:bg-[#10b981]/10 group-hover:scale-110"></div>
-<div class="flex justify-between items-start mb-6">
+<div class="cem-item bg-white/50 border border-white/60 rounded-xl p-glass-padding">
+<div class="flex items-center gap-2 mb-4">
+<span class="px-2 py-1 rounded bg-secondary/15 text-secondary font-label-sm shrink-0">Módulo</span>
+<h3 class="font-headline-md text-primary" data-clear-on-add="Nombre del módulo">Módulo 1: Fundamentos Estratégicos</h3>
+</div>
+<!-- Submodules -->
+<div class="flex flex-col gap-4" data-removable="" data-repeat-container="" data-repeat-item=".cem-item" data-repeat-label="Nuevo submódulo">
+<!-- Submodule 1.1 -->
+<div class="cem-item glass-panel rounded-xl p-glass-padding relative">
+<div class="flex justify-between items-start gap-4 mb-4 pr-8">
+<h4 class="font-label-md text-primary text-lg" data-clear-on-add="Nombre del submódulo">Submódulo 1.1: Arquitectura del ecosistema digital</h4>
+<div class="flex items-center gap-1 bg-white/50 border border-white/60 rounded-lg px-3 py-1.5 text-on-surface-variant font-label-sm shrink-0">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+<span data-clear-on-add="45 min">45 min</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<label class="cem-image-upload aspect-video w-full rounded-lg overflow-hidden border-2 border-dashed border-outline-variant bg-surface-container-low items-center justify-center cursor-pointer relative group" contenteditable="false">
+<input accept="image/*" class="hidden cem-image-input" type="file"/>
+<img alt="Vista previa 16:9" class="w-full h-full object-cover hidden"/>
+<div class="cem-image-placeholder flex flex-col items-center text-on-surface-variant pointer-events-none">
+<span class="material-symbols-outlined text-3xl mb-1">add_photo_alternate</span>
+<span class="font-label-sm">Subir imagen (16:9)</span>
+</div>
+</label>
 <div>
-<span class="inline-block px-2 py-1 rounded bg-[#10b981]/15 text-[#10b981] font-label-sm text-label-sm mb-3">Module 1</span>
-<h2 class="font-headline-md text-headline-md text-primary mb-1" data-clear-on-add="Nuevo módulo">Strategic Foundations</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Core principles of digital ecosystem architecture.</p>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant bg-white/50 px-3 py-1.5 rounded-lg border border-white/60">
-<span class="material-symbols-outlined text-[18px]" data-icon="timer">timer</span>
-<span class="font-label-sm text-label-sm">45 mins</span>
+<p class="font-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Texto</p>
+<p class="font-body-md text-on-surface" data-clear-on-add="Escribe aquí el contenido de este submódulo...">Marcos de análisis de mercado y segmentación de audiencia como base de toda estrategia.</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-surface-container-lowest/40 p-4 rounded-xl border border-white/50">
-<h3 class="font-label-md text-label-md text-primary flex items-center gap-2 mb-3">
-<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="overview">overview</span>
-                                Content Overview
-                            </h3>
-<ul class="space-y-2">
-<li class="flex items-start gap-2 text-body-md font-body-md text-on-surface-variant">
-<span class="material-symbols-outlined text-[#10b981] text-[18px] mt-0.5" data-icon="check_circle">check_circle</span>
-                                    Market Analysis Frameworks
-                                </li>
-<li class="flex items-start gap-2 text-body-md font-body-md text-on-surface-variant">
-<span class="material-symbols-outlined text-[#10b981] text-[18px] mt-0.5" data-icon="check_circle">check_circle</span>
-                                    Audience Segmentation
-                                </li>
-<li class="flex items-start gap-2 text-body-md font-body-md text-on-surface-variant opacity-60">
-<span class="material-symbols-outlined text-outline text-[18px] mt-0.5" data-icon="radio_button_unchecked">radio_button_unchecked</span>
-                                    Value Proposition Design
-                                </li>
-</ul>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+<div class="bg-surface-container-lowest/50 rounded-lg p-3 border border-white/50">
+<p class="font-label-sm text-secondary uppercase tracking-wider mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">movie</span> Guión</p>
+<p class="font-body-md text-on-surface" data-clear-on-add="Escribe aquí el guión de esta clase...">"Bienvenidos al Módulo 1 del diplomado. Hoy vamos a construir los fundamentos de..." — desarrollar palabra por palabra.</p>
 </div>
-<div class="bg-surface-container-lowest/40 p-4 rounded-xl border border-white/50 relative overflow-hidden">
-<div class="absolute right-0 bottom-0 opacity-5">
-<span class="material-symbols-outlined text-[100px]" data-icon="description">description</span>
-</div>
-<h3 class="font-label-md text-label-md text-primary flex items-center gap-2 mb-3">
-<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="movie">movie</span>
-                                Script / Guión
-                            </h3>
-<div class="space-y-3 relative z-10">
-<button class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-white/60 transition-colors text-left group">
-<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">1. Introduction to Strategy</span>
-<span class="material-symbols-outlined text-outline group-hover:text-secondary text-[18px]" data-icon="download">download</span>
-</button>
-<button class="w-full flex items-center justify-between p-2 rounded-lg hover:bg-white/60 transition-colors text-left group">
-<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">2. The 4 C's Model</span>
-<span class="material-symbols-outlined text-outline group-hover:text-secondary text-[18px]" data-icon="download">download</span>
-</button>
+<div class="bg-orange-50/60 rounded-lg p-3 border border-orange-200/60">
+<p class="font-label-sm text-orange-700 uppercase tracking-wider mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">sticky_note_2</span> Nota extra</p>
+<p class="font-body-md text-on-surface" data-clear-on-add="Nota adicional...">Tener a la mano el caso de estudio de la campaña X para mostrarlo en vivo.</p>
 </div>
 </div>
 </div>
-<div class="mt-6 flex items-center justify-between border-t border-white/40 pt-4">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded-full bg-[#10b981]/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-[#10b981] text-[16px]" data-icon="play_arrow">play_arrow</span>
-</div>
-<span class="font-label-sm text-label-sm text-on-surface-variant">In Progress - 60%</span>
-</div>
-<button class="px-6 py-2 bg-white border border-white shadow-sm rounded-full font-label-md text-label-md text-primary hover:text-secondary hover:shadow-md transition-all">
-                            Continue
-                        </button>
-</div>
-</article>
-<!-- Module 2 -->
-<article class="glass-panel rounded-[24px] p-glass-padding relative overflow-hidden group">
-<div class="absolute top-0 right-0 w-32 h-32 bg-[#fbbf24]/5 rounded-bl-full -z-10 transition-all duration-500 group-hover:bg-[#fbbf24]/10 group-hover:scale-110"></div>
-<div class="flex justify-between items-start mb-6">
-<div>
-<span class="inline-block px-2 py-1 rounded bg-[#fbbf24]/15 text-[#fbbf24] font-label-sm text-label-sm mb-3">Module 2</span>
-<h2 class="font-headline-md text-headline-md text-primary mb-1">Paid Media &amp; Performance</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">Mastering acquisition channels and ROI optimization.</p>
-</div>
-<div class="flex items-center gap-1 text-on-surface-variant bg-white/50 px-3 py-1.5 rounded-lg border border-white/60">
-<span class="material-symbols-outlined text-[18px]" data-icon="timer">timer</span>
-<span class="font-label-sm text-label-sm">60 mins</span>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-<div class="bg-surface-container-lowest/40 p-4 rounded-xl border border-white/50">
-<h3 class="font-label-md text-label-md text-primary flex items-center gap-2 mb-3">
-<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="overview">overview</span>
-                                Content Overview
-                            </h3>
-<ul class="space-y-2 opacity-70">
-<li class="flex items-start gap-2 text-body-md font-body-md text-on-surface-variant">
-<span class="material-symbols-outlined text-outline text-[18px] mt-0.5" data-icon="lock">lock</span>
-                                    Google Ads Deep Dive
-                                </li>
-<li class="flex items-start gap-2 text-body-md font-body-md text-on-surface-variant">
-<span class="material-symbols-outlined text-outline text-[18px] mt-0.5" data-icon="lock">lock</span>
-                                    Meta Business Manager
-                                </li>
-<li class="flex items-start gap-2 text-body-md font-body-md text-on-surface-variant">
-<span class="material-symbols-outlined text-outline text-[18px] mt-0.5" data-icon="lock">lock</span>
-                                    Conversion Tracking
-                                </li>
-</ul>
-</div>
-<div class="bg-surface-container-lowest/40 p-4 rounded-xl border border-white/50 relative overflow-hidden opacity-70">
-<h3 class="font-label-md text-label-md text-primary flex items-center gap-2 mb-3">
-<span class="material-symbols-outlined text-secondary text-[18px]" data-icon="movie">movie</span>
-                                Script / Guión
-                            </h3>
-<div class="flex flex-col items-center justify-center h-24 text-center">
-<span class="material-symbols-outlined text-outline mb-1" data-icon="lock_clock">lock_clock</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Unlocks after Module 1</span>
 </div>
 </div>
 </div>
-</article>
-</div>
-<!-- Sidebar Column -->
-<div class="lg:col-span-4 flex flex-col gap-6">
-<!-- Instructor Card -->
-<div class="glass-panel rounded-[24px] p-6 relative overflow-hidden">
-<div class="absolute -top-10 -right-10 w-32 h-32 bg-secondary/10 rounded-full blur-2xl"></div>
-<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-wider text-[11px]">Lead Instructor</h3>
-<div class="flex items-center gap-4">
-<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md">
-<img alt="Instructor" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVotx8A1sNjBBUpgQ4MRFJYsa7GBpcmxrLh_DPtVkrPm3zITYxoBWZs9TA6LDRN9GRRxGx8R4n-R2zWDJtrAGTBqNasgpirUHxXDZOX09hrGYd6Wie36Zd8kCP_YNrzCCeeAhf0UDWH3AgLqCMZ5ueMpOvOI8ZCfu_SkeEt-G-4NFBHBwnB6O6FnT4wM-eFxR1_0UFPfWtlMK1qbEV1qVmtsIHoZawUdjBSON_CFZFV27DyMPgWG0JAA"/>
-</div>
-<div>
-<h4 class="font-label-md text-label-md text-primary">Elena Rodriguez</h4>
-<p class="font-body-sm text-[13px] text-on-surface-variant">VP of Performance Marketing</p>
-</div>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant mt-4 text-[14px] leading-relaxed opacity-80">
-                        Elena brings 12+ years of enterprise marketing experience, having managed over $50M in ad spend across global markets.
-                    </p>
-</div>
-<!-- Resources Widget -->
-<div class="glass-panel rounded-[24px] p-6">
-<h3 class="font-label-md text-label-md text-on-surface-variant mb-4 uppercase tracking-wider text-[11px]">Program Resources</h3>
-<div class="space-y-3">
-<a class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/60 transition-colors border border-transparent hover:border-white/50 group" href="#">
-<div class="w-10 h-10 rounded-lg bg-[#e11d48]/10 flex items-center justify-center text-[#e11d48] group-hover:scale-105 transition-transform">
-<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
-</div>
-<div>
-<h4 class="font-label-sm text-label-sm text-primary">Syllabus PDF</h4>
-<p class="text-[12px] text-on-surface-variant">2.4 MB</p>
-</div>
-</a>
-<a class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/60 transition-colors border border-transparent hover:border-white/50 group" href="#">
-<div class="w-10 h-10 rounded-lg bg-[#0ea5e9]/10 flex items-center justify-center text-[#0ea5e9] group-hover:scale-105 transition-transform">
-<span class="material-symbols-outlined" data-icon="folder_zip">folder_zip</span>
-</div>
-<div>
-<h4 class="font-label-sm text-label-sm text-primary">Template Pack</h4>
-<p class="text-[12px] text-on-surface-variant">15.1 MB</p>
-</div>
-</a>
-</div>
-</div>
-</div>
+</section>
 </div>
 </main>
 <!-- Bottom Navigation (Mobile) -->
