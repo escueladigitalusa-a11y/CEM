@@ -129,10 +129,39 @@
     return !!(s.doc && s.doc.replace(/<[^>]*>/g, "").trim().length);
   }
 
-  function pct(p) {
+  function stats(p) {
     var all = allSubs(p);
-    if (!all.length) return 0;
-    return Math.round(all.filter(written).length * 100 / all.length);
+    var n = all.length || 1;
+    var w = all.filter(written).length;
+    var v = all.filter(function (s) { return s.video; }).length;
+    var u = all.filter(function (s) { return s.published; }).length;
+    return {
+      total: all.length,
+      w: w, v: v, u: u,
+      pw: all.length ? Math.round(w * 100 / n) : 0,
+      pv: all.length ? Math.round(v * 100 / n) : 0,
+      pu: all.length ? Math.round(u * 100 / n) : 0
+    };
+  }
+
+  function pct(p) { return stats(p).pw; }
+
+  var METRICS = [
+    { key: "w", p: "pw", label: "Avance del guión", cls: "m-write", noun: "documentos escritos" },
+    { key: "v", p: "pv", label: "Videos realizados", cls: "m-video", noun: "grabados" },
+    { key: "u", p: "pu", label: "Publicación", cls: "m-pub", noun: "publicados" }
+  ];
+
+  function metricsCard(p) {
+    var st = stats(p);
+    return '<div class="card stats-card">' + METRICS.map(function (m) {
+      return '<div class="stat">' +
+        '<div class="stat-h"><span class="k">' + m.label + '</span>' +
+          '<span class="v" data-m="' + m.p + '">' + st[m.p] + "%</span></div>" +
+        '<div class="bar"><i class="' + m.cls + '" data-m="' + m.p + '" style="width:' + st[m.p] + '%"></i></div>' +
+        '<p class="hint" data-m="' + m.key + '">' + st[m.key] + " de " + st.total + " " + m.noun + "</p>" +
+      "</div>";
+    }).join("") + "</div>";
   }
 
   function statusOf(id) {
@@ -179,8 +208,14 @@
         '<p class="pcard-desc">' + esc(p.description || "Sin descripción todavía.") + "</p>" +
         '<div class="pcard-foot">' +
           (p.featured
-            ? '<div class="bar"><i style="width:' + pc + '%"></i></div>' +
-              '<div class="foot-row"><span>Documentos escritos</span><b>' + pc + "%</b></div>"
+            ? (function () {
+                var st2 = stats(p);
+                return METRICS.map(function (m) {
+                  return '<div class="mini"><div class="foot-row"><span>' + m.label + "</span><b>" +
+                    st2[m.p] + '%</b></div><div class="bar"><i class="' + m.cls +
+                    '" style="width:' + st2[m.p] + '%"></i></div></div>';
+                }).join("");
+              })()
             : '<div><p class="foot-k">Módulos</p><p class="foot-v">' + p.modules.length + "</p></div>" +
               '<button class="status ' + st.cls + '" data-act="status" data-id="' + p.id + '" title="Cambiar estado">' +
                 (st.icon ? '<span class="material-symbols-outlined">' + st.icon + "</span>" : '<i class="dot"></i>') +
@@ -233,6 +268,10 @@
         return '<div class="sitem' + (on ? " on" : "") + '" data-act="open-sub" data-id="' + s.id + '">' +
           '<span class="sdot"></span>' +
           '<span class="stxt">' + esc(s.title || "Submódulo sin título") + "</span>" +
+          '<span class="sflags">' +
+            (s.video ? '<span class="material-symbols-outlined fv" title="Hecho en video">videocam</span>' : "") +
+            (s.published ? '<span class="material-symbols-outlined fp" title="Publicado">public</span>' : "") +
+          "</span>" +
           '<span class="sdur">' + esc(s.duration || "—") + "</span>" +
           '<button class="xbtn" data-act="del-sub" data-id="' + s.id + '" title="Eliminar">&times;</button>' +
         "</div>";
@@ -251,15 +290,7 @@
       "</div>";
     }).join("");
 
-    var left =
-      '<div class="card prog-card">' +
-        '<div class="prog-row"><div>' +
-          "<p class=\"k\">Avance del " + esc(LBL.one) + "</p><p class=\"v\">" + pc + "%</p></div>" +
-          '<span class="prog-ico"><span class="material-symbols-outlined">trending_up</span></span>' +
-        "</div>" +
-        '<div class="bar"><i style="width:' + pc + '%"></i></div>' +
-        '<p class="hint">' + allSubs(p).filter(written).length + " de " + allSubs(p).length + " documentos con contenido</p>" +
-      "</div>" +
+    var left = metricsCard(p) +
       '<div class="card mods-card">' +
         '<h3 class="mods-h"><span class="material-symbols-outlined">list</span> Módulos</h3>' +
         (p.modules.length ? mods : '<p class="empty sm">Sin módulos todavía.</p>') +
@@ -287,6 +318,14 @@
               '<span class="sep">•</span>' +
               '<span class="material-symbols-outlined">visibility</span>' +
               "<span>Submódulo " + (found.mi + 1) + "." + (found.si + 1) + "</span>" +
+            "</div>" +
+            '<div class="checks">' +
+              '<button class="chk' + (s.video ? " on vid" : "") + '" data-act="chk" data-f="video" data-id="' + s.id + '">' +
+                '<span class="material-symbols-outlined box">' + (s.video ? "check_box" : "check_box_outline_blank") + "</span>" +
+                '<span class="material-symbols-outlined ic">videocam</span> Hecho en video</button>' +
+              '<button class="chk' + (s.published ? " on pub" : "") + '" data-act="chk" data-f="published" data-id="' + s.id + '">' +
+                '<span class="material-symbols-outlined box">' + (s.published ? "check_box" : "check_box_outline_blank") + "</span>" +
+                '<span class="material-symbols-outlined ic">public</span> Publicado</button>' +
             "</div>" +
           "</div>" +
           '<div class="dh-actions">' +
@@ -364,7 +403,7 @@
     var m = null;
     for (var i = 0; i < p.modules.length; i++) if (p.modules[i].id === modId) m = p.modules[i];
     if (!m) return;
-    var s = { id: uid(), title: "", duration: "", doc: "", edited: 0 };
+    var s = { id: uid(), title: "", duration: "", doc: "", edited: 0, video: false, published: false };
     m.submodules.push(s);
     openMods[m.id] = true;
     route.s = s.id;
@@ -526,6 +565,19 @@
           if (route.s === id) route.s = null;
           save(true); render(); return;
         }
+        case "chk": {
+          e.stopPropagation();
+          var fx = findSub(prog(), id);
+          if (!fx) return;
+          var key = b.getAttribute("data-f");
+          fx.sub[key] = !fx.sub[key];
+          syncDoc();
+          save(true);
+          var y = window.scrollY;
+          render();
+          window.scrollTo(0, y);
+          return;
+        }
         case "save-now": syncDoc(); save(true); return;
         case "video": {
           var f = findSub(prog(), route.s);
@@ -592,16 +644,15 @@
   function refreshProgress(f) {
     var p = prog();
     if (!p) return;
-    var all = allSubs(p);
-    var done = all.filter(written).length;
-    var pc = all.length ? Math.round(done * 100 / all.length) : 0;
-
-    var v = root.querySelector(".prog-card .v");
-    if (v) v.textContent = pc + "%";
-    var bar = root.querySelector(".prog-card .bar i");
-    if (bar) bar.style.width = pc + "%";
-    var hint = root.querySelector(".prog-card .hint");
-    if (hint) hint.textContent = done + " de " + all.length + " documentos con contenido";
+    var st = stats(p);
+    METRICS.forEach(function (m) {
+      var v = root.querySelector('.stat .v[data-m="' + m.p + '"]');
+      if (v) v.textContent = st[m.p] + "%";
+      var bar = root.querySelector('.stat .bar i[data-m="' + m.p + '"]');
+      if (bar) bar.style.width = st[m.p] + "%";
+      var hint = root.querySelector('.stat .hint[data-m="' + m.key + '"]');
+      if (hint) hint.textContent = st[m.key] + " de " + st.total + " " + m.noun;
+    });
     var edt = root.querySelector(".edited");
     if (edt) edt.textContent = "Editado " + ago(f.sub.edited);
 
@@ -709,6 +760,29 @@
       "@media(max-width:1020px){.col-l{position:static}}",
       ".col-r{display:flex;flex-direction:column;gap:22px;min-width:0}",
 
+      ".stats-card{padding:18px 20px;display:flex;flex-direction:column;gap:16px}",
+      ".stat .stat-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}",
+      ".stat .k{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#747878}",
+      ".stat .v{font-size:19px;font-weight:700;color:#060607}",
+      ".stat .hint{font-size:11.5px;color:#9aa0a0;margin-top:6px}",
+      ".m-write{background:linear-gradient(90deg,#0053ce,#00b4d8)}",
+      ".m-video{background:linear-gradient(90deg,#7c3aed,#c026d3)}",
+      ".m-pub{background:linear-gradient(90deg,#15803d,#65a30d)}",
+      ".pcard .mini{width:100%;margin-bottom:9px}",
+      ".pcard .mini:last-child{margin-bottom:0}",
+      ".pcard .mini .bar{height:6px;margin-top:3px}",
+      ".pcard .mini .foot-row{margin-top:0;font-size:12px}",
+      ".checks{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}",
+      ".chk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:#747878;background:rgba(255,255,255,.6);border:1px solid #e1e3e4;border-radius:9999px;padding:7px 14px 7px 10px;cursor:pointer;white-space:nowrap}",
+      ".chk:hover{border-color:#c4c7c7;color:#444748}",
+      ".chk .box{font-size:18px}",
+      ".chk .ic{font-size:16px}",
+      ".chk.on.vid{color:#7c3aed;border-color:rgba(124,58,237,.4);background:rgba(124,58,237,.09)}",
+      ".chk.on.pub{color:#15803d;border-color:rgba(21,128,61,.4);background:rgba(21,128,61,.09)}",
+      ".sflags{display:flex;align-items:center;gap:3px;flex-shrink:0}",
+      ".sflags .material-symbols-outlined{font-size:14px}",
+      ".sflags .fv{color:#7c3aed}",
+      ".sflags .fp{color:#15803d}",
       ".prog-card{padding:20px}",
       ".prog-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}",
       ".prog-card .k{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#747878}",

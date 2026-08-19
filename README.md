@@ -14,7 +14,7 @@ Sitio estático que replica el prototipo de diseño "CEM Workspace" (sistema de 
 | `diplomas.html` | Panel de Diplomados | Crear y estructurar diplomados: módulos, submódulos, guiones, imágenes. |
 | `masterclasses.html` | Panel de Masterclasses | Crear y estructurar masterclasses: módulos, submódulos, guiones, imágenes. |
 | `ebooks.html` | Ebook Collection | Biblioteca de ebooks descargables con tarjeta destacada y grid de recursos. |
-| `tasks.html` | Content Pipeline (Kanban) | Tablero Kanban arrastrable con las fases de producción de contenido educativo. |
+| `tasks.html` | Proyectos | Proyectos internos, cada uno con el tablero que elijas: Kanban, Checklist, Notas o Post-it. |
 
 El sidebar es idéntico y totalmente enlazado en las 9 páginas (Dashboard, Tasks, Courses, Diplomas, Masterclasses, Ebooks, Analytics).
 
@@ -42,8 +42,21 @@ Al entrar en una tarjeta:
   automáticamente) y el árbol de **Módulos → Submódulos**, con `+ Nuevo módulo` y
   `+ Submódulo`, duración por submódulo y `×` para eliminar.
 - **Panel derecho:** el **documento** del submódulo seleccionado — título, duración,
-  botones *Guardar* y *Video*, barra de formato (negrita, cursiva, subrayado, H1, H2,
-  cita, lista, insertar imagen) y el área de escritura.
+  botones *Guardar* y *Video*, los checks **Hecho en video** y **Publicado**, barra de
+  formato (negrita, cursiva, subrayado, H1, H2, cita, lista, insertar imagen) y el área
+  de escritura.
+
+Los **tres indicadores** de la izquierda se calculan solos y se mueven en vivo al
+escribir o marcar los checks:
+
+| Indicador | Mide |
+| --- | --- |
+| Avance del guión | Documentos que ya tienen contenido escrito |
+| Videos realizados | Documentos con el check *Hecho en video* |
+| Publicación | Documentos con el check *Publicado* |
+
+Los submódulos ya grabados o publicados muestran su icono en el árbol de módulos, y
+una tarjeta destacada (★) enseña los tres indicadores en el registro.
 
 Cada submódulo es un documento independiente: ahí escribes el guión y el contenido
 de esa clase. Cambiar de submódulo conserva lo escrito en el anterior.
@@ -58,9 +71,23 @@ incrustadas y `localStorage` ronda los 5–10 MB por sitio: si lo llenas, el avi
 lo dirá. Para persistencia real y compartida haría falta un backend (ej.
 Firebase/Supabase).
 
+## Proyectos y tareas (`tasks.html`)
+
+Proyectos internos, cada uno con el tipo de tablero que elijas al crearlo:
+
+- **Kanban** — columnas por fase y tarjetas que se arrastran entre ellas.
+- **Checklist** — grupos de tareas con casilla y barra de progreso.
+- **Notas en grid** — tarjetas de nota con título y cuerpo.
+- **Post-it** — notas adhesivas de colores.
+
+En la barra superior, en lugar de *Quick Capture*, hay **Guardar** y **Nuevo proyecto**
+(el botón del lateral hace lo mismo). Al crear un proyecto se elige primero el tipo de
+tablero; después se entra a él y todo —nombre, descripción, columnas, tarjetas, tareas,
+notas— es editable en línea y se guarda solo. Mismas limitaciones locales que arriba.
+
 ## Edición en vivo del resto de páginas (✏️ Editar / 💾 Guardar)
 
-Las demás páginas (`index.html`, `analytics.html`, `tasks.html`, `ebooks.html`,
+Las demás páginas (`index.html`, `analytics.html`, `ebooks.html`,
 `course-production.html`, `course-lesson.html`) usan un editor más simple
 (`editable.js`) con una barra flotante:
 
