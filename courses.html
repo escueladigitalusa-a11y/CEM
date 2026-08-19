@@ -205,7 +205,7 @@
 </div>
 </aside>
 <!-- Main Canvas -->
-<main class="md:ml-64 pt-24 px-4 md:px-8 pb-24 min-h-screen relative z-10 max-w-[1280px] mx-auto" id="cem-root"></main>
+<main class="md:ml-64 pt-24 px-4 md:px-8 pb-24 min-h-screen relative z-10 max-w-[1280px] mx-auto" id="cem-root"><div id="cem-boot" style="padding:48px 8px;font-family:Poppins,system-ui,sans-serif;color:#444748;font-size:16px">Cargando el panel…</div></main>
 <script>
   window.CEM_BUILDER = {
     type: "curso",
@@ -223,5 +223,8 @@
     b2: "#2563eb"
   };
 </script>
-<script defer="" src="builder.js?v=2"></script>
+<script defer="" src="builder.js?v=3"></script>
+<script>
+(function(){setTimeout(function(){var b=document.getElementById("cem-boot");if(!b)return;b.innerHTML="<b style=\"color:#ba1a1a\">No se pudo cargar builder.js.</b><br>"+"Recarga la p\u00e1gina con Ctrl+Shift+R (o Cmd+Shift+R en Mac). Si persiste, abre la p\u00e1gina en una ventana privada.";},4000);})();
+</script>
 </body></html>

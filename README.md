@@ -85,6 +85,10 @@ En la barra superior, en lugar de *Quick Capture*, hay **Guardar** y **Nuevo pro
 tablero; después se entra a él y todo —nombre, descripción, columnas, tarjetas, tareas,
 notas— es editable en línea y se guarda solo. Mismas limitaciones locales que arriba.
 
+La página es responsive igual que el resto del sitio: en móvil el lateral fijo se
+oculta y aparece la barra de navegación inferior, para que el contenido ocupe toda
+la pantalla.
+
 ## Edición en vivo del resto de páginas (✏️ Editar / 💾 Guardar)
 
 Las demás páginas (`index.html`, `analytics.html`, `ebooks.html`,
