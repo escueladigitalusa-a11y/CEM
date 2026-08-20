@@ -18,6 +18,28 @@ Sitio estático que replica el prototipo de diseño "CEM Workspace" (sistema de 
 
 El sidebar es idéntico y totalmente enlazado en las 9 páginas (Dashboard, Tasks, Courses, Diplomas, Masterclasses, Ebooks, Analytics).
 
+## Cotizador de Auditoría y Estrategia Digital (`cotizador-auditoria-politica.html`)
+
+Herramienta independiente (marca **Impulso Digital**) para cotizar en línea el servicio
+de auditoría y estrategia digital de comunicación política. No forma parte del sidebar
+de CEM Workspace; es una página autocontenida pensada para compartir el link con un
+prospecto.
+
+- **Checklist por categoría**: las 22 macro-categorías del `Cotizador_Auditoria_Digital_Politica.xlsx`
+  original (276 puntos de análisis en total), cada una desplegable, con un checkbox por
+  punto. Los puntos con precio propio suman al elegirlos; los que vienen incluidos sin
+  costo adicional se marcan como "Incluido".
+- **Sumatoria en vivo**: cada categoría muestra su subtotal (igual que la columna
+  `SUBTOTAL` del Excel) y el panel lateral acumula el total general, con campo de
+  descuento (%) — igual que la hoja `RESUMEN` del Excel.
+- **Buscador** de puntos/categorías y botones "Todo" / "Ninguno" / "Seleccionar toda la
+  categoría".
+- **Datos del cliente**: nombre y cargo/campaña, con número de cotización autogenerado.
+- **Exportable**: botón para exportar la cotización a **PDF** (vista de impresión con
+  membrete y desglose formal), descargar un **.txt** con el resumen, o **copiar** el
+  texto de la cotización al portapapeles.
+- Guarda la selección en `localStorage` del navegador para no perderla al recargar.
+
 ## Panel de contenido (Cursos, Diplomados, Masterclasses)
 
 `courses.html`, `diplomas.html` y `masterclasses.html` son paneles para **crear y
