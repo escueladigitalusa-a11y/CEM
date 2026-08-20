@@ -26,19 +26,22 @@ de CEM Workspace; es una página autocontenida pensada para compartir el link co
 prospecto.
 
 - **Checklist por categoría**: las 22 macro-categorías del `Cotizador_Auditoria_Digital_Politica.xlsx`
-  original, cada una con un único checkbox y su precio real (la suma de los puntos de
-  análisis que la componen). No se marcan los 276 puntos individuales uno por uno — el
-  detalle de qué incluye cada categoría (sus micro-puntos) queda visible al desplegarla,
-  a modo informativo.
+  original, cada una con un único checkbox y su precio (la mayoría es la suma de los
+  puntos de análisis que la componen; Entregables Estratégicos y Acompañamiento/Medición
+  llevan precio fijo ajustado manualmente). No se marcan los 276 puntos individuales uno
+  por uno — el detalle de qué incluye cada categoría (sus micro-puntos) queda visible al
+  desplegarla, a modo informativo.
 - **Sumatoria en vivo**: cada categoría muestra su precio de una vez y el panel lateral
-  acumula el total general de las categorías marcadas, con campo de descuento (%) —
-  igual que el total de la hoja `RESUMEN` del Excel.
+  acumula el total general de las categorías marcadas, con campo de descuento (%).
 - **Buscador** de categorías (también busca dentro del detalle de puntos) y botones
   "Seleccionar todo" / "Ninguno".
 - **Datos del cliente**: nombre y cargo/campaña, con número de cotización autogenerado.
 - **Exportable**: botón para exportar la cotización a **PDF** (vista de impresión con
   membrete y desglose formal), descargar un **.txt** con el resumen, o **copiar** el
   texto de la cotización al portapapeles.
+- **Estilo**: fondo oscuro con acentos de color de marca (violeta → cian), un color de
+  acento distinto por categoría, y superficies con efecto *glassmorphism* (desenfoque +
+  transparencia) sobre manchas de color difuminadas de fondo.
 - Guarda la selección en `localStorage` del navegador para no perderla al recargar.
 
 ## Panel de contenido (Cursos, Diplomados, Masterclasses)
