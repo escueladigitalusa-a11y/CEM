@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..500,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
   --purpura:#7A3CFF;
@@ -585,6 +586,75 @@ function buildPrintHTML(){
   `;
 }
 
+function downloadPdf(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'pt', format:'a4' });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const marginX = 42;
+  let y = 50;
+
+  const { subtotal, checkedCats } = allStats();
+  const discount = Math.min(100, Math.max(0, Number(state.discount)||0));
+  const discountAmt = subtotal * discount/100;
+  const total = subtotal - discountAmt;
+  const client = document.getElementById('clientName').value.trim() || 'Cliente por definir';
+  const role = document.getElementById('clientRole').value.trim();
+
+  function ensureSpace(lines){
+    if(y + lines*14 > pageH - 50){ doc.addPage(); y = 50; }
+  }
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(17); doc.setTextColor(122,60,255);
+  doc.text('Impulso Digital', marginX, y); y += 18;
+  doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(110,110,110);
+  doc.text('Auditoría y Estrategia Digital · Comunicación Política', marginX, y); y += 22;
+
+  doc.setFontSize(10); doc.setTextColor(20,20,20);
+  doc.text('Cotización N°: ' + getQuoteNumber(), marginX, y); y += 14;
+  doc.text('Fecha: ' + new Date().toLocaleDateString('es-VE',{year:'numeric',month:'long',day:'numeric'}), marginX, y); y += 14;
+  doc.text('Cliente: ' + client + (role ? ' — ' + role : ''), marginX, y); y += 20;
+
+  doc.setDrawColor(122,60,255); doc.setLineWidth(1.2);
+  doc.line(marginX, y, pageW-marginX, y); y += 20;
+
+  CATEGORIES.forEach(cat=>{
+    if(!isChecked(cat.code)) return;
+    ensureSpace(2);
+    doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(20,20,20);
+    const priceLabel = cat.precio>0 ? fmt(cat.precio) : 'Incluido';
+    doc.text(cat.code + ' — ' + cat.title, marginX, y);
+    doc.text(priceLabel, pageW-marginX, y, { align:'right' });
+    y += 14;
+
+    doc.setFont('helvetica','normal'); doc.setFontSize(8.5); doc.setTextColor(120,120,120);
+    const detail = cat.items.map(it=>it.micro).join('  ·  ');
+    const wrapped = doc.splitTextToSize(detail, pageW - marginX*2 - 10);
+    wrapped.forEach(line=>{
+      ensureSpace(1);
+      doc.text(line, marginX+10, y); y += 11;
+    });
+    y += 8;
+  });
+
+  ensureSpace(6);
+  doc.setDrawColor(220,220,220); doc.setLineWidth(0.6);
+  doc.line(marginX, y, pageW-marginX, y); y += 18;
+
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(60,60,60);
+  doc.text('Categorías incluidas: ' + checkedCats + ' de ' + CATEGORIES.length, marginX, y); y += 15;
+  doc.text('Subtotal: ' + fmt(subtotal), marginX, y); y += 15;
+  doc.text('Descuento (' + discount + '%): -' + fmt(discountAmt), marginX, y); y += 20;
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(122,60,255);
+  doc.text('TOTAL FINAL: ' + fmt(total), marginX, y); y += 26;
+
+  doc.setFont('helvetica','italic'); doc.setFontSize(8.5); doc.setTextColor(140,140,140);
+  doc.text('Impulsamos ideas. Conectamos mundos. Generamos impacto. · Cotización válida por 15 días.', marginX, y);
+
+  doc.save('Cotizacion_' + getQuoteNumber() + '.pdf');
+}
+
 // ===== Events =====
 document.getElementById('searchBox').addEventListener('input', renderAll);
 
@@ -637,8 +707,14 @@ document.getElementById('downloadTxtBtn').addEventListener('click', ()=>{
 document.getElementById('exportPdfBtn').addEventListener('click', ()=>{
   const { checkedCats } = allStats();
   if(checkedCats===0){ showToast('Selecciona al menos una categoría'); return; }
-  buildPrintHTML();
-  setTimeout(()=> window.print(), 60);
+  try{
+    if(!window.jspdf) throw new Error('jsPDF no disponible');
+    downloadPdf();
+    showToast('PDF descargado');
+  }catch(err){
+    buildPrintHTML();
+    setTimeout(()=> window.print(), 60);
+  }
 });
 
 // init
