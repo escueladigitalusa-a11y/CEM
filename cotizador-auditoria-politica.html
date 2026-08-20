@@ -377,23 +377,23 @@ function renderCategories(filterText){
     row.style.setProperty('--cat-rgb', catRgb);
 
     row.innerHTML = `
-      <div class="flex items-center gap-3.5 p-3.5 sm:p-4">
-        <button type="button" class="chk flex items-center justify-center select-cat${selected ? ' checked' : ''}" data-cat="${cat.code}" aria-label="Seleccionar categoría" aria-pressed="${selected}">
+      <div class="flex items-center gap-2.5 sm:gap-3.5 p-3 sm:p-4">
+        <button type="button" class="chk shrink-0 flex items-center justify-center select-cat${selected ? ' checked' : ''}" data-cat="${cat.code}" aria-label="Seleccionar categoría" aria-pressed="${selected}">
           <span class="material-symbols-outlined chk-mark text-white text-[14px]">check</span>
         </button>
-        <div class="cat-icon w-9 h-9 rounded-lg flex items-center justify-center shrink-0">
-          <span class="material-symbols-outlined text-[18px]">${cat.icon}</span>
+        <div class="cat-icon w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[16px] sm:text-[18px]">${cat.icon}</span>
         </div>
         <button type="button" class="flex-1 min-w-0 text-left cat-header" data-cat="${cat.code}">
-          <div class="flex items-center gap-2">
-            <span class="text-[10px] font-semibold tracking-wider text-white/30">${cat.code}</span>
-            <span class="text-[10px] text-white/25">${cat.count} puntos analizados</span>
+          <div class="flex items-center justify-between gap-2 mb-0.5">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="text-[10px] font-semibold tracking-wider text-white/30 shrink-0">${cat.code}</span>
+              <span class="text-[10px] text-white/25 truncate hidden sm:inline">${cat.count} puntos analizados</span>
+            </div>
+            <span class="font-semi text-[13px] sm:text-sm shrink-0 ${cat.precio>0 ? 'text-white' : 'text-white/35'}">${priceLabel}</span>
           </div>
-          <h3 class="font-med text-white text-[13.5px] sm:text-sm leading-snug truncate">${cat.title}</h3>
+          <h3 class="font-med text-white text-[13px] sm:text-sm leading-snug truncate">${cat.title}</h3>
         </button>
-        <div class="text-right shrink-0">
-          <div class="font-semi text-sm ${cat.precio>0 ? 'text-white' : 'text-white/35'}">${priceLabel}</div>
-        </div>
         <button type="button" class="cat-header text-white/30 hover:text-white/60 transition shrink-0" data-cat="${cat.code}">
           <span class="material-symbols-outlined chev text-lg">expand_more</span>
         </button>
