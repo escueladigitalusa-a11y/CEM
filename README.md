@@ -26,14 +26,15 @@ de CEM Workspace; es una página autocontenida pensada para compartir el link co
 prospecto.
 
 - **Checklist por categoría**: las 22 macro-categorías del `Cotizador_Auditoria_Digital_Politica.xlsx`
-  original (276 puntos de análisis en total), cada una desplegable, con un checkbox por
-  punto. Los puntos con precio propio suman al elegirlos; los que vienen incluidos sin
-  costo adicional se marcan como "Incluido".
-- **Sumatoria en vivo**: cada categoría muestra su subtotal (igual que la columna
-  `SUBTOTAL` del Excel) y el panel lateral acumula el total general, con campo de
-  descuento (%) — igual que la hoja `RESUMEN` del Excel.
-- **Buscador** de puntos/categorías y botones "Todo" / "Ninguno" / "Seleccionar toda la
-  categoría".
+  original, cada una con un único checkbox y su precio real (la suma de los puntos de
+  análisis que la componen). No se marcan los 276 puntos individuales uno por uno — el
+  detalle de qué incluye cada categoría (sus micro-puntos) queda visible al desplegarla,
+  a modo informativo.
+- **Sumatoria en vivo**: cada categoría muestra su precio de una vez y el panel lateral
+  acumula el total general de las categorías marcadas, con campo de descuento (%) —
+  igual que el total de la hoja `RESUMEN` del Excel.
+- **Buscador** de categorías (también busca dentro del detalle de puntos) y botones
+  "Seleccionar todo" / "Ninguno".
 - **Datos del cliente**: nombre y cargo/campaña, con número de cotización autogenerado.
 - **Exportable**: botón para exportar la cotización a **PDF** (vista de impresión con
   membrete y desglose formal), descargar un **.txt** con el resumen, o **copiar** el
