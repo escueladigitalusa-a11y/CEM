@@ -102,6 +102,37 @@ Las demás páginas (`index.html`, `analytics.html`, `ebooks.html`,
 
 Mismas limitaciones de alcance local que arriba.
 
+## Cotizador de Kingdom Lab
+
+`kingdom-lab-cotizador.html` (+ `kingdom-lab.js`) es un sitio aparte, independiente
+del panel de CEM: un cotizador público para **Kingdom Lab**, una agencia de
+fotografía, audiovisual y diseño visual.
+
+Asistente de 5 pasos (Tus datos → Organización → Servicios → Cantidades → Plan):
+
+- **Organización** aplica un factor de precio según el tipo de marca (personal,
+  comercial B2C, fábrica/industria/B2B técnico, institución), igual que en los
+  cotizadores de referencia.
+- **Servicios** deja elegir Fotografía, Audiovisual y/o Visuales.
+- **Cantidades** muestra, por categoría:
+  - **Fotografía** — corporativa (por persona), comercial (por foto), de producto
+    (por producto) y locación adicional (por foto extra), a cantidad libre.
+  - **Audiovisual** — producción de video (IA, archivo listo, edición express,
+    storyboard, grabación fuera o en el local del cliente) e historias/contenido
+    hablado, a cantidad libre.
+  - **Visuales** — posts, historias y carruseles, con un total sugerido mensual
+    por sección que se reparte entre estilos y puede restablecerse.
+- **Plan** resume todo (contacto, organización, líneas por categoría, subtotal,
+  factor y total) con botones para imprimir/guardar PDF y copiar el resumen.
+
+`kingdom-lab-anexo.html` documenta los servicios que Kingdom Lab también presta
+pero que **se cotizan aparte**, sin importar el rubro del negocio: auditorías,
+configuración de cuentas, gestión de publicidad paga y producción de YouTube en
+formato largo.
+
+El progreso del cotizador se guarda en `localStorage` (`kingdom-lab-cotizador`),
+igual de local que el resto del sitio.
+
 ## Uso
 
 No requiere instalación ni build. Simplemente abre `index.html` en un navegador, o sirve la carpeta con cualquier servidor estático:
