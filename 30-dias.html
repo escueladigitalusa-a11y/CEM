@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>30 días para ti y los tuyos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9EBF4; --shell:#F6F7FB; --paper:#FFFFFF; --ink:#1A1C2B; --soft:#6F7490; --faint:#A3A8BE; --line:#E6E8F1;
+  --pri:#4B4FE8; --pri-2:#ECECFF; --pri-ink:#FFFFFF;
+  --good:#1F9D55; --good-2:#D9F7E3; --bad:#E5484D; --bad-2:#FFE1E1;
+  /* pastel tiles (education / salesforce references) */
+  --t-rose:#F5CFCF; --t-peach:#FADFBF; --t-lav:#DAD6F8; --t-mint:#CDEEDD; --t-yel:#F1E15A; --t-pink:#EFC7EE; --t-sky:#D4E4FA; --t-grey:#E8E8E3;
+  --ac-rose:#D2486A; --ac-peach:#D9812E; --ac-lav:#6A5AE0; --ac-mint:#23976A; --ac-yel:#8A7A00; --ac-pink:#B04BAE; --ac-sky:#2F6FD1;
+  --shadow:0 1px 2px rgba(26,28,43,.04),0 10px 30px -18px rgba(40,44,90,.28);
+  --tip:#16171F; --tip-ink:#FFFFFF;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C0D14; --shell:#12131C; --paper:#1A1C28; --ink:#ECEDF6; --soft:#A2A6C0; --faint:#6D7190; --line:#2A2D3D;
+  --pri:#8487FF; --pri-2:#26284A; --pri-ink:#0C0D14;
+  --good:#5AD08A; --good-2:#16301F; --bad:#FF7A7E; --bad-2:#3A1C1F;
+  --t-rose:#3A2429; --t-peach:#3A2D1D; --t-lav:#29264A; --t-mint:#18342A; --t-yel:#3A3510; --t-pink:#37213A; --t-sky:#1B2A42; --t-grey:#262833;
+  --ac-rose:#F08AA2; --ac-peach:#F2AE6A; --ac-lav:#A9A0FF; --ac-mint:#6CD6A6; --ac-yel:#E6D45A; --ac-pink:#E591E3; --ac-sky:#86B2F2;
+  --shadow:0 0 0 1px rgba(255,255,255,.03); --tip:#ECEDF6; --tip-ink:#12131C; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0C0D14; --shell:#12131C; --paper:#1A1C28; --ink:#ECEDF6; --soft:#A2A6C0; --faint:#6D7190; --line:#2A2D3D;
+  --pri:#8487FF; --pri-2:#26284A; --pri-ink:#0C0D14;
+  --good:#5AD08A; --good-2:#16301F; --bad:#FF7A7E; --bad-2:#3A1C1F;
+  --t-rose:#3A2429; --t-peach:#3A2D1D; --t-lav:#29264A; --t-mint:#18342A; --t-yel:#3A3510; --t-pink:#37213A; --t-sky:#1B2A42; --t-grey:#262833;
+  --ac-rose:#F08AA2; --ac-peach:#F2AE6A; --ac-lav:#A9A0FF; --ac-mint:#6CD6A6; --ac-yel:#E6D45A; --ac-pink:#E591E3; --ac-sky:#86B2F2;
+  --shadow:0 0 0 1px rgba(255,255,255,.03); --tip:#ECEDF6; --tip-ink:#12131C; color-scheme:dark;}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+h1,h2,h3,h4{line-height:1.2;margin:0;letter-spacing:-.015em}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--pri);outline-offset:2px;border-radius:8px}
+a{color:var(--pri);font-weight:600}
+svg.i{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- app shell (sidebar + main) ---------- */
+.app{max-width:1360px;margin:18px auto;background:var(--shell);border-radius:28px;display:grid;grid-template-columns:248px 1fr;min-height:calc(100vh - 36px);box-shadow:var(--shadow)}
+aside.side{padding:18px;position:sticky;top:18px;align-self:start;height:calc(100vh - 36px);display:flex;flex-direction:column}
+.sidecard{background:var(--paper);border-radius:22px;padding:18px 14px;height:100%;display:flex;flex-direction:column;gap:6px;overflow:auto;scrollbar-width:none}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;padding:2px 8px 14px}
+.logo .mk{width:36px;height:36px;border-radius:11px;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center;font-size:14px;font-weight:800}
+.logo small{display:block;font-weight:500;font-size:11.5px;color:var(--soft)}
+.sec{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:10px 10px 4px}
+nav.tabs{display:flex;flex-direction:column;gap:3px}
+nav.tabs button{display:flex;align-items:center;gap:11px;border:0;background:transparent;padding:10px 12px;border-radius:13px;font-size:14px;font-weight:600;color:var(--soft);text-align:left;white-space:nowrap}
+nav.tabs button:hover{background:var(--shell);color:var(--ink)}
+nav.tabs button[aria-selected="true"]{background:var(--pri);color:var(--pri-ink);box-shadow:0 10px 20px -10px var(--pri)}
+.promo{margin-top:auto;background:#121320;color:#fff;border-radius:18px;padding:16px;position:relative;overflow:hidden}
+.promo::after{content:"";position:absolute;right:-30px;bottom:-40px;width:120px;height:120px;border-radius:50%;border:18px solid rgba(255,255,255,.06)}
+.promo .ico{width:30px;height:30px;border-radius:9px;background:#fff;color:#121320;display:grid;place-items:center;margin-bottom:10px}
+.promo b{font-size:28px;font-weight:800;display:block;line-height:1}
+.promo p{margin:4px 0 12px;font-size:12.5px;opacity:.72}
+.promo button{width:100%;border:0;border-radius:12px;background:var(--pri);color:#fff;padding:9px;font-weight:700;font-size:13.5px;position:relative;z-index:1}
+:root[data-theme="dark"] .promo{background:#232540}
+
+main{padding:22px 26px 100px 8px;min-width:0}
+header.top{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+header.top h1{font-size:26px;font-weight:800}
+header.top .sub{color:var(--soft);font-size:13px;margin-top:2px}
+.spacer{flex:1}
+.iconbtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center;color:var(--ink)}
+.me{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 14px 4px 4px}
+.me .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--t-pink),var(--t-lav));display:grid;place-items:center;font-weight:800;font-size:12px;color:var(--ac-lav)}
+.me b{font-size:13px;display:block;line-height:1.1}.me span{font-size:11.5px;color:var(--soft)}
+.sync{font-size:12px;color:var(--soft)}
+
+section.view{display:none}
+section.view.on{display:block}
+
+/* ---------- generic blocks ---------- */
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.card{background:var(--paper);border-radius:22px;padding:20px;box-shadow:var(--shadow);grid-column:span 6;position:relative;min-width:0}
+.card.wide{grid-column:span 12}
+.hero .card{grid-column:auto}
+.gcol{grid-column:span 4;display:grid;gap:16px;align-content:start}.gcol .card{grid-column:auto}.card.third{grid-column:span 4}.card.two{grid-column:span 8}
+.card.done{opacity:.66}
+.card .hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.card h3{font-size:17px;font-weight:700}
+.card .hd h3{flex:1}
+.card h3 small,.card .cap{display:block;font-weight:500;font-size:12.5px;color:var(--soft);margin-top:3px;letter-spacing:0}
+.card p{margin:.4em 0}
+.card ol,.card ul{margin:.3em 0;padding-left:1.2em}
+.card li{margin:.25em 0}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px 3px 4px;margin-bottom:10px;background:var(--paper);color:var(--ink)}
+.tag .ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--shell)}
+.tag .ic svg.i{width:13px;height:13px}
+.lbl{font-weight:700}
+.mini{font-size:12.5px;color:var(--soft)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:8px 14px;font-size:13.5px;font-weight:600}
+.btn.primary{background:var(--pri);color:var(--pri-ink);border-color:var(--pri)}
+.btn.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+textarea,input[type=date],input[type=text]{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--shell);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+textarea{min-height:76px;resize:vertical}
+.h2{font-size:clamp(24px,3.4vw,34px);font-weight:800;margin:0 0 4px}
+.lead{color:var(--soft);max-width:78ch;margin:0 0 20px}
+.select{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:600;color:var(--soft);background:var(--paper)}
+
+/* pastel tiles (text stays ink, accents are decorative) */
+.pt{box-shadow:none}
+.pt .tag{background:rgba(255,255,255,.72)}
+:root[data-theme="dark"] .pt .tag{background:rgba(255,255,255,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pt .tag{background:rgba(255,255,255,.08)}}
+.pt .btn{background:rgba(255,255,255,.6);border-color:transparent}
+.pt .btn.primary{background:var(--ink);color:var(--paper)}
+.pt textarea,.pt input[type=text]{background:rgba(255,255,255,.55);border-color:transparent}
+:root[data-theme="dark"] .pt .btn,:root[data-theme="dark"] .pt textarea,:root[data-theme="dark"] .pt input[type=text]{background:rgba(255,255,255,.06)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pt .btn,:root:not([data-theme="light"]) .pt textarea,:root:not([data-theme="light"]) .pt input[type=text]{background:rgba(255,255,255,.06)}}
+.c-rose{background:var(--t-rose)}.c-rose .tag .ic{color:var(--ac-rose)}
+.c-peach{background:var(--t-peach)}.c-peach .tag .ic{color:var(--ac-peach)}
+.c-lav{background:var(--t-lav)}.c-lav .tag .ic{color:var(--ac-lav)}
+.c-mint{background:var(--t-mint)}.c-mint .tag .ic{color:var(--ac-mint)}
+.c-yel{background:var(--t-yel)}.c-yel .tag .ic{color:var(--ac-yel)}
+.c-pink{background:var(--t-pink)}.c-pink .tag .ic{color:var(--ac-pink)}
+.c-sky{background:var(--t-sky)}.c-sky .tag .ic{color:var(--ac-sky)}
+.c-grey{background:var(--t-grey)}.c-grey .tag .ic{color:var(--soft)}
+.c-white .tag{background:var(--shell)} .c-white .tag .ic{background:var(--paper);color:var(--pri)}
+
+/* round check button */
+.check{flex:0 0 auto;width:40px;height:40px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--ink) 18%,transparent);background:rgba(255,255,255,.55);display:grid;place-items:center;color:var(--ink)}
+.c-white .check{background:var(--shell)}
+.check svg{width:18px;height:18px;opacity:.18;transition:.2s}
+.check[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.check[aria-pressed="true"] svg{opacity:1}
+
+/* ---------- HOY ---------- */
+.pills{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 14px;margin-bottom:6px;scrollbar-width:thin}
+.pills button{flex:0 0 auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px 4px 4px;position:relative}
+.pills button b{width:30px;height:30px;border-radius:50%;background:var(--shell);display:grid;place-items:center;font-size:13px;font-weight:800}
+.pills button span.w{font-size:12px;color:var(--soft);font-weight:600}
+.pills button .ring{width:22px;height:22px;border-radius:50%;background:conic-gradient(var(--pri) calc(var(--p)*1%),var(--line) 0);-webkit-mask:radial-gradient(circle,transparent 6px,#000 7px);mask:radial-gradient(circle,transparent 6px,#000 7px)}
+.pills button[aria-current="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pills button[aria-current="true"] b{background:var(--paper);color:var(--ink)}
+.pills button[aria-current="true"] span.w{color:var(--paper);opacity:.75}
+.pills button.today::after{content:"";position:absolute;top:2px;left:26px;width:8px;height:8px;border-radius:50%;background:var(--bad);border:2px solid var(--paper)}
+
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch}
+.hero .ht{padding:6px 4px}
+.hero .eyebrow{font-size:13px;font-weight:700;color:var(--pri);display:flex;align-items:center;gap:8px}
+.hero h1{font-size:clamp(32px,4.6vw,54px);font-weight:700;letter-spacing:-.035em;line-height:1.02;margin:8px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;border-radius:999px;padding:6px 12px;background:var(--paper);border:1px solid var(--line)}
+.chip.stage{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.meta{color:var(--soft);font-size:13.5px;margin-bottom:12px}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+.kpi{background:var(--paper);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;min-width:0}
+.kpi .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.kpi .ib{width:40px;height:40px;border-radius:13px;background:var(--shell);display:grid;place-items:center;color:var(--ink)}
+.kpi .lb{font-size:13px;font-weight:600;color:var(--soft)}
+.kpi .v{font-size:28px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.kpi .v small{font-size:12.5px;font-weight:500;color:var(--soft);letter-spacing:0;margin-left:6px}
+.kpi.fill{background:var(--pri);color:var(--pri-ink);box-shadow:0 18px 30px -18px var(--pri)}
+.kpi.fill .ib{background:rgba(255,255,255,.95);color:#4B4FE8}
+.kpi.fill .lb,.kpi.fill .v small{color:inherit;opacity:.82}
+.badge{font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px;background:var(--good-2);color:var(--good);white-space:nowrap}
+.badge.neutral{background:var(--shell);color:var(--soft)}
+.kpi.fill .badge{background:rgba(255,255,255,.9);color:#1F9D55}
+.bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;border-radius:6px;background:var(--pri);transition:width .35s}
+.kpi.fill .bar{background:rgba(255,255,255,.28)} .kpi.fill .bar i{background:#fff}
+
+.music{display:inline-flex;gap:8px;align-items:center;font-size:12.5px;font-weight:600;background:rgba(255,255,255,.6);border-radius:999px;padding:5px 12px 5px 5px;margin-bottom:10px}
+.music .dot{width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-size:11px}
+:root[data-theme="dark"] .music{background:rgba(255,255,255,.06)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .music{background:rgba(255,255,255,.06)}}
+.quote{font-size:21px;font-weight:700;line-height:1.3;letter-spacing:-.02em;margin:4px 0 12px}
+.bubbles{display:flex;flex-direction:column;gap:8px;margin:6px 0 4px}
+.bubbles span{align-self:flex-start;background:var(--tip);color:var(--tip-ink);border-radius:14px 14px 14px 4px;padding:8px 13px;font-weight:600;font-size:14px;max-width:100%}
+.bubbles span:nth-child(2){align-self:center}
+.bubbles span:nth-child(3){align-self:flex-end;border-radius:14px 14px 4px 14px;background:var(--pri);color:var(--pri-ink)}
+.segbar{display:flex;gap:3px;height:34px;margin:6px 0 10px}
+.segbar i{border-radius:9px;display:block;position:relative}
+.segbar i.w{background:var(--t-sky)} .segbar i.r{background:var(--pri)} .segbar i.y{background:var(--t-lav)} .segbar i.d{background:var(--t-peach)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--soft);font-weight:600}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend span::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c)}
+.steps{list-style:none;padding:0!important;margin:6px 0!important;display:grid;gap:6px}
+.steps li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;margin:0!important}
+.steps li::before{content:attr(data-n);width:28px;height:28px;border-radius:50%;background:var(--shell);display:grid;place-items:center;font-size:12px;font-weight:800}
+.pt .steps li::before{background:rgba(255,255,255,.65)}
+.kv{display:grid;gap:8px;margin:4px 0}
+.kv div{background:rgba(255,255,255,.55);border-radius:14px;padding:9px 12px}
+:root[data-theme="dark"] .kv div{background:rgba(255,255,255,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kv div{background:rgba(255,255,255,.05)}}
+.kv .lbl{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--soft)}
+.skinline{display:grid;grid-template-columns:48px 1fr;gap:10px;margin:6px 0;align-items:start}
+.skinline b{background:var(--ink);color:var(--paper);border-radius:10px;text-align:center;font-size:12px;padding:4px 0}
+.note{background:rgba(255,255,255,.6);border-radius:12px;padding:9px 12px;font-size:13.5px;margin-top:8px}
+.warn{background:var(--bad-2);border-radius:16px;padding:12px 14px;font-size:14px;border-left:4px solid var(--bad)}
+.subchecks{display:flex;gap:8px;margin-top:10px}
+.subchecks button{flex:1;border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:8px;font-size:13.5px;font-weight:600}
+.pt .subchecks button{background:rgba(255,255,255,.55);border-color:transparent}
+.subchecks button[aria-pressed="true"]{background:var(--ink)!important;color:var(--paper);border-color:var(--ink)}
+
+/* ---------- MES ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.stat{border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:2px}
+.stat .ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;margin-bottom:10px}
+.stat .ic svg.i{width:17px;height:17px}
+.stat b{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.stat span{font-size:13px;font-weight:600}
+.stat em{font-style:normal;font-size:11.5px;color:var(--soft)}
+.month{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.month .wd{font-size:12px;color:var(--soft);text-align:center;font-weight:700}
+.mcell{background:var(--shell);border:1px solid transparent;border-radius:16px;padding:9px;min-height:92px;text-align:left;display:flex;flex-direction:column;gap:4px}
+.mcell:hover{border-color:var(--line);background:var(--paper)}
+.mcell b{font-size:18px;font-weight:800;line-height:1;display:flex;align-items:center;gap:6px}
+.mcell small{font-size:11px;color:var(--soft);line-height:1.25}
+.mcell .pbar{margin-top:auto;height:5px;border-radius:5px;background:var(--line);overflow:hidden}
+.mcell .pbar i{display:block;height:100%;background:var(--pri)}
+.mcell.full{background:var(--pri-2);border-color:var(--pri)}
+.mcell.cur{background:var(--ink);color:var(--paper)}
+.mcell.cur small{color:var(--paper);opacity:.7}
+.today-dot{width:8px;height:8px;border-radius:50%;background:var(--bad);display:inline-block}
+.cols{display:flex;align-items:flex-end;gap:clamp(1px,.6vw,5px);height:170px;padding:0 0 0 34px;position:relative;margin-top:10px}
+.cols .gl{position:absolute;left:34px;right:0;border-top:1px dashed var(--line);font-size:10.5px;color:var(--faint)}
+.cols .gl span{position:absolute;left:-34px;top:-8px}
+.cols .col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;position:relative;z-index:1;border:0;background:transparent;padding:0}
+.cols .col i{width:100%;max-width:14px;border-radius:4px 4px 0 0;background:var(--pri);display:block;min-height:3px}
+.cols .col.zero i{background:var(--line)}
+.cols .col.cur i{background:var(--ink)}
+.cols .col small{font-size:9.5px;color:var(--faint)}
+.cols .col:hover .tt{display:block}
+.cols .tt{display:none;position:absolute;bottom:calc(100% - 20px);left:50%;transform:translateX(-50%);background:var(--tip);color:var(--tip-ink);font-size:11.5px;font-weight:600;border-radius:10px;padding:5px 9px;white-space:nowrap;z-index:5}
+.rings{display:grid;grid-template-columns:1fr;gap:18px;justify-items:center}
+.view>.h2{display:none}
+.rings svg{width:170px;height:170px}
+.rlist{display:grid;gap:10px;width:100%}
+.rlist div{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;font-size:13.5px;font-weight:600}
+.rlist div::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c)}
+.tp{width:100%;border-collapse:collapse;font-size:13.5px}
+.tp th{font-size:11.5px;color:var(--faint);font-weight:600;text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.tp td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tp td.n{color:var(--faint);font-weight:700;width:40px}
+.tp .track{height:5px;border-radius:5px;background:var(--line);overflow:hidden;min-width:80px}
+.tp .track i{display:block;height:100%;border-radius:5px}
+.opill{display:inline-block;font-size:11.5px;font-weight:700;border:1.5px solid var(--c);color:var(--ink);border-radius:8px;padding:1px 8px;background:color-mix(in srgb,var(--c) 12%,transparent);min-width:48px;text-align:center}
+
+/* ---------- gantt (movimiento, trabajo) ---------- */
+.gantt{position:relative;overflow-x:auto}
+.gantt .inner{min-width:640px}
+.gantt .scale{display:grid;grid-template-columns:190px repeat(30,1fr);font-size:10.5px;color:var(--faint);font-weight:600;margin-bottom:22px}
+.gantt .scale span{text-align:center}
+.gantt .grow{display:grid;grid-template-columns:190px repeat(30,1fr);align-items:center;margin:10px 0;position:relative}
+.gantt .who{display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:999px;padding:5px 12px 5px 5px;box-shadow:var(--shadow);margin-right:14px;min-width:0}
+.gantt .who b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px;flex:0 0 auto}
+.gantt .who span{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.2}
+.gantt .gbar{height:46px;border-radius:999px;display:flex;align-items:center;gap:10px;padding:0 16px 0 8px;color:#fff;position:relative;overflow:hidden;font-size:12px}
+.gantt .gbar .kn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.95);flex:0 0 auto}
+.gantt .gbar strong{margin-left:auto;font-size:20px;font-weight:800}
+.gantt .gbar.cur{outline:3px solid var(--ink);outline-offset:2px}
+.gantt .vline{position:absolute;top:-4px;bottom:0;width:2px;background:var(--bad);z-index:2;border-radius:2px}
+.gantt .vline::before{content:"Hoy";position:absolute;top:-20px;left:50%;transform:translateX(-50%);background:var(--bad);color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:1px 6px}
+.gx{display:flex;height:46px;border-radius:999px;overflow:hidden;gap:3px;margin:10px 0}
+.gx div{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:#fff;min-width:0;white-space:nowrap;overflow:hidden}
+
+/* kanban (salesforce / task management) */
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kcol h4{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);text-align:center;margin:0 0 10px}
+.kcol .kline{height:4px;border-radius:4px;margin-bottom:12px}
+.kcard{border-radius:20px;padding:14px 16px;min-width:0}
+.kcard h3{font-size:15px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.kcard .more{width:28px;height:28px;border-radius:50%;border:1px solid color-mix(in srgb,var(--ink) 15%,transparent);display:grid;place-items:center;font-size:13px;flex:0 0 auto}
+.kitem{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.62);border-radius:12px;padding:8px 10px;margin:7px 0;font-size:13px}
+:root[data-theme="dark"] .kitem{background:rgba(255,255,255,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .kitem{background:rgba(255,255,255,.05)}}
+.kitem .av{width:24px;height:24px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff}
+.kitem b{font-weight:700}
+.dashes{display:flex;gap:4px;margin:10px 0 4px}
+.dashes i{flex:1;height:3px;border-radius:3px;background:color-mix(in srgb,var(--ink) 18%,transparent)}
+.dashes i.on{background:var(--ink)}
+.dashes i.half{background:linear-gradient(90deg,var(--ink) 50%,color-mix(in srgb,var(--ink) 18%,transparent) 50%)}
+
+/* tile board (pareja / familia / thomas) */
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tile{border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:6px;min-height:150px;min-width:0}
+.tile .th{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.tile h4{font-size:14px;font-weight:700;line-height:1.25}
+.tile .num{font-size:11.5px;font-weight:700;color:var(--soft)}
+.tile p{margin:0;font-size:12.5px;color:var(--soft)}
+.tile .ft{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tile .check{width:34px;height:34px}
+.tile.ok{outline:2px solid var(--ink);outline-offset:-2px}
+.tile.hatch{background:repeating-linear-gradient(135deg,var(--shell) 0 8px,var(--line) 8px 10px)}
+.pill{font-size:11.5px;border-radius:999px;padding:2px 9px;background:var(--bad-2);color:var(--bad);font-weight:700;white-space:nowrap}
+.pill.home{background:var(--good-2);color:var(--good)}
+.pill.ink{background:var(--ink);color:var(--paper)}
+
+/* course cards (familia / mente) */
+.courses{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.course{border-radius:22px;padding:16px 18px;min-height:170px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.course .ch{display:flex;align-items:center;gap:8px}
+.course .ch .ic{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center}
+:root[data-theme="dark"] .course .ch .ic{background:rgba(255,255,255,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .course .ch .ic{background:rgba(255,255,255,.08)}}
+.course .ch span{font-size:12.5px;font-weight:600}
+.course .ch .score{margin-left:auto;background:rgba(255,255,255,.85);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700}
+:root[data-theme="dark"] .course .ch .score{background:rgba(255,255,255,.08)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .course .ch .score{background:rgba(255,255,255,.08)}}
+.course h3{font-size:20px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+.course .ft{margin-top:auto;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--soft);font-weight:600}
+.dots{display:flex;gap:3px}
+.dots i{width:9px;height:9px;border-radius:50%;background:color-mix(in srgb,var(--ink) 18%,transparent)}
+.dots i.on{background:var(--ink)}
+
+/* lists */
+.list-plain{list-style:none;padding:0!important;margin:0!important}
+.list-plain li{padding:11px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;margin:0!important}
+.pt .list-plain li{border-color:color-mix(in srgb,var(--ink) 10%,transparent)}
+.list-plain li:last-child{border-bottom:0}
+.list-plain li .n{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--shell);font-weight:800;font-size:13px;color:var(--soft)}
+.pt .list-plain li .n{background:rgba(255,255,255,.6)}
+.list-plain li.ok .n{background:var(--ink);color:var(--paper)}
+.list-plain .check{width:34px;height:34px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
+.tbl th{font-size:11.5px;color:var(--faint);font-weight:600}
+.tbl tr.cur td{background:var(--pri-2)}
+.tbl tr.cur td:first-child{border-radius:10px 0 0 10px}.tbl tr.cur td:last-child{border-radius:0 10px 10px 0}
+.scroll{overflow-x:auto}
+.vbars{display:flex;align-items:flex-end;gap:14px;height:160px;margin:16px 0 6px}
+.vbars div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.vbars i{width:100%;max-width:34px;border-radius:8px 8px 3px 3px;background:var(--t-lav);display:block}
+.vbars div.cur i{background:var(--pri)}
+.vbars b{font-size:12.5px}.vbars small{font-size:11px;color:var(--soft)}
+
+/* piel */
+.skincal{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}
+.skd{border:0;border-radius:14px;padding:8px 4px;font-size:12px;background:var(--shell);text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.skd b{font-size:15px;font-weight:800}
+.skd.cur{background:var(--ink);color:var(--paper)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin:0 1px}
+.d-c{background:#E7A21D} .d-g{background:#7A6CF0} .d-p{background:#E5484D} .d-b{background:var(--line);box-shadow:inset 0 0 0 1px var(--faint)}
+
+/* timeline guía */
+.tline{list-style:none;padding:0!important;margin:0!important;position:relative}
+.tline::before{content:"";position:absolute;left:17px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.tline li{display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start;padding:8px 0;margin:0!important;position:relative}
+.tline li b{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--pri);color:var(--pri-ink);font-size:13px;z-index:1}
+.tline li:nth-child(2n) b{background:var(--ink);color:var(--paper)}
+.tline li span{background:var(--shell);border-radius:14px;padding:9px 13px}
+
+/* timer */
+#timer{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--tip);color:var(--tip-ink);border-radius:24px;padding:12px 14px;display:none;align-items:center;gap:14px;width:min(600px,calc(100% - 24px));box-shadow:0 20px 40px -14px rgba(0,0,0,.5)}
+#timer.on{display:flex}
+#timer .tt{flex:1;min-width:0}
+#timer .tt small{display:block;opacity:.7;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#timer .tt b{font-size:14.5px}
+#timer .clock{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+#timer button{background:transparent;border:1px solid color-mix(in srgb,var(--tip-ink) 30%,transparent);color:var(--tip-ink);border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:600}
+#timer #tmPause{background:var(--pri);border-color:var(--pri);color:#fff}
+#timer .seg{height:4px;border-radius:4px;background:color-mix(in srgb,var(--tip-ink) 22%,transparent);margin-top:6px;overflow:hidden}
+#timer .seg i{display:block;height:100%;background:var(--pri)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .gcol{grid-column:span 12}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .card.third{grid-column:span 6}
+  .card.two{grid-column:span 12}
+  .hero{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr);margin:0;border-radius:0;min-height:100vh}
+  aside.side{position:sticky;top:0;z-index:30;height:auto;min-width:0;padding:8px 10px;background:color-mix(in srgb,var(--shell) 90%,transparent);backdrop-filter:blur(10px)}
+  .sidecard{flex-direction:row;align-items:center;min-width:0;padding:6px;border-radius:18px;overflow:visible}
+  .logo{padding:0 6px}.logo small,.sec,.promo{display:none}
+  nav.tabs{flex-direction:row;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs button{padding:8px 12px;font-size:13px}
+  nav.tabs button svg.i{display:none}
+  main{padding:14px 16px 110px}
+  header.top h1{font-size:22px}
+  .me div{display:none}.me{padding:4px}
+  .card,.card.third,.card.two,.gcol{grid-column:span 12}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .kanban,.courses{grid-template-columns:1fr}
+  .skincal{grid-template-columns:repeat(6,1fr)}
+  .cols .col small{font-size:0}.cols .col:nth-child(5n+3) small{font-size:9px}
+  .mcell small{display:none}.mcell{min-height:60px;padding:7px}
+  .rings{grid-template-columns:1fr;justify-items:center}
+  .rlist{width:100%}
+}
+@media (max-width:480px){
+  .kpis{grid-template-columns:1fr 1fr;gap:10px}
+  .kpi{padding:14px}.kpi .v{font-size:22px}
+  .month{gap:5px}
+  #timer{gap:8px;padding:10px}#timer .clock{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side"><div class="sidecard">
+  <div class="logo"><span class="mk">30</span><div>30 días<small>para ti y los tuyos</small></div></div>
+  <nav class="tabs" role="tablist" id="tabs" aria-label="Secciones"></nav>
+  <div class="promo" id="promo"></div>
+</div></aside>
+
+<main>
+  <header class="top">
+    <div><h1 id="pageTitle">Hoy</h1><div class="sub" id="pageSub">Movimiento, conexión, aprendizaje y cuidado</div></div>
+    <div class="spacer"></div>
+    <span class="sync" id="sync"></span>
+    <button class="iconbtn" id="themeBtn" aria-label="Cambiar tema"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <div class="me"><span class="av">TÚ</span><div><b>Mi plan</b><span>30 días</span></div></div>
+  </header>
+  <section class="view" id="v-hoy"></section>
+  <section class="view" id="v-mes"></section>
+  <section class="view" id="v-mov"></section>
+  <section class="view" id="v-piel"></section>
+  <section class="view" id="v-fam"></section>
+  <section class="view" id="v-mente"></section>
+  <section class="view" id="v-par"></section>
+  <section class="view" id="v-trab"></section>
+  <section class="view" id="v-guia"></section>
+</main>
+</div>
+
+<div id="timer" role="status" aria-live="polite">
+  <div class="tt"><small id="tmName"></small><b id="tmSeg"></b><div class="seg"><i id="tmBar"></i></div></div>
+  <div class="clock" id="tmClock">00:00</div>
+  <button id="tmPause">Pausar</button>
+  <button id="tmSkip">Siguiente</button>
+  <button id="tmStop" aria-label="Cerrar temporizador">✕</button>
+</div>
+
+<script>
+const DAYS=[
+{t:"Empezar con intención",mu:"Gymnopédie n.º 1, Erik Satie",mq:"¿Cómo quiero sentirme al terminar estos 30 días? ¿Qué pequeño acto de hoy lo representa? Escribe una acción de menos de 10 minutos.",et:"Presentarme",eq:["What is your name?","Where do you live?","What do you enjoy?"],emT:"Poner nombre",em:"Detente, apoya los pies y completa: «Siento…, lo noto en…, necesito…». Puntúa la intensidad 0–10 y elige una respuesta amable.",iT:"Transportes terrestres",iI:"Carro, autobús y tren llevan personas por tierra.",iJ:"Con tres juguetes grandes o dibujos, haz una carretera y una vía. Muevan cada vehículo nombrándolo.",iP:"¿Cuál va por los rieles?",thT:"Búsqueda visible",th:"Distribuye 5 croquetas de su ración en un suelo limpio y antideslizante, delante de él. Di «busca» una vez y deja que explore.",pT:"Café de inicio",pM:"35 min",p:"Preparen una bebida y respondan por turnos: «¿Qué me gustaría compartir contigo este mes?». Elijan una cita que ambos esperen con ilusión."},
+{t:"Una identidad practicable",mu:"Arabesque n.º 1, Claude Debussy",mq:"Completa: «Estoy aprendiendo a ser una persona que…». Añade una conducta observable, no una exigencia de perfección.",et:"Mi rutina",eq:["What do you do in the morning?","What time do you work?","What do you do at night?"],emT:"Volver al presente",em:"Con ojos abiertos, nombra 5 cosas que ves, 4 sensaciones de contacto y 3 sonidos. Termina describiendo dónde estás y qué harás ahora.",iT:"Transportes aéreos",iI:"El avión y el helicóptero vuelan.",iJ:"Mueve dos dibujos por arriba de una carretera de papel. Imiten alas y hélices con los brazos.",iP:"¿Cuál vuela por el cielo?",thT:"Snack de su comida",th:"Ablanda una pequeña porción de su alimento habitual con agua y extiéndela en una alfombrilla de lamido apta para cachorro. Ofrece bajo supervisión.",pT:"Cocinar juntos",pM:"45 min",p:"Elijan una cena sencilla que ya sepan preparar. Repartan tareas, pongan una canción y coman diez minutos sin teléfonos."},
+{t:"Mi energía real",mu:"Preludio de la Suite para violonchelo n.º 1, J. S. Bach",mq:"¿Qué me da energía y qué me la quita? Elige una cosa que simplificarás hoy y una que protegerás.",et:"Mi familia",eq:["Who is in your family?","What do your children enjoy?","What do you like doing together?"],emT:"Aflojar el cuerpo",em:"Observa mandíbula, hombros y manos. Suelta tensión al exhalar suavemente, sin aguantar el aire. Después identifica una necesidad corporal.",iT:"Transportes acuáticos",iI:"El barco navega por el agua.",iJ:"Usa un recipiente poco profundo con supervisión continua y un juguete adecuado; compara barco y carro. Vacía al terminar.",iP:"¿Dónde pondrías el barco?",thT:"¿En qué mano?",th:"Muestra una croqueta y ciérrala suavemente en una mano. Abre cuando la huela; repite tres veces. No fomentes mordiscos ni frustración.",pT:"Salir por café",pM:"45–60 min",out:1,p:"Vayan a una cafetería y cuenten una anécdota que el otro no conozca. Alternativa en casa: café servido como una pequeña cita."},
+{t:"Atención con propósito",mu:"Clair de lune, Claude Debussy",mq:"¿Qué resultado justificaría mis cuatro horas de trabajo? Define un entregable y la primera acción para comenzarlo.",et:"Mi casa",eq:["Describe your favorite room.","Where do you work at home?","What is next to your desk?"],emT:"Control e influencia",em:"Divide una hoja: «Puedo actuar» y «No depende de mí». Coloca una preocupación en cada lado y actúa solo sobre la primera.",iT:"Vehículos que ayudan",iI:"Ambulancia, camión de bomberos y camión de basura tienen trabajos distintos.",iJ:"Representa rescatar un peluche, apagar un fuego imaginario y recoger papeles grandes.",iP:"¿Cuál ayuda a una persona enferma?",thT:"Pelota al ras",th:"Haz rodar una pelota para perros, demasiado grande para tragar, a un metro. Tres repeticiones sobre suelo antideslizante; sin saltos ni lanzamientos altos.",pT:"Nuestras canciones",pM:"30 min",p:"Cada uno elige tres canciones significativas y explica una historia asociada. Escuchen al menos una completa juntos."},
+{t:"Hablarme mejor",mu:"Nocturno op. 9 n.º 2, Frédéric Chopin",mq:"Escribe una frase dura que te dices. ¿Cómo expresarías la misma necesidad a una amiga? Usa esa segunda versión hoy.",et:"Gustos",eq:["What music do you like?","Do you prefer coffee or tea?","What do you dislike?"],emT:"Pensamiento y hecho",em:"Escribe una preocupación. Separa el hecho observable de tu interpretación y completa: «Estoy teniendo el pensamiento de que…». No necesitas discutir con él.",iT:"Semáforo y seguridad",iI:"Rojo: detenerse; verde: avanzar en nuestro juego. En la calle, siempre con un adulto.",iJ:"Haz dos círculos grandes y juega a caminar/parar en casa, sin carreras. Practiquen darse la mano.",iP:"¿Qué hacemos cuando está rojo?",thT:"Toalla abierta",th:"Deja 4 croquetas visibles sobre una toalla extendida; cubre solo una con un pliegue muy fácil. Retira si intenta comer la tela.",pT:"Caminar y conversar",pM:"35 min",out:1,p:"Den un paseo cómodo y respondan: «¿Qué te gustó de esta semana?». Si no pueden salir, conversen junto a una ventana con una bebida."},
+{t:"Disfrute intencional",mu:"El cisne, Camille Saint-Saëns",mq:"¿Qué disfruto que no necesita ser productivo? Reserva 15 minutos para eso y escribe cuándo lo harás.",et:"Pedir un café",eq:["Can I have a coffee, please?","What would you like?","How much is it?"],emT:"Pedir apoyo",em:"Ensaya y, si lo necesitas, di: «Estoy sobrecargada. ¿Puedes encargarte de ___ durante ___?». Pide una acción concreta y escucha la respuesta.",iT:"Tierra, aire y agua",iI:"Los transportes se agrupan por dónde se desplazan.",iJ:"Coloca tres hojas: carretera, cielo y mar. Distribuyan juntos seis dibujos, sin exigir que acierte solo.",iP:"¿Dónde viajaría este avión?",thT:"Encuentra tu juguete",th:"Muestra su juguete y colócalo parcialmente visible junto a una silla. Di «busca» y celebra que lo encuentre. Dos o tres turnos.",pT:"Cine",pM:"120 min + traslado",out:1,p:"Elijan una película entre ambos y acuerden cuidado de los niños. Plan en casa: película completa, luces suaves y teléfonos lejos."},
+{t:"Primera revisión",mu:"Reverie, Claude Debussy",mq:"¿Qué fue fácil, qué pesó y qué quiero repetir? Conserva un hábito y reduce uno que resultó excesivo.",et:"Repaso personal",eq:["Introduce yourself.","Describe your family.","Tell me about your usual morning."],emT:"Reconocer patrones",em:"Anota un momento de calma y uno de tensión de la semana. ¿Qué ocurrió antes? Elige una señal temprana que observarás la próxima semana.",iT:"Repaso: nuestro viaje",iI:"Elegir transporte y contar una historia sencilla.",iJ:"Deja que elija tres vehículos y un peluche. Inventen un viaje con inicio y llegada. Sigue sus ideas.",iP:"¿Cómo llega el peluche a casa?",thT:"Elección tranquila",th:"Ofrece dos juguetes seguros en el suelo. Acompaña cinco minutos el que elija y termina antes de que se sobreexcite.",pT:"Parque y pausa",pM:"60 min",out:1,p:"Visiten un parque, siéntense y observen el entorno. No conviertan la salida en entrenamiento. Si se quedan en casa, hagan un picnic en el suelo."},
+{t:"Mis valores",mu:"Gnossienne n.º 1, Erik Satie",mq:"Elige tres valores: cuidado, creatividad, honestidad, aprendizaje u otros. ¿Qué decisión concreta refleja uno hoy?",et:"Lo que estoy haciendo",eq:["What are you doing now?","What are your children doing?","What are you working on today?"],emT:"Pausa antes de responder",em:"Practica en calma: parar, soltar el aire, notar cuerpo y emoción, elegir qué decir. Ensaya: «Necesito un momento y vuelvo a hablar contigo».",iT:"Mi cuerpo",iI:"Cabeza, manos, pies y barriga son partes del cuerpo.",iJ:"Frente a un espejo, señalen esas partes y después en un muñeco. Terminen con una canción corporal.",iP:"¿Qué parte usamos para caminar?",thT:"Dos estaciones de olor",th:"Pon tres croquetas en cada uno de dos puntos cercanos y visibles. Deja que descubra el segundo a su ritmo, sin arrastrarlo.",pT:"Juego de mesa",pM:"35 min",p:"Jueguen cartas, dominó o un juego que ya tengan. Acuerden que el objetivo es pasarla bien y terminen con una cosa que apreciaron del otro."},
+{t:"Hechos de progreso",mu:"Preludio en do mayor, BWV 846, J. S. Bach",mq:"Anota tres esfuerzos recientes, aunque el resultado no haya sido perfecto. ¿Cuál puedes repetir sin agotarte?",et:"Ejercicio",eq:["How often do you exercise?","Do you prefer walking or dancing?","How do you feel after exercise?"],emT:"Validar sin resignarse",em:"Completa: «Tiene sentido que me sienta así porque…; aun así puedo elegir…». Elige una conducta que no dañe a nadie.",iT:"Mis sentidos",iI:"Vemos, oímos y tocamos para conocer el mundo.",iJ:"Muestra un objeto colorido, suena una campana suave y ofrece una tela. Deja que explore sin vendar los ojos.",iP:"¿Esto lo escuchas o lo miras?",thT:"Lamido sencillo",th:"Prepara de nuevo una capa fina de su comida humedecida en su alfombrilla. Cuenta esa porción dentro de la ración diaria.",pT:"Cena a cuatro manos",pM:"45 min",p:"Uno prepara y otro organiza la mesa; cambien la próxima vez. Durante la cena, hablen de un viaje que les gustaría hacer, sin resolver presupuesto hoy."},
+{t:"Soltar una expectativa",mu:"Träumerei, op. 15 n.º 7, Robert Schumann",mq:"¿Qué estoy intentando hacer solo por quedar bien? Decide qué puedes renegociar o dejar para otro momento.",et:"La ciudad",eq:["What places are near your home?","Where is the nearest park?","How do you get there?"],emT:"Emoción y necesidad",em:"Elige una emoción de hoy. Pregunta: «¿Necesito descanso, claridad, compañía, espacio o ayuda?». Pide o procura una de esas cosas.",iT:"Colores básicos",iI:"Rojo, azul y amarillo.",iJ:"Busquen tres objetos grandes de esos colores y emparejen cada uno con una hoja pintada.",iP:"¿Dónde está otro objeto azul?",thT:"Encuéntrame cerca",th:"Con otro adulto presente, ponte a la vista detrás de una puerta abierta. Llámalo una vez y prémialo al acercarse. No lo dejes solo si se angustia.",pT:"Café y sueños",pM:"45 min",out:1,p:"Salgan por una bebida y compartan un deseo personal y uno compartido. Alternativa: preparen dos bebidas distintas en casa y hagan la misma conversación."},
+{t:"Empezar pequeño",mu:"Gymnopédie n.º 1, Erik Satie",mq:"¿Qué tarea estoy evitando? Divide el comienzo en un paso de cinco minutos y describe exactamente ese paso.",et:"Comprar",eq:["How much does this cost?","Do you have another color?","Can I pay by card?"],emT:"Decir no con claridad",em:"Ensaya: «Hoy no puedo hacer X. Sí puedo Y el día Z». Mantén la frase corta; no necesitas inventar excusas.",iT:"Formas",iI:"Círculo y cuadrado tienen formas diferentes.",iJ:"Dibuja formas grandes y busca un plato y una caja para compararlas. Repasen bordes con el dedo.",iP:"¿Cuál es redondo?",thT:"Pelota y pausa",th:"Rueda la pelota grande una vez, haz una pausa tranquila y repite hasta tres veces. Intercambia por una croqueta si necesitas recuperarla.",pT:"Recuerdos buenos",pM:"30 min",p:"Elijan cinco fotos de momentos agradables. Cada uno cuenta qué recuerda; eviten convertirlo en comparación con el presente."},
+{t:"Maternidad suficiente",mu:"Arabesque n.º 1, Claude Debussy",mq:"¿Qué necesitan hoy mis hijos de mí de forma realista? ¿Qué expectativa puedo soltar para estar más presente?",et:"Emociones",eq:["How are you feeling today?","What helps you feel calm?","What do you need right now?"],emT:"Autocompasión",em:"Escribe: «Esto es difícil. No tengo que resolver todo ahora. El siguiente paso amable es…». Haz ese paso o agenda ayuda.",iT:"Grande y pequeño",iI:"Podemos comparar tamaños.",iJ:"Ordenen dos pares de peluches o recipientes grandes/pequeños. Cambia de pareja para repetir la idea.",iP:"¿Cuál es más grande de estos dos?",thT:"Un recipiente",th:"Pon una croqueta en un recipiente ancho y bajo. Deja que la encuentre; después colócalo a un paso de distancia. Usa material irrompible.",pT:"Paseo con curiosidad",pM:"40 min",out:1,p:"Caminen por una ruta conocida y busquen tres detalles que nunca habían notado. En casa, dibujen un lugar que quieran visitar juntos."},
+{t:"Curiosidad",mu:"Preludio de la Suite para violonchelo n.º 1, J. S. Bach",mq:"¿Qué me gustaría conocer por placer? Escribe una pregunta y dedica cinco minutos del día a explorarla.",et:"Mi cachorro",eq:["What is your puppy called?","What games does he like?","How do you take care of him?"],emT:"Reparar",em:"Piensa en un desencuentro pequeño. Ensaya: «Hice/dije X, entiendo que pudo doler. Lo siento. La próxima vez haré Y». Evita justificarte con un «pero».",iT:"Contar hasta tres",iI:"Un número por cada objeto, sin apurarse.",iJ:"Entrega tres bloques grandes a un peluche, tocando cada uno al contar. Retira uno y vuelve a contar.",iP:"¿Le damos dos bloques?",thT:"Sendero corto",th:"Traza un sendero visible de 5 croquetas separadas unos 20 cm en casa. Al final deja su juguete favorito.",pT:"Picnic de pareja",pM:"60–75 min",out:1,p:"Lleven una comida sencilla a un lugar tranquilo y conversen sin prisa. Si no hay cuidador, hagan el picnic en casa después de acostar a los niños."},
+{t:"Revisar sin castigar",mu:"Clair de lune, Claude Debussy",mq:"¿Qué dos cosas están funcionando? ¿Qué ajuste de tiempo haría la próxima semana más amable? Elige solo uno.",et:"Repaso: día cotidiano",eq:["Describe your day.","Ask me for directions.","Tell me how you feel and why."],emT:"Registrar lo agradable",em:"Recuerda una experiencia agradable y describe tres detalles sensoriales. Nota cómo te sientes sin exigirte cambiar una emoción difícil.",iT:"Repaso de descubrimientos",iI:"Revisar colores, tamaños y cantidades jugando.",iJ:"Arma una tienda con seis objetos grandes. Pide «dos azules» o «el grande» y deja que también te pida a ti.",iP:"¿Qué quieres comprarme?",thT:"Juego elegido",th:"Repite el juego que más disfrutó, en su versión más fácil. Observa si se aparta, bosteza o pierde interés y déjalo descansar.",pT:"Brunch en casa",pM:"60 min",p:"Preparen un desayuno tardío o merienda especial. Cada uno dice qué momento del mes quiere repetir y propone una actividad sencilla."},
+{t:"Mi cuerpo como aliado",mu:"Nocturno op. 9 n.º 2, Frédéric Chopin",mq:"¿Qué me ha permitido hacer mi cuerpo esta semana? ¿Qué señal de descanso o cuidado necesito atender?",et:"Ayer",eq:["What did you do yesterday?","What did you enjoy?","What was difficult?"],emT:"Dar espacio",em:"Durante dos minutos observa una emoción como una sensación cambiante. Describe presión, calor o tensión sin intentar eliminarla; luego vuelve a una tarea sencilla.",iT:"Animales de casa y granja",iI:"Perro, gato, vaca y gallina son animales distintos.",iJ:"Con imágenes, imiten sonidos y cuenten dónde vive cada uno. Con Thomas solo observen si está tranquilo.",iP:"¿Cuál hace muuu?",thT:"Tres puntos visibles",th:"Distribuye parte de su ración en tres lugares muy cercanos, sin esconder en muebles ni alturas. Deja que marque el ritmo.",pT:"Preguntas nuevas",pM:"30 min",p:"Respondan: «¿Qué te gustaría aprender?», «¿Qué te hace sentir cuidado?» y «¿Qué plan pequeño te entusiasma?». No interrumpan las respuestas."},
+{t:"Confianza basada en acciones",mu:"El cisne, Camille Saint-Saëns",mq:"Recuerda una situación difícil que resolviste. ¿Qué habilidad utilizaste y dónde puedes usarla hoy?",et:"Un recuerdo",eq:["Where did you go on a memorable trip?","Who went with you?","What happened?"],emT:"Salir de la comparación",em:"Nombra con quién te comparaste y qué necesidad apareció. Cierra la fuente de comparación y elige una acción acorde con tu propia situación.",iT:"Animales silvestres",iI:"León, elefante y jirafa no son mascotas.",iJ:"Caminen como esos animales e identifiquen trompa, cuello y melena en imágenes.",iP:"¿Quién tiene una trompa larga?",thT:"Preparar su snack",th:"Humedece alimento habitual y rellena solo la entrada de un juguete dispensador adecuado a su tamaño. Hazlo fácil y úsalo supervisado.",pT:"Cocinar algo distinto",pM:"45 min",p:"Elijan una receta sencilla nueva y repartan pasos antes de empezar. Acepten un resultado imperfecto y disfruten probarla juntos."},
+{t:"Límites que cuidan",mu:"Reverie, Claude Debussy",mq:"Completa: «Hoy puedo ofrecer…; hoy no puedo asumir…». Define una alternativa concreta cuando sea posible.",et:"Planes",eq:["What are you going to do this weekend?","Who will join you?","What do you need to prepare?"],emT:"Enojo seguro",em:"Reconoce tu primera señal de enojo. Ensaya pedir una pausa, tomar distancia con los niños seguros y volver a una hora acordada. No sigas discutiendo activada.",iT:"Dónde viven los animales",iI:"Los animales necesitan un lugar adecuado para vivir.",iJ:"Dibuja agua, bosque y granja; coloquen pez, búho y vaca. Aclara que es un juego simplificado.",iP:"¿Dónde pondrías al pez?",thT:"Olor del juguete",th:"Deja que huela su juguete, colócalo entre dos objetos grandes seguros y pídele buscar. Mantén todo visible al principio.",pT:"Paseo al atardecer",pM:"35–45 min",out:1,p:"Caminen a ritmo cómodo. Cada uno cuenta una preocupación y aclara si quiere escucha o ideas. En casa, hagan lo mismo sentados en un lugar tranquilo."},
+{t:"Enfoque profesional",mu:"Gnossienne n.º 1, Erik Satie",mq:"¿Qué actividad mueve más mi trabajo hacia adelante? ¿Qué tarea secundaria puedo agrupar o posponer?",et:"Mi trabajo",eq:["What do you do?","Who do you help?","What problem do you help them solve?"],emT:"Elegir un anclaje",em:"Prueba tres apoyos: pies firmes, mirar un objeto y escuchar sonidos cercanos. Quédate con el más cómodo y úsalo un minuto.",iT:"Las plantas",iI:"Muchas plantas tienen raíz, tallo y hojas; necesitan cuidados.",iJ:"Miren una planta segura. Señala tallo y hojas, y rieguen juntos si corresponde. Dibuja la raíz debajo de la tierra.",iP:"¿Dónde están sus hojas?",thT:"Pelota con intercambio",th:"Rueda la pelota a un metro. Cuando se acerque, ofrece otra igual o una croqueta y recoge la primera sin forcejear. Tres turnos.",pT:"Bailar juntos",pM:"30 min",p:"Elijan cuatro canciones: dos de cada uno. Bailen sin ensayar y terminen sentados, con agua, hablando de lo que les hizo reír."},
+{t:"Descanso con permiso",mu:"Preludio en do mayor, BWV 846, J. S. Bach",mq:"¿Qué temo que ocurra si descanso 15 minutos? ¿Qué evidencia tengo? Reserva un descanso sin pantalla.",et:"Una reunión",eq:["What is the goal of this meeting?","Could you explain that again?","What is the next step?"],emT:"Acompañar la tristeza",em:"Completa: «Hoy me duele… y me ayudaría…». Permítete sentir sin apresurar una solución. Elige compañía, descanso o una acción pequeña.",iT:"El tiempo",iI:"Podemos observar sol, nubes, lluvia y viento.",iJ:"Miren por la ventana y dibujen el tiempo de hoy. Mueve una cinta con la mano para representar viento.",iP:"¿Qué ves hoy en el cielo?",thT:"Pliegue fácil",th:"Pon tres croquetas sobre una toalla y una bajo un pliegue abierto. Si no la encuentra, levanta la tela. Retírala al terminar.",pT:"Merienda fuera",pM:"45–60 min",out:1,p:"Compartan una merienda en un lugar conocido. Cada uno hace una pregunta abierta al otro. Alternativa: merienda distinta en la mesa de casa."},
+{t:"Cuidar el vínculo",mu:"Träumerei, op. 15 n.º 7, Robert Schumann",mq:"¿Qué gesto de mi pareja valoro? ¿Qué gesto concreto puedo ofrecer sin esperar una respuesta idéntica?",et:"En el restaurante",eq:["Could we have a table for two?","What do you recommend?","Could we have the bill, please?"],emT:"Escucha emocional",em:"Con tu pareja, habla dos minutos de cómo estás. La otra persona resume sin aconsejar y pregunta: «¿Quieres escucha o ayuda?». Intercambien papeles.",iT:"La Tierra",iI:"Vivimos en un planeta llamado Tierra.",iJ:"Muestra una imagen de la Tierra y una pelota grande. Señala agua y tierra; dibujen su casa dentro de un círculo.",iP:"¿Cómo se llama nuestro planeta?",thT:"Búsqueda en pareja",th:"Dos adultos dejan croquetas, por turnos, en puntos cercanos del suelo. Un adulto juega y el otro supervisa; sin niños alrededor de la comida.",pT:"Segunda cita de cine",pM:"120 min + traslado",out:1,p:"Esta vez elige quien no eligió la primera película. Después, comenten su personaje favorito. Si no salen, usen el mismo ritual en casa."},
+{t:"Celebrar el proceso",mu:"Gymnopédie n.º 1, Erik Satie",mq:"¿Qué hago ahora con más facilidad que el día 1? Elige una forma sencilla de celebrarlo hoy.",et:"Repaso: pasado y futuro",eq:["Tell me about yesterday.","Describe your work.","Explain your plans for next week."],emT:"Corregulación",em:"Ensaya con un peluche: «Veo que estás molesto. Estoy aquí. No dejaré que pegues». Ofrece cercanía sin forzar abrazo; practícalo con los niños solo cuando corresponda.",iT:"Sol, Luna y día/noche",iI:"El Sol es una estrella; la Luna acompaña a la Tierra y a veces se ve de día.",iJ:"Con una linterna y pelota, ilumina un lado y gira despacio. Nunca dirijas la luz a sus ojos ni miren el Sol.",iP:"¿Qué lado de la pelota está iluminado?",thT:"Oler a su ritmo",th:"Deja una prenda limpia del hogar extendida para que la huela, sin perfumes añadidos. Retírala si la muerde y ofrece su juguete.",pT:"Parque sin agenda",pM:"60 min",out:1,p:"Visiten un parque y alternen paseo suave y descanso. Dejen libre parte del tiempo. En casa: picnic y mirar el cielo desde una ventana segura."},
+{t:"Claridad",mu:"Arabesque n.º 1, Claude Debussy",mq:"¿Qué quiero mantener este mes y qué no quiero seguir repitiendo? Escribe una decisión pequeña para cada respuesta.",et:"Expresar opiniones",eq:["What do you think about working from home?","Why?","What is one advantage and one challenge?"],emT:"Tolerar una espera",em:"Elige una espera pequeña y segura, como antes de mirar el móvil. Observa la incomodidad un minuto y decide conscientemente si quieres continuar.",iT:"Mercurio y Venus",iI:"Son los dos planetas más cercanos al Sol.",iJ:"Coloca un círculo amarillo como Sol y dos tarjetas grandes delante, nombrándolas sin exigir memoria.",iP:"¿Cuál tarjeta pondremos cerca del Sol?",thT:"Dos recipientes abiertos",th:"Coloca una croqueta en uno de dos recipientes bajos y separados. Deja que huela ambos y encuentre; no hace falta taparlos.",pT:"Crear juntos",pM:"40 min",p:"Dibujen, pinten o hagan un collage con lo que tengan. Tema: «Un día que nos gustaría vivir». No comparen quién lo hizo mejor."},
+{t:"Aprender del tropiezo",mu:"Preludio de la Suite para violonchelo n.º 1, J. S. Bach",mq:"Elige un día que no salió como querías. Describe el obstáculo sin juzgarte y diseña un plan B realista.",et:"Comparar opciones",eq:["Do you prefer a café or a park for a date?","Which is more relaxing?","What would you choose today?"],emT:"Revisar la culpa",em:"Pregunta: «¿Hice daño y debo reparar, o no cumplí una expectativa imposible?». Define reparación concreta o una expectativa más justa.",iT:"Tierra y Marte",iI:"La Tierra es nuestro hogar; Marte suele verse rojizo.",iJ:"Usa una imagen de cada planeta y colores azul, verde y rojo para decorarlos libremente.",iP:"¿En cuál vivimos nosotros?",thT:"Lamido y calma",th:"Ofrece una pequeña porción de su comida habitual ablandada en la alfombrilla. Al terminar, limpia el material y facilita descanso.",pT:"Cena de recuerdos",pM:"45 min",p:"Cocinen algo que les recuerde una ocasión agradable y cuenten esa historia. Si no recuerdan una receta, inventen hoy una nueva tradición."},
+{t:"Crear espacio",mu:"Clair de lune, Claude Debussy",mq:"¿Qué pendiente ocupa mi cabeza? Decide: hacer, agendar, delegar o descartar. Resuelve solo su siguiente paso.",et:"Explicar un servicio",eq:["What service do you offer?","Who is it for?","What is included?"],emT:"Petición asertiva",em:"Escribe: «Cuando ocurre X, me siento Y y necesito Z. ¿Podemos hacer A?». Usa una situación observable y evita «siempre» o «nunca».",iT:"Júpiter",iI:"Es el planeta más grande del sistema solar.",iJ:"Compara un círculo de papel muy grande con otros más pequeños. Dibuja bandas sobre el grande.",iP:"¿Cuál es el más grande de estos dibujos?",thT:"Juguete a un lado",th:"Muestra su juguete y déjalo parcialmente visible a la derecha o izquierda de una caja abierta, sin grapas. Dos búsquedas fáciles.",pT:"Café sin logística",pM:"45 min",out:1,p:"En una cafetería o en casa, acuerden dejar pendientes domésticos para otro momento. Hablen de intereses, ideas y experiencias personales."},
+{t:"Conexión auténtica",mu:"Nocturno op. 9 n.º 2, Frédéric Chopin",mq:"¿Con quién quiero sentirme más conectada? Elige una conversación y una pregunta abierta para esa persona.",et:"Conversar con un cliente",eq:["What is your main goal?","Who is your audience?","What is your timeline?"],emT:"Detectar el impulso",em:"Antes de abrir redes, pregunta: «¿Busco información, descanso o evitar algo?». Elige una respuesta de dos minutos que atienda esa necesidad.",iT:"Saturno",iI:"Es conocido por sus anillos.",iJ:"Dibuja un planeta grande y pega una banda ancha de papel alrededor con ayuda adulta.",iP:"¿Qué tiene alrededor Saturno?",thT:"Pelota lenta",th:"Rueda la pelota lentamente sobre una alfombra. Haz tres turnos; termina con caricias solo si él se acerca a pedirlas.",pT:"Ruta compartida",pM:"40 min",out:1,p:"Cada uno elige una parte de un paseo corto por una zona conocida. En casa, diseñen sobre papel una ruta futura con tres paradas."},
+{t:"Disfrutar lo cotidiano",mu:"El cisne, Camille Saint-Saëns",mq:"Describe tres detalles agradables de ayer. ¿Cómo puedes prestar atención a uno parecido hoy sin forzarlo?",et:"Resolver un problema",eq:["What happened?","What can we do now?","Which solution do you suggest?"],emT:"Sacar pendientes de la cabeza",em:"Anota preocupaciones. Marca una con acción posible y agenda su siguiente paso. Si vuelve otra, recuérdate dónde quedó escrita y vuelve al presente.",iT:"Urano y Neptuno",iI:"Son planetas muy lejanos al Sol; Neptuno es el más lejano de los ocho.",iJ:"Pon dos tarjetas azuladas al final de una fila. Explora «cerca» y «lejos» sin pedir distancias.",iP:"¿Cuál pusimos más lejos del Sol?",thT:"Olfato en una zona",th:"Esparce seis croquetas en una zona pequeña del suelo. Déjalo buscar sin señalar constantemente ni moverlo de lugar.",pT:"Mini cita sorpresa",pM:"40 min",p:"Uno organiza bebida, música y una actividad sencilla; el otro solo participa. Acuerden presupuesto mínimo y eviten regalos como requisito."},
+{t:"Mi voz",mu:"Reverie, Claude Debussy",mq:"¿Qué necesidad no he expresado con claridad? Escríbela en una frase breve y respetuosa.",et:"Contar una historia",eq:["Tell a story with a beginning, a problem and an ending.","How did you feel?","What did you learn?"],emT:"Elegir desde valores",em:"Ante una decisión pequeña, pregunta: «¿Qué respuesta se parece al tipo de persona que quiero ser?». Hazla aunque la emoción no desaparezca.",iT:"Los ocho planetas",iI:"Hay ocho planetas en nuestro sistema solar.",iJ:"Ordena tú las tarjetas: Mercurio, Venus, Tierra, Marte, Júpiter, Saturno, Urano y Neptuno. Él puede elegir su favorito.",iP:"¿Cuál te gustaría volver a pintar?",thT:"Busca y descansa",th:"Una búsqueda fácil de juguete, una croqueta encontrada y acceso a su cama. La sesión termina aunque todavía tengas tiempo disponible.",pT:"Plan cultural",pM:"60–90 min",out:1,p:"Visiten una librería, exposición o actividad local que ambos elijan, comprobando horario. En casa: documental corto y conversación sobre lo aprendido."},
+{t:"Revisión de carga",mu:"Gnossienne n.º 1, Erik Satie",mq:"¿Qué hábito me ayuda de verdad y cuál se convirtió en presión? Conserva, adapta o retira uno con intención.",et:"Repaso libre",eq:["Talk about your family, work and goals.","Ask me three follow-up questions.","Summarize our conversation."],emT:"Mi red de apoyo",em:"Escribe dos personas o recursos a los que puedes acudir y para qué. Formula una petición breve y realista para cuando la necesites.",iT:"Astronautas y cohetes",iI:"Los astronautas viajan al espacio; un cohete puede llevarlos.",iJ:"Decoren una caja abierta como nave y hagan una cuenta atrás de tres. Mantén salidas libres y no uses bolsas o cascos cerrados.",iP:"¿Qué llevarías en nuestro viaje imaginario?",thT:"Favorito del mes",th:"Elige entre búsqueda visible, lamido o pelota lenta según lo que él haya disfrutado. Mantén la dificultad baja y respeta si prefiere dormir.",pT:"Desayuno y acuerdos",pM:"60 min",p:"Preparen una comida juntos y revisen qué citas disfrutaron más. Escojan dos para repetir el próximo mes, sin evaluar al otro."},
+{t:"Diseñar continuidad",mu:"Preludio en do mayor, BWV 846, J. S. Bach",mq:"¿Qué tres hábitos quiero sostener el próximo mes? Define su versión habitual y su versión mínima.",et:"Mi mes",eq:["What changed this month?","What was your favorite activity?","What would you like to improve?"],emT:"Mi tarjeta de calma",em:"Escribe tres señales de sobrecarga, dos herramientas que te funcionaron y una persona de apoyo. Deja la tarjeta accesible.",iT:"Emociones de un viajero",iI:"Podemos sentir alegría, miedo o tristeza y pedir compañía.",iJ:"Un peluche quiere viajar pero tiene miedo. Nombra la emoción y pregunta cómo acompañarlo, sin obligarlo a «ser valiente».",iP:"¿Qué le diríamos al peluche?",thT:"Mini circuito olfativo",th:"Haz tres estaciones cercanas: croqueta visible, juguete parcialmente visible y recipiente abierto con una croqueta. Sin obstáculos ni saltos.",pT:"Agradecimiento concreto",pM:"30 min",p:"Cada uno menciona tres acciones del otro que agradeció y por qué. Después, pide una cosa concreta que le gustaría compartir más."},
+{t:"Cerrar y elegir",mu:"Träumerei, op. 15 n.º 7, Robert Schumann",mq:"¿Qué aprendí sobre mí, mis hijos y mis vínculos? Anota tres aprendizajes y una intención concreta para los siguientes 30 días.",et:"Conversación integrada",eq:["Introduce yourself, explain your work and tell a recent story.","Ask about my interests.","Describe your next-month goals."],emT:"Integrar",em:"Compara cómo reconoces tus emociones ahora con el día 1. Elige una herramienta para practicar a diario y otra para momentos de tensión.",iT:"Mi pequeña exposición",iI:"Contar lo que más le interesó del mes.",iJ:"Dispón tres trabajos elegidos por Ignacio. Invita a un adulto a escucharlo y deja que señale, juegue o explique a su manera.",iP:"¿Qué quieres mostrarnos primero?",thT:"Celebración tranquila",th:"Prepara su snack con alimento habitual y repite dos minutos de su juego favorito. Anota qué lo relaja y qué lo sobreexcita.",pT:"Cita de cierre",pM:"60–90 min",out:1,p:"Elijan su actividad favorita del mes: café, paseo, cena o película. Hablen de un recuerdo del mes y de su próxima cita."}
+];
+// piel: am b=base c=vitC ; pm b=base g=crema gel p=peeling opcional ; n=nota
+const SKIN=["bb1","bb1","bb1","bb1","bb1","bb1","bb1",
+"bg2","bb2","bg2","bb2","bg2","bb2","bg2",
+"cb","bg","bb","cb","bg","cb3","bp",
+"bb4","cg","bb","cb","bg","cb3","bp","bb4","cg"];
+const SKIN_NOTES={"1":"Prueba local de crema gel según etiqueta; aún no en todo el rostro.","2":"Prueba local de vitamina C según etiqueta; aún no en todo el rostro.","3":"Mañana el peeling es opcional, nunca obligatorio; revisa tolerancia y etiqueta.","4":"Día de recuperación de la piel; no añadas otros activos."};
+
+</script>
+<script>
+const WD=["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
+const WDs=["L","M","X","J","V","S","D"];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CHECKSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const IC={
+ home:'<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+ cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ run:'<circle cx="14" cy="4.5" r="2"/><path d="M8 21l3-6 3 2v5M5 12l4-4 4 1 3 4 3 1"/>',
+ drop:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.5a5 5 0 0 1 5.5 5"/>',
+ spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>',
+ heart:'<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>',
+ brief:'<rect x="3" y="7" width="18" height="13" rx="3"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>',
+ book:'<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2 2 2 0 0 0 2 2h13"/><path d="M9 7h6"/>',
+ chat:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+ smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/>',
+ paw:'<circle cx="6.5" cy="10.5" r="1.7"/><circle cx="17.5" cy="10.5" r="1.7"/><circle cx="10" cy="6" r="1.7"/><circle cx="14" cy="6" r="1.7"/><path d="M12 12c-3 0-5 3-5 5a2 2 0 0 0 2.5 2c1-.3 1.7-.5 2.5-.5s1.5.2 2.5.5A2 2 0 0 0 17 17c0-2-2-5-5-5z"/>',
+ star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/>',
+ music:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
+ ok:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
+ flame:'<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-6 2 1 3 2 3 2s0-3 0-6z"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ dumb:'<path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/>',
+ leaf:'<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/>',
+ pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>',
+ alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>'
+};
+const ico=(k,cls="i")=>`<svg class="${cls}" viewBox="0 0 24 24">${IC[k]||""}</svg>`;
+
+/* ---------- state ---------- */
+let state={day:1,start:"",checks:{},notes:{},theme:""};
+try{const s=JSON.parse(localStorage.getItem("plan30")||"null"); if(s) state=Object.assign(state,s);}catch(e){}
+let dbDoc=null, saving=Promise.resolve(), saveT=null;
+function save(){
+  try{localStorage.setItem("plan30",JSON.stringify(state));}catch(e){}
+  if(!dbDoc) return;
+  clearTimeout(saveT);
+  saveT=setTimeout(()=>{ const snap=JSON.parse(JSON.stringify(state));
+    saving=saving.then(()=>dbDoc.set(snap)).then(()=>setSync("Guardado")).catch(()=>setSync("Guardado en este dispositivo"));
+  },700);
+}
+function setSync(t){$("#sync").textContent=t;}
+(async()=>{
+  try{
+    if(!window.claude||!claude.use) return;
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    if(!db||!user) return;
+    const uid=await user.id(); if(!uid) return;
+    const ref=db.doc("data/users/"+uid+"/progreso");
+    const snap=await ref.get();
+    if(snap.exists){ state=Object.assign(state,snap.data()); try{localStorage.setItem("plan30",JSON.stringify(state));}catch(e){} applyTheme(); renderAll(); }
+    dbDoc=ref; setSync("Sincronizado");
+  }catch(e){}
+})();
+
+/* ---------- day model ---------- */
+const stageOf=d=>d<=7?1:d<=14?2:d<=21?3:4;
+const wdOf=d=>(d-1)%7;
+const CARDIO={1:{r:6,on:"1 min",off:"2 min",onS:60,offS:120,base:38,iv:18},2:{r:8,on:"1 min",off:"90 s",onS:60,offS:90,base:40,iv:20},3:{r:6,on:"90 s",off:"2 min",onS:90,offS:120,base:41,iv:21},4:{r:6,on:"2 min",off:"2 min",onS:120,offS:120,base:44,iv:24}};
+const SECOND={0:["Yoga Y1","y1"],2:["Pilates P1","p1"],4:["Yoga Y2","y2"]};
+const WEIGHTS={1:["A","merengue suave","silla → remo → press suelo → puente → talones → bird dog adaptado"],3:["B","salsa básica","bisagra → press sentado → remo → silla → apertura lateral → talón deslizante"],5:["C","mezcla latina","silla → flexión pared → remo → puente → curl bíceps → talones"]};
+const NINOS=["20 min: cada niño elige un juguete; alterna diez minutos de atención individual mientras otro adulto atiende al otro.","20 min: construyan una torre con bloques grandes y dejen que Lucas explore derribar o apilar a su ritmo.","20 min: lean dos cuentos; deja a cada niño escoger uno y comentar o señalar lo que quiera.","20 min: imiten animales y sigan las propuestas de los niños, sin pedir hacerlo «correctamente».","20 min: música suave y pañuelos grandes; moverse libremente con supervisión, sin envolver cuellos.","25 min: dibujo libre con ceras gruesas adecuadas a su edad y un adulto junto a ellos.","30 min: paseo familiar suave o juego libre en casa; los niños eligen el ritmo dentro de límites seguros."];
+const engMin=d=>d>=29?18:d>=22?15:d>=15?12:d>=8?8:5;
+const engSplit=m=>({5:[1,3,1],8:[1,5,2],12:[2,8,2],15:[2,10,3],18:[2,13,3]})[m];
+const danceMin=d=>d>=22?12:d>=8?10:8;
+const setsOf=d=>d>=22?"2 series × 10":d>=8?"2 series × 8":"1 serie × 8";
+const isWork=d=>wdOf(d)<=4;
+function exercise(d){
+  const w=wdOf(d), st=stageOf(d);
+  if(w===6) return {kind:"rest",title:"Recuperación",sub:"Sin doble entrenamiento"};
+  if(WEIGHTS[w]){const [L,dance,order]=WEIGHTS[w]; return {kind:"weights",title:"Pesas "+L+" + bailoterapia",sub:setsOf(d)+"; por lado, 6. Baile "+danceMin(d)+" min",L,dance,order};}
+  const c=CARDIO[st], s=SECOND[w]; return {kind:"cardio",title:"Caminata/trote + "+s[0],sub:c.r+" × ("+c.on+" trote + "+c.off+" caminar). Base "+c.base+" min",c,second:s};
+}
+function itemsOf(d){
+  const it=["mind","move","emo","eng"]; if(isWork(d)) it.push("work");
+  it.push("ign","thomas","pair","kids","skinAM","skinPM","close"); return it;
+}
+const LABELS={mind:"Mindset",move:"Ejercicio",emo:"Emociones",eng:"Inglés",work:"Trabajo",ign:"Ignacio",thomas:"Thomas",pair:"Pareja",kids:"Ambos niños",skinAM:"Piel AM",skinPM:"Piel PM",close:"Cierre"};
+const isOn=(d,k)=>!!state.checks[d+":"+k];
+function pct(d){const it=itemsOf(d);return Math.round(it.filter(k=>isOn(d,k)).length/it.length*100);}
+function toggle(d,k){const key=d+":"+k; if(state.checks[key]) delete state.checks[key]; else state.checks[key]=1; save(); renderAll(true);}
+function monthTotals(){return Object.keys(LABELS).map(k=>{let n=0,t=0;for(let d=1;d<=30;d++){if(itemsOf(d).includes(k)){t++;if(isOn(d,k))n++;}}return [k,n,t];});}
+function monthPct(){const t=monthTotals();return Math.round(t.reduce((a,x)=>a+x[1],0)/t.reduce((a,x)=>a+x[2],0)*100);}
+
+function dateOf(d){ if(!state.start) return null; const t=new Date(state.start+"T12:00:00"); t.setDate(t.getDate()+d-1); return t;}
+function todayDay(){ if(!state.start) return null; const s=new Date(state.start+"T00:00:00"), n=new Date(); n.setHours(0,0,0,0); const d=Math.round((n-s)/864e5)+1; return d>=1&&d<=30?d:null;}
+const fmtDate=t=>t?t.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}):"";
+
+/* ---------- navigation (sidebar) ---------- */
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["fam","Familia y Thomas","users"],["mente","Mente e inglés","spark"],["par","Pareja","heart"],["trab","Trabajo","brief"],["AYUDA"],["guia","Guía","book"]];
+const TITLES={hoy:"Hoy",mes:"Mes y progreso",mov:"Movimiento",piel:"Piel",fam:"Familia y Thomas",mente:"Mente e inglés",par:"Pareja",trab:"Trabajo",guia:"Guía"};
+let tab="hoy";
+function renderTabs(){
+  $("#tabs").innerHTML=TABS.map(([k,l,i])=>l?`<button role="tab" aria-selected="${k===tab}" data-tab="${k}">${ico(i)}${l}</button>`:`<div class="sec" role="presentation">${k}</div>`).join("");
+  const mp=monthPct();
+  $("#promo").innerHTML=`<div class="ico">${ico("flame")}</div><b>${mp}%</b><p>del mes completado. Un paso cada día, sin compensar lo perdido.</p><div class="bar" style="background:rgba(255,255,255,.18);margin:-4px 0 12px"><i style="width:${mp}%;background:#fff"></i></div><button data-goto="mes">Ver mi mes</button>`;
+  const d=state.day;
+  $("#pageTitle").textContent=TITLES[tab];
+  $("#pageSub").textContent=tab==="hoy"?(WD[wdOf(d)]+(state.start?", "+fmtDate(dateOf(d)):"")+" · Día "+d+" de 30"):"Movimiento, conexión, aprendizaje y cuidado";
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"); if(!b) return; tab=b.dataset.tab; renderAll(); window.scrollTo({top:0});});
+
+/* ---------- card helper ---------- */
+function card(cls,icon,tag,title,sub,key,body,extra=""){
+  const d=state.day, on=key?isOn(d,key):false;
+  return `<article class="card ${cls} ${cls.includes("c-white")?"":"pt"} ${on?"done":""} ${extra}">
+    <div class="hd"><div style="flex:1;min-width:0"><span class="tag"><span class="ic">${ico(icon)}</span>${tag}</span><h3>${esc(title)}${sub?`<small>${sub}</small>`:""}</h3></div>
+    ${key?`<button class="check" data-k="${key}" aria-pressed="${on}" aria-label="Marcar ${LABELS[key]} como hecho">${CHECKSVG}</button>`:""}</div>${body}</article>`;
+}
+const steps=arr=>`<ol class="steps">${arr.map((s,i)=>`<li data-n="${i+1}"><span>${s}</span></li>`).join("")}</ol>`;
+function segbar(parts){const tot=parts.reduce((a,p)=>a+p[1],0);return `<div class="segbar" role="img" aria-label="Estructura de la sesión">${parts.map(([c,m,t])=>`<i class="${c}" style="flex:${m}" title="${t}: ${m} min"></i>`).join("")}</div>`;}
+
+/* ---------- HOY ---------- */
+function renderHoy(){
+  const d=state.day, D=DAYS[d-1], w=wdOf(d), st=stageOf(d), ex=exercise(d), td=todayDay();
+  const strip=Array.from({length:30},(_,i)=>{const n=i+1,p=pct(n);return `<button data-day="${n}" aria-current="${n===d}" class="${n===td?"today":""}" aria-label="Día ${n}, ${p}% hecho"><b>${n}</b><span class="w">${WDs[wdOf(n)]}</span><span class="ring" style="--p:${p}"></span></button>`}).join("");
+  const p=pct(d), items=itemsOf(d), doneN=items.filter(k=>isOn(d,k)).length;
+  let exb="", seg="", exMin="";
+  if(ex.kind==="cardio"){const c=ex.c;
+    const parts=[["w",5,"Caminar suave"]]; for(let i=0;i<c.r;i++){parts.push(["r",c.onS/60,"Trote"]);parts.push(["w",c.offS/60,"Caminar"]);} parts.push(["w",5,"Caminata muy suave"],["y",10,ex.second[0]]);
+    seg=segbar(parts)+`<div class="legend"><span style="--c:var(--pri)">Trote</span><span style="--c:var(--t-sky)">Caminar</span><span style="--c:var(--t-lav)">${ex.second[0]}</span></div>`;
+    exb=seg+steps(["Caminar 5 min, empezando suave.",`${c.r} × (${c.on} trote + ${c.off} caminar), terreno llano.`,"Solo si ya toleras 5 km, añade caminata contando también el paso 4 dentro de esa distancia.","Caminar suave 5 min.",`${ex.second[0]}: 10 min (ver Movimiento).`])+`
+    <p class="mini">Base: ${c.base} min; más si completas distancia. Repite etapa si lo necesitas. Puedes sustituir el trote por caminata.</p>
+    <div class="row"><button class="btn primary" data-timer="cardio">Iniciar intervalos</button><button class="btn" data-goto="mov">Ver ${ex.second[0]}</button></div>`; exMin=c.base+" min";}
+  else if(ex.kind==="weights"){
+    seg=segbar([["w",6,"Calentar"],["r",st===1?12:20,"Pesas"],["y",2,"Pausa"],["d",danceMin(d),"Baile"],["w",4,"Marcha suave"]])+`<div class="legend"><span style="--c:var(--pri)">Pesas</span><span style="--c:var(--t-peach)">Baile</span><span style="--c:var(--t-sky)">Calentar / marcha</span></div>`;
+    exb=seg+steps(["Calentar 6 min.",`Pesas ${ex.L}: ${setsOf(d)}; por lado, 6. Orden: ${ex.order}.`,"Pausa 2 min.",`${ex.dance}: ${danceMin(d)} min.`,"Marcha suave 4 min."])+`
+    <p class="mini">Descansa 60–90 s entre series. Reserva 35–60 min.</p>
+    <div class="row"><button class="btn primary" data-timer="weights">Iniciar sesión guiada</button><button class="btn" data-goto="mov">Ver ejercicios</button></div>`; exMin="35–60 min";}
+  else {exb=`<p>Sin pesas, trote ni bailoterapia programados. Descansa; si te apetece, paseo recreativo muy suave de 10–20 min, sin objetivo de distancia. La salida en pareja puede cubrir ese paseo.</p><p class="mini">No recuperes sesiones perdidas hoy.</p>`; exMin="Descanso";}
+  const em=engMin(d), sp=engSplit(em), emPrev=d>1?engMin(d-1):em;
+  const sk=SKIN[d-1], am=sk[0], pm=sk[1], nt=sk[2];
+  const AM=am==="c"?"Limpiar → vitamina C KIMBEAUTY (solo si tolerada) → hidratante sencilla → protector solar.":"Limpiar suavemente → hidratante sencilla si la necesitas → protector solar.";
+  const PM=pm==="g"?"Limpiar y secar → capa fina de Cicatricure Porcelana crema gel, solo si tolerada.":pm==="p"?"Opcional condicionado: limpiar/secar → peeling Cicatricure, máximo 10 min → enjuagar → hidratante sencilla. Si no cumples las condiciones: solo limpieza e hidratación.":"Retirar maquillaje/protector con limpieza suave → hidratante sencilla.";
+  const note=state.notes[d]||{};
+  $("#v-hoy").innerHTML=`
+  <div class="pills" id="strip">${strip}</div>
+  <div class="hero">
+    <div class="ht"><div class="eyebrow">${ico("sun")} Día ${String(d).padStart(2,"0")} · Etapa ${st}</div>
+      <h1>${esc(D.t)}</h1>
+      <div class="meta">Una intención al empezar, una experiencia compartida al terminar.</div>
+      <div class="chips"><span class="chip stage">Etapa ${st}</span><span class="chip">${ico("run")}${ex.title}</span><span class="chip">${ico("chat")}Inglés ${em} min</span>${isWork(d)?`<span class="chip">${ico("brief")}4 h de trabajo protegido</span>`:`<span class="chip">${ico("leaf")}Sin bloque laboral</span>`}</div></div>
+    ${card("c-lav","spark","Mindset, 8 min","Pregunta del día","","mind",`<div class="music"><span class="dot">♪</span>${esc(D.mu)}</div><p class="quote">${esc(D.mq)}</p>
+      <textarea data-note="mind" placeholder="Tu respuesta y la acción elegida…">${esc(note.mind||"")}</textarea>
+      <div class="row"><button class="btn primary" data-timer="mind">Temporizador 1 + 5 + 2 min</button></div>`,"hero-card")}
+  </div>
+  <div class="kpis">
+    <div class="kpi fill"><div class="top"><span class="ib">${ico("ok")}</span><span class="badge">${doneN}/${items.length}</span></div><span class="lb">Progreso de hoy</span><span class="v">${p}%<small>de tus casillas</small></span><div class="bar"><i style="width:${p}%"></i></div></div>
+    <div class="kpi"><div class="top"><span class="ib">${ico("dumb")}</span><span class="badge ${isOn(d,"move")?"":"neutral"}">${isOn(d,"move")?"Hecho":"Pendiente"}</span></div><span class="lb">Movimiento</span><span class="v">${exMin}</span></div>
+    <div class="kpi"><div class="top"><span class="ib">${ico("chat")}</span><span class="badge ${em>emPrev?"":"neutral"}">${em>emPrev?"+"+(em-emPrev)+" min":"Etapa "+st}</span></div><span class="lb">Inglés</span><span class="v">${em} min<small>${sp.join(" + ")}</small></span></div>
+    <div class="kpi"><div class="top"><span class="ib">${ico("clock")}</span><span class="badge neutral">${isWork(d)?"Protegido":"Descanso"}</span></div><span class="lb">Trabajo</span><span class="v">${isWork(d)?"4 h":"Libre"}</span></div>
+  </div>
+  <div class="grid">
+    ${card("c-white","run","Movimiento",ex.title,ex.sub,"move",exb)}
+    ${card("c-rose","smile","Emociones, 5 min",D.emT,"","emo",`<p>${esc(D.em)}</p><div class="row"><button class="btn primary" data-timer="emo">Temporizador 5 min</button></div>`)}
+    ${card("c-white","chat","Inglés, "+em+" min",D.et,`${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,"eng",
+      `<div class="bubbles">${D.eq.map(q=>`<span>${esc(q)}</span>`).join("")}</div><p class="mini">Añade «Why?» y «Tell me more». Al cerrar: repite dos frases corregidas.</p><div class="row"><button class="btn primary" data-timer="eng">Temporizador ${em} min</button></div>`)}
+    ${isWork(d)?card("c-yel","brief","Trabajo","4 horas protegidas","Niños atendidos por otro adulto","work",
+      `<p>Define un entregable antes de empezar.</p><input type="text" data-note="deliv" placeholder="Entregable de hoy" value="${esc(note.deliv||"")}"><div class="row"><button class="btn primary" data-timer="work">Iniciar bloque de 240 min</button></div>`):
+      card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`)}
+    ${card("c-peach","star","Ignacio, 10–12 min",D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div>`,"third")}
+    ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
+    ${card("c-pink","heart","Pareja, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
+    ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>`)}
+    ${card("c-white","drop","Cuidado facial","Mañana y noche","","",
+      `<div class="skinline"><b>AM</b><span>${AM}</span></div><div class="skinline"><b>PM</b><span>${PM}</span></div>${nt?`<div class="note" style="background:var(--t-peach)">${SKIN_NOTES[nt]}</div>`:""}
+      <div class="subchecks"><button data-k="skinAM" aria-pressed="${isOn(d,"skinAM")}">AM hecho</button><button data-k="skinPM" aria-pressed="${isOn(d,"skinPM")}">PM hecho</button></div>`)}
+    ${card("c-lav","pen","Cierre","¿Qué me ayudó hoy y qué necesito mañana?","","close",`<textarea data-note="close" placeholder="Escribe tu cierre del día…">${esc(note.close||"")}</textarea>`,"wide")}
+  </div>`;
+  const sEl=$("#strip"),cur=$("#strip [aria-current=true]"); if(sEl&&cur) sEl.scrollLeft=cur.offsetLeft-sEl.clientWidth/2+40;
+}
+
+/* ---------- MES ---------- */
+function statTile(cls,color,icon,v,label,em){return `<div class="stat ${cls}"><span class="ic" style="background:${color}">${ico(icon)}</span><b>${v}</b><span>${label}</span>${em?`<em>${em}</em>`:""}</div>`;}
+function renderMes(){
+  const td=todayDay();
+  const totals=monthTotals();
+  const pcts=Array.from({length:30},(_,i)=>pct(i+1));
+  const full=pcts.filter(p=>p===100).length;
+  const mv=totals.find(x=>x[0]==="move");
+  let streak=0; for(let d=(td||state.day);d>=1;d--){ if(pct(d)>0) streak++; else break; }
+  const RC=[["mind","var(--pri)"],["move","var(--ac-mint)"],["emo","var(--ac-rose)"],["eng","var(--ac-peach)"]];
+  const rings=RC.map(([k,c],i)=>{const t=totals.find(x=>x[0]===k);const r=72-i*15;const v=t[2]?t[1]/t[2]*100:0;
+    return `<circle cx="85" cy="85" r="${r}" fill="none" stroke="var(--line)" stroke-width="9"/><circle cx="85" cy="85" r="${r}" fill="none" stroke="${c}" stroke-width="9" stroke-linecap="round" pathLength="100" stroke-dasharray="${v} 100" transform="rotate(-90 85 85)"><title>${LABELS[k]}: ${t[1]}/${t[2]}</title></circle>`;}).join("");
+  $("#v-mes").innerHTML=`<h2 class="h2">Tu mes</h2><p class="lead">Toca un día para abrirlo. El punto rojo marca hoy, si configuras la fecha de inicio.</p>
+  <div class="card wide c-white" style="margin-bottom:16px"><div class="row" style="margin:0;align-items:center"><label for="startD" class="lbl">Fecha del día 1</label><input type="date" id="startD" value="${state.start}" style="max-width:200px"><span class="mini" style="flex:1;min-width:200px">El día 1 equivale a un lunes de referencia; puedes empezar otro día y conservar la secuencia.</span></div></div>
+  <div class="stats">
+    ${statTile("c-rose","var(--ac-rose)","chart",monthPct()+"%","del mes completado","")}
+    ${statTile("c-peach","var(--ac-peach)","ok",full,"días al 100%","de 30 días")}
+    ${statTile("c-mint","var(--ac-mint)","run",mv[1]+"/"+mv[2],"sesiones de movimiento","")}
+    ${statTile("c-lav","var(--ac-lav)","flame",streak,"días seguidos","con algo hecho")}
+  </div>
+  <div class="grid">
+  <article class="card c-white two"><div class="hd"><div style="flex:1"><h3>Calendario<small>Barra: progreso de cada día</small></h3></div><span class="select">30 días</span></div>
+  <div class="month">${WDs.map(x=>`<div class="wd">${x}</div>`).join("")}
+  ${Array.from({length:30},(_,i)=>{const n=i+1,p=pcts[i];const t=dateOf(n);return `<button class="mcell ${p===100?"full":""} ${n===state.day?"cur":""}" data-open="${n}" aria-label="Día ${n}, ${p}%"><b>${n}${n===td?' <span class="today-dot"></span>':""}</b><small>${esc(DAYS[i].t)}</small><small>${t?t.toLocaleDateString("es",{day:"numeric",month:"short"}):"Etapa "+stageOf(n)}</small><span class="pbar"><i style="width:${p}%"></i></span></button>`}).join("")}</div></article>
+  <article class="card c-white third"><div class="hd"><div style="flex:1"><h3>Hábitos clave<small>Completado en el mes</small></h3></div></div>
+   <div class="rings"><svg viewBox="0 0 170 170" role="img" aria-label="Progreso de hábitos clave">${rings}</svg>
+   <div class="rlist">${RC.map(([k,c])=>{const t=totals.find(x=>x[0]===k);return `<div style="--c:${c}"><span>${LABELS[k]}</span><b>${t[1]}/${t[2]}</b><span class="badge ${t[1]?"":"neutral"}">${Math.round(t[1]/t[2]*100)}%</span></div>`}).join("")}</div></div></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Progreso diario<small>Porcentaje de casillas marcadas por día · toca una barra para abrir el día</small></h3></div><span class="legend"><span style="--c:var(--pri)">Día</span><span style="--c:var(--ink)">Seleccionado</span></span></div>
+   <div class="cols">${[100,50,0].map(v=>`<div class="gl" style="bottom:${v/100*146+18}px"><span>${v}%</span></div>`).join("")}
+   ${pcts.map((p,i)=>`<button class="col ${p?"":"zero"} ${i+1===state.day?"cur":""}" data-open="${i+1}" aria-label="Día ${i+1}: ${p}%"><span class="tt">Día ${i+1} · ${p}%</span><i style="height:${Math.max(p,2)/100*146}px"></i><small>${i+1}</small></button>`).join("")}</div></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Por área<small>Casillas completadas en los 30 días</small></h3></div></div>
+   <div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Área</th><th style="width:45%">Avance</th><th>Hechas</th><th>%</th></tr></thead><tbody>
+   ${totals.map(([k,n,t],i)=>{const v=Math.round(n/t*100);const c=["var(--pri)","var(--ac-mint)","var(--ac-lav)","var(--ac-peach)"][i%4];return `<tr><td class="n">${String(i+1).padStart(2,"0")}</td><td><b>${LABELS[k]}</b></td><td><div class="track"><i style="width:${v}%;background:${c}"></i></div></td><td class="mini">${n}/${t}</td><td><span class="opill" style="--c:${c}">${v}%</span></td></tr>`}).join("")}
+   </tbody></table></div></article>
+  </div>
+  <div class="row" style="margin-top:16px"><button class="btn" id="resetBtn">Borrar progreso</button></div>`;
+}
+
+/* ---------- MOVIMIENTO ---------- */
+function renderMov(){
+  const st=stageOf(state.day), wk=st, d=state.day, cw=wdOf(d);
+  const setTxt=["","Semana 1: 1 serie de 8 repeticiones por ejercicio.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semana 4 y día 30: 2 series de 10; conserva la carga."][st];
+  const WEEK=[["Caminata/trote","→ yoga suave","c-lav"],["Pesas A","→ bailoterapia","c-pink"],["Caminata/trote","→ pilates suave","c-lav"],["Pesas B","→ bailoterapia","c-pink"],["Caminata/trote","→ yoga suave","c-lav"],["Pesas C","→ bailoterapia","c-yel"],["Recuperación","sin doble entrenamiento","hatch"]];
+  const GC=["#3B6EE8","#8B5CF6","#D9467F","#C77A0A"];
+  const ranges=[["1–7",1,7],["8–14",8,14],["15–21",15,21],["22–30",22,30]];
+  const kan=(title,day,col,items,cls,note="")=>`<div class="kcol"><h4>${day}</h4><div class="kline" style="background:${col}"></div><div class="kcard ${cls}"><h3>${title}<span class="more">⋯</span></h3>${items.map((t,i)=>`<div class="kitem"><span class="av" style="background:${col}">${i+1}</span><span>${t}</span></div>`).join("")}${note?`<p class="mini" style="margin-top:8px">${note}</p>`:""}</div></div>`;
+  $("#v-mov").innerHTML=`<h2 class="h2">Movimiento</h2><p class="lead">Tu semana de un vistazo: tres días de caminata/trote con yoga o pilates, tres de pesas con bailoterapia y un domingo de recuperación.</p>
+  <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr));margin-bottom:16px">
+   ${WEEK.map(([a,b,c],i)=>`<div class="tile ${c}" style="min-height:118px;${i===cw?"outline:2px solid var(--ink);outline-offset:-2px":""}"><div class="th"><span class="num">${WD[i]}</span>${i===cw?'<span class="pill ink">Hoy</span>':""}</div><h4>${a}</h4><p>${b}</p><div class="dashes"><i class="on"></i><i class="${i%2?"on":"half"}"></i><i></i></div></div>`).join("")}
+  </div>
+  <div class="grid">
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("run")}</span>Caminata/trote</span><h3>Cuatro etapas propuestas<small>Intervalos por etapa a lo largo de los 30 días · la línea roja marca el día abierto</small></h3></div><span class="select">Etapa ${st}</span></div>
+   <div class="gantt"><div class="inner">
+    <div class="scale"><span></span>${Array.from({length:30},(_,i)=>`<span>${(i+1)%2?i+1:""}</span>`).join("")}</div>
+    <div style="position:relative">
+    ${ranges.map(([r,a,b],i)=>{const s=i+1,c=CARDIO[s];return `<div class="grow"><div class="who"><b style="background:${GC[i]}">${"ABCD"[i]}</b><span>Días ${r}<br><span class="mini" style="text-transform:none;letter-spacing:0;font-weight:600">${c.base-10} min + 10 yoga/pilates</span></span></div>
+      <div class="gbar ${s===st?"cur":""}" style="grid-column:${a+1} / ${b+2};background:${GC[i]}"><span class="kn"></span><span>${c.r} × (${c.on} + ${c.off})</span><strong>${c.iv}′</strong></div></div>`}).join("")}
+    <div class="vline" style="left:calc(190px + (100% - 190px) * ${(d-.5)/30})"></div></div>
+   </div></div>
+   ${steps(["Camina 5 min, empezando suave.","Haz los intervalos de la etapa, en terreno llano.","Si ya toleras caminar 5 km sin dolor ni fatiga excesiva, añade caminata reservando los últimos 5 min para el paso siguiente. Cuenta todo dentro de los 5 km. No añadas más trote.","Termina con 5 min de caminata muy suave, incluidos en la distancia.","Haz los 10 min de yoga o pilates indicados."])}
+   <p class="mini">Los 5 km corresponden a los tres días de caminata/trote. Este mes no promete correr 5 km continuos. Si una etapa pesa, repítela. Ritmo cómodo, sin buscar velocidad.</p>
+   <div class="row"><button class="btn primary" data-timer="cardio">Temporizador de la etapa ${st}</button></div></article>
+
+  <article class="card c-white wide"><span class="tag"><span class="ic">${ico("dumb")}</span>Fuerza</span><h3>Tres sesiones de pesas<small>${setTxt} En ejercicios por lado: 6 por lado. Descanso 60–90 s.</small></h3>
+   <p class="mini">Mancuernas ligeras, silla estable y colchoneta. Sin equipo confirmado, empieza sin carga. Calienta 6 min: 2 de marcha, 2 de movilidad de hombros/cadera y 2 de ensayo sin peso. Termina pudiendo hacer unas 3 repeticiones más. No aumentes el peso este mes.</p>
+   <div class="kanban" style="margin-top:14px">
+   ${kan("A: base de cuerpo completo","Martes","#D9467F",["<b>Sentarse y levantarse:</b> silla firme contra pared; inclina el tronco desde la cadera y levántate sin impulso.","<b>Remo con apoyo:</b> una mano en apoyo estable; lleva la mancuerna hacia la cadera, 6 por lado.","<b>Press en el suelo:</b> boca arriba, rodillas dobladas; empuja sin golpear al bajar.","<b>Puente de glúteos:</b> sin carga, sin arquear la espalda.","<b>Elevación de talones:</b> sujétate de la silla, controlado.","<b>Bird dog adaptado:</b> a cuatro apoyos, desliza una pierna atrás sin girar el tronco; 6 por lado."],"c-pink pt")}
+   ${kan("B: postura y cadera","Jueves","#8B5CF6",["<b>Bisagra de cadera:</b> cadera atrás, rodillas suaves; ensaya sin peso.","<b>Press de hombro sentado:</b> muy ligero, rango sin dolor; si molesta, flexiones contra pared.","<b>Remo con apoyo:</b> 6 por lado.","<b>Sentarse y levantarse:</b> sin carga si hay fatiga.","<b>Apertura lateral de rodilla:</b> de lado, abre la de arriba sin girar pelvis; 6 por lado.","<b>Deslizamiento de talón:</b> boca arriba, sin arquear espalda; 6 por lado."],"c-lav pt")}
+   ${kan("C: técnica y control","Sábado","#C77A0A",["Sentarse/levantarse.","Flexiones contra pared, cuerpo alineado y codos suaves.","Remo con apoyo, 6 por lado.","Puente de glúteos.","Curl de bíceps, sin balancear tronco.","Elevaciones de talones con apoyo."],"c-yel pt","Una sesión con una sola serie es válida si estás empezando.")}
+   </div></article>
+
+  <article class="card c-peach pt wide"><span class="tag"><span class="ic">${ico("music")}</span>Bailoterapia</span><h3>Tres guiones de bajo impacto<small>Semana 1: 8 min. Semanas 2 y 3: 10 min. Semana 4 y días 29–30: 12 min.</small></h3>
+   <div class="kanban" style="margin-top:10px">
+    ${[["Martes, merengue suave",["Marcha al ritmo","Pasos laterales","Adelante/atrás","Marcha"]],["Jueves, salsa básica sin giros",["Paso lateral","Paso básico corto","Brazos cómodos con paso lateral","Marcha"]],["Sábado, mezcla",["Marcha con música latina","Merengue suave","Salsa corta","Marcha"]]].map(([t,b])=>{const dur=st===1?[2,2,2,2]:st===4?[3,3,3,3]:[2,3,3,2];return `<div class="kitem" style="flex-direction:column;gap:6px"><b>${t}</b>${b.map((x,i)=>`<span style="display:flex;justify-content:space-between;width:100%;gap:8px"><span>${i+1}. ${x}</span><span class="mini">${dur[i]} min</span></span>`).join("")}</div>`}).join("")}
+   </div>
+   <p class="mini">Duración por bloque: semana 1, 2 min cada uno; semanas 2–3, 2, 3, 3 y 2 min; semana 4, 3 min cada uno. Mantén un pie apoyado: sin saltos, giros rápidos ni sentadillas profundas repetidas.</p>
+   <div class="row"><button class="btn primary" data-timer="dance">Temporizador de baile (semana ${wk})</button></div></article>
+
+  <article class="card c-lav pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Lunes, 10 min</span><h3>Yoga Y1</h3>${steps(["Sentada, respiración cómoda: 2 min.","Gato-vaca en rango pequeño: 2 min.","Postura del niño apoyada, solo si es cómoda (o sentarte): 2 min.","Pantorrilla con apoyo: 1 min por lado.","Boca arriba, observación del cuerpo: 2 min."])}<div class="row"><button class="btn primary" data-timer="y1">Guiar Y1</button></div></article>
+  <article class="card c-mint pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Miércoles, 10 min</span><h3>Pilates P1</h3>${steps(["Respiración, sentir costillas: 2 min.","Basculación pélvica suave: 2 min.","Deslizar talones alternos: 2 min.","Apertura lateral de rodilla: 1 min por lado.","Descanso: 2 min."])}<p class="mini">Si aparece presión pélvica, dolor o escape de orina, omite el ejercicio y solicita adaptación.</p><div class="row"><button class="btn primary" data-timer="p1">Guiar P1</button></div></article>
+  <article class="card c-sky pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Viernes, 10 min</span><h3>Yoga Y2</h3>${steps(["De pie con apoyo, postura erguida: 1 min.","Movilidad de hombros: 1 min.","Inclinación lateral sentada: 1 min por lado.","Rodilla al pecho: 1 min por lado.","Pantorrillas con apoyo: 1 min por lado.","Descanso: 2 min."])}<div class="row"><button class="btn primary" data-timer="y2">Guiar Y2</button></div></article>
+
+  <article class="card c-white wide"><h3 style="margin-bottom:10px">Cuándo ajustar</h3><div class="warn">No avances si aparece dolor articular, fatiga que altera tu día o recuperación insuficiente. Ante dolor torácico, mareo intenso o falta de aire desproporcionada, detente y busca valoración. Si tienes una lesión, restricción médica o síntomas de suelo pélvico con impacto, adapta el trote con un profesional.</div></article>
+  </div>`;
+}
+
+/* ---------- PIEL ---------- */
+function renderPiel(){
+  const d=state.day;
+  const prods=[["Cicatricure Porcelana crema gel","Se incorpora","home","Tratamiento antimanchas, no hidratante neutra. Noches alternas desde el día 8, solo tras prueba de tolerancia."],["Vitamina C KIMBEAUTY","Se incorpora","home","Mañanas separadas desde el día 15, si pasó prueba local y el envase permite ese uso."],["Peeling Cicatricure","Condicionado","","Días 21 y 28, solo si coincide el envase, la piel está tranquila y se comprobó tolerancia. Máximo 10 min, enjuague abundante; evita ojos y labios; no se duerme con él."],["Tónico Petite Maison","Opcional","","No entra al calendario inicial. Si ya lo usas sin irritación, tras limpiar en días sin peeling."],["Vitamina E, Brightening y Dark Spot KIMBEAUTY","En pausa","","Hasta leer sus fórmulas. No es necesario gastar todos los productos a la vez."]];
+  $("#v-piel").innerHTML=`<h2 class="h2">Tu piel</h2><p class="lead">Un calendario conservador con tus productos identificables. Las etiquetas completas siguen pendientes.</p>
+  <div class="grid">
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Qué va cada mañana y noche</h3></div></div>
+   <div class="legend" style="margin-bottom:12px"><span style="--c:var(--line)">Base</span><span style="--c:#E7A21D">Vitamina C (AM)</span><span style="--c:#7A6CF0">Crema gel (PM)</span><span style="--c:#E5484D">Peeling opcional (PM)</span></div>
+   <div class="skincal">${SKIN.map((s,i)=>`<button class="skd ${i+1===d?"cur":""}" data-open="${i+1}" aria-label="Día ${i+1}"><b>${i+1}</b><span><span class="dot d-${s[0]==="c"?"c":"b"}"></span><span class="dot d-${s[1]==="g"?"g":s[1]==="p"?"p":"b"}"></span></span></button>`).join("")}</div></article>
+  <article class="card c-peach pt"><span class="tag"><span class="ic">${ico("sun")}</span>Base necesaria</span><h3>Antes de cualquier activo</h3><div class="kv" style="margin-top:10px"><div>Limpiador suave.</div><div>Hidratante sencilla sin activos exfoliantes.</div><div>Protector solar de amplio espectro FPS 30 o más, preferentemente 50.</div></div><p>Ningún sérum sustituye al protector. Si todavía no tienes esta base, no inicies el peeling. Antes de entrenar de día, aplica protector; después de sudar, limpia suavemente y reaplica.</p></article>
+  <article class="card c-mint pt"><span class="tag"><span class="ic">${ico("leaf")}</span>Adaptación</span><h3>Fases</h3>
+   <ul class="list-plain" style="margin-top:6px!important">${[["1–7","Base y prueba de crema gel en una zona pequeña del brazo, según etiqueta."],["8–14","Crema gel en noches alternas si fue tolerada; prueba de vitamina C en otra zona."],["15+","Vitamina C en mañanas separadas, si pasó la prueba."],["21·28","Peeling opcional condicionado."]].map(([a,b])=>`<li style="grid-template-columns:58px 1fr"><span class="n" style="width:52px;border-radius:12px;font-size:12px">${a}</span><span>${b}</span></li>`).join("")}</ul></article>
+  <article class="card c-white wide"><h3 style="margin-bottom:8px">Tus productos</h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Producto</th><th>Estado</th><th>Uso</th></tr></thead><tbody>
+   ${prods.map(([n,s,c,u],i)=>`<tr><td class="n">${String(i+1).padStart(2,"0")}</td><td><b>${n}</b></td><td><span class="pill ${c}">${s}</span></td><td class="mini" style="color:var(--ink)">${u}</td></tr>`).join("")}</tbody></table></div></article>
+  <article class="card c-white wide"><h3 style="margin-bottom:10px">Regla para todo el mes</h3><div class="warn">No uses el peeling sobre piel irritada, lesionada o quemada por el sol; esa noche no añadas otros tratamientos. Ante irritación, vuelve a la base y suspende el activo. No aumentes la frecuencia por tu cuenta. Si estás embarazada o lactando, confirma las fórmulas completas de los antimanchas antes de incorporarlos.</div></article>
+  </div>`;
+}
+
+/* ---------- FAMILIA ---------- */
+function renderFam(){
+  const groups=[["Semana 1","Transportes",1,7,"c-rose","run"],["Semana 2","Cuerpo, sentidos y descubrimientos",8,14,"c-peach","smile"],["Semana 3","Animales, plantas y la Tierra",15,21,"c-mint","leaf"],["Semana 4","El espacio",22,30,"c-lav","star"]];
+  const TC=["c-mint","c-yel","c-lav","c-grey"];
+  $("#v-fam").innerHTML=`<h2 class="h2">Familia y Thomas</h2><p class="lead">Pequeñas prácticas, con sentido. Actividades para disfrutar, no exámenes ni exigencias.</p>
+  <div class="card c-white" style="margin-bottom:16px"><span class="tag"><span class="ic">${ico("star")}</span>Escuelita de Ignacio, 10–12 min</span><h3>Una idea, un juego y una pregunta opcional</h3>
+   <p class="mini">O menos si pierde interés. Puede repetir el tema de ayer. Usa piezas grandes, pinturas aptas y supervisión; evita piezas pequeñas accesibles a Lucas. Los planetas son exploración, no memorización obligatoria.</p></div>
+  <div class="courses" style="margin-bottom:16px">
+  ${groups.map(([g,th,a,b,cls,ic])=>{const done=Array.from({length:b-a+1},(_,i)=>isOn(a+i,"ign"));const n=done.filter(Boolean).length;return `<article class="course pt ${cls}"><div class="ch"><span class="ic">${ico(ic)}</span><span>${g} · días ${a}–${b}</span><span class="score">${n}/${b-a+1}</span></div><h3>${th}</h3>
+   <ul class="list-plain">${DAYS.slice(a-1,b).map((D,i)=>{const n=a+i;return `<li class="${isOn(n,"ign")?"ok":""}"><span class="n">${n}</span><span><b>${esc(D.iT)}</b><br><span class="mini">${esc(D.iI)} Pregunta: ${esc(D.iP)}</span></span><button class="check" data-kd="${n}:ign" aria-pressed="${isOn(n,"ign")}" aria-label="Día ${n} Ignacio">${CHECKSVG}</button></li>`}).join("")}</ul>
+   <div class="ft"><span class="dots">${done.map(x=>`<i class="${x?"on":""}"></i>`).join("")}</span><span>${n} de ${b-a+1} sesiones</span></div></article>`}).join("")}
+  </div>
+  <div class="grid">
+  <article class="card c-sky pt"><span class="tag"><span class="ic">${ico("users")}</span>Ignacio y Lucas</span><h3>Juego con ambos niños</h3>
+   <ul class="list-plain" style="margin-top:6px!important">${WD.map((w,i)=>`<li style="grid-template-columns:44px 1fr"><span class="n">${WDs[i]}</span><span><b>${w}:</b> ${NINOS[i]}</span></li>`).join("")}</ul>
+   <p class="mini">El juego libre se mantiene aparte de la escuelita. Lucas explora materiales adecuados a su etapa, sin exigir la misma actividad. Para atención individual, otro adulto cuida al otro niño.</p></article>
+  <article class="card c-mint pt"><span class="tag"><span class="ic">${ico("paw")}</span>Thomas, cachorro</span><h3>Pautas de juego</h3>
+   <div class="kv" style="margin-top:10px">${["Juegos de 3–5 min; en días de lamido, hasta 5–10 si sigue cómodo.","Todo en casa: sin parque, carreras prolongadas, saltos ni giros bruscos.","Usa parte de su alimento habitual como premio y descuéntala de su ración.","Retira tela, recipientes o juguetes si intenta ingerirlos.","Niños separados durante juegos con comida; nunca solos con el cachorro.","No sustituye alimentación, descanso, higiene ni indicaciones veterinarias."].map(x=>`<div>${x}</div>`).join("")}</div></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("paw")}</span>Los 30 juegos de Thomas</span><h3>Olfato, lamido y pelota lenta</h3></div><span class="select">${DAYS.filter((_,i)=>isOn(i+1,"thomas")).length}/30 hechos</span></div>
+   <div class="tiles">${DAYS.map((D,i)=>{const n=i+1,on=isOn(n,"thomas");return `<div class="tile ${TC[Math.min(3,Math.floor(i/7))]} ${on?"ok":""}"><div class="th"><span class="num">Día ${n}</span><button class="check" data-kd="${n}:thomas" aria-pressed="${on}" aria-label="Día ${n} Thomas">${CHECKSVG}</button></div><h4>${esc(D.thT)}</h4><p>${esc(D.th)}</p></div>`}).join("")}</div></article>
+  <article class="card c-yel pt wide"><span class="tag"><span class="ic">${ico("pen")}</span>Notas</span><h3 style="margin-bottom:6px">Notas sobre Thomas</h3><p class="mini">Anota qué lo relaja y qué lo sobreexcita (lo pide el día 30).</p><textarea data-gnote="thomas" placeholder="Lo que lo relaja, lo que lo sobreexcita, su juego favorito…">${esc(state.notes.thomas||"")}</textarea></article>
+  </div>`;
+}
+
+/* ---------- MENTE E INGLÉS ---------- */
+function renderMente(){
+  const cur=engMin(state.day), ER=[["1–7",5],["8–14",8],["15–21",12],["22–28",15],["29–30",18]];
+  $("#v-mente").innerHTML=`<h2 class="h2">Mente e inglés</h2><p class="lead">Mindset: 1 min para llegar y poner la pieza, 5 para responder y 2 para elegir una acción. Gestión emocional: 5 min diarios, preferentemente en calma. Estas prácticas no sustituyen atención psicológica cuando se necesita.</p>
+  <div class="grid">
+  <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("chat")}</span>Inglés, A1–A2 ajustable</span><h3>Tiempo que aumenta<small>Minutos diarios por tramo de días</small></h3></div><span class="select">Hoy: ${cur} min</span></div>
+   <div class="vbars" role="img" aria-label="Minutos de inglés por tramo">${ER.map(([r,m])=>`<div class="${m===cur?"cur":""}"><b>${m}′</b><i style="height:${m/18*110}px" title="Días ${r}: ${m} min"></i><small>${r}</small></div>`).join("")}</div>
+   <p class="mini">Habla con una persona o con voz de un asistente. Pide una pregunta a la vez y solo dos correcciones al final. Si pesa, repite la duración anterior.</p></article>
+  <article class="card c-white"><h3 style="margin-bottom:8px">Reparto de cada sesión</h3><div class="scroll"><table class="tbl"><thead><tr><th>Días</th><th>Duración</th><th>Repaso + conversación + corrección</th></tr></thead><tbody>
+   ${ER.map(([r,m])=>`<tr class="${cur===m?"cur":""}"><td>${r}</td><td><b>${m} min</b></td><td>${engSplit(m).join(" + ")} min</td></tr>`).join("")}</tbody></table></div></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("chat")}</span>30 temas</span><h3>Conversaciones del mes</h3></div><span class="select">${DAYS.filter((_,i)=>isOn(i+1,"eng")).length}/30 hechas</span></div>
+   <ul class="list-plain">${DAYS.map((D,i)=>{const n=i+1;return `<li class="${isOn(n,"eng")?"ok":""}"><span class="n">${n}</span><span><b>${esc(D.et)}</b> <span class="mini">(${engMin(n)} min)</span><br><span class="mini">${D.eq.map(esc).join(" / ")}</span></span><button class="check" data-kd="${n}:eng" aria-pressed="${isOn(n,"eng")}" aria-label="Día ${n} inglés">${CHECKSVG}</button></li>`}).join("")}</ul></article>
+  <article class="card c-lav pt"><span class="tag"><span class="ic">${ico("spark")}</span>Mindset, 8 min</span><h3>Preguntas y música</h3>
+   <ul class="list-plain">${DAYS.map((D,i)=>{const n=i+1;return `<li class="${isOn(n,"mind")?"ok":""}" style="grid-template-columns:44px 1fr"><span class="n">${n}</span><span>${esc(D.mq)}<br><span class="mini">♪ ${esc(D.mu)}</span></span></li>`}).join("")}</ul></article>
+  <article class="card c-rose pt"><span class="tag"><span class="ic">${ico("smile")}</span>Emociones, 5 min</span><h3>Prácticas del mes</h3>
+   <ul class="list-plain">${DAYS.map((D,i)=>{const n=i+1;return `<li class="${isOn(n,"emo")?"ok":""}" style="grid-template-columns:44px 1fr"><span class="n">${n}</span><span><b>${esc(D.emT)}</b><br><span class="mini">${esc(D.em)}</span></span></li>`}).join("")}</ul></article>
+  <article class="card c-yel pt wide"><span class="tag"><span class="ic">${ico("heart")}</span>Mi tarjeta de calma</span><h3>Tres señales, dos herramientas, una persona</h3><p class="mini">Del día 29. Déjala escrita aquí para tenerla accesible.</p><textarea data-gnote="calma" placeholder="Señales de sobrecarga, herramientas que funcionaron, persona de apoyo…">${esc(state.notes.calma||"")}</textarea></article>
+  </div>`;
+}
+
+/* ---------- PAREJA ---------- */
+function renderPar(){
+  const outN=DAYS.filter(D=>D.out).length, doneN=DAYS.filter((_,i)=>isOn(i+1,"pair")).length;
+  $("#v-par").innerHTML=`<h2 class="h2">Pareja</h2><p class="lead">Citas diarias de 30–45 min; algunas salidas de 60–120 min más traslados. Cada salida tiene alternativa casera. Una noche con niños despiertos puede requerir mover la cita, no recortar el sueño.</p>
+  <div class="stats">
+   ${statTile("c-pink","var(--ac-pink)","heart",doneN+"/30","citas hechas","")}
+   ${statTile("c-rose","var(--ac-rose)","run",outN,"salidas propuestas","")}
+   ${statTile("c-mint","var(--ac-mint)","home",30-outN,"citas en casa","")}
+   ${statTile("c-lav","var(--ac-lav)","star",2,"noches de cine","")}
+  </div>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Tablero de citas<small>Rosa: salida · lila: en casa</small></h3></div><span class="select">${doneN}/30</span></div>
+   <div class="tiles">${DAYS.map((D,i)=>{const n=i+1,on=isOn(n,"pair");return `<div class="tile ${D.out?"c-pink":"c-lav"} ${on?"ok":""}"><div class="th"><span class="num">Día ${n} · ${esc(D.pM)}</span><button class="check" data-kd="${n}:pair" aria-pressed="${on}" aria-label="Día ${n} pareja">${CHECKSVG}</button></div><h4>${esc(D.pT)}</h4><p>${esc(D.p)}</p><div class="ft"><span class="pill ${D.out?"":"home"}">${D.out?"Salida":"En casa"}</span></div></div>`}).join("")}</div></article>
+  <article class="card c-yel pt wide" style="margin-top:16px"><span class="tag"><span class="ic">${ico("pen")}</span>Día 28</span><h3 style="margin-bottom:6px">Citas para repetir el próximo mes</h3><p class="mini">Escojan dos, sin evaluar al otro.</p><textarea data-gnote="pareja" placeholder="Nuestras dos citas favoritas…">${esc(state.notes.pareja||"")}</textarea></article>`;
+}
+
+/* ---------- TRABAJO ---------- */
+const WORKSEG=[["Decidir el entregable",10],["Concentración 1",65],["Pausa",5],["Concentración 2",65],["Pausa",5],["Concentración 3",65],["Revisar, cerrar y dejar el siguiente paso",25]];
+function renderTrab(){
+  const total=WORKSEG.reduce((a,x)=>a+x[1],0);
+  const col=n=>n.startsWith("Conc")?"#4B4FE8":n==="Pausa"?"#C77A0A":"#8B5CF6";
+  const days=Array.from({length:30},(_,i)=>i+1).filter(isWork);
+  $("#v-trab").innerHTML=`<h2 class="h2">Trabajo protegido</h2><p class="lead">Lunes a viernes, 4 horas corridas con cobertura de cuidado infantil confirmada. Las siestas no sustituyen cuatro horas de cuidado. Sábados y domingos sin bloque laboral fijo.</p>
+  <div class="grid">
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("clock")}</span>240 min</span><h3>Estructura del bloque</h3></div><span class="select">Total: ${total} min</span></div>
+   <div class="gx" role="img" aria-label="Estructura del bloque de trabajo">${WORKSEG.map(([n,m])=>`<div title="${n}: ${m} min" style="flex:${m};background:${col(n)}">${m>=25?m+"′":""}</div>`).join("")}</div>
+   <div class="legend" style="margin-bottom:12px"><span style="--c:#4B4FE8">Concentración</span><span style="--c:#C77A0A">Pausa</span><span style="--c:#8B5CF6">Decidir / cerrar</span></div>
+   ${steps(WORKSEG.map(([n,m])=>`${n}: <b>${m} min</b>`))}
+   <div class="row"><button class="btn primary" data-timer="work">Iniciar bloque</button></div></article>
+  <article class="card c-yel pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Durante las pausas</span><h3>Agua, baño o movilidad</h3><div class="kv" style="margin-top:10px"><div>No redes.</div><div>Teléfono en modo enfoque.</div><div>Aviso previo a quien cuide a los niños.</div></div></article>
+  <article class="card c-white two"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("brief")}</span>Entregables</span><h3>Lo que definiste cada día</h3></div><span class="select">${days.filter(n=>isOn(n,"work")).length}/${days.length} bloques</span></div>
+   <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${days.map(n=>{const v=(state.notes[n]||{}).deliv, on=isOn(n,"work");return `<div class="tile ${v?(on?"c-mint":"c-sky"):"hatch"}" style="min-height:96px"><div class="th"><span class="num">Día ${n} · ${WDs[wdOf(n)]}</span>${on?'<span class="pill home">✓ Hecho</span>':""}</div><h4 style="font-weight:${v?700:500};color:${v?"var(--ink)":"var(--faint)"}">${esc(v||"Sin definir")}</h4></div>`}).join("")}</div></article>
+  </div>`;
+}
+
+/* ---------- GUÍA ---------- */
+function renderGuia(){
+  const dd=state.notes.difficult||{};
+  const SRC=[["NHS, Couch to 5K","Tres días de carrera con recuperación entre ellos."],["Cleveland Clinic, cardio y pesas","El orden depende del objetivo; fuerza primero cuando se prioriza la fuerza."],["Mayo Clinic, técnica de fuerza","Calentamiento, control del movimiento y descanso entre series."],["Cicatricure, línea Porcelana","Instrucciones oficiales de crema gel y peeling; manda la etiqueta de tu envase."],["American Academy of Dermatology","Prueba de productos, cuidado básico y protección solar."],["Blue Cross, cachorros y juego","Actividad breve, enriquecimiento, descanso y evitar saltos/giros intensos."],["American Academy of Pediatrics, juego","Aprendizaje dirigido por el juego y la curiosidad del niño."],["OMS, En tiempos de estrés, haz lo que importa","Anclaje al presente, valores y una relación más amable con las emociones."]];
+  const SEQ=["Al comenzar: necesidades de los niños y Thomas; después, mindset (8 min).","Bloque de ejercicio en el orden de la ficha, con niños atendidos y un lugar seguro.","Higiene, cuidado facial de mañana y alimentación habitual.","Trabajo: bloque real de 4 horas con cobertura de cuidado infantil.","Cuando Ignacio esté receptivo: escuelita breve; después, juego libre con ambos.","Thomas: su juego de 3–5 minutos cuando esté despierto y tranquilo.","Inglés y práctica emocional, en dos pequeños momentos distintos.","Tiempo de pareja con los niños atendidos; cuidado facial nocturno y descanso."];
+  $("#v-guia").innerHTML=`<h2 class="h2">Guía</h2><p class="lead">Un orden para cada día, sin inventar una hora de despertar ni ocupar el tiempo de sueño de la familia.</p>
+  <div class="grid">
+  <article class="card c-white two"><span class="tag"><span class="ic">${ico("clock")}</span>Secuencia diaria</span><h3 style="margin-bottom:12px">Tu día, paso a paso</h3><ol class="tline">${SEQ.map((s,i)=>`<li><b>${i+1}</b><span>${s}</span></li>`).join("")}</ol></article>
+  <div class="gcol">
+  <article class="card c-rose pt"><span class="tag"><span class="ic">${ico("alert")}</span>Día difícil</span><h3>El mínimo posible</h3>
+   <p>Si hay enfermedad, dolor, agotamiento o mala noche: no fuerces trote ni doble sesión. Conserva cuidados básicos, reduce el resto y retoma la secuencia sin «pagar» lo perdido con doble carga.</p>
+   <div class="subchecks" style="flex-direction:column"><button data-dd="r" aria-pressed="${!!dd.r}">2 min reflexión</button><button data-dd="e" aria-pressed="${!!dd.e}">3 min inglés</button><button data-dd="f" aria-pressed="${!!dd.f}">10 min familia</button></div>
+   <p class="mini">No equivalen a la sesión completa; sí mantienen continuidad.</p></article>
+  <article class="card c-peach pt"><span class="tag"><span class="ic">${ico("sun")}</span>Inicio</span><h3 style="margin-bottom:6px">Cómo empezar</h3><p>El día 1 equivale a un lunes de referencia. Los días 29 y 30 inician el siguiente ciclo. Las sesiones iniciales son cortas porque aún no se conoce tu condición física, equipo ni sueño actual.</p><p class="mini">El meal prep y la alimentación quedan para la siguiente fase.</p></article>
+  </div>
+  <article class="card c-white wide"><h3 style="margin-bottom:8px">Fuentes</h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Fuente</th><th>Qué respalda</th><th></th></tr></thead><tbody>${SRC.map(([n,t],i)=>`<tr><td class="n">${String(i+1).padStart(2,"0")}</td><td><b>${n}</b></td><td class="mini" style="color:var(--ink)">${t}</td><td><a href="https://www.google.com/search?q=${encodeURIComponent(n)}" target="_blank" rel="noopener">Buscar</a></td></tr>`).join("")}</tbody></table></div>
+   <p class="mini">Las actividades diarias son propuestas originales; las fuentes respaldan las pautas generales. Puedes mover días manteniendo la recuperación entre sesiones similares.</p></article>
+  </div>`;
+}
+
+/* ---------- render ---------- */
+const R={hoy:renderHoy,mes:renderMes,mov:renderMov,piel:renderPiel,fam:renderFam,mente:renderMente,par:renderPar,trab:renderTrab,guia:renderGuia};
+function renderAll(keepScroll){
+  const y=window.scrollY; renderTabs();
+  document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id==="v-"+tab));
+  R[tab](); if(keepScroll) window.scrollTo(0,y);
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const t=e.target;
+  let b=t.closest("[data-day]"); if(b){state.day=+b.dataset.day;save();renderAll();return;}
+  b=t.closest("[data-open]"); if(b){state.day=+b.dataset.open;tab="hoy";save();renderAll();window.scrollTo({top:0});return;}
+  b=t.closest("[data-k]"); if(b){toggle(state.day,b.dataset.k);return;}
+  b=t.closest("[data-kd]"); if(b){const [d,k]=b.dataset.kd.split(":");toggle(+d,k);return;}
+  b=t.closest("[data-goto]"); if(b){tab=b.dataset.goto;renderAll();window.scrollTo({top:0});return;}
+  b=t.closest("[data-dd]"); if(b){const dd=state.notes.difficult||(state.notes.difficult={});dd[b.dataset.dd]=!dd[b.dataset.dd];save();renderAll(true);return;}
+  b=t.closest("[data-timer]"); if(b){startPreset(b.dataset.timer);return;}
+  if(t.id==="resetBtn"){ if(confirm("¿Borrar todas las casillas y notas?")){state.checks={};state.notes={};save();renderAll();} }
+});
+document.addEventListener("input",e=>{
+  const t=e.target;
+  if(t.dataset.note){const n=state.notes[state.day]||(state.notes[state.day]={});n[t.dataset.note]=t.value;save();}
+  if(t.dataset.gnote){state.notes[t.dataset.gnote]=t.value;save();}
+});
+document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
+
+/* ---------- theme ---------- */
+function applyTheme(){ if(state.theme) document.documentElement.setAttribute("data-theme",state.theme); else document.documentElement.removeAttribute("data-theme"); }
+$("#themeBtn").addEventListener("click",()=>{const dark=state.theme?state.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches; state.theme=dark?"light":"dark"; applyTheme(); save();});
+
+/* ---------- timer ---------- */
+let T=null;
+function startPreset(k){
+  const d=state.day, st=stageOf(d), m=x=>x*60;
+  let name, segs;
+  if(k==="mind"){name="Mindset";segs=[["Llegar y poner la pieza",60],["Responder",300],["Elegir una acción",120]];}
+  else if(k==="emo"){name="Gestión emocional";segs=[["Práctica del día",300]];}
+  else if(k==="eng"){const em=engMin(d),sp=engSplit(em);name="Inglés, "+em+" min";segs=[["Repaso",m(sp[0])],["Conversación",m(sp[1])],["Corrección y dos frases",m(sp[2])]];}
+  else if(k==="work"){name="Trabajo protegido";segs=WORKSEG.map(([n,x])=>[n,m(x)]);}
+  else if(k==="cardio"){const c=CARDIO[st];name="Caminata/trote, etapa "+st;segs=[["Caminar suave",300]];for(let i=1;i<=c.r;i++){segs.push(["Trote "+i+"/"+c.r,c.onS]);segs.push(["Caminar "+i+"/"+c.r,c.offS]);}segs.push(["Caminata muy suave",300]);}
+  else if(k==="weights"){const ex=exercise(d);name="Pesas "+(ex.L||"")+" + baile";segs=[["Calentamiento",360],["Pesas: a tu ritmo (descansa 60–90 s)",m(st===1?12:20)],["Transición e hidratación",120]];blocksDance(d).forEach(x=>segs.push(x));segs.push(["Marcha suave",240]);}
+  else if(k==="dance"){name="Bailoterapia";segs=blocksDance(d);}
+  else if(k==="y1"){name="Yoga Y1";segs=[["Respiración sentada",120],["Gato-vaca pequeño",120],["Postura del niño o descanso sentada",120],["Pantorrilla lado 1",60],["Pantorrilla lado 2",60],["Observación del cuerpo",120]];}
+  else if(k==="p1"){name="Pilates P1";segs=[["Respiración y costillas",120],["Basculación pélvica",120],["Deslizar talones",120],["Apertura rodilla lado 1",60],["Apertura rodilla lado 2",60],["Descanso",120]];}
+  else if(k==="y2"){name="Yoga Y2";segs=[["Postura erguida",60],["Movilidad de hombros",60],["Inclinación lado 1",60],["Inclinación lado 2",60],["Rodilla al pecho 1",60],["Rodilla al pecho 2",60],["Pantorrilla 1",60],["Pantorrilla 2",60],["Descanso",120]];}
+  T={name,segs,i:0,left:segs[0][1],run:true,last:Date.now()}; drawTimer(); $("#timer").classList.add("on");
+}
+function blocksDance(d){const st=stageOf(d),w=wdOf(d);
+  const names=w===3?["Paso lateral","Paso básico corto","Brazos con paso lateral","Marcha"]:w===5?["Marcha con música latina","Merengue suave","Salsa corta","Marcha"]:["Marcha al ritmo","Pasos laterales","Adelante/atrás","Marcha"];
+  const dur=st===1?[2,2,2,2]:st===4?[3,3,3,3]:[2,3,3,2]; return names.map((n,i)=>["Baile: "+n,dur[i]*60]);}
+function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=740;g.gain.value=.08;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.25);}catch(e){} if(navigator.vibrate) navigator.vibrate(200);}
+function drawTimer(){ if(!T) return; const s=T.segs[T.i], mm=Math.floor(T.left/60), ss=Math.floor(T.left%60);
+  $("#tmName").textContent=T.name+" · "+(T.i+1)+"/"+T.segs.length; $("#tmSeg").textContent=s[0];
+  $("#tmClock").textContent=String(mm).padStart(2,"0")+":"+String(ss).padStart(2,"0");
+  $("#tmBar").style.width=(100-T.left/s[1]*100)+"%"; $("#tmPause").textContent=T.run?"Pausar":"Seguir";}
+function nextSeg(){ T.i++; if(T.i>=T.segs.length){ beep(); $("#tmSeg").textContent="¡Listo!"; $("#tmClock").textContent="00:00"; T.run=false; T.done=true; return;} T.left=T.segs[T.i][1]; beep(); }
+setInterval(()=>{ if(!T||!T.run) return; const now=Date.now(); T.left-=(now-T.last)/1000; T.last=now; if(T.left<=0) nextSeg(); if(!T.done) drawTimer(); },250);
+$("#tmPause").onclick=()=>{ if(!T||T.done) return; T.run=!T.run; T.last=Date.now(); drawTimer(); };
+$("#tmSkip").onclick=()=>{ if(!T||T.done) return; nextSeg(); T.last=Date.now(); if(!T.done) drawTimer(); };
+$("#tmStop").onclick=()=>{ T=null; $("#timer").classList.remove("on"); };
+
+applyTheme();
+{const td=todayDay(); if(td) state.day=td;}
+renderAll();
+</script>
+</body>
+</html>
