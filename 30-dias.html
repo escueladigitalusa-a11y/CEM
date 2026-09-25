@@ -918,7 +918,7 @@ function itemsOf(d){
   const it=["mind","move","eng"]; if(isWork(d)) it.push("work");
   it.push("ign","thomas","pair","kids","skinAM","skinPM","close"); return it;
 }
-const LABELS={mind:"Mindset",move:"Ejercicio",eng:"Inglés",work:"Trabajo",ign:"Ignacio",thomas:"Thomas",pair:"Pareja",kids:"Ambos niños",skinAM:"Piel AM",skinPM:"Piel PM",close:"Cierre"};
+const LABELS={mind:"Mindset",move:"Ejercicio",eng:"Inglés",work:"Trabajo",ign:"Ignacio",thomas:"Thomas",pair:"Personal",kids:"Ambos niños",skinAM:"Piel AM",skinPM:"Piel PM",close:"Cierre"};
 const isOn=(d,k)=>!!state.checks[d+":"+k];
 function pct(d){const it=itemsOf(d);return Math.round(it.filter(k=>isOn(d,k)).length/it.length*100);}
 function toggle(d,k){const key=d+":"+k; if(state.checks[key]) delete state.checks[key]; else state.checks[key]=1; save(); renderAll(true);}
@@ -930,8 +930,8 @@ function todayDay(){ if(!state.start) return null; const s=new Date(state.start+
 const fmtDate=t=>t?t.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}):"";
 
 /* ---------- navigation (sidebar) ---------- */
-const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["wall","Family Wall","users"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["eng","Inglés","chat"],["par","Pareja","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
-const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Family Wall",mov:"Movimiento",piel:"Piel",ign:"Ignacio",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Pareja",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["wall","Family Wall","users"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["eng","Inglés","chat"],["par","Personal","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
+const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Family Wall",mov:"Movimiento",piel:"Piel",ign:"Ignacio",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Personal",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
 let tab="hoy";
 function renderTabs(){
   $("#tabs").innerHTML=TABS.map(([k,l,i])=>l?`<button role="tab" aria-selected="${k===tab}" data-tab="${k}">${ico(i)}${l}</button>`:`<div class="sec" role="presentation">${k}</div>`).join("");
@@ -1000,7 +1000,7 @@ function renderHoy(){
       card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`,"wide")}
     ${card("c-peach","star","Ignacio · "+ignWeek(d).t,D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div><div class="row"><button class="btn" data-goto="ign">Ver día completo</button></div>`,"third")}
     ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
-    ${card("c-pink","heart","Pareja, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
+    ${card("c-pink","heart","Personal, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
     ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>`)}
     ${card("c-white","drop","Cuidado facial","Mañana y noche",`Esta noche: <span class="catchip" style="--c:${PT.c}">${PT.t}</span>`,"",
       `<div class="skinline"><b>AM</b><span>${SK.am.map(x=>x.split(":")[0].replace(/\.$/,"")).join(" → ")}.</span></div><div class="skinline"><b>PM</b><span>${PM_STEPS[SK.pm].map(x=>x.split(/[:;]/)[0].replace(/\.$/,"")).join(" → ")}.</span></div>${SK.note?`<div class="note" style="background:var(--t-peach)">${SK.note}</div>`:""}
@@ -1420,7 +1420,7 @@ function renderEng(){
 /* ---------- PAREJA ---------- */
 function renderPar(){
   const outN=DAYS.filter(D=>D.out).length, doneN=DAYS.filter((_,i)=>isOn(i+1,"pair")).length;
-  $("#v-par").innerHTML=`<h2 class="h2">Pareja</h2><p class="lead">Citas diarias de 30–45 min; algunas salidas de 60–120 min más traslados. Cada salida tiene alternativa casera. Una noche con niños despiertos puede requerir mover la cita, no recortar el sueño.</p>
+  $("#v-par").innerHTML=`<h2 class="h2">Personal</h2><p class="lead">Citas diarias de 30–45 min; algunas salidas de 60–120 min más traslados. Cada salida tiene alternativa casera. Una noche con niños despiertos puede requerir mover la cita, no recortar el sueño.</p>
   <div class="stats">
    ${statTile("c-pink","var(--ac-pink)","heart",doneN+"/30","citas hechas","")}
    ${statTile("c-rose","var(--ac-rose)","run",outN,"salidas propuestas","")}
