@@ -465,6 +465,26 @@ dialog h3{font-size:19px;font-weight:800}
 .skr li{counter-increment:s;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--c) 14%,var(--paper));border-radius:8px;padding:2px 8px 2px 3px}
 .skr li::before{content:counter(s);width:16px;height:16px;border-radius:50%;background:var(--c);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
 .sknote{margin:0;font-size:11.5px;color:var(--soft)}
+/* diagrama semanal */
+.wg{overflow-x:auto;margin-top:14px}
+.wg-in{min-width:860px;position:relative;padding-top:4px}
+.wg-row{display:grid;grid-template-columns:190px repeat(7,minmax(0,1fr));align-items:center;margin:8px 0}
+.wg-row .who{display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:999px;padding:5px 12px 5px 5px;box-shadow:var(--shadow);margin-right:12px;min-width:0}
+.wg-row .who b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px;flex:0 0 auto}
+.wg-row .who span{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.25}
+.wg-head span,.wg-foot span{text-align:center;font-size:12.5px;font-weight:700;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:1px;border-radius:12px;padding:4px 0}
+.wg-head small,.wg-foot small{font-weight:500;font-size:11px;color:var(--faint)}
+.wg-head span.on{color:var(--ink)}
+.wg-foot{border-top:1px dashed var(--line);padding-top:8px}
+.wg-foot span:first-child{align-items:flex-start;padding-left:6px}
+.wg-foot b{color:var(--ink);font-size:13px}
+.wg-foot span.on{background:var(--pri-2)}
+.wg-cell{padding:0 4px;min-width:0}
+.wg-bar{min-height:50px;border-radius:18px;display:flex;flex-direction:column-reverse;justify-content:center;gap:1px;padding:6px 12px;color:#fff;min-width:0}
+.wg-bar span{font-size:11.5px;font-weight:600;line-height:1.2}
+.wg-bar strong{font-size:18px;font-weight:800;line-height:1.1}
+.wg-bar.cur{outline:3px solid var(--ink);outline-offset:2px}
+.wg-now{position:absolute;top:44px;bottom:48px;width:2px;background:var(--bad);border-radius:2px;pointer-events:none;z-index:2}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -865,6 +885,25 @@ function movDay(n,kg){
   segs=[["Paseo recreativo (opcional)",15,"w","w","10–20 min, sin objetivo"]];
   return {title:"Recuperación",sub:"Sin pesas, trote ni baile",cls:"hatch",timer:"",segs,km:Math.round(15*5/60*10)/10,min:15,kcal:Math.round(15*MET.w*kg/60)};
 }
+/* diagrama semanal: actividades (filas) × días lunes–domingo (columnas) */
+function weekGantt(mw,d,kg){
+  const dayN=i=>(mw-1)*7+i+1, c=CARDIO[mw], cw=d>=dayN(0)&&d<=dayN(6)?wdOf(d):-1;
+  const pm=mw===1?12:20, dm=danceMin(dayN(1)), sets=setsOf(dayN(1)).replace(/ series? × /,"×"), iv=c.r+"×("+c.on.replace(" min","′").replace(" s","″")+"+"+c.off.replace(" min","′").replace(" s","″")+")";
+  const ROWS=[
+   ["A","Caminata/trote","#3B6EE8",{0:[iv,c.base-10],2:[iv,c.base-10],4:[iv,c.base-10]}],
+   ["B","Pesas","#D9467F",{1:["A · "+sets,pm+8],3:["B · "+sets,pm+8],5:["C · "+sets,pm+8]}],
+   ["C","Bailoterapia","#C77A0A",{1:["Merengue",dm+4],3:["Salsa",dm+4],5:["Mezcla latina",dm+4]}],
+   ["D","Yoga / pilates","#8B5CF6",{0:["Yoga Y1",10],2:["Pilates P1",10],4:["Yoga Y2",10]}],
+   ["E","Recuperación","#1F9D55",{6:["Paseo opcional",15]}]];
+  const MD=Array.from({length:7},(_,i)=>movDay(dayN(i),kg));
+  return `<div class="wg"><div class="wg-in">
+   <div class="wg-row wg-head"><span></span>${WD.map((w,i)=>`<span class="${i===cw?"on":""}">${w}<small>día ${dayN(i)}</small></span>`).join("")}</div>
+   ${ROWS.map(([L,name,col,cells])=>{const tot=Object.values(cells).reduce((a,x)=>a+x[1],0);return `<div class="wg-row"><div class="who"><b style="background:${col}">${L}</b><span>${name}<br><span class="mini" style="text-transform:none;letter-spacing:0;font-weight:600">${tot} min/semana</span></span></div>
+     ${WD.map((_,i)=>cells[i]?`<div class="wg-cell"><div class="wg-bar ${i===cw?"cur":""}" style="background:${col}" title="${WD[i]}: ${name}, ${cells[i][0]}, ${cells[i][1]} min"><span>${cells[i][0]}</span><strong>${cells[i][1]}′</strong></div></div>`:`<div class="wg-cell"></div>`).join("")}</div>`}).join("")}
+   <div class="wg-row wg-foot"><span>Total del día</span>${MD.map((x,i)=>`<span class="${i===cw?"on":""}"><b>${x.min} min</b><small>${x.kcal} kcal${x.km?" · "+NF1.format(x.km)+" km":""}</small></span>`).join("")}</div>
+   ${cw>=0?`<div class="wg-now" style="left:calc(190px + (100% - 190px) * ${(cw+.5)/7})"></div>`:""}
+  </div></div>`;
+}
 function renderMov(){
   const st=stageOf(state.day), wk=st, d=state.day, cw=wdOf(d);
   const setTxt=["","Semana 1: 1 serie de 8 repeticiones por ejercicio.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semana 4 y día 30: 2 series de 10; conserva la carga."][st];
@@ -877,6 +916,7 @@ function renderMov(){
   <article class="card c-white" style="margin-bottom:16px"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:220px"><span class="tag"><span class="ic">${ico("cal")}</span>Plan semanal</span><h3>Semana ${mw} · días ${(mw-1)*7+1}–${mw===4?"28 (+29–30)":mw*7}<small>Trote ${CARDIO[mw].r} × (${CARDIO[mw].on} + ${CARDIO[mw].off} caminando) · pesas ${setsOf(dayN(1))} · baile ${danceMin(dayN(1))} min</small></h3></div>
     <label class="mini" style="display:flex;align-items:center;gap:8px">Tu peso <input type="number" id="moveKg" min="30" max="200" value="${kg}" style="width:80px;padding:6px 10px"> kg</label></div>
    <div class="pills" style="padding-bottom:4px;margin:0">${[1,2,3,4].map(k=>`<button data-mweek="${k}" aria-current="${k===mw}"><b>${k}</b><span class="w">${CARDIO[k].r}×(${CARDIO[k].on}+${CARDIO[k].off})</span></button>`).join("")}</div>
+   ${weekGantt(mw,d,kg)}
    <div class="wkboard">
    ${MD.map((x,i)=>{const n=dayN(i),isT=n===d,done=isOn(n,"move");return `<div class="wday tile ${x.cls}" style="${isT?"outline:2px solid var(--ink);outline-offset:-2px":""}">
      <div class="th"><span class="num">${WD[i]} · día ${n}</span>${isT?'<span class="pill ink">Hoy</span>':done?'<span class="pill home">✓</span>':""}</div>
