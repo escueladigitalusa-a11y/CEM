@@ -532,12 +532,38 @@ const DAYS=[
 {t:"Diseñar continuidad",mu:"Preludio en do mayor, BWV 846, J. S. Bach",mq:"¿Qué tres hábitos quiero sostener el próximo mes? Define su versión habitual y su versión mínima.",et:"Mi mes",eq:["What changed this month?","What was your favorite activity?","What would you like to improve?"],emT:"Mi tarjeta de calma",em:"Escribe tres señales de sobrecarga, dos herramientas que te funcionaron y una persona de apoyo. Deja la tarjeta accesible.",iT:"Emociones de un viajero",iI:"Podemos sentir alegría, miedo o tristeza y pedir compañía.",iJ:"Un peluche quiere viajar pero tiene miedo. Nombra la emoción y pregunta cómo acompañarlo, sin obligarlo a «ser valiente».",iP:"¿Qué le diríamos al peluche?",thT:"Mini circuito olfativo",th:"Haz tres estaciones cercanas: croqueta visible, juguete parcialmente visible y recipiente abierto con una croqueta. Sin obstáculos ni saltos.",pT:"Agradecimiento concreto",pM:"30 min",p:"Cada uno menciona tres acciones del otro que agradeció y por qué. Después, pide una cosa concreta que le gustaría compartir más."},
 {t:"Cerrar y elegir",mu:"Träumerei, op. 15 n.º 7, Robert Schumann",mq:"¿Qué aprendí sobre mí, mis hijos y mis vínculos? Anota tres aprendizajes y una intención concreta para los siguientes 30 días.",et:"Conversación integrada",eq:["Introduce yourself, explain your work and tell a recent story.","Ask about my interests.","Describe your next-month goals."],emT:"Integrar",em:"Compara cómo reconoces tus emociones ahora con el día 1. Elige una herramienta para practicar a diario y otra para momentos de tensión.",iT:"Mi pequeña exposición",iI:"Contar lo que más le interesó del mes.",iJ:"Dispón tres trabajos elegidos por Ignacio. Invita a un adulto a escucharlo y deja que señale, juegue o explique a su manera.",iP:"¿Qué quieres mostrarnos primero?",thT:"Celebración tranquila",th:"Prepara su snack con alimento habitual y repite dos minutos de su juego favorito. Anota qué lo relaja y qué lo sobreexcita.",pT:"Cita de cierre",pM:"60–90 min",out:1,p:"Elijan su actividad favorita del mes: café, paseo, cena o película. Hablen de un recuerdo del mes y de su próxima cita."}
 ];
-// piel: am b=base c=vitC ; pm b=base g=crema gel p=peeling opcional ; n=nota
-const SKIN=["bb1","bb1","bb1","bb1","bb1","bb1","bb1",
-"bg2","bb2","bg2","bb2","bg2","bb2","bg2",
-"cb","bg","bb","cb","bg","cb3","bp",
-"bb4","cg","bb","cb","bg","cb3","bp","bb4","cg"];
-const SKIN_NOTES={"1":"Prueba local de crema gel según etiqueta; aún no en todo el rostro.","2":"Prueba local de vitamina C según etiqueta; aún no en todo el rostro.","3":"Mañana el peeling es opcional, nunca obligatorio; revisa tolerancia y etiqueta.","4":"Día de recuperación de la piel; no añadas otros activos."};
+// piel: rutina para piel grasa con arrugas, poros abiertos y manchas
+const PM_TYPES={
+ base:{t:"Recuperación",c:"#1F9D55",cls:"c-mint",s:"Solo limpiar e hidratar: la piel descansa y repara."},
+ gel:{t:"Antimanchas",c:"#7A6CF0",cls:"c-lav",s:"Cicatricure Porcelana crema gel para manchas."},
+ bha:{t:"Ácido salicílico",c:"#0E9F9A",cls:"c-sky",s:"BHA 2 %: destapa poros, controla grasa y afina textura."},
+ ret:{t:"Retinoide",c:"#D9467F",cls:"c-pink",s:"Retinol o adapaleno: arrugas, poros y textura."},
+ arc:{t:"Arcilla + calma",c:"#B8741A",cls:"c-peach",s:"Mascarilla de arcilla en zona T y luego hidratar."},
+ peel:{t:"Peeling semanal",c:"#E5484D",cls:"c-rose",s:"Peeling Cicatricure 1 vez por semana, como indica el envase."}
+};
+const PM_STEPS={
+ base:["Desmaquillar: agua micelar o bálsamo si usaste protector o maquillaje.","Limpiador en gel, 30–60 s con agua tibia; secar a toques.","Hidratante en gel oil-free (una avellana para rostro y cuello).","Opcional si la sientes tirante: 2–3 gotas de vitamina E KIMBEAUTY antes de la hidratante."],
+ gel:["Desmaquillar y limpiador en gel; secar muy bien.","Tónico Petite Maison (opcional, si no tiene alcohol ni ácidos).","Cicatricure Porcelana crema gel: capa fina en rostro o sobre manchas, según etiqueta.","Si queda tirante, una capa ligera de hidratante en gel."],
+ bha:["Desmaquillar y limpiador en gel; secar muy bien.","Ácido salicílico 2 %: 3–4 gotas (o un algodón) en zona T, nariz, mentón y poros. Sin tónico esa noche.","Esperar 10 min.","Hidratante en gel oil-free."],
+ ret:["Desmaquillar y limpiador en gel; esperar 10 min con la piel totalmente seca.","Capa fina de hidratante.","Retinoide: cantidad de un guisante en 5 puntitos (frente, mejillas, mentón). Evita ojos, alas de la nariz y comisuras.","Otra capa de hidratante encima (técnica sándwich)."],
+ arc:["Desmaquillar y limpiador en gel.","Mascarilla de arcilla en zona T 8–10 min; retírala antes de que se cuartee del todo.","Enjuagar con agua tibia.","Hidratante en gel; opcional 2–3 gotas de vitamina E en zonas secas."],
+ peel:["Desmaquillar y limpiador en gel; secar muy bien.","Peeling Cicatricure según el envase, máximo 10 min, evitando ojos y labios.","Enjuagar con abundante agua.","Solo hidratante sencilla. Esta noche nada más: ni ácidos, ni retinoide, ni antimanchas."]
+};
+// semana tipo (lunes..domingo)
+const WEEK2=["bha","gel","base","arc","gel","peel","base"];
+const WEEK3=["bha","gel","ret","arc","gel","peel","base"];
+const WEEK1=["base","base","base","base","gel","base","base"];
+const PATCH={1:"Prueba de parche: Porcelana crema gel detrás de la oreja o en el cuello. Revisa en 24–48 h.",2:"Prueba de parche: vitamina C KIMBEAUTY en otra zona pequeña.",3:"Prueba de parche: ácido salicílico 2 % en la mandíbula.",4:"Prueba de parche del peeling según su etiqueta (mínimo 48 h antes del primer uso).",5:"Primera noche de Porcelana en todo el rostro si el parche salió bien.",8:"Empieza el ácido salicílico: hoy es su primera noche.",10:"Prueba de parche del retinoide en la mandíbula.",13:"Primer peeling semanal, solo si la piel está tranquila.",15:"Desde hoy vitamina C diaria y, si la compraste, niacinamida.",17:"Primera noche de retinoide: 1 vez por semana este mes."};
+function skinOf(d){
+  const w=wdOf(d), st=stageOf(d);
+  const pm=(st===1?WEEK1:st===2?WEEK2:WEEK3)[w];
+  const vitc=st>=3||(st===2&&d%2===0), nia=st>=3, afterPeel=w===6&&st>=2;
+  const am=["Limpiador en gel suave, 30 s (o solo agua si la piel está tranquila).","Tónico Petite Maison, si no tiene alcohol ni ácidos."];
+  if(vitc) am.push("Vitamina C KIMBEAUTY: 3–4 gotas; esperar 1 min."+(afterPeel?" Si arde tras el peeling, omítela hoy.":""));
+  if(nia) am.push("Niacinamida 5–10 %: 2–3 gotas (poros, grasa y manchas).");
+  am.push("Hidratante en gel oil-free: poca cantidad.","Protector FPS 50 toque seco: dos dedos de producto para rostro y cuello. Reaplicar cada 2–3 h si hay sol.");
+  return {pm,vitc,nia,am,note:PATCH[d]||""};
+}
 
 </script>
 <script>
@@ -678,9 +704,7 @@ function renderHoy(){
     <div class="row"><button class="btn primary" data-timer="weights">Iniciar sesión guiada</button><button class="btn" data-goto="mov">Ver ejercicios</button></div>`; exMin="35–60 min";}
   else {exb=`<p>Sin pesas, trote ni bailoterapia programados. Descansa; si te apetece, paseo recreativo muy suave de 10–20 min, sin objetivo de distancia. La salida en pareja puede cubrir ese paseo.</p><p class="mini">No recuperes sesiones perdidas hoy.</p>`; exMin="Descanso";}
   const em=engMin(d), sp=engSplit(em), emPrev=d>1?engMin(d-1):em;
-  const sk=SKIN[d-1], am=sk[0], pm=sk[1], nt=sk[2];
-  const AM=am==="c"?"Limpiar → vitamina C KIMBEAUTY (solo si tolerada) → hidratante sencilla → protector solar.":"Limpiar suavemente → hidratante sencilla si la necesitas → protector solar.";
-  const PM=pm==="g"?"Limpiar y secar → capa fina de Cicatricure Porcelana crema gel, solo si tolerada.":pm==="p"?"Opcional condicionado: limpiar/secar → peeling Cicatricure, máximo 10 min → enjuagar → hidratante sencilla. Si no cumples las condiciones: solo limpieza e hidratación.":"Retirar maquillaje/protector con limpieza suave → hidratante sencilla.";
+  const SK=skinOf(d), PT=PM_TYPES[SK.pm];
   const note=state.notes[d]||{};
   $("#v-hoy").innerHTML=`
   <div class="pills" id="strip">${strip}</div>
@@ -711,8 +735,9 @@ function renderHoy(){
     ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
     ${card("c-pink","heart","Pareja, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
     ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>`)}
-    ${card("c-white","drop","Cuidado facial","Mañana y noche","","",
-      `<div class="skinline"><b>AM</b><span>${AM}</span></div><div class="skinline"><b>PM</b><span>${PM}</span></div>${nt?`<div class="note" style="background:var(--t-peach)">${SKIN_NOTES[nt]}</div>`:""}
+    ${card("c-white","drop","Cuidado facial","Mañana y noche",`Esta noche: <span class="catchip" style="--c:${PT.c}">${PT.t}</span>`,"",
+      `<div class="skinline"><b>AM</b><span>${SK.am.map(x=>x.split(":")[0].replace(/\.$/,"")).join(" → ")}.</span></div><div class="skinline"><b>PM</b><span>${PM_STEPS[SK.pm].map(x=>x.split(/[:;]/)[0].replace(/\.$/,"")).join(" → ")}.</span></div>${SK.note?`<div class="note" style="background:var(--t-peach)">${SK.note}</div>`:""}
+      <div class="row" style="margin-top:8px"><button class="btn" data-goto="piel">Ver paso a paso</button></div>
       <div class="subchecks"><button data-k="skinAM" aria-pressed="${isOn(d,"skinAM")}">AM hecho</button><button data-k="skinPM" aria-pressed="${isOn(d,"skinPM")}">PM hecho</button></div>`)}
     ${card("c-lav","pen","Cierre","¿Qué me ayudó hoy y qué necesito mañana?","","close",`<textarea data-note="close" placeholder="Escribe tu cierre del día…">${esc(note.close||"")}</textarea>`,"wide")}
   </div>`;
@@ -807,19 +832,56 @@ function renderMov(){
 
 /* ---------- PIEL ---------- */
 function renderPiel(){
-  const d=state.day;
-  const prods=[["Cicatricure Porcelana crema gel","Se incorpora","home","Tratamiento antimanchas, no hidratante neutra. Noches alternas desde el día 8, solo tras prueba de tolerancia."],["Vitamina C KIMBEAUTY","Se incorpora","home","Mañanas separadas desde el día 15, si pasó prueba local y el envase permite ese uso."],["Peeling Cicatricure","Condicionado","","Días 21 y 28, solo si coincide el envase, la piel está tranquila y se comprobó tolerancia. Máximo 10 min, enjuague abundante; evita ojos y labios; no se duerme con él."],["Tónico Petite Maison","Opcional","","No entra al calendario inicial. Si ya lo usas sin irritación, tras limpiar en días sin peeling."],["Vitamina E, Brightening y Dark Spot KIMBEAUTY","En pausa","","Hasta leer sus fórmulas. No es necesario gastar todos los productos a la vez."]];
-  $("#v-piel").innerHTML=`<h2 class="h2">Tu piel</h2><p class="lead">Un calendario conservador con tus productos identificables. Las etiquetas completas siguen pendientes.</p>
+  const d=state.day, S=skinOf(d), P=PM_TYPES[S.pm];
+  const GOALS=[["Grasa y brillo","c-sky","drop","Limpiador en gel, niacinamida, ácido salicílico, arcilla y protector de toque seco."],["Poros abiertos","c-mint","spark","Ácido salicílico 2 veces por semana, niacinamida diaria y retinoide."],["Manchas","c-lav","sun","Protector diario (lo más importante), vitamina C, Porcelana 2 noches y peeling semanal."],["Arrugas","c-pink","star","Retinoide, vitamina C, hidratación y protector todos los días."],["Textura","c-peach","leaf","Peeling semanal más ácido salicílico y retinoide en noches separadas."]];
+  const prods=[
+   ["Limpiador en gel suave para piel grasa","Comprar","","Mañana y noche. Sin exfoliantes ni partículas."],
+   ["Hidratante en gel oil-free no comedogénica","Comprar","","Mañana y noche. La piel grasa también se deshidrata, sobre todo con ácidos."],
+   ["Protector solar FPS 50 toque seco","Comprar","","Todas las mañanas, aunque no salgas. Sin él, las manchas vuelven y los ácidos sensibilizan."],
+   ["Ácido salicílico 2 % (BHA)","Comprar","","Lunes por la noche desde el día 8. Es el ácido que entra al poro."],
+   ["Retinol 0,2–0,5 % o adapaleno 0,1 % gel","Comprar","","Miércoles por la noche desde el día 17. Es el activo con más respaldo para arrugas."],
+   ["Niacinamida 5–10 %","Opcional","","Mañanas desde el día 15: grasa, poros y manchas. Si no la compras, sáltala."],
+   ["Mascarilla de arcilla","Opcional","","Jueves por la noche, 8–10 min en zona T."],
+   ["Cicatricure Porcelana crema gel","Ya lo tienes","home","Martes y viernes por la noche. Es tu antimanchas principal."],
+   ["Vitamina C KIMBEAUTY","Ya lo tienes","home","Mañanas: días pares de la semana 2 y diaria desde el día 15."],
+   ["Peeling Cicatricure","Ya lo tienes","home","Sábado por la noche, 1 vez por semana como indica el envase, desde el día 13."],
+   ["Tónico Petite Maison","Ya lo tienes","home","Mañanas y noches de Porcelana, solo si no tiene alcohol ni ácidos. Nunca con el salicílico ni el peeling."],
+   ["Vitamina E KIMBEAUTY","Ya lo tienes","home","Opcional en noches de recuperación y arcilla, 2–3 gotas en zonas secas."],
+   ["Brightening y Dark Spot KIMBEAUTY","En pausa","ink","No uses dos antimanchas a la vez. Si prefieres uno de estos, reemplaza a Porcelana el viernes tras leer la fórmula."]];
+  const dayCols=d=>{const s=skinOf(d);return [s.vitc?"#E7A21D":"var(--line)",PM_TYPES[s.pm].c];};
+  $("#v-piel").innerHTML=`<h2 class="h2">Tu piel</h2><p class="lead">Rutina para piel grasa con líneas finas, poros abiertos y manchas. Cada activo tiene su noche para que trabajen sin irritar. Introdúcelos de uno en uno y deja que el protector solar haga la mitad del trabajo.</p>
+  <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));margin-bottom:16px">
+   ${GOALS.map(([t,c,i,x])=>`<div class="tile pt ${c}" style="min-height:0"><div class="th"><h4>${t}</h4><span class="tag" style="margin:0;padding:3px"><span class="ic">${ico(i)}</span></span></div><p>${x}</p></div>`).join("")}
+  </div>
   <div class="grid">
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Qué va cada mañana y noche</h3></div></div>
-   <div class="legend" style="margin-bottom:12px"><span style="--c:var(--line)">Base</span><span style="--c:#E7A21D">Vitamina C (AM)</span><span style="--c:#7A6CF0">Crema gel (PM)</span><span style="--c:#E5484D">Peeling opcional (PM)</span></div>
-   <div class="skincal">${SKIN.map((s,i)=>`<button class="skd ${i+1===d?"cur":""}" data-open="${i+1}" aria-label="Día ${i+1}"><b>${i+1}</b><span><span class="dot d-${s[0]==="c"?"c":"b"}"></span><span class="dot d-${s[1]==="g"?"g":s[1]==="p"?"p":"b"}"></span></span></button>`).join("")}</div></article>
-  <article class="card c-peach pt"><span class="tag"><span class="ic">${ico("sun")}</span>Base necesaria</span><h3>Antes de cualquier activo</h3><div class="kv" style="margin-top:10px"><div>Limpiador suave.</div><div>Hidratante sencilla sin activos exfoliantes.</div><div>Protector solar de amplio espectro FPS 30 o más, preferentemente 50.</div></div><p>Ningún sérum sustituye al protector. Si todavía no tienes esta base, no inicies el peeling. Antes de entrenar de día, aplica protector; después de sudar, limpia suavemente y reaplica.</p></article>
-  <article class="card c-mint pt"><span class="tag"><span class="ic">${ico("leaf")}</span>Adaptación</span><h3>Fases</h3>
-   <ul class="list-plain" style="margin-top:6px!important">${[["1–7","Base y prueba de crema gel en una zona pequeña del brazo, según etiqueta."],["8–14","Crema gel en noches alternas si fue tolerada; prueba de vitamina C en otra zona."],["15+","Vitamina C en mañanas separadas, si pasó la prueba."],["21·28","Peeling opcional condicionado."]].map(([a,b])=>`<li style="grid-template-columns:58px 1fr"><span class="n" style="width:52px;border-radius:12px;font-size:12px">${a}</span><span>${b}</span></li>`).join("")}</ul></article>
-  <article class="card c-white wide"><h3 style="margin-bottom:8px">Tus productos</h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Producto</th><th>Estado</th><th>Uso</th></tr></thead><tbody>
+  <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("sun")}</span>Mañana · día ${d}</span><h3>Rutina AM<small>Siempre en este orden, de lo más líquido a lo más denso</small></h3></div></div>
+   ${steps(S.am)}
+   <div class="note" style="background:var(--t-peach)">Si vas a entrenar al aire libre, aplica el protector antes y reaplícalo después de sudar.</div></article>
+  <article class="card pt ${P.cls}"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("spark")}</span>Noche · día ${d}</span><h3>${P.t}<small>${P.s}</small></h3></div></div>
+   ${steps(PM_STEPS[S.pm])}${S.note?`<div class="note">${S.note}</div>`:""}</article>
+
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Semana tipo desde el día 15</span><h3>Rotación de noche<small>Un activo fuerte por noche; nunca ácido, retinoide y peeling juntos</small></h3></div></div>
+   <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${WEEK3.map((k,i)=>{const T=PM_TYPES[k];return `<div class="tile pt ${T.cls}" style="min-height:130px;${i===wdOf(d)?"outline:2px solid var(--ink);outline-offset:-2px":""}"><div class="th"><span class="num">${WD[i]}</span>${i===wdOf(d)?'<span class="pill ink">Hoy</span>':""}</div><h4>${T.t}</h4><p>${T.s}</p></div>`}).join("")}</div>
+   <p class="mini" style="margin-top:10px">El domingo, después del peeling del sábado, la piel solo descansa. El retinoide queda en 1 noche por semana este mes; el mes siguiente, si no hay irritación, puedes subir a 2 (miércoles y domingo).</p></article>
+
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Qué va cada mañana y noche<small>Toca un día para abrirlo en «Hoy»</small></h3></div></div>
+   <div class="legend" style="margin-bottom:12px"><span style="--c:#E7A21D">Vitamina C (AM)</span>${Object.values(PM_TYPES).map(T=>`<span style="--c:${T.c}">${T.t} (PM)</span>`).join("")}</div>
+   <div class="skincal">${Array.from({length:30},(_,i)=>{const n=i+1,[a,p]=dayCols(n),s=skinOf(n);return `<button class="skd ${n===d?"cur":""}" data-open="${n}" aria-label="Día ${n}: ${PM_TYPES[s.pm].t}${s.vitc?", vitamina C":""}" title="${PM_TYPES[s.pm].t}${s.note?" · "+s.note:""}"><b>${n}</b><span><span class="dot" style="background:${a}"></span><span class="dot" style="background:${p}"></span></span>${s.note?'<span class="mini" style="font-size:10px">★</span>':""}</button>`}).join("")}</div>
+   <p class="mini" style="margin-top:10px">★ Día con prueba de parche o con un activo nuevo.</p></article>
+
+  <article class="card c-peach pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Días 1–7</span><h3>Fase 1: base y parches</h3><p>Limpiar, hidratar y protector. Pruebas de parche de Porcelana, vitamina C, salicílico y peeling. Porcelana en todo el rostro solo el viernes (día 5).</p></article>
+  <article class="card c-sky pt third"><span class="tag"><span class="ic">${ico("drop")}</span>Días 8–14</span><h3>Fase 2: entran los ácidos</h3><p>Salicílico el lunes, Porcelana martes y viernes, arcilla el jueves, primer peeling el sábado 13. Vitamina C en días alternos. Parche del retinoide el día 10.</p></article>
+  <article class="card c-pink pt third"><span class="tag"><span class="ic">${ico("star")}</span>Días 15–30</span><h3>Fase 3: rutina completa</h3><p>Vitamina C y niacinamida cada mañana. Se suma el retinoide los miércoles. Así queda la rotación completa de la semana tipo.</p></article>
+
+  <article class="card c-white wide"><h3 style="margin-bottom:8px">Tus productos<small>Qué tienes, qué falta y cuándo se usa cada uno</small></h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Producto</th><th>Estado</th><th>Cuándo y para qué</th></tr></thead><tbody>
    ${prods.map(([n,s,c,u],i)=>`<tr><td class="n">${String(i+1).padStart(2,"0")}</td><td><b>${n}</b></td><td><span class="pill ${c}">${s}</span></td><td class="mini" style="color:var(--ink)">${u}</td></tr>`).join("")}</tbody></table></div></article>
-  <article class="card c-white wide"><h3 style="margin-bottom:10px">Regla para todo el mes</h3><div class="warn">No uses el peeling sobre piel irritada, lesionada o quemada por el sol; esa noche no añadas otros tratamientos. Ante irritación, vuelve a la base y suspende el activo. No aumentes la frecuencia por tu cuenta. Si estás embarazada o lactando, confirma las fórmulas completas de los antimanchas antes de incorporarlos.</div></article>
+
+  <article class="card c-white"><h3 style="margin-bottom:10px">Qué no mezclar</h3><div class="kv">
+   <div style="background:var(--shell)">Retinoide, salicílico y peeling: cada uno en su noche, nunca juntos.</div>
+   <div style="background:var(--shell)">Tras el peeling: 48 h sin ácidos ni retinoide.</div>
+   <div style="background:var(--shell)">Un solo antimanchas de noche (Porcelana). Los KIMBEAUTY de manchas quedan en pausa.</div>
+   <div style="background:var(--shell)">Vitamina C de mañana; retinoide y ácidos de noche.</div></div></article>
+  <article class="card c-white"><h3 style="margin-bottom:10px">Señales para frenar</h3><div class="warn">Ardor que dura más de unos minutos, descamación, enrojecimiento o granitos nuevos: vuelve a la noche de recuperación 3–4 días y reintroduce ese activo más espaciado. No uses activos sobre piel irritada o quemada por el sol. Si estás embarazada o lactando, no uses retinoide y consulta el salicílico y los antimanchas antes. Si las manchas no mejoran en 8–12 semanas, consulta a dermatología: podría ser melasma y hay tratamientos específicos.</div></article>
   </div>`;
 }
 
