@@ -628,6 +628,49 @@ dialog h3{font-size:19px;font-weight:800}
 .catnew{border:1.5px dashed var(--faint);background:transparent;border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700;color:var(--soft)}
 .catnew:hover{border-color:var(--pri);color:var(--pri)}
 .quickcat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 10px}
+/* kanban trabajo */
+.kbwrap{overflow-x:auto;margin:6px -4px 0;padding:0 4px 6px}
+.kb{min-width:min-content;display:grid;gap:10px}
+.kbrow{display:grid;grid-template-columns:var(--gc);gap:10px;align-items:stretch}
+.kbhead{align-items:center;position:sticky;top:0;z-index:2}
+.kbcorner{padding-left:6px;font-weight:700}
+.kbcolh{display:flex;align-items:center;gap:6px;background:var(--shell);border-radius:12px;padding:6px 8px}
+.kbcolh input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-weight:800;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);padding:2px}
+.kbcolh input:focus{background:var(--paper);border-radius:6px}
+.kbdot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.kbcount{font-size:11.5px;font-weight:800;background:var(--paper);border-radius:999px;padding:1px 8px;color:var(--soft)}
+.kbcolh .xbtn{width:24px;height:24px;font-size:10px}
+.kbco{background:color-mix(in srgb,var(--cc) 12%,var(--paper));border-left:5px solid var(--cc);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.kbcoh{display:flex;align-items:center;gap:8px}
+.kbcoh .sw{width:26px;height:26px;flex:0 0 auto}
+.kbname{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:15px;font-weight:800;color:var(--ink);padding:3px 4px;border-radius:8px}
+.kbname:focus,.kbnote:focus{background:var(--paper)}
+.kbprice{display:flex;align-items:center;gap:4px;background:var(--paper);border-radius:10px;padding:3px 4px 3px 10px;font-weight:800}
+.kbprice input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:18px;font-weight:800;color:var(--ink);padding:4px 2px;font-variant-numeric:tabular-nums}
+.kbprice select{width:auto;border:0;background:var(--shell);font-size:12px;padding:4px 6px;border-radius:8px}
+.kbmeter{display:grid;gap:4px}
+.kbm{height:8px;border-radius:8px;background:color-mix(in srgb,var(--ink) 10%,transparent);overflow:hidden}
+.kbm i{display:block;height:100%;background:var(--cc);border-radius:8px}
+.kbmt{display:flex;justify-content:space-between;gap:6px;font-size:11.5px;color:var(--soft)}
+.kbmt b{color:var(--ink)}
+.kbnote{border:0;background:transparent;font:inherit;font-size:12px;color:var(--soft);padding:3px 4px;border-radius:8px;width:100%}
+.kbtools{display:flex;gap:4px;justify-content:flex-end;margin-top:auto}
+.kbtools .xbtn{width:26px;height:26px}
+.kbtools .xbtn:disabled{opacity:.35}
+.kbcell{background:var(--shell);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:6px;min-height:90px;border:2px dashed transparent;transition:border-color .15s,background .15s}
+.kbcell.over{border-color:var(--cc);background:color-mix(in srgb,var(--cc) 8%,var(--shell))}
+.kbt{background:var(--paper);border-radius:12px;padding:8px 8px 6px 10px;border-left:4px solid var(--cc);box-shadow:0 4px 10px -8px rgba(0,0,0,.35);cursor:grab}
+.kbt.dragging{opacity:.45}
+.kbt.isdone .kbtt{text-decoration:line-through;color:var(--soft)}
+.kbtt{font-size:13.5px;font-weight:600;line-height:1.35;outline:none;min-height:1.35em;word-break:break-word;cursor:text}
+.kbtt:empty::before{content:"Escribe la tarea…";color:var(--faint);font-weight:500}
+.kbtt:focus{background:var(--shell);border-radius:6px;padding:2px 4px;margin:-2px -4px}
+.kbta{display:flex;gap:2px;justify-content:flex-end;margin-top:4px;opacity:.55}
+.kbt:hover .kbta,.kbt:focus-within .kbta{opacity:1}
+.kbta button{border:0;background:var(--shell);border-radius:7px;width:24px;height:22px;font-size:12px;color:var(--soft);padding:0}
+.kbta button:disabled{opacity:.3}
+.kbadd{border:1.5px dashed color-mix(in srgb,var(--ink) 18%,transparent);background:transparent;border-radius:10px;padding:6px;font-size:12.5px;font-weight:700;color:var(--soft);margin-top:auto}
+.kbadd:hover{border-color:var(--cc);color:var(--ink)}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -1391,21 +1434,68 @@ function renderPar(){
 
 /* ---------- TRABAJO ---------- */
 const WORKSEG=[["Decidir el entregable",10],["Concentración 1",65],["Pausa",5],["Concentración 2",65],["Pausa",5],["Concentración 3",65],["Revisar, cerrar y dejar el siguiente paso",25]];
+/* ---------- TRABAJO: kanban por empresa ---------- */
+const CO_COL=["#4B4FE8","#1F9D55","#D9467F","#D9812E","#0E9F9A","#8B5CF6","#2F6FD1","#B8741A"];
+function work(){
+  if(!state.work) state.work={cols:[{id:"todo",name:"Por hacer"},{id:"doing",name:"En curso"},{id:"review",name:"En revisión"},{id:"done",name:"Hecho"}],
+    cos:[{id:uid(),name:"Empresa de ejemplo",color:"#4B4FE8",price:0,period:"mes",note:"Cámbiale el nombre o bórrala",tasks:[{id:uid(),t:"Reunión de arranque",col:"done"},{id:uid(),t:"Propuesta de contenidos",col:"doing"},{id:uid(),t:"Primer entregable",col:"todo"}]}]};
+  const w=state.work; w.cols=w.cols||[]; w.cos=w.cos||[]; w.cos.forEach(c=>c.tasks=c.tasks||[]); return w;
+}
+const doneCol=()=>{const c=work().cols; return c.length?c[c.length-1].id:"";};
+let kbDrag=null;
 function renderTrab(){
-  const total=WORKSEG.reduce((a,x)=>a+x[1],0);
-  const col=n=>n.startsWith("Conc")?"#4B4FE8":n==="Pausa"?"#C77A0A":"#8B5CF6";
-  const days=Array.from({length:30},(_,i)=>i+1).filter(isWork);
-  $("#v-trab").innerHTML=`<h2 class="h2">Trabajo protegido</h2><p class="lead">Lunes a viernes, 4 horas corridas con cobertura de cuidado infantil confirmada. Las siestas no sustituyen cuatro horas de cuidado. Sábados y domingos sin bloque laboral fijo.</p>
-  <div class="grid">
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("clock")}</span>240 min</span><h3>Estructura del bloque</h3></div><span class="select">Total: ${total} min</span></div>
-   <div class="gx" role="img" aria-label="Estructura del bloque de trabajo">${WORKSEG.map(([n,m])=>`<div title="${n}: ${m} min" style="flex:${m};background:${col(n)}">${m>=25?m+"′":""}</div>`).join("")}</div>
-   <div class="legend" style="margin-bottom:12px"><span style="--c:#4B4FE8">Concentración</span><span style="--c:#C77A0A">Pausa</span><span style="--c:#8B5CF6">Decidir / cerrar</span></div>
-   ${steps(WORKSEG.map(([n,m])=>`${n}: <b>${m} min</b>`))}
+  const W=work(), dc=doneCol(), cur=fin().cur;
+  const all=W.cos.flatMap(c=>c.tasks), done=all.filter(t=>t.col===dc).length, total=W.cos.reduce((a,c)=>a+(+c.price||0),0);
+  const total2=WORKSEG.reduce((a,x)=>a+x[1],0), segc=n=>n.startsWith("Conc")?"#4B4FE8":n==="Pausa"?"#C77A0A":"#8B5CF6";
+  const gcols=`220px repeat(${W.cols.length},minmax(190px,1fr))`;
+  $("#v-trab").innerHTML=`${stickBar("Trabajo",all.length?Math.round(done/all.length*100):0,`${done}/${all.length} tareas hechas`)}<h2 class="h2">Trabajo</h2><p class="lead">Un tablero por empresa. Cada fila es un cliente con su precio y su avance; arrastra las tareas entre columnas (o usa las flechas). Todo se edita tocando el texto.</p>
+  <div class="kpis">
+   <div class="kpi fill"><div class="top"><span class="ib">${ico("wallet")}</span><span class="badge">${W.cos.length} empresa${W.cos.length===1?"":"s"}</span></div><span class="lb">Facturación total</span><span class="v">${cur}${NF.format(total)}</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("brief")}</span></div><span class="lb">Tareas por hacer</span><span class="v">${all.length-done}</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("ok")}</span><span class="badge">${all.length?Math.round(done/all.length*100):0}%</span></div><span class="lb">Tareas hechas</span><span class="v">${done}</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("clock")}</span></div><span class="lb">Bloque de hoy</span><span class="v">${isWork(state.day)?"4 h":"Libre"}</span></div>
+  </div>
+  <article class="card c-white"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:200px"><span class="tag"><span class="ic">${ico("brief")}</span>Kanban</span><h3>Tablero por empresa<small>La última columna cuenta como «hecho»</small></h3></div>
+    <div class="row" style="margin:0"><button class="btn" data-kb="addcol">+ Columna</button><button class="btn primary" data-kb="addco">+ Empresa</button></div></div>
+   <div class="kbwrap"><div class="kb" style="--gc:${gcols}">
+    <div class="kbrow kbhead"><div class="kbcorner mini">Empresa</div>${W.cols.map((c,i)=>`<div class="kbcolh"><span class="kbdot" style="background:${i===W.cols.length-1?"var(--good)":["var(--faint)","var(--pri)","#E7A21D","#8B5CF6","#0E9F9A"][i%5]}"></span><input value="${esc(c.name)}" data-kbcol="${c.id}" aria-label="Nombre de la columna"><span class="kbcount">${all.filter(t=>t.col===c.id).length}</span>${W.cols.length>1?`<button class="xbtn" data-kb="delcol" data-id="${c.id}" aria-label="Borrar columna ${esc(c.name)}">✕</button>`:""}</div>`).join("")}</div>
+    ${W.cos.map((co,ci)=>{const n=co.tasks.length, d=co.tasks.filter(t=>t.col===dc).length, p=n?Math.round(d/n*100):0;return `<div class="kbrow" style="--cc:${co.color}">
+     <div class="kbco">
+      <div class="kbcoh"><input type="color" class="sw" value="${co.color}" data-kbco="${co.id}" data-f="color" aria-label="Color de ${esc(co.name)}" style="--c:${co.color}"><input class="kbname" value="${esc(co.name)}" data-kbco="${co.id}" data-f="name" aria-label="Nombre de la empresa"></div>
+      <label class="kbprice"><span>${esc(cur)}</span><input type="text" inputmode="decimal" value="${+co.price||0}" data-kbco="${co.id}" data-f="price" aria-label="Precio de ${esc(co.name)}"><select data-kbco="${co.id}" data-f="period" aria-label="Periodo">${["mes","proyecto","hora","semana"].map(x=>`<option ${co.period===x?"selected":""}>${x}</option>`).join("")}</select></label>
+      <div class="kbmeter"><div class="kbm"><i style="width:${p}%"></i></div><div class="kbmt"><span><b>${n-d}</b> por hacer</span><span><b>${d}</b> hechas</span><b>${p}%</b></div></div>
+      <input class="kbnote" value="${esc(co.note||"")}" placeholder="Nota: contacto, entrega…" data-kbco="${co.id}" data-f="note" aria-label="Nota">
+      <div class="kbtools"><button class="xbtn" data-kb="up" data-id="${co.id}" ${ci===0?"disabled":""} aria-label="Subir empresa">↑</button><button class="xbtn" data-kb="down" data-id="${co.id}" ${ci===W.cos.length-1?"disabled":""} aria-label="Bajar empresa">↓</button><button class="xbtn" data-kb="delco" data-id="${co.id}" aria-label="Borrar ${esc(co.name)}">✕</button></div>
+     </div>
+     ${W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""}" draggable="true" data-drag="${co.id}|${t.id}">
+        <div class="kbtt" contenteditable="true" data-kbt="${co.id}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
+        <div class="kbta"><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
+       <button class="kbadd" data-kb="addtask" data-id="${co.id}|${c.id}">+ Tarea</button></div>`).join("")}
+    </div>`}).join("")||`<p class="mini" style="padding:12px">No hay empresas. Toca «+ Empresa» para empezar.</p>`}
+   </div></div></article>
+
+  <div class="grid" style="margin-top:16px">
+  <article class="card c-white two"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("clock")}</span>240 min</span><h3>Bloque de trabajo protegido<small>Lunes a viernes, con cuidado infantil confirmado</small></h3></div><span class="select">Total: ${total2} min</span></div>
+   <div class="gx" role="img" aria-label="Estructura del bloque de trabajo">${WORKSEG.map(([n,m])=>`<div title="${n}: ${m} min" style="flex:${m};background:${segc(n)}">${m>=25?m+"′":""}</div>`).join("")}</div>
+   <div class="legend" style="margin-bottom:10px"><span style="--c:#4B4FE8">Concentración</span><span style="--c:#C77A0A">Pausa</span><span style="--c:#8B5CF6">Decidir / cerrar</span></div>
    <div class="row"><button class="btn primary" data-timer="work">Iniciar bloque</button></div></article>
   <article class="card c-yel pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Durante las pausas</span><h3>Agua, baño o movilidad</h3><div class="kv" style="margin-top:10px"><div>No redes.</div><div>Teléfono en modo enfoque.</div><div>Aviso previo a quien cuide a los niños.</div></div></article>
-  <article class="card c-white two"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("brief")}</span>Entregables</span><h3>Lo que definiste cada día</h3></div><span class="select">${days.filter(n=>isOn(n,"work")).length}/${days.length} bloques</span></div>
-   <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">${days.map(n=>{const v=(state.notes[n]||{}).deliv, on=isOn(n,"work");return `<div class="tile ${v?(on?"c-mint":"c-sky"):"hatch"}" style="min-height:96px"><div class="th"><span class="num">Día ${n} · ${WDs[wdOf(n)]}</span>${on?'<span class="pill home">✓ Hecho</span>':""}</div><h4 style="font-weight:${v?700:500};color:${v?"var(--ink)":"var(--faint)"}">${esc(v||"Sin definir")}</h4></div>`}).join("")}</div></article>
   </div>`;
+}
+function kbFind(key){const [cid,tid]=key.split("|");const co=work().cos.find(c=>c.id===cid);return {co,t:co&&co.tasks.find(t=>t.id===tid)};}
+function kbAction(a,b){
+  const W=work(), id=b&&b.dataset.id;
+  if(a==="addco"){W.cos.push({id:uid(),name:"Nueva empresa",color:CO_COL[W.cos.length%CO_COL.length],price:0,period:"mes",note:"",tasks:[]});}
+  else if(a==="addcol"){const cid=uid(); W.cols.splice(Math.max(0,W.cols.length-1),0,{id:cid,name:"Nueva columna"});}
+  else if(a==="delcol"){const has=W.cos.some(c=>c.tasks.some(t=>t.col===id)); if(!b.dataset.armed){b.dataset.armed="1";b.textContent=has?"¿Borrar con tareas?":"¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;}
+    const i=W.cols.findIndex(c=>c.id===id), to=W.cols[i===0?1:i-1]; W.cos.forEach(c=>c.tasks.forEach(t=>{if(t.col===id&&to) t.col=to.id;})); W.cols.splice(i,1);}
+  else if(a==="delco"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar empresa?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} W.cos=W.cos.filter(c=>c.id!==id);}
+  else if(a==="up"||a==="down"){const i=W.cos.findIndex(c=>c.id===id), j=a==="up"?i-1:i+1; if(j<0||j>=W.cos.length) return; [W.cos[i],W.cos[j]]=[W.cos[j],W.cos[i]];}
+  else if(a==="addtask"){const [cid,col]=id.split("|"); const co=W.cos.find(c=>c.id===cid); const t={id:uid(),t:"",col}; co.tasks.push(t); save(); renderAll(true);
+    const el=document.querySelector(`[data-kbt="${cid}|${t.id}"]`); if(el) el.focus(); return;}
+  else if(a==="left"||a==="right"){const {t}=kbFind(id); const i=W.cols.findIndex(c=>c.id===t.col), j=a==="left"?i-1:i+1; if(W.cols[j]) t.col=W.cols[j].id;}
+  else if(a==="deltask"){const {co,t}=kbFind(id); co.tasks=co.tasks.filter(x=>x!==t);}
+  save(); renderAll(true);
 }
 
 /* ---------- GUÍA ---------- */
@@ -1722,6 +1812,7 @@ function renderAll(keepScroll){
 document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
+  fb=t.closest("[data-kb]"); if(fb){kbAction(fb.dataset.kb,fb);return;}
   fb=t.closest("[data-fwd]"); if(fb){fwSel=fb.dataset.fwd;renderAll(true);return;}
   fb=t.closest("[data-fw]"); if(fb){fwAction(fb.dataset.fw,fb);return;}
   fb=t.closest("[data-mday]"); if(fb){state.day=+fb.dataset.mday;save();renderAll(true);return;}
@@ -1760,6 +1851,18 @@ document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.ta
 document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.fwk; if(!k) return;
   const f=fam(), d=f.days[fwSel]||(f.days[fwSel]={}); const v=e.target.value; if(v.trim()) d[k]=v; else delete d[k]; if(!Object.keys(d).length) delete f.days[fwSel];
   save(); const g=$("#fwGrid"); if(g) g.innerHTML=fwGrid(); fwStars(); });
+document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.kbt; if(!k) return; const {t}=kbFind(k); if(t){t.t=e.target.textContent; save();} });
+document.addEventListener("focusout",e=>{ const k=e.target.dataset&&e.target.dataset.kbt; if(!k) return; const {co,t}=kbFind(k); if(co&&t&&!t.t.trim()){co.tasks=co.tasks.filter(x=>x!==t); save(); setTimeout(()=>renderAll(true),0);} });
+document.addEventListener("change",e=>{ const t=e.target, cid=t.dataset&&t.dataset.kbco, col=t.dataset&&t.dataset.kbcol;
+  if(cid){const co=work().cos.find(c=>c.id===cid); if(!co) return; const f=t.dataset.f; if(f==="price"){const v=parseFloat(t.value.replace(/\s/g,"").replace(",","."));co.price=isNaN(v)?0:v;} else if(f==="name") co.name=t.value.trim()||"Empresa"; else co[f]=t.value; save(); renderAll(true);}
+  if(col){const c=work().cols.find(x=>x.id===col); if(c){c.name=t.value.trim()||"Columna"; save(); renderAll(true);}} });
+document.addEventListener("dragstart",e=>{ const d=e.target.closest&&e.target.closest("[data-drag]"); if(!d) return; kbDrag=d.dataset.drag; d.classList.add("dragging"); try{e.dataTransfer.setData("text/plain",kbDrag);e.dataTransfer.effectAllowed="move";}catch(err){} });
+document.addEventListener("dragend",e=>{ document.querySelectorAll(".dragging,.over").forEach(x=>x.classList.remove("dragging","over")); });
+document.addEventListener("dragover",e=>{ const c=e.target.closest&&e.target.closest("[data-drop]"); if(!c||!kbDrag) return; e.preventDefault(); document.querySelectorAll(".kbcell.over").forEach(x=>x!==c&&x.classList.remove("over")); c.classList.add("over"); });
+document.addEventListener("drop",e=>{ const c=e.target.closest&&e.target.closest("[data-drop]"); if(!c||!kbDrag) return; e.preventDefault();
+  const [toCo,toCol]=c.dataset.drop.split("|"), {co,t}=kbFind(kbDrag); kbDrag=null; if(!co||!t) return;
+  t.col=toCol; if(co.id!==toCo){co.tasks=co.tasks.filter(x=>x!==t); work().cos.find(x=>x.id===toCo).tasks.push(t);} save(); renderAll(true); });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.dataset&&e.target.dataset.kbt){e.preventDefault();e.target.blur();} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
