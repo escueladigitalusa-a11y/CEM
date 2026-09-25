@@ -441,6 +441,17 @@ dialog h3{font-size:19px;font-weight:800}
 @media (max-width:1100px){.wkboard{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:520px){.wkboard{grid-template-columns:1fr}}
 @media (min-width:861px) and (max-height:1080px){nav.tabs button{padding:8px 12px}.sec{padding-top:6px}.promo p{display:none}.promo b{font-size:22px}.promo .ico{display:none}}
+/* registro */
+.logup{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;border:2px dashed color-mix(in srgb,var(--pri) 45%,var(--line));background:var(--pri-2);border-radius:18px;padding:18px;cursor:pointer;min-height:120px}
+.drop:hover{border-color:var(--pri)}
+.drop:focus-within{outline:3px solid var(--pri);outline-offset:2px}
+.drop input{position:absolute;opacity:0;width:1px;height:1px}
+.drop .dico{width:40px;height:40px;border-radius:50%;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center}
+.lgf{grid-template-columns:repeat(4,minmax(0,1fr))}
+.wlog{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;background:var(--ink);color:var(--paper);border-radius:10px;padding:5px 8px;margin-top:6px}
+.wlog svg.i{width:14px;height:14px}
+@media (max-width:860px){.logup{grid-template-columns:1fr}.lgf{grid-template-columns:1fr 1fr}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -850,12 +861,14 @@ function renderMov(){
      <div class="segbar" style="height:12px;margin:4px 0 6px">${x.segs.map(s=>`<i style="flex:${s[1]};background:${KC[s[3]]}" title="${s[0]}: ${s[1]} min"></i>`).join("")}</div>
      <ul class="wsegs">${x.segs.map(s=>`<li><span><i style="background:${KC[s[3]]}"></i>${s[0]}${s[4]?`<small>${s[4]}</small>`:""}</span><b>${s[1]}′</b></li>`).join("")}</ul>
      <div class="wstats"><span>${ico("clock")}${x.min} min</span><span>${ico("run")}${x.km?NF1.format(x.km)+" km":"—"}</span><span>${ico("flame")}${x.kcal} kcal</span></div>
+     ${logDay(n).length?(()=>{const s=logSum(logDay(n));return `<div class="wlog">${ico("ok")}<span>Registrado: ${s.min?Math.round(s.min)+" min":""}${s.km?" · "+NF1.format(s.km)+" km":""}${s.kcal?" · "+Math.round(s.kcal)+" kcal":""}</span></div>`})():""}
      ${x.timer?`<button class="btn" data-timer="${x.timer}" data-tday="${n}" style="margin-top:8px;width:100%">Temporizador</button>`:""}</div>`}).join("")}
    <div class="wday tile wtot"><div class="th"><span class="num">Total semana ${mw}</span></div>
-     <div class="wbig"><b>${tot.min}</b><span>minutos activos</span></div><div class="wbig"><b>${NF1.format(tot.km)} km</b><span>caminando y trotando</span></div><div class="wbig"><b>${tot.kcal}</b><span>kcal meta aprox.</span></div>
+     <div class="wbig"><b>${tot.min}</b><span>minutos activos</span></div><div class="wbig"><b>${NF1.format(tot.km)} km</b><span>caminando y trotando</span></div><div class="wbig"><b>${tot.kcal}</b><span>kcal meta aprox.</span></div>${(()=>{const s=logSum(logOf().filter(e=>e.day>=dayN(0)&&e.day<=dayN(6)));return `<div class="wbig"><b>${Math.round(s.kcal)} kcal</b><span>registradas · ${Math.round(s.min)} min${s.km?" · "+NF1.format(s.km)+" km":""}</span></div>`})()}
      <p class="mini">Calorías estimadas con METs para ${kg} kg. Son una referencia, no una exigencia.</p></div>
    </div>
    <div class="legend" style="margin-top:12px"><span style="--c:var(--t-sky)">Caminar</span><span style="--c:var(--pri)">Trote</span><span style="--c:#E27BA4">Pesas</span><span style="--c:#F2B36B">Baile</span><span style="--c:#B7AEF5">Yoga / pilates</span></div></article>
+  <div style="margin-bottom:16px">${logCard()}</div>
   <div class="grid">
   <article class="card c-white wide"><span class="tag"><span class="ic">${ico("run")}</span>Caminata/trote</span><h3>Cómo hacer los días de trote<small>Ritmo cómodo, terreno llano</small></h3>
    ${steps(["Camina 5 min, empezando suave.","Haz los intervalos de la semana, en terreno llano.","Si ya toleras caminar 5 km sin dolor ni fatiga excesiva, añade caminata reservando los últimos 5 min para el paso siguiente. Cuenta todo dentro de los 5 km. No añadas más trote.","Termina con 5 min de caminata muy suave, incluidos en la distancia.","Haz los 10 min de yoga o pilates indicados."])}
@@ -1190,9 +1203,88 @@ function finAction(a,b){
     f.cats.push({id:uid(),name,op:$("#ncOp").value,color:pick?pick.value:$("#ncCustom").value});
   }
   else if(a==="catdel"){const n=f.tx.filter(t=>t.cat===b.dataset.id).length;
-    if(n&&!confirm(`Esta categoría tiene ${n} movimiento(s). Quedarán como «Sin categoría». ¿Borrar?`)) return;
+    if(!b.dataset.armed){ b.dataset.armed="1"; b.textContent=n?`¿Borrar? ${n} mov.`:"¿Borrar?"; b.style.width="auto"; b.style.padding="0 8px"; b.style.borderRadius="999px"; return; }
     f.cats=f.cats.filter(c=>c.id!==b.dataset.id);}
   save(); renderAll(true);
+}
+
+/* ---------- registro de entrenamientos (fotos de iPhone / Apple Watch) ---------- */
+let logDraft=null, logFiles=null, logBusy=false, logMsg="", sampleFn=null, sampleImg=false, assetsNs=null;
+(async()=>{try{ if(!window.claude||!claude.use) return;
+  const [s,a]=await Promise.all([claude.use("sample"),claude.use("assets")]);
+  assetsNs=a; if(s){ const lim=await s.limits().catch(()=>null); sampleFn=s; sampleImg=!!(lim&&lim.images); }
+  if(tab==="mov") renderAll(true);
+}catch(e){}})();
+const logOf=()=>state.moveLog||(state.moveLog=[]);
+const logDay=n=>logOf().filter(e=>e.day===n);
+const logSum=L=>({min:L.reduce((a,e)=>a+(+e.min||0),0),km:L.reduce((a,e)=>a+(+e.km||0),0),kcal:L.reduce((a,e)=>a+(+e.kcal||0),0)});
+function dayFromDate(iso){ if(!iso||!state.start) return null; const d=Math.round((new Date(iso+"T12:00:00")-new Date(state.start+"T12:00:00"))/864e5)+1; return d>=1&&d<=30?d:null; }
+const LOG_PROMPT=`Estas imágenes son capturas de un resumen de entrenamiento de la app Fitness/Salud del iPhone o de un Apple Watch (pueden estar en español o inglés). Extrae los datos del entrenamiento y responde SOLO con un objeto JSON con estas claves:
+{"type": texto corto en español (p. ej. "Caminata al aire libre", "Carrera", "Fuerza tradicional", "Baile", "Yoga", "Pilates"),
+ "date": "YYYY-MM-DD" o null,
+ "start_time": "HH:MM" o null,
+ "duration_min": número de minutos (convierte 0:42:15 a 42.25) o null,
+ "distance_km": número en km (convierte millas a km multiplicando por 1.609) o null,
+ "active_kcal": calorías activas (ACTIVE KILOCALORIES / Calorías activas) o null,
+ "total_kcal": calorías totales o null,
+ "avg_hr": frecuencia cardiaca media en ppm o null,
+ "max_hr": frecuencia máxima o null,
+ "steps": pasos o null,
+ "pace": ritmo medio como texto (p. ej. "9'45\\" /km") o null,
+ "elevation_m": desnivel positivo en metros o null,
+ "notes": una frase breve con cualquier otro dato útil o null}
+Si hay varias imágenes del mismo entrenamiento, combínalas. No inventes valores: usa null si un dato no aparece.`;
+async function readLogPhotos(files){
+  logFiles=files; logDraft={day:state.day,date:"",type:"",min:"",km:"",kcal:"",kcalTot:"",hr:"",hrMax:"",steps:"",pace:"",note:""};
+  if(!sampleFn||!sampleImg){ logMsg="La lectura automática funciona en la versión publicada en Claude. Completa los datos a mano."; renderAll(true); return; }
+  logBusy=true; logMsg="Leyendo la captura… puede tardar unos segundos."; renderAll(true);
+  try{
+    const r=await sampleFn.json(LOG_PROMPT,{images:Array.from(files).slice(0,4)});
+    const v=(x)=>x==null||x===""?"":x;
+    Object.assign(logDraft,{date:v(r.date),type:v(r.type),min:v(r.duration_min),km:v(r.distance_km),kcal:v(r.active_kcal),kcalTot:v(r.total_kcal),hr:v(r.avg_hr),hrMax:v(r.max_hr),steps:v(r.steps),pace:v(r.pace),note:v(r.notes)});
+    const dd=dayFromDate(logDraft.date); if(dd) logDraft.day=dd;
+    logMsg="Listo. Revisa los datos y guarda.";
+  }catch(e){
+    logMsg=e&&e.code==="not_granted"?"No se dio permiso para leer la imagen. Completa los datos a mano.":e&&e.code==="rate_limited"?"Demasiadas lecturas seguidas. Espera un momento o completa a mano.":"No pude leer la captura. Completa los datos a mano.";
+  }
+  logBusy=false; renderAll(true);
+}
+async function saveLog(){
+  const g=id=>{const el=$("#"+id);return el?el.value.trim():"";}, num=id=>{const x=parseFloat(g(id).replace(",","."));return isNaN(x)?"":Math.round(x*100)/100;};
+  const e={id:uid(),day:+g("lgDay")||state.day,date:g("lgDate"),type:g("lgType")||"Entrenamiento",min:num("lgMin"),km:num("lgKm"),kcal:num("lgKcal"),kcalTot:num("lgKcalTot"),hr:num("lgHr"),hrMax:num("lgHrMax"),steps:num("lgSteps"),pace:g("lgPace"),note:g("lgNote"),photo:""};
+  if(!e.min&&!e.kcal&&!e.km){ logMsg="Anota al menos minutos, distancia o calorías."; renderAll(true); return; }
+  if(logFiles&&logFiles[0]&&assetsNs){ try{ const up=await assetsNs.upload(logFiles[0]); e.photo=up.id; }catch(err){} }
+  logOf().push(e); state.checks[e.day+":move"]=1;
+  logDraft=null; logFiles=null; logMsg="Entrenamiento guardado en el día "+e.day+" y marcado como hecho.";
+  save(); renderAll(true);
+}
+function logCard(){
+  const L=logOf().slice().sort((a,b)=>b.day-a.day||(a.date<b.date?1:-1)), D=logDraft;
+  const f=(id,lbl,val,type="text",extra="")=>`<div><label class="l" for="${id}">${lbl}</label><input type="${type}" id="${id}" value="${esc(val??"")}" ${type==="text"?'inputmode="decimal"':""} ${extra}></div>`;
+  return `<article class="card c-white wide" id="logCard"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("ok")}</span>Registro</span><h3>Mis entrenamientos<small>Sube la captura del resumen de la app Fitness del iPhone o del Apple Watch y se anotan los datos solos</small></h3></div><span class="select">${L.length} registrados</span></div>
+   <div class="logup">
+    <label class="drop" for="logFile"><input type="file" id="logFile" accept="image/jpeg,image/png,image/webp,image/gif" multiple ${logBusy?"disabled":""}>
+     <span class="dico">${ico("up")}</span><b>${logBusy?"Leyendo…":"Subir captura"}</b><span class="mini">Hasta 4 imágenes del mismo entrenamiento. ${sampleImg?"Se leen automáticamente.":"Sin lectura automática en esta vista: podrás anotar a mano."}</span></label>
+    <div style="display:grid;gap:8px;align-content:start"><button class="btn" data-log="manual">Anotar a mano</button>${logMsg?`<p class="mini" role="status" style="margin:0">${esc(logMsg)}</p>`:""}</div>
+   </div>
+   ${D?`<div class="dlgsec"><b>Revisa y guarda</b>
+    <div class="frm lgf" style="margin-top:8px">
+     <div><label class="l" for="lgDay">Día del plan</label><select id="lgDay">${Array.from({length:30},(_,i)=>`<option value="${i+1}" ${i+1===+D.day?"selected":""}>Día ${i+1} · ${WD[wdOf(i+1)]}</option>`).join("")}</select></div>
+     ${f("lgDate","Fecha",D.date,"date")}${f("lgType","Tipo",D.type,"text",'inputmode="text" placeholder="Caminata al aire libre"')}
+     ${f("lgMin","Minutos",D.min)}${f("lgKm","Distancia (km)",D.km)}${f("lgKcal","Calorías activas",D.kcal)}${f("lgKcalTot","Calorías totales",D.kcalTot)}
+     ${f("lgHr","FC media (ppm)",D.hr)}${f("lgHrMax","FC máxima",D.hrMax)}${f("lgSteps","Pasos",D.steps)}${f("lgPace","Ritmo medio",D.pace,"text",'inputmode="text"')}
+     <div class="full">${f("lgNote","Nota",D.note,"text",'inputmode="text"').replace(/^<div>|<\/div>$/g,"")}</div></div>
+    <div class="row"><button class="btn primary" data-log="save">Guardar entrenamiento</button><button class="btn" data-log="cancel">Descartar</button></div></div>`:""}
+   ${L.length?`<div class="scroll" style="margin-top:12px"><table class="tp"><thead><tr><th>Día</th><th>Entrenamiento</th><th style="text-align:right">Min</th><th style="text-align:right">Km</th><th style="text-align:right">Kcal</th><th style="text-align:right">FC</th><th>Meta del día</th><th></th></tr></thead><tbody>
+   ${L.map(e=>{const m=movDay(e.day,+state.kg||65),p=m.kcal?Math.round((+e.kcal||0)/m.kcal*100):0;return `<tr><td class="n">${pad2(e.day)}</td><td><div style="display:flex;gap:10px;align-items:center">${e.photo?`<img src="/_blob/${e.photo}" alt="Captura" style="width:38px;height:38px;border-radius:10px;object-fit:cover">`:""}<span><b>${esc(e.type)}</b><br><span class="mini">${esc([e.date,e.pace,e.steps?e.steps+" pasos":"",e.note].filter(Boolean).join(" · "))}</span></span></div></td><td style="text-align:right">${e.min||"—"}</td><td style="text-align:right">${e.km?NF1.format(e.km):"—"}</td><td style="text-align:right">${e.kcal||"—"}</td><td style="text-align:right">${e.hr||"—"}${e.hrMax?`<br><span class="mini">máx ${e.hrMax}</span>`:""}</td><td><div class="track" style="min-width:70px"><i style="width:${Math.min(100,p)}%;background:${p>=100?"var(--good)":"var(--pri)"}"></i></div><span class="mini">${p}% de ${m.kcal} kcal</span></td><td><button class="xbtn" data-log="del" data-id="${e.id}" aria-label="Borrar registro">✕</button></td></tr>`}).join("")}</tbody></table></div>`:`<p class="mini" style="margin-top:12px">Aún no hay entrenamientos registrados. Tras entrenar, abre Fitness en el iPhone, entra al entrenamiento, haz una captura del resumen y súbela aquí.</p>`}
+  </article>`;
+}
+function logAction(a,b){
+  if(a==="manual"){ logDraft={day:state.day,date:"",type:"",min:"",km:"",kcal:"",kcalTot:"",hr:"",hrMax:"",steps:"",pace:"",note:""}; logFiles=null; logMsg=""; renderAll(true); }
+  else if(a==="cancel"){ logDraft=null; logFiles=null; logMsg=""; renderAll(true); }
+  else if(a==="save"){ saveLog(); }
+  else if(a==="del"){ if(!b.dataset.armed){ b.dataset.armed="1"; b.textContent="¿Borrar?"; b.style.width="auto"; b.style.padding="0 8px"; b.style.borderRadius="999px"; return; }
+    state.moveLog=logOf().filter(e=>e.id!==b.dataset.id); save(); renderAll(true); }
 }
 
 /* ---------- render ---------- */
@@ -1207,6 +1299,7 @@ function renderAll(keepScroll){
 document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
+  fb=t.closest("[data-log]"); if(fb){logAction(fb.dataset.log,fb);return;}
   fb=t.closest("[data-fin]"); if(fb){finAction(fb.dataset.fin,fb);return;}
   let b=t.closest("[data-day]"); if(b){state.day=+b.dataset.day;save();renderAll();return;}
   b=t.closest("[data-open]"); if(b){state.day=+b.dataset.open;tab="hoy";save();renderAll();window.scrollTo({top:0});return;}
@@ -1216,7 +1309,7 @@ document.addEventListener("click",e=>{
   b=t.closest("[data-dd]"); if(b){const dd=state.notes.difficult||(state.notes.difficult={});dd[b.dataset.dd]=!dd[b.dataset.dd];save();renderAll(true);return;}
   b=t.closest("[data-mweek]"); if(b){movWeek=+b.dataset.mweek;renderAll(true);return;}
   b=t.closest("[data-timer]"); if(b){startPreset(b.dataset.timer,+b.dataset.tday||0);return;}
-  if(t.id==="resetBtn"){ if(confirm("¿Borrar todas las casillas y notas?")){state.checks={};state.notes={};save();renderAll();} }
+  if(t.id==="resetBtn"){ if(!t.dataset.armed){t.dataset.armed="1";t.textContent="Toca otra vez para borrar casillas y notas";return;} state.checks={};state.notes={};save();renderAll(); }
 });
 document.addEventListener("input",e=>{
   const t=e.target;
@@ -1234,6 +1327,7 @@ document.addEventListener("change",e=>{ const t=e.target;
     save(); renderAll(true); return;}
   if(t.dataset.finset){const F=fin(); if(t.dataset.finset==="init"){const v=parseFloat(t.value.replace(/\s/g,"").replace(",","."));F.init=isNaN(v)?0:v;} else F.cur=t.value.trim()||"$"; save(); renderAll(true); return;}
 });
+document.addEventListener("change",e=>{ if(e.target.id==="logFile"&&e.target.files&&e.target.files.length){readLogPhotos(e.target.files);} });
 document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.target.value; state.kg=v>=30&&v<=200?v:65; save(); renderAll(true);} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
