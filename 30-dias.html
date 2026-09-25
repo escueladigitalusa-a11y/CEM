@@ -6,7 +6,7 @@
 <title>30 días para ti y los tuyos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#E9EBF4; --shell:#F6F7FB; --paper:#FFFFFF; --ink:#1A1C2B; --soft:#6F7490; --faint:#A3A8BE; --line:#E6E8F1;
@@ -565,6 +565,69 @@ dialog h3{font-size:19px;font-weight:800}
 :root[data-theme="dark"] .fwlist li,:root[data-theme="dark"] .fwadd input{background:rgba(255,255,255,.06)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fwlist li,:root:not([data-theme="light"]) .fwadd input{background:rgba(255,255,255,.06)}}
 @media (max-width:860px){.fwc{min-height:60px;padding:6px;border-radius:12px}.fwc .fwl{display:none}.fwdots{display:flex}}
+/* family wall v2 */
+.fwlayout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.fwmain{display:grid;gap:16px;min-width:0}
+.fwmain>.card{grid-column:auto}
+.fwside{position:sticky;top:16px;min-width:0}
+.fwside .card{grid-column:auto;max-height:calc(100vh - 40px);overflow:auto}
+.fwform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fwf label{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;margin-bottom:4px}
+.fwf label svg.i{width:15px;height:15px;color:var(--c)}
+.fwin{position:relative}
+.fwin textarea{min-height:64px;border-left:4px solid var(--c)!important;padding-right:40px}
+.star{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:0;background:transparent;font-size:19px;line-height:1;color:color-mix(in srgb,var(--ink) 25%,transparent)}
+.star[aria-pressed="true"]{color:#E7A21D}
+.star:disabled{opacity:.3;cursor:default}
+.favgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.favcol{background:color-mix(in srgb,var(--c) 8%,var(--paper));border-radius:16px;padding:10px;border-top:4px solid var(--c);min-width:0}
+.favcol h4{display:flex;align-items:center;gap:6px;font-size:13px;margin:0 0 8px}
+.favcol h4 svg.i{width:15px;height:15px;color:var(--c)}
+.favs{display:flex;flex-wrap:wrap;gap:6px}
+.favchip{display:inline-flex;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:999px;max-width:100%}
+.favchip button{border:0;background:transparent;font-size:12.5px;font-weight:600;padding:4px 4px 4px 10px;text-align:left}
+.favchip button:first-child::before{content:"★ ";color:#E7A21D}
+.favchip .favx{padding:4px 9px 4px 4px;color:var(--faint);font-size:11px}
+.checklist{list-style:none;margin:0;padding:0;display:grid}
+.checklist li{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px dashed color-mix(in srgb,var(--ink) 15%,transparent);font-size:14.5px;transition:opacity .25s,transform .25s}
+.checklist li.going{opacity:0;transform:translateX(20px)}
+.checklist li.empty{border:0}
+.cbox{width:22px;height:22px;border-radius:7px;border:2px solid color-mix(in srgb,var(--ink) 40%,transparent);background:rgba(255,255,255,.7);flex:0 0 auto;padding:0}
+.cbox.on{background:var(--ink);border-color:var(--ink)}
+.linkbtn{border:0;background:none;color:var(--pri);font-weight:700;text-decoration:underline;padding:0;font-size:inherit}
+.bought{background:rgba(255,255,255,.6);border-radius:10px;padding:6px 10px;margin:0 0 8px}
+.shopcard .fwadd input[type=text]{min-width:0}
+.postits{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px;padding:6px 4px}
+.postit{background:var(--pc);color:#2B2A26;border-radius:4px 4px 4px 18px;padding:14px 14px 10px;min-height:150px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 18px -12px rgba(0,0,0,.45);transform:rotate(var(--rot,0deg));position:relative}
+.postit::before{content:"";position:absolute;top:-8px;left:50%;width:54px;height:16px;transform:translateX(-50%) rotate(-2deg);background:rgba(255,255,255,.55);border-radius:2px}
+.postit p{margin:0;font-family:"Caveat","Segoe Print","Comic Sans MS",cursive;font-size:23px;line-height:1.15;word-break:break-word;flex:1}
+.postit.done p{text-decoration:line-through;opacity:.5}
+.postit .pirow{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.postit .pirow>span{display:flex;gap:4px}
+.postit small{font-size:11.5px;font-weight:700;color:#5A574E}
+.postit small.neg{color:#B42318}
+.postit .check{background:rgba(255,255,255,.55);border-color:rgba(0,0,0,.15);color:#2B2A26}
+.postit .check[aria-pressed="true"]{background:#2B2A26;color:#fff;border-color:#2B2A26}
+.postit .xbtn{background:rgba(255,255,255,.55);border-color:rgba(0,0,0,.12);color:#5A574E}
+.postit.new textarea{flex:1;background:transparent;border:1.5px dashed rgba(0,0,0,.25);font-family:"Caveat","Segoe Print",cursive;font-size:22px;color:#2B2A26;min-height:80px}
+.postit.new input[type=date]{background:rgba(255,255,255,.55);border:0;color:#2B2A26;padding:6px 8px;font-size:12px}
+/* inglés: prompt */
+.pbox{background:var(--paper);border:1px solid var(--line);border-radius:16px;margin:8px 0;overflow:hidden}
+.pbh{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:8px 12px;background:var(--shell);border-bottom:1px solid var(--line);font-size:13px}
+.pbox pre{margin:0;padding:12px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12.5px;line-height:1.5;max-height:320px;overflow:auto}
+/* ignacio */
+.ignweek{margin-top:16px}
+.ignweek details summary{cursor:pointer;list-style:none}
+.ignweek details summary::-webkit-details-marker{display:none}
+.ignd{display:grid;gap:8px;margin-top:8px}
+.ignvoc{display:flex;flex-wrap:wrap;gap:6px}
+.ignvoc span{background:var(--ink);color:var(--paper);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:700}
+@media (max-width:1100px){.fwlayout{grid-template-columns:1fr}.fwside{position:static}.fwside .card{max-height:none}.favgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.fwform,.favgrid{grid-template-columns:1fr}}
+.swatches input.sw{position:static;opacity:1;pointer-events:auto;width:30px;height:30px;box-shadow:0 0 0 1.5px var(--line)}
+.catnew{border:1.5px dashed var(--faint);background:transparent;border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700;color:var(--soft)}
+.catnew:hover{border-color:var(--pri);color:var(--pri)}
+.quickcat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 10px}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -824,7 +887,7 @@ function todayDay(){ if(!state.start) return null; const s=new Date(state.start+
 const fmtDate=t=>t?t.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}):"";
 
 /* ---------- navigation (sidebar) ---------- */
-const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["wall","Family Wall","users"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["eng","Inglés","chat"],["par","Pareja","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["AYUDA"],["guia","Guía","book"]];
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["wall","Family Wall","users"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["eng","Inglés","chat"],["par","Pareja","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
 const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Family Wall",mov:"Movimiento",piel:"Piel",ign:"Ignacio",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Pareja",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
 let tab="hoy";
 function renderTabs(){
@@ -892,7 +955,7 @@ function renderHoy(){
     ${isWork(d)?card("c-yel","brief","Trabajo","4 horas protegidas","Niños atendidos por otro adulto","work",
       `<p>Define un entregable antes de empezar.</p><input type="text" data-note="deliv" placeholder="Entregable de hoy" value="${esc(note.deliv||"")}"><div class="row"><button class="btn primary" data-timer="work">Iniciar bloque de 240 min</button></div>`,"wide"):
       card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`,"wide")}
-    ${card("c-peach","star","Ignacio, 10–12 min",D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div>`,"third")}
+    ${card("c-peach","star","Ignacio · "+ignWeek(d).t,D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div><div class="row"><button class="btn" data-goto="ign">Ver día completo</button></div>`,"third")}
     ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
     ${card("c-pink","heart","Pareja, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
     ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>`)}
@@ -1110,20 +1173,73 @@ function areaHead(k,cls,icon,tag,title,sub,body){
 }
 const dayList=(k,fn)=>`<ul class="list-plain">${DAYS.map((D,i)=>{const n=i+1,on=isOn(n,k);return `<li class="${on?"ok":""}" style="${n===state.day?"background:color-mix(in srgb,var(--pri) 8%,transparent);border-radius:14px":""}"><span class="n">${n}</span><span>${fn(D,n)}</span><button class="check" data-kd="${n}:${k}" aria-pressed="${on}" aria-label="Día ${n} ${LABELS[k]}">${CHECKSVG}</button></li>`}).join("")}</ul>`;
 
+/* ---------- Escuelita de Ignacio: un tema profundo por semana ---------- */
+const IGN_WEEKS=[
+ {a:1,b:7,t:"Los transportes",cls:"c-rose",ic:"run",obj:"Reconocer cómo nos movemos por tierra, aire y agua, y quién nos ayuda en el camino.",mat:"Carritos o dibujos grandes, cinta de pintor, cajas, recipiente con poca agua, hojas y ceras gruesas.",con:"Es la primera semana: todo lo que aprenda aquí vuelve en las siguientes (sonidos, animales que vuelan como aviones, cohetes al espacio)."},
+ {a:8,b:14,t:"Mi cuerpo y mis sentidos",cls:"c-peach",ic:"smile",obj:"Nombrar partes del cuerpo y descubrir para qué sirve cada sentido.",mat:"Espejo, telas de texturas distintas, campanita o sonajero, frutas para oler, pelota grande.",con:"Usamos el cuerpo para viajar: manos que manejan, piernas que pedalean, oídos que escuchan la sirena."},
+ {a:15,b:21,t:"Los animales",cls:"c-mint",ic:"paw",obj:"Conocer dónde viven, qué comen, cómo se mueven y cómo se cuidan los animales.",mat:"Animales de juguete o láminas, hojas verdes, cajas como casitas, peluches.",con:"Los animales tienen cuerpo como nosotros (patas, alas, aletas) y algunos se mueven como los transportes."},
+ {a:22,b:30,t:"El espacio",cls:"c-lav",ic:"star",obj:"Explorar el Sol, la Luna, la Tierra y los planetas, y cómo viajan los astronautas.",mat:"Linterna, pelotas de varios tamaños, papel negro, pegatinas o ceras claras, caja grande como nave.",con:"Juntamos todo: el cohete es un transporte, el astronauta usa su cuerpo y sus sentidos, y la Tierra es la casa de los animales."}
+];
+const IGN=[
+ // Semana 1 · Transportes
+ {t:"Transportes de tierra",idea:"Carro, autobús y tren llevan personas por la tierra, sobre calles y rieles.",voc:["carro","autobús","tren","rueda"],juego:"Con cinta de pintor haz una calle y una vía en el piso. Mueve cada vehículo por su camino y nómbralo.",arte:"Dibuja ruedas redondas con ceras gruesas y pégalas a un carro de papel.",mov:"Canta «Las ruedas del autobús» haciendo girar los brazos.",con:"Empieza el viaje: hoy abrimos nuestro «libro de transportes» con una hoja por día.",preg:"¿Cuál va por los rieles?",lucas:"Que empuje un carrito grande por la calle de cinta."},
+ {t:"Transportes de aire",idea:"El avión y el helicóptero vuelan por el cielo. Tienen alas o hélices.",voc:["avión","helicóptero","alas","cielo"],juego:"Vuela dibujos de avión por encima de la calle de ayer. Aterricen en una «pista» de cinta.",arte:"Avión de papel doblado muy simple (lo dobla el adulto) y lo decora él.",mov:"Brazos como alas: correr despacio y aterrizar agachados.",con:"Ayer fuimos por la tierra; hoy subimos al cielo. ¿Qué es más rápido?",preg:"¿Cuál vuela por el cielo?",lucas:"Mirar el avión de papel volar y buscarlo."},
+ {t:"Transportes de agua",idea:"El barco y la lancha navegan. Flotan sobre el agua.",voc:["barco","agua","flotar","remar"],juego:"En un recipiente con poca agua, prueba qué flota: barco de juguete, tapita, piedra. Supervisión continua y vaciar al terminar.",arte:"Barco con media cáscara de nuez o tapa grande y vela de papel.",mov:"Remar sentados en el piso con los brazos.",con:"Tierra, aire y ahora agua: ya conocemos tres caminos.",preg:"¿Dónde pondrías el barco?",lucas:"Chapotear con las manos en el recipiente, siempre acompañado."},
+ {t:"Vehículos que ayudan",idea:"La ambulancia cura, el camión de bomberos apaga fuegos y el de basura limpia la ciudad.",voc:["ambulancia","bomberos","sirena","ayudar"],juego:"Rescate de peluches: la ambulancia lleva al peluche «enfermo» y el camión de bomberos apaga un fuego imaginario.",arte:"Pinta una sirena roja en una caja de cartón.",mov:"Hacer el sonido de la sirena subiendo y bajando la voz mientras gatean rápido.",con:"Estos vehículos van por tierra, como los del día 1.",preg:"¿Cuál ayuda a una persona enferma?",lucas:"Imitar el «uuu-uuu» de la sirena."},
+ {t:"Semáforo y seguridad",idea:"Rojo: parar. Amarillo: atención. Verde: avanzar. En la calle siempre de la mano de un adulto.",voc:["rojo","verde","parar","avanzar"],juego:"Tú muestras un círculo rojo o verde; él camina o se congela. Sin correr.",arte:"Semáforo con tres círculos de papel pegados en una tira.",mov:"«Luz roja, luz verde» por el pasillo.",con:"Los carros del día 1 y la ambulancia del día 4 también respetan el semáforo.",preg:"¿Qué hacemos cuando está rojo?",lucas:"Practicar darse la mano para cruzar."},
+ {t:"¿Dónde viaja cada uno?",idea:"Clasificamos: tierra, aire o agua.",voc:["tierra","aire","agua","grupo"],juego:"Tres hojas en el piso (calle, cielo, mar). Reparte seis dibujos juntos, sin exigir que acierte solo.",arte:"Pega en su libro una página con los tres grupos.",mov:"Cuando digas «¡aire!» vuelan; «¡agua!» reman; «¡tierra!» manejan.",con:"Repasamos días 1, 2 y 3 en un solo juego.",preg:"¿Dónde viajaría este avión?",lucas:"Que ponga un vehículo en cualquier hoja y lo celebramos."},
+ {t:"Gran viaje de repaso",idea:"Contamos una historia con principio, viaje y llegada.",voc:["viaje","salir","llegar","casa"],juego:"Un peluche quiere visitar a la abuela: elige tres transportes y cuenten el viaje. Sigue sus ideas.",arte:"Termina el libro de transportes con una portada.",mov:"Tren humano por la casa con Lucas como vagón.",con:"Cierre de la semana. Mañana empieza el cuerpo: ¿qué partes usamos para viajar?",preg:"¿Cómo llega el peluche a casa?",lucas:"Ser un vagón del tren."},
+ // Semana 2 · Cuerpo y sentidos
+ {t:"Las partes de mi cuerpo",idea:"Cabeza, brazos, manos, piernas y pies. Cada parte hace algo.",voc:["cabeza","manos","piernas","pies"],juego:"Frente al espejo, toca la parte que nombras. Luego él nombra y tú tocas.",arte:"Traza su silueta en papel grande y pinten juntos.",mov:"«Cabeza, hombros, rodillas y pies».",con:"¿Qué parte usamos para manejar el carro? ¿Y para remar el barco?",preg:"¿Qué parte usamos para caminar?",lucas:"Tocar su nariz y su barriga frente al espejo."},
+ {t:"Mis ojos: ver",idea:"Con los ojos vemos colores, formas y lo que está cerca y lejos.",voc:["ojos","ver","color","lejos"],juego:"«Veo, veo» con colores básicos: rojo, azul, amarillo.",arte:"Binoculares con dos tubos de papel higiénico para mirar la casa.",mov:"Parpadear rápido y lento; abrir y cerrar los ojos al ritmo.",con:"Los semáforos del día 5 los vemos con los ojos.",preg:"¿Qué cosa azul ves?",lucas:"Seguir con la mirada una pelota de color."},
+ {t:"Mis oídos: escuchar",idea:"Con los oídos oímos sonidos fuertes y suaves.",voc:["oídos","sonido","fuerte","suave"],juego:"Sonidos de transportes: tú haces tren, avión o sirena y él adivina.",arte:"Maraca con un envase bien cerrado y arroz (el adulto lo sella).",mov:"Caminar fuerte como elefante y suave como ratón.",con:"Recordamos los transportes de la semana 1 por su sonido.",preg:"¿Esto suena fuerte o suave?",lucas:"Agitar la maraca."},
+ {t:"Mis manos: tocar",idea:"Con las manos sentimos si algo es suave, áspero, frío o duro.",voc:["suave","áspero","frío","duro"],juego:"Bolsa de texturas: tela, esponja, cuchara, peluche. Toca y describe.",arte:"Collage de texturas pegando telas y papeles.",mov:"Aplausos rápidos y lentos; manos arriba y abajo.",con:"Con las manos armamos los barcos del día 3.",preg:"¿Esto es suave o duro?",lucas:"Explorar las telas grandes con las manos."},
+ {t:"Nariz y boca: oler y probar",idea:"La nariz huele y la boca prueba sabores: dulce, ácido, salado.",voc:["nariz","oler","dulce","ácido"],juego:"Huele naranja, canela y plátano con los ojos abiertos. Prueben un trocito de fruta y digan si es dulce.",arte:"Dibuja su fruta favorita.",mov:"Respirar oliendo una flor y soplando una vela.",con:"Los animales de la próxima semana también huelen: como Thomas con sus croquetas.",preg:"¿Cómo huele el plátano?",lucas:"Oler la fruta (sin trozos pequeños a su alcance)."},
+ {t:"Mi cuerpo se mueve",idea:"El cuerpo puede estirarse grande o hacerse pequeño, ir rápido o despacio.",voc:["grande","pequeño","rápido","despacio"],juego:"Contar pasos grandes y pequeños hasta el sillón: uno, dos, tres.",arte:"Huellas de pies y manos con pintura lavable.",mov:"Crecer como árbol y encogerse como semilla.",con:"Rápido como avión, despacio como barco.",preg:"¿Cuántos pasos grandes diste?",lucas:"Gatear rápido y despacio."},
+ {t:"Repaso: cuidar mi cuerpo",idea:"Comer, dormir, lavarse las manos y moverse nos mantiene sanos.",voc:["lavar","dormir","comer","sano"],juego:"El peluche doctor: revisen ojos, oídos, manos y pies del peluche, y lo cuidan.",arte:"Completa la silueta del día 8 con ojos, orejas y manos.",mov:"Rutina de lavar las manos cantando.",con:"La ambulancia del día 4 ayuda cuando el cuerpo se enferma.",preg:"¿Qué hacemos para estar sanos?",lucas:"Lavarse las manos con ayuda."},
+ // Semana 3 · Animales
+ {t:"Animales de casa",idea:"Perro, gato y pez viven con las familias. Necesitan comida, agua y cariño.",voc:["perro","gato","cuidar","cariño"],juego:"Observar a Thomas: qué come, dónde duerme, cómo juega. Solo mirar si está tranquilo.",arte:"Retrato de Thomas con ceras.",mov:"Caminar en cuatro patas como perrito.",con:"Thomas huele como nosotros el día 12, pero ¡mucho mejor!",preg:"¿Qué necesita Thomas para estar feliz?",lucas:"Decir «guau» y señalar a Thomas desde lejos."},
+ {t:"Animales de la granja",idea:"Vaca, gallina, cerdo y caballo viven en la granja y nos dan alimentos.",voc:["vaca","gallina","caballo","granja"],juego:"Granja con cajas: cada animal a su corral. Imiten sus sonidos.",arte:"Huevo de papel con pollito que sale.",mov:"Galopar como caballo.",con:"El caballo fue un transporte antes que los carros.",preg:"¿Cuál hace muuu?",lucas:"Imitar sonidos de animales."},
+ {t:"Animales de la selva y la sabana",idea:"León, elefante, jirafa y mono viven lejos, en lugares salvajes. No son mascotas.",voc:["león","elefante","jirafa","selva"],juego:"Safari por la casa con los binoculares del día 9 buscando animales escondidos a la vista.",arte:"Cuello largo de jirafa con tiras de papel.",mov:"Caminar pesado como elefante, estirarse como jirafa.",con:"Usamos los ojos (día 9) para buscar animales.",preg:"¿Quién tiene una trompa larga?",lucas:"Encontrar un peluche escondido a la vista."},
+ {t:"Animales del agua",idea:"Peces, ballenas, tortugas y patos viven o nadan en el agua. Los peces tienen aletas.",voc:["pez","ballena","aletas","nadar"],juego:"Pesca con un recipiente con poca agua y figuras que flotan (supervisión continua).",arte:"Pez con escamas de papel de colores.",mov:"Nadar con los brazos acostados en el piso.",con:"Nadan en el agua, como los barcos del día 3.",preg:"¿Qué animal vive en el mar?",lucas:"Tocar el agua y los juguetes grandes."},
+ {t:"Animales que vuelan",idea:"Pájaros, mariposas y abejas vuelan con alas, como los aviones.",voc:["pájaro","mariposa","alas","nido"],juego:"Mira por la ventana: ¿ves pájaros? Cuenten cuántos.",arte:"Mariposa con pintura doblando el papel a la mitad.",mov:"Aletear suave como mariposa y rápido como abeja.",con:"Alas de pájaro y alas de avión (día 2): ¿en qué se parecen?",preg:"¿Qué usa el pájaro para volar?",lucas:"Aletear los brazos."},
+ {t:"¿Qué comen y cómo se mueven?",idea:"Unos animales comen plantas, otros comen carne. Unos saltan, otros reptan o corren.",voc:["comer","saltar","reptar","correr"],juego:"Dale de comer a cada animal de juguete: hojas para la vaca, pescado para el gato.",arte:"Hojas verdes recortadas para los animales que comen plantas.",mov:"Saltar como rana, reptar como serpiente, correr como perro.",con:"Nuestro cuerpo (semana 2) también salta y corre.",preg:"¿Qué come la vaca?",lucas:"Saltar tomado de las manos."},
+ {t:"Repaso: el gran zoológico",idea:"Juntamos animales de casa, granja, selva, agua y cielo.",voc:["zoológico","casa","granja","cielo"],juego:"Arma un zoológico con cajas y deja que él sea el guía que presenta a cada animal.",arte:"Entrada del zoológico dibujada en una caja.",mov:"Desfile de animales con música.",con:"Llegamos al zoológico en autobús (día 1). Mañana: el espacio.",preg:"¿Qué animal te gustaría visitar?",lucas:"Ser un animal del desfile."},
+ // Semana 4 · El espacio
+ {t:"El Sol y el día",idea:"El Sol es una estrella que nos da luz y calor. Nunca se mira directo.",voc:["Sol","luz","calor","día"],juego:"Con una linterna y una pelota, ilumina un lado: ahí es de día. Nunca la luz a los ojos.",arte:"Sol grande con rayos de papel amarillo.",mov:"Despertar como el Sol: estirarse grande.",con:"Las plantas y los animales (semana 3) necesitan el Sol.",preg:"¿Qué nos da el Sol?",lucas:"Buscar la luz de la linterna en la pared."},
+ {t:"La Luna y la noche",idea:"La Luna brilla de noche y cambia de forma: llena, media, delgadita.",voc:["Luna","noche","estrella","brillar"],juego:"Apaga la luz y con la linterna proyecta una Luna en el techo.",arte:"Luna y estrellas con cera blanca sobre papel negro.",mov:"Moverse como si pesaran poquito, como en la Luna.",con:"Los búhos (animales) despiertan de noche.",preg:"¿Cuándo vemos la Luna?",lucas:"Mirar las estrellas pegadas en el techo."},
+ {t:"La Tierra, nuestra casa",idea:"La Tierra es el planeta donde vivimos. Tiene agua azul y tierra verde.",voc:["Tierra","planeta","azul","verde"],juego:"En una pelota grande, pega papel azul (agua) y verde (tierra).",arte:"Dibujar su casa dentro de un círculo grande.",mov:"Girar despacio como la Tierra.",con:"Aquí viven todos los animales de la semana 3.",preg:"¿Cómo se llama nuestro planeta?",lucas:"Rodar la pelota-Tierra."},
+ {t:"Planetas cercanos",idea:"Mercurio y Venus están cerca del Sol; Marte es rojizo.",voc:["Mercurio","Venus","Marte","cerca"],juego:"Pon el Sol de papel y coloca los planetas cerca o lejos.",arte:"Marte con pintura roja y huellas de dedos.",mov:"Caminar cerca del Sol (calor) y lejos (frío).",con:"Cerca y lejos, como vimos con los ojos el día 9.",preg:"¿Cuál es rojo?",lucas:"Pintar con dedos."},
+ {t:"Planetas gigantes",idea:"Júpiter es el más grande; Saturno tiene anillos.",voc:["Júpiter","Saturno","anillos","gigante"],juego:"Ordena pelotas de más pequeña a más grande.",arte:"Saturno con un plato de papel como anillo.",mov:"Hacerse gigante y pequeñito (día 13).",con:"Grande y pequeño, como en la semana del cuerpo.",preg:"¿Qué tiene Saturno alrededor?",lucas:"Encestar pelotas en una caja."},
+ {t:"Cohetes: transporte al espacio",idea:"Para ir al espacio usamos cohetes. Es el transporte más rápido.",voc:["cohete","despegar","espacio","rápido"],juego:"Cuenta regresiva 3, 2, 1… ¡despegue! Salta desde agachado.",arte:"Cohete con tubo de cartón y fuego de papel.",mov:"Despegar y aterrizar suave.",con:"Otro transporte más para su libro de la semana 1: ¡por el espacio!",preg:"¿Qué transporte va al espacio?",lucas:"Contar juntos y saltar con las manos tomadas."},
+ {t:"Astronautas",idea:"Los astronautas usan traje y casco. En el espacio flotan.",voc:["astronauta","casco","flotar","traje"],juego:"Nave con una caja abierta: el astronauta revisa su cuerpo (ojos, oídos, manos) antes de salir. Sin cascos cerrados ni bolsas.",arte:"Insignia de astronauta con su nombre.",mov:"Caminar lento como flotando.",con:"El astronauta usa sus sentidos (semana 2) para trabajar.",preg:"¿Qué se pone el astronauta?",lucas:"Ser copiloto dentro de la caja."},
+ {t:"Un viaje por el sistema solar",idea:"Visitamos Sol, Luna, Tierra y planetas en orden, sin exigir memoria.",voc:["viaje","planetas","orden","visitar"],juego:"Pon las láminas de planetas por la casa y viajen en la nave de uno en uno.",arte:"Mapa del viaje con pegatinas.",mov:"Tren espacial por la casa (como el tren del día 7).",con:"Usamos transportes, cuerpo y ¿qué animal llevaríamos?",preg:"¿Cuál te gustaría volver a visitar?",lucas:"Ir en el tren espacial."},
+ {t:"Emociones del viajero",idea:"Al viajar podemos sentir alegría, miedo o nervios, y está bien pedir compañía.",voc:["alegre","miedo","valiente","compañía"],juego:"Un peluche quiere ir al espacio pero tiene miedo. ¿Cómo lo acompañamos?",arte:"Caritas de emociones en platos de papel.",mov:"Abrazo de oso y respiración de cohete (inhalar, soplar).",con:"Como el peluche del gran viaje del día 7.",preg:"¿Qué le decimos al peluche?",lucas:"Dar un abrazo al peluche."},
+ {t:"Mi gran exposición",idea:"Mostrar lo que más le gustó del mes: transportes, cuerpo, animales o espacio.",voc:["mostrar","favorito","aprendí","juntos"],juego:"Monta una mesa con tres trabajos elegidos por Ignacio e invita a la familia a escucharlo.",arte:"Diploma de «Explorador del mes».",mov:"Desfile final con música.",con:"Cierre de todo el mes: las cuatro semanas juntas.",preg:"¿Qué quieres mostrarnos primero?",lucas:"Aplaudir y entregar el diploma."}
+];
+DAYS.forEach((D,i)=>{const g=IGN[i]; D.iT=g.t; D.iI=g.idea; D.iJ=g.juego; D.iP=g.preg;});
+const ignWeek=n=>IGN_WEEKS.find(w=>n>=w.a&&n<=w.b);
+function ignDetail(n){
+  const g=IGN[n-1], W=ignWeek(n);
+  return `<div class="ignd">
+   <div class="kv"><div><span class="lbl">Idea (2 min)</span>${esc(g.idea)}</div></div>
+   <div class="ignvoc">${g.voc.map(v=>`<span>${esc(v)}</span>`).join("")}</div>
+   <div class="kv"><div><span class="lbl">Juego (5 min)</span>${esc(g.juego)}</div><div><span class="lbl">Arte (5 min)</span>${esc(g.arte)}</div><div><span class="lbl">Movimiento o canción (3 min)</span>${esc(g.mov)}</div>
+   <div><span class="lbl">Conecta con lo anterior</span>${esc(g.con)}</div><div><span class="lbl">Pregunta para cerrar</span>${esc(g.preg)}</div><div><span class="lbl">Para Lucas</span>${esc(g.lucas)}</div></div></div>`;
+}
+
 /* ---------- IGNACIO ---------- */
 function renderIgn(){
-  const D=DAYS[state.day-1];
-  const groups=[["Semana 1","Transportes",1,7,"c-rose","run"],["Semana 2","Cuerpo, sentidos y descubrimientos",8,14,"c-peach","smile"],["Semana 3","Animales, plantas y la Tierra",15,21,"c-mint","leaf"],["Semana 4","El espacio",22,30,"c-lav","star"]];
-  $("#v-ign").innerHTML=`<h2 class="h2">Ignacio</h2><p class="lead">Escuelita de 10–12 min: una idea, un juego y una pregunta opcional. O menos si pierde interés; puede repetir el tema de ayer. Usa piezas grandes, pinturas aptas y supervisión; evita piezas pequeñas accesibles a Lucas.</p>
-  ${areaHead("ign","c-peach","star","Escuelita",D.iT,"",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div>`)}
-  <div class="courses" style="margin-bottom:16px">
-  ${groups.map(([g,th,a,b,cls,ic])=>{const done=Array.from({length:b-a+1},(_,i)=>isOn(a+i,"ign"));const n=done.filter(Boolean).length;return `<article class="course pt ${cls}"><div class="ch"><span class="ic">${ico(ic)}</span><span>${g} · días ${a}–${b}</span><span class="score">${n}/${b-a+1}</span></div><h3>${th}</h3>
-   <ul class="list-plain">${DAYS.slice(a-1,b).map((D,i)=>{const n=a+i;return `<li class="${isOn(n,"ign")?"ok":""}"><span class="n">${n}</span><span><b>${esc(D.iT)}</b><br><span class="mini">${esc(D.iI)} Pregunta: ${esc(D.iP)}</span></span><button class="check" data-kd="${n}:ign" aria-pressed="${isOn(n,"ign")}" aria-label="Día ${n} Ignacio">${CHECKSVG}</button></li>`}).join("")}</ul>
-   <div class="ft"><span class="dots">${done.map(x=>`<i class="${x?"on":""}"></i>`).join("")}</span><span>${n} de ${b-a+1} sesiones</span></div></article>`}).join("")}
-  </div>
-  <article class="card c-sky pt"><span class="tag"><span class="ic">${ico("users")}</span>Ignacio y Lucas</span><h3>Juego con ambos niños</h3>
-   <ul class="list-plain" style="margin-top:6px!important">${WD.map((w,i)=>`<li style="grid-template-columns:44px 1fr;${i===wdOf(state.day)?"font-weight:700":""}"><span class="n">${WDs[i]}</span><span><b>${w}:</b> ${NINOS[i]}</span></li>`).join("")}</ul>
-   <p class="mini">El juego libre se mantiene aparte de la escuelita. Lucas explora materiales adecuados a su etapa, sin exigir la misma actividad. Para atención individual, otro adulto cuida al otro niño.</p></article>`;
+  const d=state.day, g=IGN[d-1], W=ignWeek(d);
+  $("#v-ign").innerHTML=`${stickBar("Ignacio",Math.round(doneOf("ign")/30*100),`semana: ${W.t}`)}<h2 class="h2">Ignacio</h2><p class="lead">Un tema a fondo cada semana. Cada día trae un subtema con idea, palabras nuevas, juego, arte, movimiento y una conexión con lo que ya aprendió. Unos 15 minutos, o menos si pierde interés. Piezas grandes, materiales aptos y supervisión; nada pequeño al alcance de Lucas.</p>
+  ${areaHead("ign","c-peach","star",`Semana: ${W.t}`,g.t,"",ignDetail(d))}
+  ${IGN_WEEKS.map(w=>{const days=Array.from({length:w.b-w.a+1},(_,i)=>w.a+i), n=days.filter(x=>isOn(x,"ign")).length;return `<article class="course pt ${w.cls} ignweek"><div class="ch"><span class="ic">${ico(w.ic)}</span><span>Días ${w.a}–${w.b}</span><span class="score">${n}/${days.length}</span></div><h3>${w.t}</h3>
+   <div class="kv"><div><span class="lbl">Objetivo</span>${w.obj}</div><div><span class="lbl">Materiales de la semana</span>${w.mat}</div><div><span class="lbl">Cómo se conecta</span>${w.con}</div></div>
+   <ul class="list-plain">${days.map(k=>{const on=isOn(k,"ign");return `<li class="${on?"ok":""}"><span class="n">${k}</span><details ${k===d?"open":""}><summary><b>${esc(IGN[k-1].t)}</b><br><span class="mini">${esc(IGN[k-1].idea)}</span></summary>${ignDetail(k)}</details><button class="check" data-kd="${k}:ign" aria-pressed="${on}" aria-label="Día ${k} Ignacio">${CHECKSVG}</button></li>`}).join("")}</ul>
+   <div class="ft"><span class="dots">${days.map(x=>`<i class="${isOn(x,"ign")?"on":""}"></i>`).join("")}</span><span>${n} de ${days.length} sesiones</span></div></article>`}).join("")}
+  <article class="card c-sky pt" style="margin-top:16px"><span class="tag"><span class="ic">${ico("users")}</span>Ignacio y Lucas</span><h3>Juego libre con ambos niños</h3>
+   <ul class="list-plain" style="margin-top:6px!important">${WD.map((w,i)=>`<li style="grid-template-columns:44px 1fr;${i===wdOf(d)?"font-weight:700":""}"><span class="n">${WDs[i]}</span><span><b>${w}:</b> ${NINOS[i]}</span></li>`).join("")}</ul>
+   <p class="mini">El juego libre va aparte de la escuelita. Para atención individual, otro adulto cuida al otro niño.</p></article>`;
 }
 
 /* ---------- THOMAS ---------- */
@@ -1176,20 +1292,25 @@ const ENG_MORE=[
 const engQs=n=>DAYS[n-1].eq.concat(ENG_MORE[n-1]);
 function engPrompt(n){
   const D=DAYS[n-1], m=engMin(n), qs=engQs(n);
-  return `Act as my friendly English conversation teacher. My level is A1–A2 and my first language is Spanish.
+  return `From now on, you are my English teacher. My level is A1–A2 and my first language is Spanish.
 Today's topic: "${D.et}". We have about ${m} minutes.
 
-Rules:
-- Ask me the questions below ONE AT A TIME and wait for my answer before the next one.
-- After each answer, ask one short follow-up question like "Why?" or "Tell me more".
-- Use simple English. If I don't understand, rephrase the question more simply.
-- Do not correct me during the conversation.
-- At the end, give me: 1) the 2 most important corrections with the correct sentence, 2) 3 useful new words or phrases from our conversation, 3) one sentence I should repeat out loud.
+How the class works:
+1. Ask me the questions below ONE AT A TIME and wait for my answer.
+2. After EVERY answer, correct EVERYTHING I said wrong: grammar, vocabulary, word order, prepositions and spelling. Use this format:
+   ❌ What I said: ...
+   ✅ Correct: ...
+   💡 Why (one short explanation in Spanish)
+   If my answer was perfect, say "Perfect!" and give me one more natural way to say it.
+3. Ask me to repeat the corrected sentence, then ask one short follow-up question ("Why?" or "Tell me more").
+4. Then continue with the next question.
+5. Use simple English. If I write in Spanish or don't understand, help me say it in English.
+6. At the end, give me: a list of all my mistakes and their corrections, 5 useful new words from today, and a score from 1 to 10 with one tip to improve.
 
 Questions:
 ${qs.map((q,i)=>`${i+1}. ${q}`).join("\n")}
 
-Start with question 1 now.`;
+Start now with question 1.`;
 }
 
 /* ---------- MINDSET (juego) ---------- */
@@ -1234,13 +1355,14 @@ function copyEng(n,btn){
   const fb=()=>{copyMsg={n,t:"Selecciona el texto de abajo y cópialo.",box:true};renderAll(true);const b=$("#copyBox");if(b){b.focus();b.select();}};
   try{ navigator.clipboard.writeText(txt).then(ok,fb); }catch(e){ fb(); }
 }
+const engPromptBox=n=>`<div class="pbox"><div class="pbh"><b>Prompt para tu profesor de inglés</b><span class="mini">Cópialo y pégalo en ChatGPT</span></div><pre>${esc(engPrompt(n))}</pre></div>`;
 const engButtons=n=>`<div class="row"><button class="btn primary" data-copyeng="${n}">${ico("pen")} Copiar para ChatGPT</button><a class="btn" href="https://chatgpt.com/?q=${encodeURIComponent(engPrompt(n))}" target="_blank" rel="noopener">Abrir en ChatGPT ↗</a></div>
   ${copyMsg.n===n?`<p class="mini" role="status" style="color:var(--good);font-weight:700;margin:6px 0 0">${copyMsg.t}</p>${copyMsg.box?`<textarea id="copyBox" readonly style="min-height:160px;margin-top:6px">${esc(engPrompt(n))}</textarea>`:""}`:""}`;
 function renderEng(){
   const d=state.day, D=DAYS[d-1], cur=engMin(d), sp=engSplit(cur), ER=[["1–7",5],["8–14",8],["15–21",12],["22–28",15],["29–30",18]];
   const n=DAYS.filter((_,i)=>isOn(i+1,"eng")).length;
   $("#v-eng").innerHTML=`${stickBar("Inglés",Math.round(n/30*100),`${n}/30 conversaciones`)}<h2 class="h2">Inglés</h2><p class="lead">Nivel A1–A2. Copia las instrucciones y las 10 preguntas del tema, pégalas en ChatGPT (o usa el modo de voz) y responde en voz alta. ChatGPT te hará una pregunta a la vez y al final te dará dos correcciones.</p>
-  ${areaHead("eng","c-sky","chat","Conversación de hoy",D.et,`${cur} min: ${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,`<ol class="qlist">${engQs(d).map(q=>`<li>${esc(q)}</li>`).join("")}</ol>${engButtons(d)}<div class="row" style="margin-top:6px"><button class="btn" data-timer="eng">Temporizador ${cur} min</button></div>`)}
+  ${areaHead("eng","c-sky","chat","Conversación de hoy",D.et,`${cur} min: ${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,`${engPromptBox(d)}${engButtons(d)}<div class="row" style="margin-top:6px"><button class="btn" data-timer="eng">Temporizador ${cur} min</button></div>`)}
   <div class="grid">
   <article class="card c-white"><div class="hd"><div style="flex:1"><h3>Tiempo que aumenta<small>Minutos diarios por tramo de días</small></h3></div><span class="select">Hoy: ${cur} min</span></div>
    <div class="vbars" role="img" aria-label="Minutos de inglés por tramo">${ER.map(([r,m])=>`<div class="${m===cur?"cur":""}"><b>${m}′</b><i style="height:${m/18*110}px" title="Días ${r}: ${m} min"></i><small>${r}</small></div>`).join("")}</div>
@@ -1248,7 +1370,7 @@ function renderEng(){
   <article class="card c-white"><h3 style="margin-bottom:8px">Reparto de cada sesión</h3><div class="scroll"><table class="tbl"><thead><tr><th>Días</th><th>Duración</th><th>Repaso + conversación + corrección</th></tr></thead><tbody>
    ${ER.map(([r,m])=>`<tr class="${cur===m?"cur":""}"><td>${r}</td><td><b>${m} min</b></td><td>${engSplit(m).join(" + ")} min</td></tr>`).join("")}</tbody></table></div></article>
   <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("chat")}</span>30 temas · 300 preguntas</span><h3>Conversaciones del mes<small>Abre un tema para ver sus 10 preguntas y copiarlas</small></h3></div></div>
-   <ul class="list-plain">${DAYS.map((D,i)=>{const k=i+1,on=isOn(k,"eng");return `<li class="${on?"ok":""}" style="${k===d?"background:color-mix(in srgb,var(--pri) 8%,transparent);border-radius:14px":""}"><span class="n">${k}</span><details class="engd" ${copyMsg.n===k&&k!==d?"open":""}><summary><b>${esc(D.et)}</b> <span class="mini">(${engMin(k)} min · 10 preguntas)</span></summary><ol class="qlist">${engQs(k).map(q=>`<li>${esc(q)}</li>`).join("")}</ol>${k!==d?engButtons(k):""}</details><button class="check" data-kd="${k}:eng" aria-pressed="${on}" aria-label="Día ${k} inglés">${CHECKSVG}</button></li>`}).join("")}</ul></article>
+   <ul class="list-plain">${DAYS.map((D,i)=>{const k=i+1,on=isOn(k,"eng");return `<li class="${on?"ok":""}" style="${k===d?"background:color-mix(in srgb,var(--pri) 8%,transparent);border-radius:14px":""}"><span class="n">${k}</span><details class="engd" ${copyMsg.n===k&&k!==d?"open":""}><summary><b>${esc(D.et)}</b> <span class="mini">(${engMin(k)} min · 10 preguntas)</span></summary>${k!==d?engPromptBox(k)+engButtons(k):`<p class="mini">Es el tema de hoy: su prompt está arriba.</p>`}</details><button class="check" data-kd="${k}:eng" aria-pressed="${on}" aria-label="Día ${k} inglés">${CHECKSVG}</button></li>`}).join("")}</ul></article>
   </div>`;
 }
 
@@ -1320,7 +1442,7 @@ function fin(){
     {id:"ocio",name:"Ocio y pareja",color:"#8B5CF6",op:"gasto"},{id:"ahorro",name:"Ahorro e inversión",color:"#4B4FE8",op:"aporte"}]};
   const f=state.fin; f.cats=f.cats||[]; f.tx=f.tx||[]; if(f.cur==null) f.cur="$"; if(f.init==null) f.init=0; return f;
 }
-let finLastCat=null, finYM=null, finSel=isoOf(new Date()), catOpen=false;
+let finQuick=false, finLastCat=null, finYM=null, finSel=isoOf(new Date()), catOpen=false;
 function finMonth(){ if(!finYM){const n=new Date();finYM=[n.getFullYear(),n.getMonth()];} return finYM; }
 const NF=new Intl.NumberFormat("es",{minimumFractionDigits:0,maximumFractionDigits:2,useGrouping:"always"});
 const NF1=new Intl.NumberFormat("es",{maximumFractionDigits:1});
@@ -1354,7 +1476,11 @@ function renderFin(){
   const dayPanel=`<article class="card c-white third"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Día seleccionado</span><h3>${cap(selD.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}<small>${dL.length?dL.length+" movimiento"+(dL.length>1?"s":""):"Sin movimientos"}</small></h3></div></div>
     ${dL.length?`<ul class="txl">${dL.map(t=>{const c=catOf(t.cat);return `<li><span><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span>${t.note?`<span class="nt">${esc(t.note)}</span>`:""}</span><span style="text-align:right"><b class="${t.op==="ingreso"||t.op==="retiro"?"pos":t.op==="gasto"?"neg":""}">${t.op==="aporte"?money(t.amt):money(cashOf(t),1)}</b><br><span class="opl ${t.op}">${FIN_OPS[t.op][0]}</span></span><button class="xbtn" data-fin="del" data-id="${t.id}" aria-label="Borrar movimiento">✕</button></li>`}).join("")}</ul>`:""}
     <div class="dlgsec" style="background:var(--shell)"><b style="font-size:14px">Agregar movimiento</b>
-    ${f.cats.length?`<div class="catpicks" role="radiogroup" aria-label="Categoría">${f.cats.map((c,i)=>`<label><input type="radio" name="fcat" value="${c.id}" ${c===firstCat?"checked":""}><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span></label>`).join("")}</div>
+    ${f.cats.length?`<div class="catpicks" role="radiogroup" aria-label="Categoría">${f.cats.map((c,i)=>`<label><input type="radio" name="fcat" value="${c.id}" ${c===firstCat?"checked":""}><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span></label>`).join("")}<button class="catnew" data-fin="quicktog" aria-expanded="${finQuick}">${finQuick?"✕ Cerrar":"+ Nueva"}</button></div>
+    ${finQuick?`<div class="quickcat"><div class="frm"><div class="full"><label class="l" for="qcName">Nombre de la categoría</label><input type="text" id="qcName" placeholder="Ej.: Farmacia, Gasolina, Colegio…"></div>
+     <div class="full"><label class="l" for="qcOp">Tipo de operación</label><select id="qcOp">${Object.entries(FIN_OPS).map(([k,v])=>`<option value="${k}" ${k==="gasto"?"selected":""}>${v[0]}</option>`).join("")}</select></div>
+     <div class="full"><span class="l" style="font-size:11.5px;font-weight:700;color:var(--soft)">Color</span><div class="swatches" role="radiogroup" aria-label="Color">${SWATCH.map((s,i)=>`<label><input type="radio" name="qcColor" value="${s}" ${i===f.cats.length%SWATCH.length?"checked":""}><span style="--c:${s}"></span></label>`).join("")}<label title="Otro color"><input type="color" id="qcCustom" class="sw" value="#FF8A00" style="--c:#FF8A00" aria-label="Elegir otro color"></label></div></div></div>
+     <div class="row" style="margin-top:8px"><button class="btn primary" data-fin="quickadd">Crear y usar</button></div></div>`:""}
     <div class="frm"><div><label class="l" for="fAmt">Monto (${esc(f.cur)})</label><input type="text" inputmode="decimal" id="fAmt" placeholder="0"></div>
     <div><label class="l" for="fOp">Operación</label><select id="fOp">${Object.entries(FIN_OPS).map(([k,v])=>`<option value="${k}" ${firstCat&&firstCat.op===k?"selected":""}>${v[0]}</option>`).join("")}</select></div>
     <div class="full"><label class="l" for="fNote">Nota (opcional)</label><input type="text" id="fNote" placeholder="Ej.: compra semanal"></div></div>
@@ -1420,6 +1546,10 @@ function finAction(a,b){
   }
   else if(a==="del"){f.tx=f.tx.filter(t=>t.id!==b.dataset.id);}
   else if(a==="cats"){catOpen=true;renderCatDlg();const d=$("#catDlg");if(!d.open) d.showModal();return;}
+  else if(a==="quicktog"){finQuick=!finQuick; renderAll(true); if(finQuick&&$("#qcName")) $("#qcName").focus(); return;}
+  else if(a==="quickadd"){const name=$("#qcName").value.trim(); if(!name){$("#qcName").focus();return;}
+    const pick=document.querySelector('input[name="qcColor"]:checked'), id=uid();
+    f.cats.push({id,name,op:$("#qcOp").value,color:pick?pick.value:$("#qcCustom").value}); finLastCat=id; finQuick=false;}
   else if(a==="catclose"){catOpen=false;$("#catDlg").close();return;}
   else if(a==="catadd"){
     const name=$("#ncName").value.trim(); if(!name){$("#ncName").focus();return;}
@@ -1513,60 +1643,71 @@ function logAction(a,b){
 
 /* ---------- FAMILY WALL ---------- */
 const FW_K=[["b","Desayuno","#D9812E","sun"],["l","Almuerzo","#1F9D55","leaf"],["d","Cena","#6A5AE0","heart"],["a","Actividad en familia","#D9467F","users"]];
-let fwYM=null, fwSel=isoOf(new Date());
-function fam(){ const f=state.fam||(state.fam={days:{},shop:[],rem:[]}); f.days=f.days||{}; f.shop=f.shop||[]; f.rem=f.rem||[]; return f; }
+const PI_C=["#FFE58A","#FFC6D9","#BFE3FF","#C9F2C7","#FFD6A5"];
+let fwYM=null, fwSel=isoOf(new Date()), fwBought=null;
+function fam(){ const f=state.fam||(state.fam={}); f.days=f.days||{}; f.shop=f.shop||[]; f.rem=f.rem||[]; f.favs=f.favs||{b:[],l:[],d:[],a:[]}; FW_K.forEach(([k])=>f.favs[k]=f.favs[k]||[]); return f; }
 function fwMonth(){ if(!fwYM){const n=new Date();fwYM=[n.getFullYear(),n.getMonth()];} return fwYM; }
 function fwGrid(){
   const f=fam(), [y,m]=fwMonth(), ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), off=(new Date(y,m,1).getDay()+6)%7, today=isoOf(new Date());
   return WDs.map(x=>`<div class="wd">${x}</div>`).join("")+Array.from({length:off},()=>`<div class="fwc blank"></div>`).join("")+Array.from({length:last},(_,i)=>{
     const iso=ym+"-"+pad2(i+1), D=f.days[iso]||{}, R=f.rem.filter(r=>r.date===iso&&!r.done);
     return `<button class="fwc ${iso===fwSel?"sel":""} ${iso===today?"today":""}" data-fwd="${iso}" aria-label="${i+1}: ${FW_K.filter(k=>D[k[0]]).length} de 4 anotados">
-      <span class="dn"><b>${i+1}</b>${R.length?`<span class="fwbell">${ico("alert")}${R.length}</span>`:""}</span>
+      <span class="dn"><b>${i+1}</b>${R.length?`<span class="fwbell" title="${esc(R.map(r=>r.t).join(" · "))}">${ico("alert")}${R.length}</span>`:""}</span>
       ${FW_K.map(([k,,c])=>D[k]?`<span class="fwl" style="--c:${c}">${esc(D[k])}</span>`:"").join("")}
       <span class="fwdots">${FW_K.map(([k,,c])=>D[k]?`<i style="--c:${c}"></i>`:"").join("")}</span></button>`}).join("");
 }
+const isFav=(k,v)=>!!v&&fam().favs[k].some(x=>x.toLowerCase()===v.trim().toLowerCase());
+function fwStars(){ const D=fam().days[fwSel]||{}; FW_K.forEach(([k])=>{const b=$("#fwstar-"+k); if(b){const on=isFav(k,D[k]||"");b.setAttribute("aria-pressed",on);b.disabled=!(D[k]||"").trim();}}); }
 function renderWall(){
   const f=fam(), [y,m]=fwMonth(), D=f.days[fwSel]||{}, sd=new Date(fwSel+"T12:00:00"), today=isoOf(new Date());
-  const shop=f.shop, pend=shop.filter(s=>!s.done).length;
   const rems=f.rem.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1));
-  const filled=Object.values(f.days).reduce((a,d)=>a+FW_K.filter(k=>d[k[0]]).length,0);
+  const filled=Object.values(f.days).reduce((a,d)=>a+FW_K.filter(k=>d[k[0]]).length,0), nf=FW_K.reduce((a,[k])=>a+f.favs[k].length,0);
   $("#v-wall").innerHTML=`<h2 class="h2">Family Wall</h2>
   <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">El muro de la casa: qué comemos cada día, qué hacemos juntos, qué falta comprar y qué no hay que olvidar.</p>
    <div class="fnav"><button class="iconbtn" data-fw="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-fw="next" aria-label="Mes siguiente">›</button><button class="btn" data-fw="today">Hoy</button></div></div>
-  <div class="grid">
-  <article class="card c-white two"><div class="hd"><div style="flex:1"><h3>Calendario familiar<small>Toca un día para escribir comidas y actividad</small></h3></div><span class="select">${filled} anotaciones</span></div>
-   <div class="fcal fwgrid" id="fwGrid">${fwGrid()}</div>
-   <div class="legend" style="margin-top:12px">${FW_K.map(([,n,c])=>`<span style="--c:${c}">${n}</span>`).join("")}<span style="--c:var(--bad)">Recordatorio</span></div></article>
-  <article class="card pt c-peach third fwday"><span class="tag"><span class="ic">${ico("cal")}</span>${fwSel===today?"Hoy":"Día seleccionado"}</span><h3 style="margin-bottom:10px">${cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}</h3>
-   <div class="fwform">${FW_K.map(([k,n,c,ic])=>`<label class="fwf" style="--c:${c}"><span>${ico(ic)}${n}</span><textarea id="fw-${k}" data-fwk="${k}" rows="2" placeholder="${k==="a"?"Ej.: parque, cuento, película…":"Ej.: "+({b:"avena con fruta",l:"pollo con arroz",d:"sopa y pan"})[k]}">${esc(D[k]||"")}</textarea></label>`).join("")}</div>
-   <div class="row"><button class="btn" data-fw="copyprev">Copiar del día anterior</button>${FW_K.some(k=>D[k[0]])?`<button class="btn" data-fw="clearday">Vaciar día</button>`:""}</div>
-   ${f.rem.filter(r=>r.date===fwSel).length?`<p class="mini" style="margin-top:10px"><b>Recordatorios de este día:</b> ${f.rem.filter(r=>r.date===fwSel).map(r=>esc(r.t)).join(" · ")}</p>`:""}</article>
+  <div class="fwlayout">
+  <div class="fwmain">
+   <article class="card c-white"><div class="hd"><div style="flex:1"><h3>Calendario familiar<small>Toca un día para escribir comidas y actividad</small></h3></div><span class="select">${filled} anotaciones</span></div>
+    <div class="fcal fwgrid" id="fwGrid">${fwGrid()}</div>
+    <div class="legend" style="margin-top:12px">${FW_K.map(([,n,c])=>`<span style="--c:${c}">${n}</span>`).join("")}<span style="--c:var(--bad)">Recordatorio</span></div></article>
 
-  <article class="card pt c-mint"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("ok")}</span>Por comprar</span><h3>Lista del súper<small>${pend} pendiente${pend===1?"":"s"} · ${shop.length-pend} comprado${shop.length-pend===1?"":"s"}</small></h3></div></div>
-   <div class="fwadd"><input type="text" id="shopIn" placeholder="Añadir: leche, pañales, croquetas…" aria-label="Nuevo artículo"><button class="btn primary" data-fw="shopadd">Añadir</button></div>
-   <ul class="fwlist">${shop.slice().sort((a,b)=>a.done-b.done).map(s=>`<li class="${s.done?"done":""}"><button class="check sm" data-fw="shoptog" data-id="${s.id}" aria-pressed="${!!s.done}" aria-label="Marcar ${esc(s.t)}">${CHECKSVG}</button><span>${esc(s.t)}</span><button class="xbtn" data-fw="shopdel" data-id="${s.id}" aria-label="Quitar ${esc(s.t)}">✕</button></li>`).join("")||'<li class="empty mini">La lista está vacía.</li>'}</ul>
-   ${shop.some(s=>s.done)?`<div class="row"><button class="btn" data-fw="shopclear">Quitar comprados</button></div>`:""}</article>
+   <article class="card pt c-peach fwday"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>${fwSel===today?"Hoy":"Día seleccionado"}</span><h3>${cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}<small>La estrella guarda la comida en tus favoritos</small></h3></div></div>
+    <div class="fwform">${FW_K.map(([k,n,c,ic])=>`<div class="fwf" style="--c:${c}"><label for="fw-${k}">${ico(ic)}${n}</label><div class="fwin"><textarea id="fw-${k}" data-fwk="${k}" rows="2" placeholder="${({b:"Ej.: avena con fruta",l:"Ej.: pollo con arroz",d:"Ej.: sopa y pan",a:"Ej.: parque, cuento, película…"})[k]}">${esc(D[k]||"")}</textarea><button class="star" id="fwstar-${k}" data-fw="fav" data-k="${k}" aria-pressed="${isFav(k,D[k]||"")}" ${(D[k]||"").trim()?"":"disabled"} aria-label="Guardar ${n.toLowerCase()} en favoritos">★</button></div></div>`).join("")}</div>
+    <div class="row"><button class="btn" data-fw="copyprev">Copiar del día anterior</button>${FW_K.some(k=>D[k[0]])?`<button class="btn" data-fw="clearday">Vaciar día</button>`:""}</div></article>
 
-  <article class="card pt c-pink"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("alert")}</span>Recordatorios</span><h3>No olvidar<small>Con fecha aparecen en el calendario</small></h3></div></div>
-   <div class="fwadd"><input type="text" id="remIn" placeholder="Ej.: vacuna de Thomas, pagar luz…" aria-label="Nuevo recordatorio"><input type="date" id="remDate" value="${fwSel}" aria-label="Fecha" style="max-width:150px"><button class="btn primary" data-fw="remadd">Añadir</button></div>
-   <ul class="fwlist">${rems.map(r=>{const late=r.date&&r.date<today&&!r.done;return `<li class="${r.done?"done":""}"><button class="check sm" data-fw="remtog" data-id="${r.id}" aria-pressed="${!!r.done}" aria-label="Marcar ${esc(r.t)}">${CHECKSVG}</button><span>${esc(r.t)}${r.date?`<small class="${late?"neg":""}">${late?"Vencido · ":""}${cap(new Date(r.date+"T12:00:00").toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"}))}</small>`:""}</span><button class="xbtn" data-fw="remdel" data-id="${r.id}" aria-label="Borrar ${esc(r.t)}">✕</button></li>`}).join("")||'<li class="empty mini">Sin recordatorios.</li>'}</ul></article>
+   <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("star")}</span>Favoritos</span><h3>Nuestros favoritos<small>${nf?"Toca uno para ponerlo en el día seleccionado":"Marca una comida con ★ para guardarla aquí"}</small></h3></div></div>
+    <div class="favgrid">${FW_K.map(([k,n,c,ic])=>`<div class="favcol" style="--c:${c}"><h4>${ico(ic)}${n} <span class="mini">${f.favs[k].length}</span></h4><div class="favs">${f.favs[k].map((v,i)=>`<span class="favchip"><button data-fw="usefav" data-k="${k}" data-i="${i}" title="Poner en ${esc(cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric"})))}">${esc(v)}</button><button class="favx" data-fw="unfav" data-k="${k}" data-i="${i}" aria-label="Quitar ${esc(v)} de favoritos">✕</button></span>`).join("")||'<span class="mini">Aún ninguno.</span>'}</div></div>`).join("")}</div></article>
+
+   <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("alert")}</span>Recordatorios</span><h3>No olvidar<small>Los que tienen fecha también aparecen en el calendario</small></h3></div></div>
+    <div class="postits">
+     <div class="postit new" style="--pc:${PI_C[f.rem.length%PI_C.length]}"><textarea id="remIn" rows="3" placeholder="Escribe un recordatorio…" aria-label="Nuevo recordatorio"></textarea><div class="pirow"><input type="date" id="remDate" value="${fwSel}" aria-label="Fecha"><button class="btn primary" data-fw="remadd">Pegar</button></div></div>
+     ${rems.map((r,i)=>{const late=r.date&&r.date<today&&!r.done;return `<div class="postit ${r.done?"done":""}" style="--pc:${PI_C[(r.c??i)%PI_C.length]};--rot:${((i*37)%7-3)*.6}deg"><p>${esc(r.t)}</p><div class="pirow">${r.date?`<small class="${late?"neg":""}">${late?"Vencido · ":""}${cap(new Date(r.date+"T12:00:00").toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"}))}</small>`:"<small></small>"}<span><button class="check sm" data-fw="remtog" data-id="${r.id}" aria-pressed="${!!r.done}" aria-label="Marcar hecho: ${esc(r.t)}">${CHECKSVG}</button><button class="xbtn" data-fw="remdel" data-id="${r.id}" aria-label="Quitar ${esc(r.t)}">✕</button></span></div></div>`}).join("")}
+    </div></article>
+  </div>
+
+  <aside class="fwside"><article class="card pt c-mint shopcard"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("ok")}</span>Por comprar</span><h3>Lista del súper<small>${f.shop.length} pendiente${f.shop.length===1?"":"s"} · al marcar, desaparece</small></h3></div></div>
+    <div class="fwadd"><input type="text" id="shopIn" placeholder="Leche, pañales, croquetas…" aria-label="Nuevo artículo"><button class="btn primary" data-fw="shopadd" aria-label="Añadir">+</button></div>
+    ${fwBought?`<p class="mini bought">Comprado: <b>${esc(fwBought.t)}</b> <button class="linkbtn" data-fw="undo">Deshacer</button></p>`:""}
+    <ul class="checklist">${f.shop.map(s=>`<li><button class="cbox" data-fw="buy" data-id="${s.id}" aria-label="Marcar comprado: ${esc(s.t)}"></button><span>${esc(s.t)}</span></li>`).join("")||'<li class="empty mini">Todo comprado. Añade lo que falte.</li>'}</ul></article></aside>
   </div>`;
 }
 function fwAction(a,b){
-  const f=fam();
+  const f=fam(), D=()=>f.days[fwSel]||(f.days[fwSel]={});
   if(a==="prev"||a==="next"){const [y,m]=fwMonth();const d=new Date(y,m+(a==="next"?1:-1),1);fwYM=[d.getFullYear(),d.getMonth()];fwSel=isoOf(d);}
   else if(a==="today"){fwYM=null;fwSel=isoOf(new Date());}
-  else if(a==="copyprev"){const p=new Date(fwSel+"T12:00:00");p.setDate(p.getDate()-1);const src=f.days[isoOf(p)];if(!src){return;}f.days[fwSel]=Object.assign({},src);}
+  else if(a==="copyprev"){const p=new Date(fwSel+"T12:00:00");p.setDate(p.getDate()-1);const src=f.days[isoOf(p)];if(!src) return;f.days[fwSel]=Object.assign({},src);}
   else if(a==="clearday"){delete f.days[fwSel];}
-  else if(a==="shopadd"){const v=$("#shopIn").value.trim(); if(!v){$("#shopIn").focus();return;} v.split(/,\s*/).filter(Boolean).forEach(t=>f.shop.push({id:uid(),t,done:0}));}
-  else if(a==="shoptog"){const s=f.shop.find(x=>x.id===b.dataset.id); if(s) s.done=s.done?0:1;}
-  else if(a==="shopdel"){f.shop=f.shop.filter(x=>x.id!==b.dataset.id);}
-  else if(a==="shopclear"){f.shop=f.shop.filter(x=>!x.done);}
-  else if(a==="remadd"){const v=$("#remIn").value.trim(); if(!v){$("#remIn").focus();return;} f.rem.push({id:uid(),t:v,date:$("#remDate").value||"",done:0});}
+  else if(a==="fav"){const k=b.dataset.k, v=(D()[k]||"").trim(); if(!v) return; const L=f.favs[k], i=L.findIndex(x=>x.toLowerCase()===v.toLowerCase()); if(i>=0) L.splice(i,1); else L.push(v);}
+  else if(a==="usefav"){const k=b.dataset.k; D()[k]=f.favs[k][+b.dataset.i];}
+  else if(a==="unfav"){f.favs[b.dataset.k].splice(+b.dataset.i,1);}
+  else if(a==="shopadd"){const v=$("#shopIn").value.trim(); if(!v){$("#shopIn").focus();return;} v.split(/,\s*/).filter(Boolean).forEach(t=>f.shop.push({id:uid(),t}));}
+  else if(a==="buy"){const i=f.shop.findIndex(x=>x.id===b.dataset.id); if(i<0) return; const li=b.closest("li"); b.classList.add("on"); if(li) li.classList.add("going"); fwBought=Object.assign({pos:i},f.shop[i]); f.shop.splice(i,1); save(); setTimeout(()=>renderAll(true),260); return;}
+  else if(a==="undo"){ if(fwBought){f.shop.splice(Math.min(fwBought.pos,f.shop.length),0,{id:fwBought.id,t:fwBought.t}); fwBought=null;} }
+  else if(a==="remadd"){const v=$("#remIn").value.trim(); if(!v){$("#remIn").focus();return;} f.rem.push({id:uid(),t:v,date:$("#remDate").value||"",done:0,c:f.rem.length%PI_C.length});}
   else if(a==="remtog"){const r=f.rem.find(x=>x.id===b.dataset.id); if(r) r.done=r.done?0:1;}
   else if(a==="remdel"){f.rem=f.rem.filter(x=>x.id!==b.dataset.id);}
   save(); renderAll(true);
-  if(a==="shopadd") $("#shopIn")&&$("#shopIn").focus(); if(a==="remadd") $("#remIn")&&$("#remIn").focus();
+  if(a==="shopadd"&&$("#shopIn")) $("#shopIn").focus();
 }
 
 /* ---------- render ---------- */
@@ -1605,6 +1746,7 @@ document.addEventListener("input",e=>{
 document.addEventListener("change",e=>{ const t=e.target;
   if(t.name==="fcat"){const c=catOf(t.value);$("#fOp").value=c.op;$("#fOpHelp").textContent=FIN_OPS[c.op][1];return;}
   if(t.id==="fOp"){$("#fOpHelp").textContent=FIN_OPS[t.value][1];return;}
+  if(t.id==="qcCustom"){document.querySelectorAll('input[name="qcColor"]').forEach(r=>r.checked=false);t.style.setProperty("--c",t.value);return;}
   if(t.id==="ncCustom"){document.querySelectorAll('input[name="ncColor"]').forEach(r=>r.checked=false);t.style.setProperty("--c",t.value);return;}
   if(t.name==="ncColor"){return;}
   const cid=t.dataset.catcolor||t.dataset.catname||t.dataset.catop;
@@ -1617,9 +1759,9 @@ document.addEventListener("change",e=>{ if(e.target.id==="logFile"&&e.target.fil
 document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.target.value; state.kg=v>=30&&v<=200?v:65; save(); renderAll(true);} });
 document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.fwk; if(!k) return;
   const f=fam(), d=f.days[fwSel]||(f.days[fwSel]={}); const v=e.target.value; if(v.trim()) d[k]=v; else delete d[k]; if(!Object.keys(d).length) delete f.days[fwSel];
-  save(); const g=$("#fwGrid"); if(g) g.innerHTML=fwGrid(); });
-document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
-document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
+  save(); const g=$("#fwGrid"); if(g) g.innerHTML=fwGrid(); fwStars(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
 
