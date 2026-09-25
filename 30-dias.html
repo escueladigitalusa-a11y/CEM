@@ -499,6 +499,72 @@ dialog h3{font-size:19px;font-weight:800}
 .skchk button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .skchk button[aria-pressed="true"] svg{opacity:1}
 @media (max-width:860px){.stick{top:74px}.stk-parts{display:none}}
+/* mindset juego */
+.mhero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+.mquest{grid-column:auto}
+.mlevel{grid-column:auto;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;gap:8px}
+.mlv{font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.mxp{display:flex;justify-content:space-between;font-size:13px;opacity:.85}
+.mxp b{font-size:18px}
+.mbar{background:color-mix(in srgb,var(--paper) 22%,transparent);height:8px}.mbar i{background:#8C8FFF}
+.mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:auto}
+.mstats div{background:color-mix(in srgb,var(--paper) 10%,transparent);border-radius:14px;padding:10px;display:flex;flex-direction:column}
+.mstats b{font-size:22px;font-weight:800}.mstats span{font-size:11.5px;opacity:.75}
+.mdone[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:#fff}
+.mpath{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(5,86px);margin-top:6px}
+.mpath>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.mp-all{fill:none;stroke:var(--line);stroke-width:10;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.mp-done{fill:none;stroke:var(--pri);stroke-width:10;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.mnode{position:relative;z-index:1;justify-self:center;align-self:center;border:0;background:transparent;padding:0;display:flex;flex-direction:column;align-items:center;gap:2px}
+.mnode .mn{width:44px;height:44px;border-radius:50%;background:var(--paper);border:3px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:14px;color:var(--soft);transition:transform .15s}
+.mnode:hover .mn{transform:scale(1.08)}
+.mnode .mn svg{width:18px;height:18px}
+.mnode.done .mn{background:var(--pri);border-color:var(--pri);color:#fff}
+.mnode.ms .mn{border-color:#E7A21D;color:#B7790A}
+.mnode.ms.done .mn{background:#E7A21D;border-color:#E7A21D;color:#fff}
+.mnode.cur .mn{box-shadow:0 0 0 5px color-mix(in srgb,var(--pri) 30%,transparent);border-color:var(--ink)}
+.mnode small{position:absolute;top:100%;font-size:10.5px;font-weight:700;color:var(--soft);white-space:nowrap}
+.mnode em{position:absolute;bottom:100%;margin-bottom:3px;font-style:normal;font-size:10px;font-weight:800;background:var(--ink);color:var(--paper);border-radius:999px;padding:1px 7px}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.badge2{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;background:var(--shell);border-radius:16px;padding:12px;opacity:.55}
+.badge2 span{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--soft)}
+.badge2.ok{opacity:1}.badge2.ok span{background:#E7A21D;color:#fff}
+.badge2 b{font-size:13px}.badge2 small{font-size:11.5px;color:var(--soft)}
+/* inglés */
+.qlist{margin:6px 0 8px;padding-left:1.4em;display:grid;gap:3px;font-size:14px}
+.engd summary{cursor:pointer;list-style:none}
+.engd summary::-webkit-details-marker{display:none}
+.engd summary::after{content:" ▾";color:var(--soft)}
+.engd[open] summary::after{content:" ▴"}
+@media (max-width:860px){.mhero{grid-template-columns:1fr}.mpath{grid-template-rows:repeat(5,70px)}.mnode .mn{width:36px;height:36px;font-size:12px}.mnode small{display:none}}
+/* family wall */
+.fwc{background:var(--shell);border:1.5px solid transparent;border-radius:16px;padding:7px;min-height:118px;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0}
+.fwc:hover{background:var(--paper);border-color:var(--line)}
+.fwc.blank{background:transparent;pointer-events:none}
+.fwc.sel{border-color:var(--ink);background:var(--paper)}
+.fwc .dn{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:15px}
+.fwc.today .dn b{background:var(--pri);color:var(--pri-ink);border-radius:8px;padding:0 6px}
+.fwbell{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;color:var(--bad);font-weight:800}
+.fwbell svg.i{width:12px;height:12px}
+.fwl{font-size:11px;font-weight:600;line-height:1.25;border-left:3px solid var(--c);background:color-mix(in srgb,var(--c) 12%,var(--paper));border-radius:0 6px 6px 0;padding:1px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fwdots{display:none;gap:3px;margin-top:auto}
+.fwdots i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.fwform{display:grid;gap:8px}
+.fwf{display:grid;gap:4px}
+.fwf>span{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700}
+.fwf>span svg.i{width:15px;height:15px;color:var(--c)}
+.fwf textarea{min-height:0;border-left:4px solid var(--c)!important}
+.fwadd{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.fwadd input[type=text]{flex:1;min-width:160px;background:rgba(255,255,255,.6);border-color:transparent}
+.fwadd input[type=date]{background:rgba(255,255,255,.6);border-color:transparent}
+.fwlist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.fwlist li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:rgba(255,255,255,.62);border-radius:14px;padding:6px 8px}
+.fwlist li span small{display:block;font-size:11.5px;color:var(--soft)}
+.fwlist li.done span{text-decoration:line-through;opacity:.55}
+.fwlist li.empty{display:block;background:transparent;padding:4px 0}
+:root[data-theme="dark"] .fwlist li,:root[data-theme="dark"] .fwadd input{background:rgba(255,255,255,.06)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fwlist li,:root:not([data-theme="light"]) .fwadd input{background:rgba(255,255,255,.06)}}
+@media (max-width:860px){.fwc{min-height:60px;padding:6px;border-radius:12px}.fwc .fwl{display:none}.fwdots{display:flex}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -557,12 +623,12 @@ dialog h3{font-size:19px;font-weight:800}
   </header>
   <section class="view" id="v-hoy"></section>
   <section class="view" id="v-mes"></section>
+  <section class="view" id="v-wall"></section>
   <section class="view" id="v-mov"></section>
   <section class="view" id="v-piel"></section>
   <section class="view" id="v-ign"></section>
   <section class="view" id="v-thomas"></section>
   <section class="view" id="v-mind"></section>
-  <section class="view" id="v-emo"></section>
   <section class="view" id="v-eng"></section>
   <section class="view" id="v-par"></section>
   <section class="view" id="v-trab"></section>
@@ -743,10 +809,10 @@ function exercise(d){
   const c=CARDIO[st], s=SECOND[w]; return {kind:"cardio",title:"Caminata/trote + "+s[0],sub:c.r+" × ("+c.on+" trote + "+c.off+" caminar). Base "+c.base+" min",c,second:s};
 }
 function itemsOf(d){
-  const it=["mind","move","emo","eng"]; if(isWork(d)) it.push("work");
+  const it=["mind","move","eng"]; if(isWork(d)) it.push("work");
   it.push("ign","thomas","pair","kids","skinAM","skinPM","close"); return it;
 }
-const LABELS={mind:"Mindset",move:"Ejercicio",emo:"Emociones",eng:"Inglés",work:"Trabajo",ign:"Ignacio",thomas:"Thomas",pair:"Pareja",kids:"Ambos niños",skinAM:"Piel AM",skinPM:"Piel PM",close:"Cierre"};
+const LABELS={mind:"Mindset",move:"Ejercicio",eng:"Inglés",work:"Trabajo",ign:"Ignacio",thomas:"Thomas",pair:"Pareja",kids:"Ambos niños",skinAM:"Piel AM",skinPM:"Piel PM",close:"Cierre"};
 const isOn=(d,k)=>!!state.checks[d+":"+k];
 function pct(d){const it=itemsOf(d);return Math.round(it.filter(k=>isOn(d,k)).length/it.length*100);}
 function toggle(d,k){const key=d+":"+k; if(state.checks[key]) delete state.checks[key]; else state.checks[key]=1; save(); renderAll(true);}
@@ -758,8 +824,8 @@ function todayDay(){ if(!state.start) return null; const s=new Date(state.start+
 const fmtDate=t=>t?t.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}):"";
 
 /* ---------- navigation (sidebar) ---------- */
-const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["emo","Emociones","smile"],["eng","Inglés","chat"],["par","Pareja","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["AYUDA"],["guia","Guía","book"]];
-const TITLES={hoy:"Hoy",mes:"Mes y progreso",mov:"Movimiento",piel:"Piel",ign:"Ignacio",thomas:"Thomas",mind:"Mindset",emo:"Emociones",eng:"Inglés",par:"Pareja",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["wall","Family Wall","users"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["eng","Inglés","chat"],["par","Pareja","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["AYUDA"],["guia","Guía","book"]];
+const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Family Wall",mov:"Movimiento",piel:"Piel",ign:"Ignacio",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Pareja",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
 let tab="hoy";
 function renderTabs(){
   $("#tabs").innerHTML=TABS.map(([k,l,i])=>l?`<button role="tab" aria-selected="${k===tab}" data-tab="${k}">${ico(i)}${l}</button>`:`<div class="sec" role="presentation">${k}</div>`).join("");
@@ -821,12 +887,11 @@ function renderHoy(){
   </div>
   <div class="grid">
     ${card("c-white","run","Movimiento",ex.title,ex.sub,"move",exb)}
-    ${card("c-rose","smile","Emociones, 5 min",D.emT,"","emo",`<p>${esc(D.em)}</p><div class="row"><button class="btn primary" data-timer="emo">Temporizador 5 min</button></div>`)}
     ${card("c-white","chat","Inglés, "+em+" min",D.et,`${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,"eng",
-      `<div class="bubbles">${D.eq.map(q=>`<span>${esc(q)}</span>`).join("")}</div><p class="mini">Añade «Why?» y «Tell me more». Al cerrar: repite dos frases corregidas.</p><div class="row"><button class="btn primary" data-timer="eng">Temporizador ${em} min</button></div>`)}
+      `<div class="bubbles">${D.eq.map(q=>`<span>${esc(q)}</span>`).join("")}</div><p class="mini">+7 preguntas más en la sección Inglés. Copia las 10 y pégalas en ChatGPT.</p>${engButtons(d)}<div class="row" style="margin-top:6px"><button class="btn" data-timer="eng">Temporizador ${em} min</button></div>`)}
     ${isWork(d)?card("c-yel","brief","Trabajo","4 horas protegidas","Niños atendidos por otro adulto","work",
-      `<p>Define un entregable antes de empezar.</p><input type="text" data-note="deliv" placeholder="Entregable de hoy" value="${esc(note.deliv||"")}"><div class="row"><button class="btn primary" data-timer="work">Iniciar bloque de 240 min</button></div>`):
-      card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`)}
+      `<p>Define un entregable antes de empezar.</p><input type="text" data-note="deliv" placeholder="Entregable de hoy" value="${esc(note.deliv||"")}"><div class="row"><button class="btn primary" data-timer="work">Iniciar bloque de 240 min</button></div>`,"wide"):
+      card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`,"wide")}
     ${card("c-peach","star","Ignacio, 10–12 min",D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div>`,"third")}
     ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
     ${card("c-pink","heart","Pareja, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
@@ -849,7 +914,7 @@ function renderMes(){
   const full=pcts.filter(p=>p===100).length;
   const mv=totals.find(x=>x[0]==="move");
   let streak=0; for(let d=(td||state.day);d>=1;d--){ if(pct(d)>0) streak++; else break; }
-  const RC=[["mind","var(--pri)"],["move","var(--ac-mint)"],["emo","var(--ac-rose)"],["eng","var(--ac-peach)"]];
+  const RC=[["mind","var(--pri)"],["move","var(--ac-mint)"],["ign","var(--ac-rose)"],["eng","var(--ac-peach)"]];
   const rings=RC.map(([k,c],i)=>{const t=totals.find(x=>x[0]===k);const r=72-i*15;const v=t[2]?t[1]/t[2]*100:0;
     return `<circle cx="85" cy="85" r="${r}" fill="none" stroke="var(--line)" stroke-width="9"/><circle cx="85" cy="85" r="${r}" fill="none" stroke="${c}" stroke-width="9" stroke-linecap="round" pathLength="100" stroke-dasharray="${v} 100" transform="rotate(-90 85 85)"><title>${LABELS[k]}: ${t[1]}/${t[2]}</title></circle>`;}).join("");
   $("#v-mes").innerHTML=`<h2 class="h2">Tu mes</h2><p class="lead">Toca un día para abrirlo. El punto rojo marca hoy, si configuras la fecha de inicio.</p>
@@ -1075,41 +1140,115 @@ function renderThomas(){
   </div>`;
 }
 
-/* ---------- MINDSET ---------- */
+// 7 preguntas extra por tema (se suman a las 3 de cada día = 10 por tema)
+const ENG_MORE=[
+["How old are you?","Where are you from?","What languages do you speak?","What do you do for work?","What is your favorite food?","How would your friends describe you?","Why are you learning English?"],
+["What time do you wake up?","What do you eat for breakfast?","How do you get your children ready?","When do you exercise?","What do you do in the afternoon?","What time do you go to bed?","What part of your day do you like most? Why?"],
+["How many brothers and sisters do you have?","How old are your children?","What are their names?","Who do you look like in your family?","Where do your parents live?","What does your family do on weekends?","What is a family tradition you love?"],
+["Do you live in a house or an apartment?","How many rooms does your home have?","What is in your kitchen?","What would you like to change in your home?","Is your neighborhood quiet or busy?","Where do your children play?","What do you see from your window?"],
+["What kind of movies do you like?","What is your favorite season? Why?","Do you like cooking?","What food don't you like?","What do you like to do on vacation?","Do you prefer the beach or the mountains?","What is something new you want to try?"],
+["Can I have it with milk, please?","Do you have decaf coffee?","Is it for here or to go?","Can I pay with my phone?","What size would you like?","Could I have a glass of water too?","Where is the restroom, please?"],
+["What is your name and where do you live?","What do you do every morning?","Who lives with you?","What do you like and dislike?","Describe your home in three sentences.","What do you usually order at a café?","What was easy and what was difficult this week?"],
+["What are you wearing today?","What is your partner doing right now?","What is the weather doing outside?","What are you reading or watching these days?","What is your puppy doing now?","What are you planning for tonight?","What are you learning this month?"],
+["What exercise are you doing this month?","How many days a week do you walk?","Do you like lifting weights?","What music do you listen to when you exercise?","Is it hard to find time to exercise? Why?","Where do you walk or jog?","What is your fitness goal?"],
+["What is your city famous for?","Is there a good restaurant near your home?","How do you go to the supermarket?","What do you like about your city?","What don't you like about your city?","Where can children play in your city?","If a friend visits, where will you take them?"],
+["Where do you usually buy food?","Do you like shopping online? Why?","What was the last thing you bought?","Can I try this on?","Is there a discount on this?","Do you compare prices before you buy?","What do you never buy? Why?"],
+["What makes you happy?","What makes you stressed?","What do you do when you feel tired?","Who do you talk to when you are sad?","How do you relax after a long day?","What was a good moment today?","How do you want to feel next week?"],
+["How old is your puppy?","What does he eat?","Where does he sleep?","Is he calm or very active?","What is his favorite toy?","Who takes care of him most?","What is funny about your puppy?"],
+["What did you do this morning?","What do you usually do after lunch?","How do you ask someone for directions?","How are you feeling today and why?","What is the busiest time of your day?","What would make your day easier?","Tell me about your evening routine."],
+["What time did you wake up yesterday?","What did you eat for dinner?","Did you exercise yesterday?","Who did you talk to?","Did you watch anything?","What did your children do yesterday?","How did you feel at the end of the day?"],
+["When was the trip?","How did you travel there?","Where did you stay?","What was the weather like?","What did you eat there?","What was the best moment?","Would you go back? Why?"],
+["What time will you get up on Saturday?","Are you going to exercise this weekend?","Where are you going to go with your family?","What are you going to cook?","Will you see any friends?","What will you do if it rains?","What are you excited about next week?"],
+["How long have you been doing this work?","What does a normal workday look like for you?","What tools do you use?","What do you like most about your job?","What is difficult about your job?","Who are your clients?","What is your next professional goal?"],
+["Who is going to be in the meeting?","Can you share your screen, please?","Sorry, could you repeat that?","Can we schedule another meeting?","What are the main points?","Who is responsible for this task?","When is the deadline?"],
+["Do you have a reservation?","Can we sit by the window?","Are there vegetarian options?","Is this dish spicy?","Can I have the dressing on the side?","Could we have some more bread?","Can we split the bill?"],
+["What did you do last weekend?","What did you learn this month?","What are you going to do tomorrow?","What will you do next year?","What was different in your life five years ago?","What do you want to change next month?","Tell me one thing you did and one thing you will do."],
+["What do you think about social media?","Is it better to live in a city or in the countryside? Why?","Do you think children should learn English early? Why?","What do you think about working on weekends?","Is it important to exercise every day?","What is the best age to have a pet?","Do you agree that money brings happiness? Why?"],
+["Is it better to cook at home or eat out? Why?","Which is healthier: walking or running?","Do you prefer mornings or evenings? Why?","Is a bus better than a car in your city?","Which is more fun: a movie at home or at the cinema?","Would you rather have more time or more money?","Which is easier for you: speaking or listening?"],
+["How long does the service take?","How much does it cost?","What makes your service different?","What do clients need to prepare?","How can people contact you?","What happens after the first meeting?","Can you give me an example of a result?"],
+["What problem do you want to solve?","What is your budget?","Who will make the final decision?","What did you try before?","What would a good result look like?","How often do you want updates?","Do you have any questions for me?"],
+["When did the problem start?","Who is affected?","What have you tried already?","What is the fastest solution?","What is the best long-term solution?","How can we avoid this next time?","Can you explain the problem in simple words?"],
+["Where did the story happen?","Who was with you?","What was the problem?","How did you solve it?","What was the funniest part?","What did other people say?","If it happened again, what would you do differently?"],
+["What are your goals for this year?","What does a perfect day look like for you?","What are you proud of?","What do you want to learn next?","Tell me about someone who inspires you.","What advice would you give your younger self?","What do you want to remember from this month?"],
+["What habit was the easiest to keep?","What was the hardest habit?","How did your family enjoy this month?","What did you learn about yourself?","How is your English different now?","What will you keep doing next month?","What will you do differently?"],
+["What makes your work special?","Tell me about a challenge you faced recently.","What are your plans for your family this year?","What are your favorite things to do on weekends?","Describe your city to a visitor.","What did you enjoy most about these 30 days?","What will you practice in English next month?"]
+];
+const engQs=n=>DAYS[n-1].eq.concat(ENG_MORE[n-1]);
+function engPrompt(n){
+  const D=DAYS[n-1], m=engMin(n), qs=engQs(n);
+  return `Act as my friendly English conversation teacher. My level is A1–A2 and my first language is Spanish.
+Today's topic: "${D.et}". We have about ${m} minutes.
+
+Rules:
+- Ask me the questions below ONE AT A TIME and wait for my answer before the next one.
+- After each answer, ask one short follow-up question like "Why?" or "Tell me more".
+- Use simple English. If I don't understand, rephrase the question more simply.
+- Do not correct me during the conversation.
+- At the end, give me: 1) the 2 most important corrections with the correct sentence, 2) 3 useful new words or phrases from our conversation, 3) one sentence I should repeat out loud.
+
+Questions:
+${qs.map((q,i)=>`${i+1}. ${q}`).join("\n")}
+
+Start with question 1 now.`;
+}
+
+/* ---------- MINDSET (juego) ---------- */
+const MIND_LV=[[0,"Semilla"],[7,"Brote"],[14,"Flor"],[21,"Árbol"],[30,"Bosque"]];
+function mindStats(){
+  const on=n=>isOn(n,"mind"), done=DAYS.filter((_,i)=>on(i+1)).length;
+  let streak=0; for(let n=state.day;n>=1;n--){ if(on(n)) streak++; else if(n===state.day) continue; else break; }
+  let best=0,run=0; for(let n=1;n<=30;n++){ run=on(n)?run+1:0; best=Math.max(best,run); }
+  let li=0; MIND_LV.forEach(([m],i)=>{ if(done>=m) li=i; });
+  const next=MIND_LV[li+1];
+  return {done,streak,best,xp:done*10,lv:MIND_LV[li][1],li,next,toNext:next?next[0]-done:0,
+    badges:[["Primer paso","Completa 1 misión",done>=1],["Racha de 3","3 días seguidos",best>=3],["Semana perfecta","Días 1–7 completos",[1,2,3,4,5,6,7].every(on)],["Mitad del camino","15 misiones",done>=15],["Racha de 7","7 días seguidos",best>=7],["30 de 30","Todas las misiones",done>=30]]};
+}
 function renderMind(){
-  const D=DAYS[state.day-1], note=state.notes[state.day]||{};
-  $("#v-mind").innerHTML=`<h2 class="h2">Mindset</h2><p class="lead">8 minutos: 1 para llegar y poner la pieza, 5 para responder y 2 para elegir una acción pequeña.</p>
-  ${areaHead("mind","c-lav","spark","Pregunta del día",DAYS[state.day-1].t,"",`<div class="music"><span class="dot">♪</span>${esc(D.mu)}</div><p class="quote">${esc(D.mq)}</p>
-    <textarea data-note="mind" placeholder="Tu respuesta y la acción elegida…">${esc(note.mind||"")}</textarea><div class="row"><button class="btn primary" data-timer="mind">Temporizador 1 + 5 + 2 min</button></div>`)}
+  const d=state.day, D=DAYS[d-1], note=state.notes[d]||{}, S=mindStats(), on=isOn(d,"mind");
+  const pos=i=>{const r=Math.floor(i/6),c=r%2?5-i%6:i%6;return [c,r];};
+  const pts=Array.from({length:30},(_,i)=>{const [c,r]=pos(i);return `${(c+.5)/6*100},${(r+.5)/5*100}`;});
+  const lvPrev=MIND_LV[S.li][0], lvSpan=S.next?S.next[0]-lvPrev:1, lvPct=S.next?Math.round((S.done-lvPrev)/lvSpan*100):100;
+  $("#v-mind").innerHTML=`${stickBar("Mindset",Math.round(S.done/30*100),`Nivel ${S.lv} · racha ${S.streak}`)}<h2 class="h2">Mindset</h2>
+  <div class="mhero">
+   <article class="card pt c-lav mquest"><div class="hd"><div style="flex:1;min-width:0"><span class="tag"><span class="ic">${ico("spark")}</span>Misión del día ${d}</span><h3 style="font-size:22px">${esc(D.t)}<small>8 min: 1 para llegar, 5 para responder, 2 para elegir una acción</small></h3></div></div>
+    <div class="music"><span class="dot">♪</span>${esc(D.mu)}</div><p class="quote">${esc(D.mq)}</p>
+    <textarea data-note="mind" placeholder="Tu respuesta y la acción elegida…">${esc(note.mind||"")}</textarea>
+    <div class="row"><button class="btn" data-timer="mind">Temporizador 1 + 5 + 2</button><button class="btn ${on?"":"primary"} mdone" data-kd="${d}:mind" aria-pressed="${on}">${on?"✓ Misión completada":"Completar misión · +10 XP"}</button></div></article>
+   <article class="card mlevel"><span class="mini" style="color:inherit;opacity:.7">Nivel ${S.li+1} de 5</span><b class="mlv">${S.lv}</b>
+    <div class="mxp"><span><b>${S.xp}</b> XP</span><span>${S.next?`${S.toNext} para ${S.next[1]}`:"Nivel máximo"}</span></div><div class="bar mbar"><i style="width:${lvPct}%"></i></div>
+    <div class="mstats"><div><b>${S.streak}</b><span>racha actual</span></div><div><b>${S.best}</b><span>mejor racha</span></div><div><b>${S.done}/30</b><span>misiones</span></div></div></article>
+  </div>
+  <article class="card c-white" style="margin:16px 0"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("flame")}</span>Tu camino</span><h3>30 misiones<small>Toca una casilla para abrir su pregunta. Cada 7 misiones subes de nivel</small></h3></div></div>
+   <div class="mpath"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts.join(" ")}" class="mp-all"/>${pts.slice(0,29).map((p,i)=>isOn(i+1,"mind")&&isOn(i+2,"mind")?`<polyline points="${p} ${pts[i+1]}" class="mp-done"/>`:"").join("")}</svg>
+   ${Array.from({length:30},(_,i)=>{const n=i+1,[c,r]=pos(i),dn=isOn(n,"mind"),ms=[7,14,21,30].includes(n);return `<button class="mnode ${dn?"done":""} ${n===d?"cur":""} ${ms?"ms":""}" data-mday="${n}" style="grid-column:${c+1};grid-row:${r+1}" aria-label="Misión ${n}${dn?", completada":""}${n===d?", abierta":""}"><span class="mn">${dn?CHECKSVG:ms?ico("star"):n}</span>${ms?`<small>${MIND_LV[[7,14,21,30].indexOf(n)+1][1]}</small>`:""}${n===d?'<em>Tú</em>':""}</button>`}).join("")}</div></article>
+  <article class="card c-white" style="margin-bottom:16px"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("star")}</span>Insignias</span><h3>${S.badges.filter(b=>b[2]).length} de ${S.badges.length} desbloqueadas</h3></div></div>
+   <div class="badges">${S.badges.map(([t,s,ok])=>`<div class="badge2 ${ok?"ok":""}"><span>${ok?ico("star"):ico("ok")}</span><b>${t}</b><small>${s}</small></div>`).join("")}</div></article>
   <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("spark")}</span>30 preguntas</span><h3>Preguntas y música del mes<small>Tus respuestas guardadas aparecen debajo de cada pregunta</small></h3></div></div>
    ${dayList("mind",(D,n)=>`<b>${esc(D.t)}</b><br>${esc(D.mq)}<br><span class="mini">♪ ${esc(D.mu)}</span>${(state.notes[n]||{}).mind?`<br><span class="mini" style="color:var(--pri)">✎ ${esc(state.notes[n].mind)}</span>`:""}`)}</article>`;
 }
 
-/* ---------- EMOCIONES ---------- */
-function renderEmo(){
-  const D=DAYS[state.day-1];
-  $("#v-emo").innerHTML=`<h2 class="h2">Emociones</h2><p class="lead">5 minutos diarios, preferentemente en calma. Estas prácticas no sustituyen atención psicológica cuando se necesita.</p>
-  ${areaHead("emo","c-rose","smile","Práctica de hoy",D.emT,"5 min",`<p style="font-size:16px">${esc(D.em)}</p><div class="row"><button class="btn primary" data-timer="emo">Temporizador 5 min</button></div>`)}
-  <div class="grid">
-  <article class="card c-white two"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("smile")}</span>30 prácticas</span><h3>Prácticas del mes</h3></div></div>
-   ${dayList("emo",D=>`<b>${esc(D.emT)}</b><br><span class="mini">${esc(D.em)}</span>`)}</article>
-  <article class="card c-yel pt third" style="align-self:start"><span class="tag"><span class="ic">${ico("heart")}</span>Mi tarjeta de calma</span><h3>Tres señales, dos herramientas, una persona</h3><p class="mini">Del día 29. Déjala escrita aquí para tenerla accesible.</p><textarea data-gnote="calma" placeholder="Señales de sobrecarga, herramientas que funcionaron, persona de apoyo…" style="min-height:200px">${esc(state.notes.calma||"")}</textarea></article>
-  </div>`;
-}
-
 /* ---------- INGLÉS ---------- */
+let copyMsg={};
+function copyEng(n,btn){
+  const txt=engPrompt(n), ok=()=>{copyMsg={n,t:"Copiado. Pégalo en ChatGPT."};renderAll(true);};
+  const fb=()=>{copyMsg={n,t:"Selecciona el texto de abajo y cópialo.",box:true};renderAll(true);const b=$("#copyBox");if(b){b.focus();b.select();}};
+  try{ navigator.clipboard.writeText(txt).then(ok,fb); }catch(e){ fb(); }
+}
+const engButtons=n=>`<div class="row"><button class="btn primary" data-copyeng="${n}">${ico("pen")} Copiar para ChatGPT</button><a class="btn" href="https://chatgpt.com/?q=${encodeURIComponent(engPrompt(n))}" target="_blank" rel="noopener">Abrir en ChatGPT ↗</a></div>
+  ${copyMsg.n===n?`<p class="mini" role="status" style="color:var(--good);font-weight:700;margin:6px 0 0">${copyMsg.t}</p>${copyMsg.box?`<textarea id="copyBox" readonly style="min-height:160px;margin-top:6px">${esc(engPrompt(n))}</textarea>`:""}`:""}`;
 function renderEng(){
   const d=state.day, D=DAYS[d-1], cur=engMin(d), sp=engSplit(cur), ER=[["1–7",5],["8–14",8],["15–21",12],["22–28",15],["29–30",18]];
-  $("#v-eng").innerHTML=`<h2 class="h2">Inglés</h2><p class="lead">Nivel A1–A2 ajustable. Habla con una persona o con la voz de un asistente: una pregunta a la vez y solo dos correcciones al final.</p>
-  ${areaHead("eng","c-sky","chat","Conversación de hoy",D.et,`${cur} min: ${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,`<div class="bubbles">${D.eq.map(q=>`<span>${esc(q)}</span>`).join("")}</div><p class="mini">Añade «Why?» y «Tell me more». Al cerrar: repite dos frases corregidas.</p><div class="row"><button class="btn primary" data-timer="eng">Temporizador ${cur} min</button></div>`)}
+  const n=DAYS.filter((_,i)=>isOn(i+1,"eng")).length;
+  $("#v-eng").innerHTML=`${stickBar("Inglés",Math.round(n/30*100),`${n}/30 conversaciones`)}<h2 class="h2">Inglés</h2><p class="lead">Nivel A1–A2. Copia las instrucciones y las 10 preguntas del tema, pégalas en ChatGPT (o usa el modo de voz) y responde en voz alta. ChatGPT te hará una pregunta a la vez y al final te dará dos correcciones.</p>
+  ${areaHead("eng","c-sky","chat","Conversación de hoy",D.et,`${cur} min: ${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,`<ol class="qlist">${engQs(d).map(q=>`<li>${esc(q)}</li>`).join("")}</ol>${engButtons(d)}<div class="row" style="margin-top:6px"><button class="btn" data-timer="eng">Temporizador ${cur} min</button></div>`)}
   <div class="grid">
   <article class="card c-white"><div class="hd"><div style="flex:1"><h3>Tiempo que aumenta<small>Minutos diarios por tramo de días</small></h3></div><span class="select">Hoy: ${cur} min</span></div>
    <div class="vbars" role="img" aria-label="Minutos de inglés por tramo">${ER.map(([r,m])=>`<div class="${m===cur?"cur":""}"><b>${m}′</b><i style="height:${m/18*110}px" title="Días ${r}: ${m} min"></i><small>${r}</small></div>`).join("")}</div>
    <p class="mini">Si pesa, repite la duración anterior.</p></article>
   <article class="card c-white"><h3 style="margin-bottom:8px">Reparto de cada sesión</h3><div class="scroll"><table class="tbl"><thead><tr><th>Días</th><th>Duración</th><th>Repaso + conversación + corrección</th></tr></thead><tbody>
    ${ER.map(([r,m])=>`<tr class="${cur===m?"cur":""}"><td>${r}</td><td><b>${m} min</b></td><td>${engSplit(m).join(" + ")} min</td></tr>`).join("")}</tbody></table></div></article>
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("chat")}</span>30 temas</span><h3>Conversaciones del mes</h3></div></div>
-   ${dayList("eng",(D,n)=>`<b>${esc(D.et)}</b> <span class="mini">(${engMin(n)} min)</span><br><span class="mini">${D.eq.map(esc).join(" / ")}</span>`)}</article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("chat")}</span>30 temas · 300 preguntas</span><h3>Conversaciones del mes<small>Abre un tema para ver sus 10 preguntas y copiarlas</small></h3></div></div>
+   <ul class="list-plain">${DAYS.map((D,i)=>{const k=i+1,on=isOn(k,"eng");return `<li class="${on?"ok":""}" style="${k===d?"background:color-mix(in srgb,var(--pri) 8%,transparent);border-radius:14px":""}"><span class="n">${k}</span><details class="engd" ${copyMsg.n===k&&k!==d?"open":""}><summary><b>${esc(D.et)}</b> <span class="mini">(${engMin(k)} min · 10 preguntas)</span></summary><ol class="qlist">${engQs(k).map(q=>`<li>${esc(q)}</li>`).join("")}</ol>${k!==d?engButtons(k):""}</details><button class="check" data-kd="${k}:eng" aria-pressed="${on}" aria-label="Día ${k} inglés">${CHECKSVG}</button></li>`}).join("")}</ul></article>
   </div>`;
 }
 
@@ -1151,7 +1290,7 @@ function renderTrab(){
 function renderGuia(){
   const dd=state.notes.difficult||{};
   const SRC=[["NHS, Couch to 5K","Tres días de carrera con recuperación entre ellos."],["Cleveland Clinic, cardio y pesas","El orden depende del objetivo; fuerza primero cuando se prioriza la fuerza."],["Mayo Clinic, técnica de fuerza","Calentamiento, control del movimiento y descanso entre series."],["Cicatricure, línea Porcelana","Instrucciones oficiales de crema gel y peeling; manda la etiqueta de tu envase."],["American Academy of Dermatology","Prueba de productos, cuidado básico y protección solar."],["Blue Cross, cachorros y juego","Actividad breve, enriquecimiento, descanso y evitar saltos/giros intensos."],["American Academy of Pediatrics, juego","Aprendizaje dirigido por el juego y la curiosidad del niño."],["OMS, En tiempos de estrés, haz lo que importa","Anclaje al presente, valores y una relación más amable con las emociones."]];
-  const SEQ=["Al comenzar: necesidades de los niños y Thomas; después, mindset (8 min).","Bloque de ejercicio en el orden de la ficha, con niños atendidos y un lugar seguro.","Higiene, cuidado facial de mañana y alimentación habitual.","Trabajo: bloque real de 4 horas con cobertura de cuidado infantil.","Cuando Ignacio esté receptivo: escuelita breve; después, juego libre con ambos.","Thomas: su juego de 3–5 minutos cuando esté despierto y tranquilo.","Inglés y práctica emocional, en dos pequeños momentos distintos.","Tiempo de pareja con los niños atendidos; cuidado facial nocturno y descanso."];
+  const SEQ=["Al comenzar: necesidades de los niños y Thomas; después, mindset (8 min).","Bloque de ejercicio en el orden de la ficha, con niños atendidos y un lugar seguro.","Higiene, cuidado facial de mañana y alimentación habitual.","Trabajo: bloque real de 4 horas con cobertura de cuidado infantil.","Cuando Ignacio esté receptivo: escuelita breve; después, juego libre con ambos.","Thomas: su juego de 3–5 minutos cuando esté despierto y tranquilo.","Inglés con ChatGPT en un momento tranquilo del día.","Tiempo de pareja con los niños atendidos; cuidado facial nocturno y descanso."];
   $("#v-guia").innerHTML=`<h2 class="h2">Guía</h2><p class="lead">Un orden para cada día, sin inventar una hora de despertar ni ocupar el tiempo de sueño de la familia.</p>
   <div class="grid">
   <article class="card c-white two"><span class="tag"><span class="ic">${ico("clock")}</span>Secuencia diaria</span><h3 style="margin-bottom:12px">Tu día, paso a paso</h3><ol class="tline">${SEQ.map((s,i)=>`<li><b>${i+1}</b><span>${s}</span></li>`).join("")}</ol></article>
@@ -1372,8 +1511,66 @@ function logAction(a,b){
     state.moveLog=logOf().filter(e=>e.id!==b.dataset.id); save(); renderAll(true); }
 }
 
+/* ---------- FAMILY WALL ---------- */
+const FW_K=[["b","Desayuno","#D9812E","sun"],["l","Almuerzo","#1F9D55","leaf"],["d","Cena","#6A5AE0","heart"],["a","Actividad en familia","#D9467F","users"]];
+let fwYM=null, fwSel=isoOf(new Date());
+function fam(){ const f=state.fam||(state.fam={days:{},shop:[],rem:[]}); f.days=f.days||{}; f.shop=f.shop||[]; f.rem=f.rem||[]; return f; }
+function fwMonth(){ if(!fwYM){const n=new Date();fwYM=[n.getFullYear(),n.getMonth()];} return fwYM; }
+function fwGrid(){
+  const f=fam(), [y,m]=fwMonth(), ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), off=(new Date(y,m,1).getDay()+6)%7, today=isoOf(new Date());
+  return WDs.map(x=>`<div class="wd">${x}</div>`).join("")+Array.from({length:off},()=>`<div class="fwc blank"></div>`).join("")+Array.from({length:last},(_,i)=>{
+    const iso=ym+"-"+pad2(i+1), D=f.days[iso]||{}, R=f.rem.filter(r=>r.date===iso&&!r.done);
+    return `<button class="fwc ${iso===fwSel?"sel":""} ${iso===today?"today":""}" data-fwd="${iso}" aria-label="${i+1}: ${FW_K.filter(k=>D[k[0]]).length} de 4 anotados">
+      <span class="dn"><b>${i+1}</b>${R.length?`<span class="fwbell">${ico("alert")}${R.length}</span>`:""}</span>
+      ${FW_K.map(([k,,c])=>D[k]?`<span class="fwl" style="--c:${c}">${esc(D[k])}</span>`:"").join("")}
+      <span class="fwdots">${FW_K.map(([k,,c])=>D[k]?`<i style="--c:${c}"></i>`:"").join("")}</span></button>`}).join("");
+}
+function renderWall(){
+  const f=fam(), [y,m]=fwMonth(), D=f.days[fwSel]||{}, sd=new Date(fwSel+"T12:00:00"), today=isoOf(new Date());
+  const shop=f.shop, pend=shop.filter(s=>!s.done).length;
+  const rems=f.rem.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1));
+  const filled=Object.values(f.days).reduce((a,d)=>a+FW_K.filter(k=>d[k[0]]).length,0);
+  $("#v-wall").innerHTML=`<h2 class="h2">Family Wall</h2>
+  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">El muro de la casa: qué comemos cada día, qué hacemos juntos, qué falta comprar y qué no hay que olvidar.</p>
+   <div class="fnav"><button class="iconbtn" data-fw="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-fw="next" aria-label="Mes siguiente">›</button><button class="btn" data-fw="today">Hoy</button></div></div>
+  <div class="grid">
+  <article class="card c-white two"><div class="hd"><div style="flex:1"><h3>Calendario familiar<small>Toca un día para escribir comidas y actividad</small></h3></div><span class="select">${filled} anotaciones</span></div>
+   <div class="fcal fwgrid" id="fwGrid">${fwGrid()}</div>
+   <div class="legend" style="margin-top:12px">${FW_K.map(([,n,c])=>`<span style="--c:${c}">${n}</span>`).join("")}<span style="--c:var(--bad)">Recordatorio</span></div></article>
+  <article class="card pt c-peach third fwday"><span class="tag"><span class="ic">${ico("cal")}</span>${fwSel===today?"Hoy":"Día seleccionado"}</span><h3 style="margin-bottom:10px">${cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}</h3>
+   <div class="fwform">${FW_K.map(([k,n,c,ic])=>`<label class="fwf" style="--c:${c}"><span>${ico(ic)}${n}</span><textarea id="fw-${k}" data-fwk="${k}" rows="2" placeholder="${k==="a"?"Ej.: parque, cuento, película…":"Ej.: "+({b:"avena con fruta",l:"pollo con arroz",d:"sopa y pan"})[k]}">${esc(D[k]||"")}</textarea></label>`).join("")}</div>
+   <div class="row"><button class="btn" data-fw="copyprev">Copiar del día anterior</button>${FW_K.some(k=>D[k[0]])?`<button class="btn" data-fw="clearday">Vaciar día</button>`:""}</div>
+   ${f.rem.filter(r=>r.date===fwSel).length?`<p class="mini" style="margin-top:10px"><b>Recordatorios de este día:</b> ${f.rem.filter(r=>r.date===fwSel).map(r=>esc(r.t)).join(" · ")}</p>`:""}</article>
+
+  <article class="card pt c-mint"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("ok")}</span>Por comprar</span><h3>Lista del súper<small>${pend} pendiente${pend===1?"":"s"} · ${shop.length-pend} comprado${shop.length-pend===1?"":"s"}</small></h3></div></div>
+   <div class="fwadd"><input type="text" id="shopIn" placeholder="Añadir: leche, pañales, croquetas…" aria-label="Nuevo artículo"><button class="btn primary" data-fw="shopadd">Añadir</button></div>
+   <ul class="fwlist">${shop.slice().sort((a,b)=>a.done-b.done).map(s=>`<li class="${s.done?"done":""}"><button class="check sm" data-fw="shoptog" data-id="${s.id}" aria-pressed="${!!s.done}" aria-label="Marcar ${esc(s.t)}">${CHECKSVG}</button><span>${esc(s.t)}</span><button class="xbtn" data-fw="shopdel" data-id="${s.id}" aria-label="Quitar ${esc(s.t)}">✕</button></li>`).join("")||'<li class="empty mini">La lista está vacía.</li>'}</ul>
+   ${shop.some(s=>s.done)?`<div class="row"><button class="btn" data-fw="shopclear">Quitar comprados</button></div>`:""}</article>
+
+  <article class="card pt c-pink"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("alert")}</span>Recordatorios</span><h3>No olvidar<small>Con fecha aparecen en el calendario</small></h3></div></div>
+   <div class="fwadd"><input type="text" id="remIn" placeholder="Ej.: vacuna de Thomas, pagar luz…" aria-label="Nuevo recordatorio"><input type="date" id="remDate" value="${fwSel}" aria-label="Fecha" style="max-width:150px"><button class="btn primary" data-fw="remadd">Añadir</button></div>
+   <ul class="fwlist">${rems.map(r=>{const late=r.date&&r.date<today&&!r.done;return `<li class="${r.done?"done":""}"><button class="check sm" data-fw="remtog" data-id="${r.id}" aria-pressed="${!!r.done}" aria-label="Marcar ${esc(r.t)}">${CHECKSVG}</button><span>${esc(r.t)}${r.date?`<small class="${late?"neg":""}">${late?"Vencido · ":""}${cap(new Date(r.date+"T12:00:00").toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"}))}</small>`:""}</span><button class="xbtn" data-fw="remdel" data-id="${r.id}" aria-label="Borrar ${esc(r.t)}">✕</button></li>`}).join("")||'<li class="empty mini">Sin recordatorios.</li>'}</ul></article>
+  </div>`;
+}
+function fwAction(a,b){
+  const f=fam();
+  if(a==="prev"||a==="next"){const [y,m]=fwMonth();const d=new Date(y,m+(a==="next"?1:-1),1);fwYM=[d.getFullYear(),d.getMonth()];fwSel=isoOf(d);}
+  else if(a==="today"){fwYM=null;fwSel=isoOf(new Date());}
+  else if(a==="copyprev"){const p=new Date(fwSel+"T12:00:00");p.setDate(p.getDate()-1);const src=f.days[isoOf(p)];if(!src){return;}f.days[fwSel]=Object.assign({},src);}
+  else if(a==="clearday"){delete f.days[fwSel];}
+  else if(a==="shopadd"){const v=$("#shopIn").value.trim(); if(!v){$("#shopIn").focus();return;} v.split(/,\s*/).filter(Boolean).forEach(t=>f.shop.push({id:uid(),t,done:0}));}
+  else if(a==="shoptog"){const s=f.shop.find(x=>x.id===b.dataset.id); if(s) s.done=s.done?0:1;}
+  else if(a==="shopdel"){f.shop=f.shop.filter(x=>x.id!==b.dataset.id);}
+  else if(a==="shopclear"){f.shop=f.shop.filter(x=>!x.done);}
+  else if(a==="remadd"){const v=$("#remIn").value.trim(); if(!v){$("#remIn").focus();return;} f.rem.push({id:uid(),t:v,date:$("#remDate").value||"",done:0});}
+  else if(a==="remtog"){const r=f.rem.find(x=>x.id===b.dataset.id); if(r) r.done=r.done?0:1;}
+  else if(a==="remdel"){f.rem=f.rem.filter(x=>x.id!==b.dataset.id);}
+  save(); renderAll(true);
+  if(a==="shopadd") $("#shopIn")&&$("#shopIn").focus(); if(a==="remadd") $("#remIn")&&$("#remIn").focus();
+}
+
 /* ---------- render ---------- */
-const R={hoy:renderHoy,mes:renderMes,mov:renderMov,piel:renderPiel,ign:renderIgn,thomas:renderThomas,mind:renderMind,emo:renderEmo,eng:renderEng,par:renderPar,trab:renderTrab,fin:renderFin,guia:renderGuia};
+const R={hoy:renderHoy,mes:renderMes,wall:renderWall,mov:renderMov,piel:renderPiel,ign:renderIgn,thomas:renderThomas,mind:renderMind,eng:renderEng,par:renderPar,trab:renderTrab,fin:renderFin,guia:renderGuia};
 function renderAll(keepScroll){
   const y=window.scrollY; renderTabs();
   document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id==="v-"+tab));
@@ -1384,6 +1581,10 @@ function renderAll(keepScroll){
 document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
+  fb=t.closest("[data-fwd]"); if(fb){fwSel=fb.dataset.fwd;renderAll(true);return;}
+  fb=t.closest("[data-fw]"); if(fb){fwAction(fb.dataset.fw,fb);return;}
+  fb=t.closest("[data-mday]"); if(fb){state.day=+fb.dataset.mday;save();renderAll(true);return;}
+  fb=t.closest("[data-copyeng]"); if(fb){copyEng(+fb.dataset.copyeng,fb);return;}
   fb=t.closest("[data-log]"); if(fb){logAction(fb.dataset.log,fb);return;}
   fb=t.closest("[data-fin]"); if(fb){finAction(fb.dataset.fin,fb);return;}
   let b=t.closest("[data-day]"); if(b){state.day=+b.dataset.day;save();renderAll();return;}
@@ -1414,6 +1615,10 @@ document.addEventListener("change",e=>{ const t=e.target;
 });
 document.addEventListener("change",e=>{ if(e.target.id==="logFile"&&e.target.files&&e.target.files.length){readLogPhotos(e.target.files);} });
 document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.target.value; state.kg=v>=30&&v<=200?v:65; save(); renderAll(true);} });
+document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.fwk; if(!k) return;
+  const f=fam(), d=f.days[fwSel]||(f.days[fwSel]={}); const v=e.target.value; if(v.trim()) d[k]=v; else delete d[k]; if(!Object.keys(d).length) delete f.days[fwSel];
+  save(); const g=$("#fwGrid"); if(g) g.innerHTML=fwGrid(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
