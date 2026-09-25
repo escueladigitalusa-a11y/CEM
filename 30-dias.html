@@ -485,6 +485,20 @@ dialog h3{font-size:19px;font-weight:800}
 .wg-bar strong{font-size:18px;font-weight:800;line-height:1.1}
 .wg-bar.cur{outline:3px solid var(--ink);outline-offset:2px}
 .wg-now{position:absolute;top:44px;bottom:48px;width:2px;background:var(--bad);border-radius:2px;pointer-events:none;z-index:2}
+/* avance fijo y checks pequeños */
+.stick{position:sticky;top:10px;z-index:25;display:flex;justify-content:flex-end;margin:-6px 0 8px;pointer-events:none}
+.stickin{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px;font-size:12px;box-shadow:0 8px 20px -14px rgba(0,0,0,.35);font-variant-numeric:tabular-nums}
+.stickin .ring{width:20px;height:20px;border-radius:50%;background:conic-gradient(var(--pri) calc(var(--p)*1%),var(--line) 0);-webkit-mask:radial-gradient(circle,transparent 5.5px,#000 6.5px);mask:radial-gradient(circle,transparent 5.5px,#000 6.5px)}
+.stk-parts{color:var(--soft)}
+.stk-bar{width:70px;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.stk-bar i{display:block;height:100%;background:var(--pri);border-radius:4px}
+.check.sm{width:28px;height:28px}.check.sm svg{width:14px;height:14px}
+.skchk{display:flex;gap:6px}
+.skchk button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:4px 8px;font-size:12px;font-weight:700;color:var(--soft)}
+.skchk button svg{width:13px;height:13px;opacity:.25}
+.skchk button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.skchk button[aria-pressed="true"] svg{opacity:1}
+@media (max-width:860px){.stick{top:74px}.stk-parts{display:none}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -904,6 +918,10 @@ function weekGantt(mw,d,kg){
    ${cw>=0?`<div class="wg-now" style="left:calc(190px + (100% - 190px) * ${(cw+.5)/7})"></div>`:""}
   </div></div>`;
 }
+/* avance fijo, minimalista */
+function stickBar(label,p,parts){
+  return `<div class="stick" role="status" aria-label="${label}: ${p}%"><div class="stickin"><span class="ring" style="--p:${p}"></span><b>${label}</b><span class="stk-parts">${parts}</span><span class="stk-bar"><i style="width:${p}%"></i></span><b>${p}%</b></div></div>`;
+}
 function renderMov(){
   const st=stageOf(state.day), wk=st, d=state.day, cw=wdOf(d);
   const setTxt=["","Semana 1: 1 serie de 8 repeticiones por ejercicio.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semana 4 y día 30: 2 series de 10; conserva la carga."][st];
@@ -912,14 +930,14 @@ function renderMov(){
   const tot={min:MD.reduce((a,x)=>a+x.min,0),km:MD.reduce((a,x)=>a+x.km,0),kcal:MD.reduce((a,x)=>a+x.kcal,0)};
   const KC={w:"var(--t-sky)",r:"var(--pri)",y:"#B7AEF5",d:"#F2B36B",s:"#E27BA4",p:"var(--line)"};
   const kan=(title,day,col,items,cls,note="")=>`<div class="kcol"><h4>${day}</h4><div class="kline" style="background:${col}"></div><div class="kcard ${cls}"><h3>${title}<span class="more">⋯</span></h3>${items.map((t,i)=>`<div class="kitem"><span class="av" style="background:${col}">${i+1}</span><span>${t}</span></div>`).join("")}${note?`<p class="mini" style="margin-top:8px">${note}</p>`:""}</div></div>`;
-  $("#v-mov").innerHTML=`<h2 class="h2">Movimiento</h2><p class="lead">Tu semana completa: qué haces cada día, cuánto dura cada parte, la distancia aproximada y las calorías meta. Cambia de semana para ver cómo progresan los intervalos.</p>
+  $("#v-mov").innerHTML=`${(()=>{const n=DAYS.filter((_,i)=>isOn(i+1,"move")).length, wk=Array.from({length:7},(_,i)=>(mw-1)*7+i+1).filter(x=>isOn(x,"move")).length;return stickBar("Ejercicio",Math.round(n/30*100),`${n}/30 días · semana ${mw}: ${wk}/7`);})()}<h2 class="h2">Movimiento</h2><p class="lead">Tu semana completa: qué haces cada día, cuánto dura cada parte, la distancia aproximada y las calorías meta. Cambia de semana para ver cómo progresan los intervalos.</p>
   <article class="card c-white" style="margin-bottom:16px"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:220px"><span class="tag"><span class="ic">${ico("cal")}</span>Plan semanal</span><h3>Semana ${mw} · días ${(mw-1)*7+1}–${mw===4?"28 (+29–30)":mw*7}<small>Trote ${CARDIO[mw].r} × (${CARDIO[mw].on} + ${CARDIO[mw].off} caminando) · pesas ${setsOf(dayN(1))} · baile ${danceMin(dayN(1))} min</small></h3></div>
     <label class="mini" style="display:flex;align-items:center;gap:8px">Tu peso <input type="number" id="moveKg" min="30" max="200" value="${kg}" style="width:80px;padding:6px 10px"> kg</label></div>
    <div class="pills" style="padding-bottom:4px;margin:0">${[1,2,3,4].map(k=>`<button data-mweek="${k}" aria-current="${k===mw}"><b>${k}</b><span class="w">${CARDIO[k].r}×(${CARDIO[k].on}+${CARDIO[k].off})</span></button>`).join("")}</div>
    ${weekGantt(mw,d,kg)}
    <div class="wkboard">
    ${MD.map((x,i)=>{const n=dayN(i),isT=n===d,done=isOn(n,"move");return `<div class="wday tile ${x.cls}" style="${isT?"outline:2px solid var(--ink);outline-offset:-2px":""}">
-     <div class="th"><span class="num">${WD[i]} · día ${n}</span>${isT?'<span class="pill ink">Hoy</span>':done?'<span class="pill home">✓</span>':""}</div>
+     <div class="th"><span class="num">${WD[i]} · día ${n}</span><span style="display:flex;gap:6px;align-items:center">${isT?'<span class="pill ink">Hoy</span>':""}<button class="check sm" data-kd="${n}:move" aria-pressed="${done}" aria-label="Día ${n}: ejercicio hecho">${CHECKSVG}</button></span></div>
      <h4>${x.title}</h4><p class="wsub">${x.sub}</p>
      <div class="segbar" style="height:12px;margin:4px 0 6px">${x.segs.map(s=>`<i style="flex:${s[1]};background:${KC[s[3]]}" title="${s[0]}: ${s[1]} min"></i>`).join("")}</div>
      <ul class="wsegs">${x.segs.map(s=>`<li><span><i style="background:${KC[s[3]]}"></i>${s[0]}${s[4]?`<small>${s[4]}</small>`:""}</span><b>${s[1]}′</b></li>`).join("")}</ul>
@@ -978,7 +996,7 @@ function renderPiel(){
    ["Vitamina E KIMBEAUTY","Ya lo tienes","home","Opcional en noches de recuperación y arcilla, 2–3 gotas en zonas secas."],
    ["Brightening y Dark Spot KIMBEAUTY","En pausa","ink","No uses dos antimanchas a la vez. Si prefieres uno de estos, reemplaza a Porcelana el viernes tras leer la fórmula."]];
   const dayCols=d=>{const s=skinOf(d);return [s.vitc?"#E7A21D":"var(--line)",PM_TYPES[s.pm].c];};
-  $("#v-piel").innerHTML=`<h2 class="h2">Tu piel</h2><p class="lead">Rutina para piel grasa con líneas finas, poros abiertos y manchas. Cada activo tiene su noche para que trabajen sin irritar. Introdúcelos de uno en uno y deja que el protector solar haga la mitad del trabajo.</p>
+  $("#v-piel").innerHTML=`${(()=>{const a=DAYS.filter((_,i)=>isOn(i+1,"skinAM")).length,b=DAYS.filter((_,i)=>isOn(i+1,"skinPM")).length;return stickBar("Piel",Math.round((a+b)/60*100),`AM ${a}/30 · PM ${b}/30`);})()}<h2 class="h2">Tu piel</h2><p class="lead">Rutina para piel grasa con líneas finas, poros abiertos y manchas. Cada activo tiene su noche para que trabajen sin irritar. Introdúcelos de uno en uno y deja que el protector solar haga la mitad del trabajo.</p>
   <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));margin-bottom:16px">
    ${GOALS.map(([t,c,i,x])=>`<div class="tile pt ${c}" style="min-height:0"><div class="th"><h4>${t}</h4><span class="tag" style="margin:0;padding:3px"><span class="ic">${ico(i)}</span></span></div><p>${x}</p></div>`).join("")}
   </div>
@@ -997,6 +1015,7 @@ function renderPiel(){
    <div class="legend" style="margin-bottom:6px">${Object.values(PM_TYPES).map(T=>`<span style="--c:${T.c}">${T.t}</span>`).join("")}</div>
    ${[["Semana 1 · base y pruebas de parche",1,7],["Semana 2 · entran los ácidos",8,14],["Semana 3 · rutina completa",15,21],["Semana 4 · rutina completa",22,28],["Días 29–30",29,30]].map(([g,a,b])=>`<h4 class="skwk">${g}</h4><div class="skdays">${Array.from({length:b-a+1},(_,i)=>{const n=a+i,s=skinOf(n),T=PM_TYPES[s.pm];return `<div class="skday ${n===d?"cur":""}" style="--c:${T.c}">
      <div class="skh"><button class="skn" data-open="${n}" aria-label="Abrir día ${n} en Hoy">${n}</button><span class="mini">${WD[wdOf(n)]}</span><span class="catchip" style="--c:${T.c};margin-left:auto">${T.t}</span></div>
+     <div class="skchk"><button data-kd="${n}:skinAM" aria-pressed="${isOn(n,"skinAM")}" aria-label="Día ${n}: rutina AM hecha">${CHECKSVG}AM</button><button data-kd="${n}:skinPM" aria-pressed="${isOn(n,"skinPM")}" aria-label="Día ${n}: rutina PM hecha">${CHECKSVG}PM</button></div>
      <div class="skr"><b>AM</b><ol>${s.amShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
      <div class="skr"><b>PM</b><ol>${PM_SHORT[s.pm].map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
      ${s.note?`<p class="sknote">★ ${s.note}</p>`:""}</div>`}).join("")}</div>`).join("")}</article>
