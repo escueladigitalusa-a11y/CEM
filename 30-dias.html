@@ -362,6 +362,60 @@ textarea{min-height:76px;resize:vertical}
 #timer .seg{height:4px;border-radius:4px;background:color-mix(in srgb,var(--tip-ink) 22%,transparent);margin-top:6px;overflow:hidden}
 #timer .seg i{display:block;height:100%;background:var(--pri)}
 
+/* ---------- finanzas ---------- */
+.fnav{display:flex;align-items:center;gap:6px}
+.fnav .iconbtn{width:34px;height:34px;font-size:15px}
+.fnav b{min-width:150px;text-align:center;font-size:15px}
+.fcal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.fcal .wd{font-size:12px;color:var(--soft);text-align:center;font-weight:700}
+.fcell{background:var(--shell);border:1.5px solid transparent;border-radius:16px;padding:8px;min-height:104px;text-align:left;display:flex;flex-direction:column;gap:3px;min-width:0}
+.fcell:hover{background:var(--paper);border-color:var(--line)}
+.fcell.blank{background:transparent;pointer-events:none}
+.fcell.sel{border-color:var(--ink);background:var(--paper)}
+.fcell .dn{display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:15px}
+.fcell .dn .today-dot{margin-left:4px}
+.fcell.today .dn b{background:var(--pri);color:var(--pri-ink);border-radius:8px;padding:0 6px}
+.fchip{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;border-radius:7px;padding:1px 6px;background:color-mix(in srgb,var(--c) 16%,var(--paper));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.fchip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c);flex:0 0 auto}
+.fcell .more{font-size:10.5px;color:var(--soft);font-weight:600}
+.fcell .net{margin-top:auto;font-size:11px;font-weight:700}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+.fdots{display:none;gap:3px;flex-wrap:wrap}
+.fdots i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.catchip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 10px 3px 8px;background:color-mix(in srgb,var(--c) 16%,var(--paper));white-space:nowrap}
+.catchip::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.catpicks{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.catpicks label{cursor:pointer}
+.catpicks input{position:absolute;opacity:0;pointer-events:none}
+.catpicks input:checked+.catchip{background:var(--c);color:#fff;box-shadow:0 6px 14px -8px var(--c)}
+.catpicks input:checked+.catchip::before{background:#fff}
+.catpicks input:focus-visible+.catchip{outline:3px solid var(--pri);outline-offset:2px}
+.frm{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.frm .full{grid-column:1/-1}
+.frm label.l{font-size:11.5px;font-weight:700;color:var(--soft);display:block;margin-bottom:3px}
+select,input[type=number]{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--shell);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.txl{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px}
+.txl li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;background:var(--shell);border-radius:14px;padding:8px 10px}
+.txl li .nt{font-size:12px;color:var(--soft);display:block;margin-top:2px}
+.txl li b{font-size:14px;white-space:nowrap}
+.xbtn{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center;font-size:12px;color:var(--soft)}
+.opl{font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:var(--shell);color:var(--soft);white-space:nowrap}
+.opl.ingreso{background:var(--good-2);color:var(--good)} .opl.gasto{background:var(--bad-2);color:var(--bad)}
+.opl.aporte{background:var(--pri-2);color:var(--pri)} .opl.retiro{background:var(--t-peach);color:var(--ac-peach)}
+.catrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.catrow:last-child{border-bottom:0}
+.sw{width:30px;height:30px;border-radius:50%;border:0;padding:0;overflow:hidden;cursor:pointer;background:var(--c)}
+.sw::-webkit-color-swatch-wrapper{padding:0}.sw::-webkit-color-swatch{border:0;border-radius:50%}.sw::-moz-color-swatch{border:0;border-radius:50%}
+.swatches{display:flex;flex-wrap:wrap;gap:8px}
+.swatches label{cursor:pointer}
+.swatches input{position:absolute;opacity:0;pointer-events:none}
+.swatches span{display:block;width:30px;height:30px;border-radius:50%;background:var(--c);border:3px solid var(--paper);box-shadow:0 0 0 1.5px var(--line)}
+.swatches input:checked+span{box-shadow:0 0 0 2.5px var(--ink)}
+.swatches input:focus-visible+span{outline:3px solid var(--pri);outline-offset:2px}
+dialog{border:0;border-radius:26px;background:var(--paper);color:var(--ink);padding:22px;width:min(560px,calc(100% - 24px));max-height:calc(100vh - 40px);box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
+dialog::backdrop{background:rgba(12,13,20,.45);backdrop-filter:blur(4px)}
+dialog h3{font-size:19px;font-weight:800}
+.dlgsec{background:var(--shell);border-radius:18px;padding:14px;margin-top:14px}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -385,6 +439,8 @@ textarea{min-height:76px;resize:vertical}
   .card,.card.third,.card.two,.gcol{grid-column:span 12}
   .stats{grid-template-columns:repeat(2,1fr)}
   .kanban,.courses{grid-template-columns:1fr}
+  .fcal{gap:4px}.fcell{min-height:58px;padding:6px;border-radius:12px}.fcell .fchip,.fcell .more,.fcell .net{display:none}.fdots{display:flex}
+  .fnav b{min-width:0;font-size:14px}.catrow{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"c n x" "c s x"}.catrow .sw{grid-area:c}.catrow input[type=text]{grid-area:n}.catrow select{grid-area:s;width:100%!important}.catrow .xbtn{grid-area:x}.frm{grid-template-columns:1fr}
   .skincal{grid-template-columns:repeat(6,1fr)}
   .cols .col small{font-size:0}.cols .col:nth-child(5n+3) small{font-size:9px}
   .mcell small{display:none}.mcell{min-height:60px;padding:7px}
@@ -424,9 +480,16 @@ textarea{min-height:76px;resize:vertical}
   <section class="view" id="v-mente"></section>
   <section class="view" id="v-par"></section>
   <section class="view" id="v-trab"></section>
+  <section class="view" id="v-fin"></section>
   <section class="view" id="v-guia"></section>
 </main>
 </div>
+
+<dialog id="catDlg" aria-labelledby="catTitle">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 id="catTitle" style="flex:1">Categorías</h3><button class="xbtn" data-fin="catclose" aria-label="Cerrar">✕</button></div>
+  <p class="mini" style="margin:0">Cada categoría tiene un color y una operación por defecto. Cambia el color tocando el círculo.</p>
+  <div id="catBody"></div>
+</dialog>
 
 <div id="timer" role="status" aria-live="polite">
   <div class="tt"><small id="tmName"></small><b id="tmSeg"></b><div class="seg"><i id="tmBar"></i></div></div>
@@ -506,7 +569,10 @@ const IC={
  dumb:'<path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"/>',
  leaf:'<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14zM5 19l7-7"/>',
  pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/>',
- alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>'
+ alert:'<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+ wallet:'<rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M6 6V5a2 2 0 0 1 2-2h9"/>',
+ up:'<path d="M7 17L17 7M9 7h8v8"/>',
+ down:'<path d="M7 7l10 10M17 9v8H9"/>'
 };
 const ico=(k,cls="i")=>`<svg class="${cls}" viewBox="0 0 24 24">${IC[k]||""}</svg>`;
 
@@ -570,8 +636,8 @@ function todayDay(){ if(!state.start) return null; const s=new Date(state.start+
 const fmtDate=t=>t?t.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}):"";
 
 /* ---------- navigation (sidebar) ---------- */
-const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["fam","Familia y Thomas","users"],["mente","Mente e inglés","spark"],["par","Pareja","heart"],["trab","Trabajo","brief"],["AYUDA"],["guia","Guía","book"]];
-const TITLES={hoy:"Hoy",mes:"Mes y progreso",mov:"Movimiento",piel:"Piel",fam:"Familia y Thomas",mente:"Mente e inglés",par:"Pareja",trab:"Trabajo",guia:"Guía"};
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["fam","Familia y Thomas","users"],["mente","Mente e inglés","spark"],["par","Pareja","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["AYUDA"],["guia","Guía","book"]];
+const TITLES={hoy:"Hoy",mes:"Mes y progreso",mov:"Movimiento",piel:"Piel",fam:"Familia y Thomas",mente:"Mente e inglés",par:"Pareja",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
 let tab="hoy";
 function renderTabs(){
   $("#tabs").innerHTML=TABS.map(([k,l,i])=>l?`<button role="tab" aria-selected="${k===tab}" data-tab="${k}">${ico(i)}${l}</button>`:`<div class="sec" role="presentation">${k}</div>`).join("");
@@ -855,8 +921,134 @@ function renderGuia(){
   </div>`;
 }
 
+/* ---------- FINANZAS ---------- */
+const FIN_OPS={ingreso:["Ingreso","Suma al efectivo"],gasto:["Gasto","Resta del efectivo"],aporte:["Aporte a activos","Pasa efectivo a capital en activos"],retiro:["Retiro de activos","Pasa capital en activos a efectivo"]};
+const SWATCH=["#4B4FE8","#1F9D55","#E5484D","#D9812E","#8B5CF6","#D9467F","#0E9F9A","#B89600","#2F6FD1","#8A5A3C","#64748B","#1A1C2B"];
+const pad2=n=>String(n).padStart(2,"0");
+const isoOf=t=>t.getFullYear()+"-"+pad2(t.getMonth()+1)+"-"+pad2(t.getDate());
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function fin(){
+  if(!state.fin) state.fin={cur:"$",init:0,tx:[],cats:[
+    {id:"sueldo",name:"Sueldo",color:"#1F9D55",op:"ingreso"},{id:"negocio",name:"Negocio y ventas",color:"#0E9F9A",op:"ingreso"},
+    {id:"super",name:"Supermercado",color:"#D9812E",op:"gasto"},{id:"casa",name:"Casa y servicios",color:"#2F6FD1",op:"gasto"},
+    {id:"ninos",name:"Niños",color:"#D9467F",op:"gasto"},{id:"thomas",name:"Thomas",color:"#8A5A3C",op:"gasto"},
+    {id:"ocio",name:"Ocio y pareja",color:"#8B5CF6",op:"gasto"},{id:"ahorro",name:"Ahorro e inversión",color:"#4B4FE8",op:"aporte"}]};
+  const f=state.fin; f.cats=f.cats||[]; f.tx=f.tx||[]; if(f.cur==null) f.cur="$"; if(f.init==null) f.init=0; return f;
+}
+let finLastCat=null, finYM=null, finSel=isoOf(new Date()), catOpen=false;
+function finMonth(){ if(!finYM){const n=new Date();finYM=[n.getFullYear(),n.getMonth()];} return finYM; }
+const NF=new Intl.NumberFormat("es",{minimumFractionDigits:0,maximumFractionDigits:2,useGrouping:"always"});
+const NF1=new Intl.NumberFormat("es",{maximumFractionDigits:1});
+const NFC={format:n=>n>=1e6?NF1.format(n/1e6)+"M":n>=1e3?NF1.format(n/1e3)+"k":NF1.format(n)};
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const money=(n,sign)=>(n<0?"−":sign&&n>0?"+":"")+fin().cur+NF.format(Math.abs(n));
+const moneyC=n=>(n<0?"−":"+")+fin().cur+NFC.format(Math.abs(n));
+const catOf=id=>fin().cats.find(c=>c.id===id)||{id:"",name:"Sin categoría",color:"#9CA3AF",op:"gasto"};
+const cashOf=t=>t.op==="ingreso"||t.op==="retiro"?t.amt:-t.amt;
+const assetOf=t=>t.op==="aporte"?t.amt:t.op==="retiro"?-t.amt:0;
+function renderFin(){
+  const f=fin(), [y,m]=finMonth(), ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), lastISO=ym+"-"+pad2(last);
+  const mt=f.tx.filter(t=>t.date.startsWith(ym));
+  const sum=op=>mt.filter(t=>t.op===op).reduce((a,t)=>a+t.amt,0);
+  const ing=sum("ingreso"), gas=sum("gasto"), apo=sum("aporte"), ret=sum("retiro");
+  const upto=f.tx.filter(t=>t.date<=lastISO);
+  const assets=(+f.init||0)+upto.reduce((a,t)=>a+assetOf(t),0);
+  const cash=upto.reduce((a,t)=>a+cashOf(t),0);
+  const todayISO=isoOf(new Date()), off=(new Date(y,m,1).getDay()+6)%7;
+  const byDay={}; mt.forEach(t=>(byDay[t.date]=byDay[t.date]||[]).push(t));
+  const cells=Array.from({length:off},()=>`<div class="fcell blank"></div>`).join("")+Array.from({length:last},(_,i)=>{
+    const iso=ym+"-"+pad2(i+1), L=byDay[iso]||[], net=L.reduce((a,t)=>a+(t.op==="ingreso"?t.amt:t.op==="gasto"?-t.amt:0),0);
+    return `<button class="fcell ${iso===finSel?"sel":""} ${iso===todayISO?"today":""}" data-fd="${iso}" aria-label="${i+1}, ${L.length} movimientos"><span class="dn"><b>${i+1}</b></span>
+      ${L.slice(0,3).map(t=>{const c=catOf(t.cat);return `<span class="fchip" style="--c:${c.color}" title="${esc(c.name)}: ${money(cashOf(t),1)}">${moneyC(t.op==="aporte"?t.amt:cashOf(t))}</span>`}).join("")}
+      ${L.length>3?`<span class="more">+${L.length-3} más</span>`:""}
+      <span class="fdots">${L.map(t=>`<i style="--c:${catOf(t.cat).color}"></i>`).join("")}</span>
+      ${L.length&&net?`<span class="net ${net>0?"pos":"neg"}">${moneyC(net)}</span>`:""}</button>`}).join("");
+  // day panel
+  const dL=f.tx.filter(t=>t.date===finSel), selD=new Date(finSel+"T12:00:00");
+  const firstCat=f.cats.find(c=>c.id===finLastCat)||f.cats[0];
+  const dayPanel=`<article class="card c-white third"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Día seleccionado</span><h3>${cap(selD.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}<small>${dL.length?dL.length+" movimiento"+(dL.length>1?"s":""):"Sin movimientos"}</small></h3></div></div>
+    ${dL.length?`<ul class="txl">${dL.map(t=>{const c=catOf(t.cat);return `<li><span><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span>${t.note?`<span class="nt">${esc(t.note)}</span>`:""}</span><span style="text-align:right"><b class="${t.op==="ingreso"||t.op==="retiro"?"pos":t.op==="gasto"?"neg":""}">${t.op==="aporte"?money(t.amt):money(cashOf(t),1)}</b><br><span class="opl ${t.op}">${FIN_OPS[t.op][0]}</span></span><button class="xbtn" data-fin="del" data-id="${t.id}" aria-label="Borrar movimiento">✕</button></li>`}).join("")}</ul>`:""}
+    <div class="dlgsec" style="background:var(--shell)"><b style="font-size:14px">Agregar movimiento</b>
+    ${f.cats.length?`<div class="catpicks" role="radiogroup" aria-label="Categoría">${f.cats.map((c,i)=>`<label><input type="radio" name="fcat" value="${c.id}" ${c===firstCat?"checked":""}><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span></label>`).join("")}</div>
+    <div class="frm"><div><label class="l" for="fAmt">Monto (${esc(f.cur)})</label><input type="text" inputmode="decimal" id="fAmt" placeholder="0"></div>
+    <div><label class="l" for="fOp">Operación</label><select id="fOp">${Object.entries(FIN_OPS).map(([k,v])=>`<option value="${k}" ${firstCat&&firstCat.op===k?"selected":""}>${v[0]}</option>`).join("")}</select></div>
+    <div class="full"><label class="l" for="fNote">Nota (opcional)</label><input type="text" id="fNote" placeholder="Ej.: compra semanal"></div></div>
+    <p class="mini" id="fOpHelp">${firstCat?FIN_OPS[firstCat.op][1]:""}</p>
+    <div class="row" style="margin-top:6px"><button class="btn primary" data-fin="add">Agregar al ${selD.getDate()}</button><button class="btn" data-fin="cats">Categorías</button></div>`
+    :`<p class="mini">Primero crea una categoría.</p><button class="btn primary" data-fin="cats">Crear categoría</button>`}</div></article>`;
+  // breakdown
+  const groups={}; mt.forEach(t=>{const k=(t.cat||"")+"|"+t.op;(groups[k]=groups[k]||{cat:catOf(t.cat),op:t.op,tot:0,n:0}).tot+=t.amt;groups[k].n++;});
+  const G=Object.values(groups).sort((a,b)=>b.tot-a.tot), gmax=Math.max(1,...G.map(g=>g.tot));
+  $("#v-fin").innerHTML=`<h2 class="h2">Finanzas</h2>
+  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">Anota cada gasto, ingreso o movimiento de capital en su día. Los aportes suman al capital en activos; los retiros lo restan.</p>
+   <div class="fnav"><button class="iconbtn" data-fin="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-fin="next" aria-label="Mes siguiente">›</button><button class="btn" data-fin="today">Hoy</button></div></div>
+  <div class="kpis">
+    <div class="kpi fill"><div class="top"><span class="ib">${ico("wallet")}</span><span class="badge">${apo-ret>=0?"+":"−"}${f.cur}${NFC.format(Math.abs(apo-ret))} este mes</span></div><span class="lb">Capital en activos</span><span class="v">${money(assets)}</span><span class="lb" style="font-size:11.5px">Incluye capital inicial de ${money(+f.init||0)}</span></div>
+    <div class="kpi"><div class="top"><span class="ib">${ico("up")}</span><span class="badge">${mt.filter(t=>t.op==="ingreso").length} mov.</span></div><span class="lb">Ingresos del mes</span><span class="v pos">${money(ing)}</span></div>
+    <div class="kpi"><div class="top"><span class="ib">${ico("down")}</span><span class="badge neutral">${mt.filter(t=>t.op==="gasto").length} mov.</span></div><span class="lb">Gastos del mes</span><span class="v neg">${money(gas)}</span></div>
+    <div class="kpi"><div class="top"><span class="ib">${ico("chart")}</span><span class="badge ${ing-gas>=0?"":"neutral"}">${ing?Math.round((ing-gas)/ing*100)+"% ahorro":"—"}</span></div><span class="lb">Balance del mes</span><span class="v">${money(ing-gas,1)}</span><span class="lb" style="font-size:11.5px">Efectivo acumulado: ${money(cash)}</span></div>
+  </div>
+  <div class="grid">
+  <article class="card c-white two"><div class="hd"><div style="flex:1"><h3>Calendario<small>Toca un día para ver y anotar movimientos · cada color es una categoría</small></h3></div><button class="btn" data-fin="cats">+ Categorías</button></div>
+   <div class="fcal">${WDs.map(x=>`<div class="wd">${x}</div>`).join("")}${cells}</div>
+   <div class="legend" style="margin-top:12px">${f.cats.map(c=>`<span style="--c:${c.color}">${esc(c.name)}</span>`).join("")}</div></article>
+  ${dayPanel}
+  <article class="card c-white"><div class="hd"><div style="flex:1"><h3>Por categoría<small>Total del mes por categoría y operación</small></h3></div></div>
+   ${G.length?`<div class="scroll"><table class="tp"><thead><tr><th>Categoría</th><th>Operación</th><th style="width:34%">Peso</th><th style="text-align:right">Total</th></tr></thead><tbody>
+   ${G.map(g=>`<tr><td><span class="catchip" style="--c:${g.cat.color}">${esc(g.cat.name)}</span></td><td><span class="opl ${g.op}">${FIN_OPS[g.op][0]}</span></td><td><div class="track"><i style="width:${g.tot/gmax*100}%;background:${g.cat.color}"></i></div></td><td style="text-align:right"><b>${money(g.tot)}</b><br><span class="mini">${g.n} mov.</span></td></tr>`).join("")}</tbody></table></div>`:`<p class="mini">Aún no hay movimientos este mes.</p>`}</article>
+  <article class="card c-white"><div class="hd"><div style="flex:1"><h3>Capital y efectivo<small>Configuración y resumen de operaciones del mes</small></h3></div></div>
+   <div class="frm"><div><label class="l" for="fInit">Capital inicial en activos</label><input type="text" inputmode="decimal" id="fInit" data-finset="init" value="${+f.init||0}"></div>
+   <div><label class="l" for="fCur">Símbolo de moneda</label><input type="text" id="fCur" data-finset="cur" value="${esc(f.cur)}" maxlength="4"></div></div>
+   <div class="kv" style="margin-top:12px">
+    <div style="background:var(--shell)"><span class="lbl">Ingresos − gastos</span>${money(ing,1)} − ${money(gas)} = <b>${money(ing-gas,1)}</b></div>
+    <div style="background:var(--shell)"><span class="lbl">Aportes a activos</span><b>${money(apo)}</b> <span class="mini">(salen del efectivo y suman al capital)</span></div>
+    <div style="background:var(--shell)"><span class="lbl">Retiros de activos</span><b>${money(ret)}</b> <span class="mini">(restan al capital y vuelven al efectivo)</span></div>
+   </div></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Movimientos del mes<small>${mt.length} registros</small></h3></div></div>
+   ${mt.length?`<div class="scroll"><table class="tp"><thead><tr><th>Día</th><th>Categoría</th><th>Nota</th><th>Operación</th><th style="text-align:right">Monto</th><th></th></tr></thead><tbody>
+   ${mt.slice().sort((a,b)=>a.date<b.date?-1:1).map(t=>{const c=catOf(t.cat);return `<tr><td class="n">${pad2(+t.date.slice(8))}</td><td><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span></td><td class="mini" style="color:var(--ink)">${esc(t.note||"—")}</td><td><span class="opl ${t.op}">${FIN_OPS[t.op][0]}</span></td><td style="text-align:right"><b class="${t.op==="gasto"?"neg":t.op==="aporte"?"":"pos"}">${t.op==="aporte"?money(t.amt):money(cashOf(t),1)}</b></td><td><button class="xbtn" data-fin="del" data-id="${t.id}" aria-label="Borrar movimiento">✕</button></td></tr>`}).join("")}</tbody></table></div>`:`<p class="mini">Selecciona un día en el calendario para anotar el primero.</p>`}</article>
+  </div>`;
+  if(catOpen) renderCatDlg();
+}
+function renderCatDlg(){
+  const f=fin(), used=id=>f.tx.filter(t=>t.cat===id).length;
+  $("#catBody").innerHTML=`<div>${f.cats.map(c=>`<div class="catrow"><input type="color" class="sw" style="--c:${c.color}" value="${c.color}" data-catcolor="${c.id}" aria-label="Color de ${esc(c.name)}">
+    <input type="text" value="${esc(c.name)}" data-catname="${c.id}" aria-label="Nombre">
+    <select data-catop="${c.id}" aria-label="Operación de ${esc(c.name)}" style="width:auto">${Object.entries(FIN_OPS).map(([k,v])=>`<option value="${k}" ${c.op===k?"selected":""}>${v[0]}</option>`).join("")}</select>
+    <button class="xbtn" data-fin="catdel" data-id="${c.id}" aria-label="Borrar ${esc(c.name)}" title="${used(c.id)} movimientos">✕</button></div>`).join("")||'<p class="mini">No hay categorías.</p>'}</div>
+   <div class="dlgsec"><b>Nueva categoría</b>
+    <div class="frm" style="margin-top:8px"><div><label class="l" for="ncName">Nombre</label><input type="text" id="ncName" placeholder="Ej.: Farmacia"></div>
+    <div><label class="l" for="ncOp">Operación</label><select id="ncOp">${Object.entries(FIN_OPS).map(([k,v])=>`<option value="${k}" ${k==="gasto"?"selected":""}>${v[0]}</option>`).join("")}</select></div>
+    <div class="full"><span class="l" style="font-size:11.5px;font-weight:700;color:var(--soft)">Color</span><div class="swatches" role="radiogroup" aria-label="Color">${SWATCH.map((s,i)=>`<label><input type="radio" name="ncColor" value="${s}" ${i===f.cats.length%SWATCH.length?"checked":""}><span style="--c:${s}"></span></label>`).join("")}
+     <label title="Otro color"><input type="color" id="ncCustom" class="sw" value="#FF8A00" style="--c:#FF8A00" aria-label="Color personalizado"></label></div></div></div>
+    <div class="row"><button class="btn primary" data-fin="catadd">Agregar categoría</button></div></div>`;
+}
+function finAction(a,b){
+  const f=fin();
+  if(a==="prev"||a==="next"){const [y,m]=finMonth();const d=new Date(y,m+(a==="next"?1:-1),1);finYM=[d.getFullYear(),d.getMonth()];finSel=isoOf(d);}
+  else if(a==="today"){finYM=null;finSel=isoOf(new Date());}
+  else if(a==="add"){
+    const amt=parseFloat(($("#fAmt").value||"").replace(/\s/g,"").replace(",","."));
+    const cat=(document.querySelector('input[name="fcat"]:checked')||{}).value;
+    if(!(amt>0)){$("#fAmt").focus();$("#fAmt").style.borderColor="var(--bad)";return;}
+    finLastCat=cat; f.tx.push({id:uid(),date:finSel,cat,op:$("#fOp").value,amt:Math.round(amt*100)/100,note:$("#fNote").value.trim()});
+  }
+  else if(a==="del"){f.tx=f.tx.filter(t=>t.id!==b.dataset.id);}
+  else if(a==="cats"){catOpen=true;renderCatDlg();const d=$("#catDlg");if(!d.open) d.showModal();return;}
+  else if(a==="catclose"){catOpen=false;$("#catDlg").close();return;}
+  else if(a==="catadd"){
+    const name=$("#ncName").value.trim(); if(!name){$("#ncName").focus();return;}
+    const pick=document.querySelector('input[name="ncColor"]:checked');
+    f.cats.push({id:uid(),name,op:$("#ncOp").value,color:pick?pick.value:$("#ncCustom").value});
+  }
+  else if(a==="catdel"){const n=f.tx.filter(t=>t.cat===b.dataset.id).length;
+    if(n&&!confirm(`Esta categoría tiene ${n} movimiento(s). Quedarán como «Sin categoría». ¿Borrar?`)) return;
+    f.cats=f.cats.filter(c=>c.id!==b.dataset.id);}
+  save(); renderAll(true);
+}
+
 /* ---------- render ---------- */
-const R={hoy:renderHoy,mes:renderMes,mov:renderMov,piel:renderPiel,fam:renderFam,mente:renderMente,par:renderPar,trab:renderTrab,guia:renderGuia};
+const R={hoy:renderHoy,mes:renderMes,mov:renderMov,piel:renderPiel,fam:renderFam,mente:renderMente,par:renderPar,trab:renderTrab,fin:renderFin,guia:renderGuia};
 function renderAll(keepScroll){
   const y=window.scrollY; renderTabs();
   document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id==="v-"+tab));
@@ -866,6 +1058,8 @@ function renderAll(keepScroll){
 /* ---------- events ---------- */
 document.addEventListener("click",e=>{
   const t=e.target;
+  let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
+  fb=t.closest("[data-fin]"); if(fb){finAction(fb.dataset.fin,fb);return;}
   let b=t.closest("[data-day]"); if(b){state.day=+b.dataset.day;save();renderAll();return;}
   b=t.closest("[data-open]"); if(b){state.day=+b.dataset.open;tab="hoy";save();renderAll();window.scrollTo({top:0});return;}
   b=t.closest("[data-k]"); if(b){toggle(state.day,b.dataset.k);return;}
@@ -880,6 +1074,19 @@ document.addEventListener("input",e=>{
   if(t.dataset.note){const n=state.notes[state.day]||(state.notes[state.day]={});n[t.dataset.note]=t.value;save();}
   if(t.dataset.gnote){state.notes[t.dataset.gnote]=t.value;save();}
 });
+document.addEventListener("change",e=>{ const t=e.target;
+  if(t.name==="fcat"){const c=catOf(t.value);$("#fOp").value=c.op;$("#fOpHelp").textContent=FIN_OPS[c.op][1];return;}
+  if(t.id==="fOp"){$("#fOpHelp").textContent=FIN_OPS[t.value][1];return;}
+  if(t.id==="ncCustom"){document.querySelectorAll('input[name="ncColor"]').forEach(r=>r.checked=false);t.style.setProperty("--c",t.value);return;}
+  if(t.name==="ncColor"){return;}
+  const cid=t.dataset.catcolor||t.dataset.catname||t.dataset.catop;
+  if(cid){const c=fin().cats.find(x=>x.id===cid); if(!c) return;
+    if(t.dataset.catcolor) c.color=t.value; else if(t.dataset.catop) c.op=t.value; else if(t.value.trim()) c.name=t.value.trim();
+    save(); renderAll(true); return;}
+  if(t.dataset.finset){const F=fin(); if(t.dataset.finset==="init"){const v=parseFloat(t.value.replace(/\s/g,"").replace(",","."));F.init=isNaN(v)?0:v;} else F.cur=t.value.trim()||"$"; save(); renderAll(true); return;}
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
+$("#catDlg").addEventListener("close",()=>{catOpen=false;});
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
 
 /* ---------- theme ---------- */
