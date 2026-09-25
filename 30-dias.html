@@ -416,6 +416,30 @@ dialog{border:0;border-radius:26px;background:var(--paper);color:var(--ink);padd
 dialog::backdrop{background:rgba(12,13,20,.45);backdrop-filter:blur(4px)}
 dialog h3{font-size:19px;font-weight:800}
 .dlgsec{background:var(--shell);border-radius:18px;padding:14px;margin-top:14px}
+/* semana de movimiento */
+.wkboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.wday{min-height:0;gap:4px}
+.wday h4{font-size:15px}
+.wday .wsub{font-size:12.5px;color:var(--ink);opacity:.75;margin:0}
+.wsegs{list-style:none;padding:0;margin:2px 0 4px;display:grid;gap:5px}
+.wsegs li{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;align-items:flex-start}
+.wsegs li span{display:flex;flex-direction:column;min-width:0;padding-left:14px;position:relative;font-weight:600}
+.wsegs li span i{position:absolute;left:0;top:5px;width:8px;height:8px;border-radius:50%}
+.wsegs li small{font-weight:500;color:var(--soft);font-size:11.5px}
+.wsegs li b{white-space:nowrap}
+.wstats{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.wstats span{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;background:rgba(255,255,255,.62);border-radius:999px;padding:3px 9px}
+.wstats svg.i{width:13px;height:13px}
+:root[data-theme="dark"] .wstats span{background:rgba(255,255,255,.07)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wstats span{background:rgba(255,255,255,.07)}}
+.wday.hatch .wstats span{background:var(--paper)}
+.wtot{background:var(--ink);color:var(--paper)}
+.wtot .num,.wtot .mini{color:var(--paper);opacity:.7}
+.wbig{display:flex;flex-direction:column;border-bottom:1px solid color-mix(in srgb,var(--paper) 18%,transparent);padding:6px 0}
+.wbig b{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.wbig span{font-size:12px;opacity:.75}
+@media (max-width:1100px){.wkboard{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.wkboard{grid-template-columns:1fr}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -783,30 +807,55 @@ function renderMes(){
 }
 
 /* ---------- MOVIMIENTO ---------- */
+/* movimiento: detalle por día (minutos, distancia, calorías) */
+let movWeek=0;
+const MET={w:3.5,r:7,y:2.5,p:3,s:3.5,d:5,m:3,x:1.3};
+function movDay(n,kg){
+  const w=wdOf(n), st=stageOf(n), ex=exercise(n);
+  let segs,title,sub,cls,timer,km=0;
+  if(ex.kind==="cardio"){const c=ex.c, walk=5+c.r*c.offS/60+5, jog=c.r*c.onS/60, yo=ex.second[1]==="p1";
+    title="Caminata/trote"; sub="+ "+ex.second[0]+(yo?" (pilates suave)":" (yoga suave)"); cls="c-lav"; timer="cardio";
+    segs=[["Calentar caminando",5,"w","w"],["Intervalos",c.r*(c.onS+c.offS)/60,"r","r",c.r+" × ("+c.on+" trote + "+c.off+" caminar)"],["Enfriar caminando",5,"w","w"],[ex.second[0],10,yo?"p":"y","y",yo?"Pilates suave":"Yoga suave"]];
+    km=walk*5/60+jog*7.5/60;
+    const kc=(5*MET.w+c.r*c.offS/60*MET.w+c.r*c.onS/60*MET.r+5*MET.w+10*(yo?MET.p:MET.y))*kg/60;
+    return {title,sub,cls,timer,segs,km:Math.round(km*10)/10,min:segs.reduce((a,s)=>a+s[1],0),kcal:Math.round(kc)};}
+  if(ex.kind==="weights"){const pm=st===1?12:20, dm=danceMin(n), bl=blocksDance(n);
+    title="Pesas "+ex.L; sub="+ "+ex.dance[0].toUpperCase()+ex.dance.slice(1); cls=ex.L==="C"?"c-yel":"c-pink"; timer="weights";
+    segs=[["Calentamiento",6,"m","w","Marcha y movilidad"],["Pesas "+ex.L,pm,"s","s",setsOf(n)+" · 6 ejercicios"],["Pausa e hidratación",2,"x","p"],["Baile: "+ex.dance,dm,"d","d",bl.map(b=>b[0].replace("Baile: ","")+" "+b[1]/60+"′").join(" · ")],["Marcha suave",4,"m","w"]];
+    const kc=segs.reduce((a,s)=>a+s[1]*MET[s[2]],0)*kg/60;
+    return {title,sub,cls,timer,segs,km:0,min:segs.reduce((a,s)=>a+s[1],0),kcal:Math.round(kc)};}
+  segs=[["Paseo recreativo (opcional)",15,"w","w","10–20 min, sin objetivo"]];
+  return {title:"Recuperación",sub:"Sin pesas, trote ni baile",cls:"hatch",timer:"",segs,km:Math.round(15*5/60*10)/10,min:15,kcal:Math.round(15*MET.w*kg/60)};
+}
 function renderMov(){
   const st=stageOf(state.day), wk=st, d=state.day, cw=wdOf(d);
   const setTxt=["","Semana 1: 1 serie de 8 repeticiones por ejercicio.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semanas 2 y 3: 2 series de 8, solo si te recuperas bien.","Semana 4 y día 30: 2 series de 10; conserva la carga."][st];
-  const WEEK=[["Caminata/trote","→ yoga suave","c-lav"],["Pesas A","→ bailoterapia","c-pink"],["Caminata/trote","→ pilates suave","c-lav"],["Pesas B","→ bailoterapia","c-pink"],["Caminata/trote","→ yoga suave","c-lav"],["Pesas C","→ bailoterapia","c-yel"],["Recuperación","sin doble entrenamiento","hatch"]];
-  const GC=["#3B6EE8","#8B5CF6","#D9467F","#C77A0A"];
-  const ranges=[["1–7",1,7],["8–14",8,14],["15–21",15,21],["22–30",22,30]];
+  const kg=+state.kg||65, mw=movWeek||Math.min(4,Math.ceil(d/7)), dayN=i=>(mw-1)*7+i+1;
+  const MD=Array.from({length:7},(_,i)=>movDay(dayN(i),kg));
+  const tot={min:MD.reduce((a,x)=>a+x.min,0),km:MD.reduce((a,x)=>a+x.km,0),kcal:MD.reduce((a,x)=>a+x.kcal,0)};
+  const KC={w:"var(--t-sky)",r:"var(--pri)",y:"#B7AEF5",d:"#F2B36B",s:"#E27BA4",p:"var(--line)"};
   const kan=(title,day,col,items,cls,note="")=>`<div class="kcol"><h4>${day}</h4><div class="kline" style="background:${col}"></div><div class="kcard ${cls}"><h3>${title}<span class="more">⋯</span></h3>${items.map((t,i)=>`<div class="kitem"><span class="av" style="background:${col}">${i+1}</span><span>${t}</span></div>`).join("")}${note?`<p class="mini" style="margin-top:8px">${note}</p>`:""}</div></div>`;
-  $("#v-mov").innerHTML=`<h2 class="h2">Movimiento</h2><p class="lead">Tu semana de un vistazo: tres días de caminata/trote con yoga o pilates, tres de pesas con bailoterapia y un domingo de recuperación.</p>
-  <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr));margin-bottom:16px">
-   ${WEEK.map(([a,b,c],i)=>`<div class="tile ${c}" style="min-height:118px;${i===cw?"outline:2px solid var(--ink);outline-offset:-2px":""}"><div class="th"><span class="num">${WD[i]}</span>${i===cw?'<span class="pill ink">Hoy</span>':""}</div><h4>${a}</h4><p>${b}</p><div class="dashes"><i class="on"></i><i class="${i%2?"on":"half"}"></i><i></i></div></div>`).join("")}
-  </div>
+  $("#v-mov").innerHTML=`<h2 class="h2">Movimiento</h2><p class="lead">Tu semana completa: qué haces cada día, cuánto dura cada parte, la distancia aproximada y las calorías meta. Cambia de semana para ver cómo progresan los intervalos.</p>
+  <article class="card c-white" style="margin-bottom:16px"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:220px"><span class="tag"><span class="ic">${ico("cal")}</span>Plan semanal</span><h3>Semana ${mw} · días ${(mw-1)*7+1}–${mw===4?"28 (+29–30)":mw*7}<small>Trote ${CARDIO[mw].r} × (${CARDIO[mw].on} + ${CARDIO[mw].off} caminando) · pesas ${setsOf(dayN(1))} · baile ${danceMin(dayN(1))} min</small></h3></div>
+    <label class="mini" style="display:flex;align-items:center;gap:8px">Tu peso <input type="number" id="moveKg" min="30" max="200" value="${kg}" style="width:80px;padding:6px 10px"> kg</label></div>
+   <div class="pills" style="padding-bottom:4px;margin:0">${[1,2,3,4].map(k=>`<button data-mweek="${k}" aria-current="${k===mw}"><b>${k}</b><span class="w">${CARDIO[k].r}×(${CARDIO[k].on}+${CARDIO[k].off})</span></button>`).join("")}</div>
+   <div class="wkboard">
+   ${MD.map((x,i)=>{const n=dayN(i),isT=n===d,done=isOn(n,"move");return `<div class="wday tile ${x.cls}" style="${isT?"outline:2px solid var(--ink);outline-offset:-2px":""}">
+     <div class="th"><span class="num">${WD[i]} · día ${n}</span>${isT?'<span class="pill ink">Hoy</span>':done?'<span class="pill home">✓</span>':""}</div>
+     <h4>${x.title}</h4><p class="wsub">${x.sub}</p>
+     <div class="segbar" style="height:12px;margin:4px 0 6px">${x.segs.map(s=>`<i style="flex:${s[1]};background:${KC[s[3]]}" title="${s[0]}: ${s[1]} min"></i>`).join("")}</div>
+     <ul class="wsegs">${x.segs.map(s=>`<li><span><i style="background:${KC[s[3]]}"></i>${s[0]}${s[4]?`<small>${s[4]}</small>`:""}</span><b>${s[1]}′</b></li>`).join("")}</ul>
+     <div class="wstats"><span>${ico("clock")}${x.min} min</span><span>${ico("run")}${x.km?NF1.format(x.km)+" km":"—"}</span><span>${ico("flame")}${x.kcal} kcal</span></div>
+     ${x.timer?`<button class="btn" data-timer="${x.timer}" data-tday="${n}" style="margin-top:8px;width:100%">Temporizador</button>`:""}</div>`}).join("")}
+   <div class="wday tile wtot"><div class="th"><span class="num">Total semana ${mw}</span></div>
+     <div class="wbig"><b>${tot.min}</b><span>minutos activos</span></div><div class="wbig"><b>${NF1.format(tot.km)} km</b><span>caminando y trotando</span></div><div class="wbig"><b>${tot.kcal}</b><span>kcal meta aprox.</span></div>
+     <p class="mini">Calorías estimadas con METs para ${kg} kg. Son una referencia, no una exigencia.</p></div>
+   </div>
+   <div class="legend" style="margin-top:12px"><span style="--c:var(--t-sky)">Caminar</span><span style="--c:var(--pri)">Trote</span><span style="--c:#E27BA4">Pesas</span><span style="--c:#F2B36B">Baile</span><span style="--c:#B7AEF5">Yoga / pilates</span></div></article>
   <div class="grid">
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("run")}</span>Caminata/trote</span><h3>Cuatro etapas propuestas<small>Intervalos por etapa a lo largo de los 30 días · la línea roja marca el día abierto</small></h3></div><span class="select">Etapa ${st}</span></div>
-   <div class="gantt"><div class="inner">
-    <div class="scale"><span></span>${Array.from({length:30},(_,i)=>`<span>${(i+1)%2?i+1:""}</span>`).join("")}</div>
-    <div style="position:relative">
-    ${ranges.map(([r,a,b],i)=>{const s=i+1,c=CARDIO[s];return `<div class="grow"><div class="who"><b style="background:${GC[i]}">${"ABCD"[i]}</b><span>Días ${r}<br><span class="mini" style="text-transform:none;letter-spacing:0;font-weight:600">${c.base-10} min + 10 yoga/pilates</span></span></div>
-      <div class="gbar ${s===st?"cur":""}" style="grid-column:${a+1} / ${b+2};background:${GC[i]}"><span class="kn"></span><span>${c.r} × (${c.on} + ${c.off})</span><strong>${c.iv}′</strong></div></div>`}).join("")}
-    <div class="vline" style="left:calc(190px + (100% - 190px) * ${(d-.5)/30})"></div></div>
-   </div></div>
-   ${steps(["Camina 5 min, empezando suave.","Haz los intervalos de la etapa, en terreno llano.","Si ya toleras caminar 5 km sin dolor ni fatiga excesiva, añade caminata reservando los últimos 5 min para el paso siguiente. Cuenta todo dentro de los 5 km. No añadas más trote.","Termina con 5 min de caminata muy suave, incluidos en la distancia.","Haz los 10 min de yoga o pilates indicados."])}
-   <p class="mini">Los 5 km corresponden a los tres días de caminata/trote. Este mes no promete correr 5 km continuos. Si una etapa pesa, repítela. Ritmo cómodo, sin buscar velocidad.</p>
-   <div class="row"><button class="btn primary" data-timer="cardio">Temporizador de la etapa ${st}</button></div></article>
-
+  <article class="card c-white wide"><span class="tag"><span class="ic">${ico("run")}</span>Caminata/trote</span><h3>Cómo hacer los días de trote<small>Ritmo cómodo, terreno llano</small></h3>
+   ${steps(["Camina 5 min, empezando suave.","Haz los intervalos de la semana, en terreno llano.","Si ya toleras caminar 5 km sin dolor ni fatiga excesiva, añade caminata reservando los últimos 5 min para el paso siguiente. Cuenta todo dentro de los 5 km. No añadas más trote.","Termina con 5 min de caminata muy suave, incluidos en la distancia.","Haz los 10 min de yoga o pilates indicados."])}
+   <p class="mini">Distancia estimada a 5 km/h caminando y 7,5 km/h trotando. Este mes no promete correr 5 km continuos. Si una semana pesa, repítela.</p></article>
   <article class="card c-white wide"><span class="tag"><span class="ic">${ico("dumb")}</span>Fuerza</span><h3>Tres sesiones de pesas<small>${setTxt} En ejercicios por lado: 6 por lado. Descanso 60–90 s.</small></h3>
    <p class="mini">Mancuernas ligeras, silla estable y colchoneta. Sin equipo confirmado, empieza sin carga. Calienta 6 min: 2 de marcha, 2 de movilidad de hombros/cadera y 2 de ensayo sin peso. Termina pudiendo hacer unas 3 repeticiones más. No aumentes el peso este mes.</p>
    <div class="kanban" style="margin-top:14px">
@@ -1128,7 +1177,8 @@ document.addEventListener("click",e=>{
   b=t.closest("[data-kd]"); if(b){const [d,k]=b.dataset.kd.split(":");toggle(+d,k);return;}
   b=t.closest("[data-goto]"); if(b){tab=b.dataset.goto;renderAll();window.scrollTo({top:0});return;}
   b=t.closest("[data-dd]"); if(b){const dd=state.notes.difficult||(state.notes.difficult={});dd[b.dataset.dd]=!dd[b.dataset.dd];save();renderAll(true);return;}
-  b=t.closest("[data-timer]"); if(b){startPreset(b.dataset.timer);return;}
+  b=t.closest("[data-mweek]"); if(b){movWeek=+b.dataset.mweek;renderAll(true);return;}
+  b=t.closest("[data-timer]"); if(b){startPreset(b.dataset.timer,+b.dataset.tday||0);return;}
   if(t.id==="resetBtn"){ if(confirm("¿Borrar todas las casillas y notas?")){state.checks={};state.notes={};save();renderAll();} }
 });
 document.addEventListener("input",e=>{
@@ -1147,6 +1197,7 @@ document.addEventListener("change",e=>{ const t=e.target;
     save(); renderAll(true); return;}
   if(t.dataset.finset){const F=fin(); if(t.dataset.finset==="init"){const v=parseFloat(t.value.replace(/\s/g,"").replace(",","."));F.init=isNaN(v)?0:v;} else F.cur=t.value.trim()||"$"; save(); renderAll(true); return;}
 });
+document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.target.value; state.kg=v>=30&&v<=200?v:65; save(); renderAll(true);} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
@@ -1157,8 +1208,8 @@ $("#themeBtn").addEventListener("click",()=>{const dark=state.theme?state.theme=
 
 /* ---------- timer ---------- */
 let T=null;
-function startPreset(k){
-  const d=state.day, st=stageOf(d), m=x=>x*60;
+function startPreset(k,dOver){
+  const d=dOver||state.day, st=stageOf(d), m=x=>x*60;
   let name, segs;
   if(k==="mind"){name="Mindset";segs=[["Llegar y poner la pieza",60],["Responder",300],["Elegir una acción",120]];}
   else if(k==="emo"){name="Gestión emocional";segs=[["Práctica del día",300]];}
