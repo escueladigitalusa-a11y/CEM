@@ -452,6 +452,19 @@ dialog h3{font-size:19px;font-weight:800}
 .wlog{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;background:var(--ink);color:var(--paper);border-radius:10px;padding:5px 8px;margin-top:6px}
 .wlog svg.i{width:14px;height:14px}
 @media (max-width:860px){.logup{grid-template-columns:1fr}.lgf{grid-template-columns:1fr 1fr}}
+/* calendario de piel completo */
+.skwk{font-size:13px;font-weight:700;color:var(--soft);margin:16px 0 8px;letter-spacing:.02em}
+.skdays{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.skday{background:var(--shell);border-radius:18px;padding:12px;display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--c);min-width:0}
+.skday.cur{outline:2px solid var(--ink);outline-offset:-2px}
+.skh{display:flex;align-items:center;gap:8px}
+.skn{width:34px;height:34px;border-radius:50%;border:0;background:var(--ink);color:var(--paper);font-weight:800;font-size:14px}
+.skr{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:start}
+.skr>b{font-size:11px;background:var(--paper);border-radius:8px;text-align:center;padding:3px 0;margin-top:1px}
+.skr ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px;counter-reset:s}
+.skr li{counter-increment:s;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--c) 14%,var(--paper));border-radius:8px;padding:2px 8px 2px 3px}
+.skr li::before{content:counter(s);width:16px;height:16px;border-radius:50%;background:var(--c);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
+.sknote{margin:0;font-size:11.5px;color:var(--soft)}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -580,6 +593,15 @@ const PM_TYPES={
  arc:{t:"Arcilla + calma",c:"#B8741A",cls:"c-peach",s:"Mascarilla de arcilla en zona T y luego hidratar."},
  peel:{t:"Peeling semanal",c:"#E5484D",cls:"c-rose",s:"Peeling Cicatricure 1 vez por semana, como indica el envase."}
 };
+const PM_SHORT={
+ base:["Desmaquillar","Limpiador en gel","Vitamina E (opcional)","Hidratante"],
+ gel:["Desmaquillar","Limpiador en gel","Tónico","Porcelana crema gel","Hidratante (si hace falta)"],
+ bha:["Desmaquillar","Limpiador en gel","Ácido salicílico 2 %","Esperar 10 min","Hidratante"],
+ ret:["Desmaquillar","Limpiador en gel","Esperar 10 min","Hidratante","Retinoide","Hidratante"],
+ arc:["Desmaquillar","Limpiador en gel","Mascarilla de arcilla 10 min","Enjuagar","Vitamina E (opcional)","Hidratante"],
+ peel:["Desmaquillar","Limpiador en gel","Peeling Cicatricure ≤10 min","Enjuagar bien","Hidratante"]
+};
+const SKP={"Desmaquillar":"#94A3B8","Limpiador en gel":"#64748B","Tónico":"#0EA5A4","Vitamina C":"#E7A21D","Niacinamida":"#2F6FD1","Hidratante":"#1F9D55","Hidratante (si hace falta)":"#1F9D55","Protector FPS 50":"#F97316","Vitamina E (opcional)":"#B8741A","Porcelana crema gel":"#7A6CF0","Ácido salicílico 2 %":"#0E9F9A","Retinoide":"#D9467F","Mascarilla de arcilla 10 min":"#B8741A","Peeling Cicatricure ≤10 min":"#E5484D"};
 const PM_STEPS={
  base:["Desmaquillar: agua micelar o bálsamo si usaste protector o maquillaje.","Limpiador en gel, 30–60 s con agua tibia; secar a toques.","Hidratante en gel oil-free (una avellana para rostro y cuello).","Opcional si la sientes tirante: 2–3 gotas de vitamina E KIMBEAUTY antes de la hidratante."],
  gel:["Desmaquillar y limpiador en gel; secar muy bien.","Tónico Petite Maison (opcional, si no tiene alcohol ni ácidos).","Cicatricure Porcelana crema gel: capa fina en rostro o sobre manchas, según etiqueta.","Si queda tirante, una capa ligera de hidratante en gel."],
@@ -601,7 +623,8 @@ function skinOf(d){
   if(vitc) am.push("Vitamina C KIMBEAUTY: 3–4 gotas; esperar 1 min."+(afterPeel?" Si arde tras el peeling, omítela hoy.":""));
   if(nia) am.push("Niacinamida 5–10 %: 2–3 gotas (poros, grasa y manchas).");
   am.push("Hidratante en gel oil-free: poca cantidad.","Protector FPS 50 toque seco: dos dedos de producto para rostro y cuello. Reaplicar cada 2–3 h si hay sol.");
-  return {pm,vitc,nia,am,note:PATCH[d]||""};
+  const amShort=["Limpiador en gel","Tónico","Vitamina C","Niacinamida","Hidratante","Protector FPS 50"].filter(x=>(x!=="Vitamina C"||vitc)&&(x!=="Niacinamida"||nia));
+  return {pm,vitc,nia,am,amShort,note:PATCH[d]||""};
 }
 
 </script>
@@ -930,10 +953,13 @@ function renderPiel(){
    <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${WEEK3.map((k,i)=>{const T=PM_TYPES[k];return `<div class="tile pt ${T.cls}" style="min-height:130px;${i===wdOf(d)?"outline:2px solid var(--ink);outline-offset:-2px":""}"><div class="th"><span class="num">${WD[i]}</span>${i===wdOf(d)?'<span class="pill ink">Hoy</span>':""}</div><h4>${T.t}</h4><p>${T.s}</p></div>`}).join("")}</div>
    <p class="mini" style="margin-top:10px">El domingo, después del peeling del sábado, la piel solo descansa. El retinoide queda en 1 noche por semana este mes; el mes siguiente, si no hay irritación, puedes subir a 2 (miércoles y domingo).</p></article>
 
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Qué va cada mañana y noche<small>Toca un día para abrirlo en «Hoy»</small></h3></div></div>
-   <div class="legend" style="margin-bottom:12px"><span style="--c:#E7A21D">Vitamina C (AM)</span>${Object.values(PM_TYPES).map(T=>`<span style="--c:${T.c}">${T.t} (PM)</span>`).join("")}</div>
-   <div class="skincal">${Array.from({length:30},(_,i)=>{const n=i+1,[a,p]=dayCols(n),s=skinOf(n);return `<button class="skd ${n===d?"cur":""}" data-open="${n}" aria-label="Día ${n}: ${PM_TYPES[s.pm].t}${s.vitc?", vitamina C":""}" title="${PM_TYPES[s.pm].t}${s.note?" · "+s.note:""}"><b>${n}</b><span><span class="dot" style="background:${a}"></span><span class="dot" style="background:${p}"></span></span>${s.note?'<span class="mini" style="font-size:10px">★</span>':""}</button>`}).join("")}</div>
-   <p class="mini" style="margin-top:10px">★ Día con prueba de parche o con un activo nuevo.</p></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Rutina completa de cada día<small>Todos los pasos en orden, de la limpieza al protector. Toca el número del día para abrirlo en «Hoy»</small></h3></div></div>
+   <div class="legend" style="margin-bottom:6px">${Object.values(PM_TYPES).map(T=>`<span style="--c:${T.c}">${T.t}</span>`).join("")}</div>
+   ${[["Semana 1 · base y pruebas de parche",1,7],["Semana 2 · entran los ácidos",8,14],["Semana 3 · rutina completa",15,21],["Semana 4 · rutina completa",22,28],["Días 29–30",29,30]].map(([g,a,b])=>`<h4 class="skwk">${g}</h4><div class="skdays">${Array.from({length:b-a+1},(_,i)=>{const n=a+i,s=skinOf(n),T=PM_TYPES[s.pm];return `<div class="skday ${n===d?"cur":""}" style="--c:${T.c}">
+     <div class="skh"><button class="skn" data-open="${n}" aria-label="Abrir día ${n} en Hoy">${n}</button><span class="mini">${WD[wdOf(n)]}</span><span class="catchip" style="--c:${T.c};margin-left:auto">${T.t}</span></div>
+     <div class="skr"><b>AM</b><ol>${s.amShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
+     <div class="skr"><b>PM</b><ol>${PM_SHORT[s.pm].map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
+     ${s.note?`<p class="sknote">★ ${s.note}</p>`:""}</div>`}).join("")}</div>`).join("")}</article>
 
   <article class="card c-peach pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>Días 1–7</span><h3>Fase 1: base y parches</h3><p>Limpiar, hidratar y protector. Pruebas de parche de Porcelana, vitamina C, salicílico y peeling. Porcelana en todo el rostro solo el viernes (día 5).</p></article>
   <article class="card c-sky pt third"><span class="tag"><span class="ic">${ico("drop")}</span>Días 8–14</span><h3>Fase 2: entran los ácidos</h3><p>Salicílico el lunes, Porcelana martes y viernes, arcilla el jueves, primer peeling el sábado 13. Vitamina C en días alternos. Parche del retinoide el día 10.</p></article>
