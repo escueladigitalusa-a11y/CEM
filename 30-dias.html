@@ -760,6 +760,22 @@ nav.tabs button{white-space:normal;line-height:1.2}
 .boardh h3{font-size:19px;font-weight:800}
 @media (max-width:1100px){.shopgrid{grid-template-columns:1fr}.czgroups{grid-template-columns:1fr}}
 @media (max-width:860px){.cz-frm{grid-template-columns:1fr 1fr}.czlist li{grid-template-columns:auto minmax(0,1fr) 90px auto}.czlist li .mvsel{grid-column:2/-1;margin-left:0}.cztasks li{grid-template-columns:auto minmax(0,1fr) auto}.cztasks li>input[type=date],.cztasks li>.mvsel{grid-column:2/-1;margin-left:0}.carerow{grid-template-columns:40px 1fr}.csub{grid-column:2;text-align:left}.mesgrid .mcell{min-height:60px}.pcrule{grid-template-columns:32px 1fr}.pcrule>*:nth-child(3){grid-column:2}}
+.akb{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,240px);gap:10px;overflow-x:auto;padding-bottom:8px;align-items:start}
+.acol{background:var(--shell);border-radius:16px;padding:8px;border-top:4px solid var(--cc);display:flex;flex-direction:column;gap:6px;min-height:140px;transition:background .15s}
+.acol.over{background:color-mix(in srgb,var(--cc) 10%,var(--shell))}
+.acolh{display:flex;align-items:center;gap:6px}
+.acolh input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-weight:800;font-size:13px;color:var(--ink);padding:3px 4px;border-radius:6px}
+.acolh input:focus{background:var(--paper)}
+.acolh .xbtn{width:24px;height:24px;font-size:10px}
+.acol .kbm i{background:var(--cc)}
+.atask{display:flex;gap:8px;align-items:flex-start;background:var(--paper);border-radius:12px;padding:8px;border-left:4px solid var(--cc);box-shadow:0 4px 10px -8px rgba(0,0,0,.35);cursor:grab}
+.atask.dragging{opacity:.45}
+.atask .cbox{width:20px;height:20px;border-radius:6px;margin-top:1px}
+.atask.done .kbtt{text-decoration:line-through;color:var(--soft)}
+.atb{flex:1;min-width:0;display:grid;gap:4px}
+.ata{display:flex;gap:4px;align-items:center;justify-content:space-between}
+.ata input[type=date]{width:auto;min-width:0;flex:1;padding:3px 6px;font-size:11.5px;background:var(--shell);border:0;border-radius:8px}
+.ata .xbtn{width:22px;height:22px;font-size:10px}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -2046,11 +2062,17 @@ const CASA_DEF={
      items:[{name:"Fina",amt:60,freq:"mensual",cat:"per",note:""},{name:"Belkis",amt:12,freq:"mensual",cat:"per",note:""}]}
 };
 const FREQ={"único":"Una vez",semanal:"Semanal",mensual:"Mensual"};
-let casaQuick={}, casaNew={};
+let casaQuick={}, casaNew={}, akDrag=null;
+const AREA_DEF={sc:["Fachada","Porche","Pasillos","Patio frontal","Patio trasero","Área de lavandería","Cuartos de abajo","Cuartos de arriba","Salón de fiesta","Baños","Sala","Cocina","Tanque"],ccs:["General"]};
+const AREA_C=["#4B4FE8","#1F9D55","#D9467F","#D9812E","#0E9F9A","#8B5CF6","#2F6FD1","#B8741A","#E5484D","#64748B","#0EA5A4","#A855F7","#C77A0A"];
 function casa(k){
   const all=state.casas||(state.casas={});
   if(!all[k]){const d=CASA_DEF[k]; all[k]={name:d.name,cats:d.cats.map(c=>Object.assign({},c)),items:d.items.map(i=>Object.assign({id:uid(),paid:{}},i))};}
-  const c=all[k]; c.cats=c.cats||[]; c.items=c.items||[]; c.tasks=c.tasks||[]; c.items.forEach(i=>i.paid=i.paid||{}); return c;
+  const c=all[k]; c.cats=c.cats||[]; c.items=c.items||[]; c.tasks=c.tasks||[]; c.items.forEach(i=>i.paid=i.paid||{});
+  if(!c.areas) c.areas=(AREA_DEF[k]||["General"]).map(n=>({id:uid(),name:n}));
+  if(!c.areas.length) c.areas.push({id:uid(),name:"General"});
+  c.tasks.forEach(t=>{ if(!c.areas.some(a=>a.id===t.area)) t.area=c.areas[0].id; });
+  return c;
 }
 function weekKey(t){const d=new Date(t); d.setHours(12); d.setDate(d.getDate()-((d.getDay()+6)%7)); return "w"+isoOf(d);}
 const periodKey=(it,t=new Date())=>it.freq==="semanal"?weekKey(t):it.freq==="mensual"?"m"+isoOf(t).slice(0,7):"once";
@@ -2070,10 +2092,15 @@ function renderCasa(k){
    <div class="kpi"><div class="top"><span class="ib">${ico("brief")}</span></div><span class="lb">Inversión y obra</span><span class="v">${cur}${NF.format(sum(on))}</span><span class="lb" style="font-size:11.5px">pendiente ${cur}${NF.format(sumPend(on))}</span></div>
    <div class="kpi"><div class="top"><span class="ib">${ico("chart")}</span></div><span class="lb">Costo fijo al mes</span><span class="v">${cur}${NF.format(Math.round(monthly))}</span><span class="lb" style="font-size:11.5px">mensual + semanal × 4,3</span></div>
   </div>
-  <div class="boardh"><span class="tag" style="margin:0"><span class="ic">${ico("ok")}</span>Tablero</span><h3>Tareas</h3><span class="select">${C.tasks.filter(t=>t.done).length}/${C.tasks.length} hechas</span></div>
-  <article class="card c-white" style="margin-bottom:16px">
-   <div class="fwadd"><input type="text" id="czTask-${k}" placeholder="Nueva tarea: comprar cemento, llamar al plomero…" aria-label="Nueva tarea"><select id="czTaskCat-${k}" class="mvsel" style="margin:0;background:var(--shell)" aria-label="Categoría">${C.cats.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}<option value="">Sin categoría</option></select><button class="btn primary" data-casa="addtask" data-k="${k}">Añadir</button></div>
-   <ul class="cztasks">${C.tasks.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1)).map(t=>{const c=casaCat(C,t.cat);return `<li class="${t.done?"done":""}" style="--cc:${c.color}"><button class="cbox ${t.done?"on":""}" data-casa="task" data-k="${k}" data-id="${t.id}" aria-pressed="${!!t.done}" aria-label="Marcar tarea: ${esc(t.t)}"></button><input class="czname" value="${esc(t.t)}" data-cztk="${k}|${t.id}" data-f="t" aria-label="Tarea"><input type="date" value="${t.date||""}" data-cztk="${k}|${t.id}" data-f="date" aria-label="Fecha límite"><select class="mvsel" data-cztk="${k}|${t.id}" data-f="cat" aria-label="Categoría">${C.cats.map(c2=>`<option value="${c2.id}" ${c2.id===t.cat?"selected":""}>${esc(c2.name)}</option>`).join("")}<option value="" ${C.cats.some(c2=>c2.id===t.cat)?"":"selected"}>Sin categoría</option></select><button class="xbtn" data-casa="deltask" data-k="${k}" data-id="${t.id}" aria-label="Borrar tarea">✕</button></li>`}).join("")||'<li class="mini" style="border:0;background:transparent;display:block">Sin tareas. Añade la primera arriba.</li>'}</ul></article>
+  <div class="boardh"><span class="tag" style="margin:0"><span class="ic">${ico("ok")}</span>Tablero</span><h3>Tareas por área</h3><span class="select">${C.tasks.filter(t=>t.done).length}/${C.tasks.length} hechas</span><span style="flex:1"></span><button class="btn" data-casa="addarea" data-k="${k}">+ Área</button></div>
+  <article class="card c-white" style="margin-bottom:16px;padding:14px"><p class="mini" style="margin:0 0 10px">Cada columna es un área de la casa. Arrastra una tarea a otra área, márcala al terminarla y toca el texto para editarla.</p>
+   <div class="akb">${C.areas.map((ar,ai)=>{const col=AREA_C[ai%AREA_C.length], T=C.tasks.filter(t=>t.area===ar.id).sort((x,y)=>(x.done-y.done)||((x.date||"9")<(y.date||"9")?-1:1)), dn=T.filter(t=>t.done).length;return `<div class="acol" style="--cc:${col}" data-adrop="${k}|${ar.id}">
+    <div class="acolh"><input value="${esc(ar.name)}" data-czarea="${k}|${ar.id}" aria-label="Nombre del área"><span class="kbcount">${dn}/${T.length}</span><button class="xbtn" data-casa="delarea" data-k="${k}" data-id="${ar.id}" aria-label="Borrar área ${esc(ar.name)}">✕</button></div>
+    <div class="kbm" style="margin:0 2px 8px"><i style="width:${T.length?Math.round(dn/T.length*100):0}%"></i></div>
+    ${T.map(t=>`<div class="atask ${t.done?"done":""}" draggable="true" data-adrag="${k}|${t.id}"><button class="cbox ${t.done?"on":""}" data-casa="task" data-k="${k}" data-id="${t.id}" aria-pressed="${!!t.done}" aria-label="Marcar tarea: ${esc(t.t)}"></button>
+      <div class="atb"><div class="kbtt" contenteditable="true" data-aktt="${k}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
+       <div class="ata"><input type="date" value="${t.date||""}" data-cztk="${k}|${t.id}" data-f="date" aria-label="Fecha límite"><select class="mvsel" data-cztk="${k}|${t.id}" data-f="area" aria-label="Mover a otra área" style="max-width:70px;margin:0;background:var(--shell)"><option value="${ar.id}">Mover…</option>${C.areas.filter(x=>x.id!==ar.id).map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join("")}</select><button class="xbtn" data-casa="deltask" data-k="${k}" data-id="${t.id}" aria-label="Borrar tarea">✕</button></div></div></div>`).join("")}
+    <button class="kbadd" data-casa="addtask" data-k="${k}" data-id="${ar.id}">+ Tarea</button></div>`}).join("")}</div></article>
   <div class="boardh"><span class="tag" style="margin:0"><span class="ic">${ico("wallet")}</span>Tablero</span><h3>Inversiones y gastos</h3></div>
   <article class="card c-white" style="margin-bottom:16px"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("pen")}</span>Nuevo gasto o inversión</span><h3>Añadir a ${esc(C.name)}</h3></div></div>
    <div class="catpicks" role="radiogroup" aria-label="Categoría">${C.cats.map((c,i)=>`<label><input type="radio" name="cz-${k}" value="${c.id}" ${(N.cat?N.cat===c.id:i===0)?"checked":""}><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span></label>`).join("")}<button class="catnew" data-casa="quick" data-k="${k}" aria-expanded="${!!Q}">${Q?"✕ Cerrar":"+ Nueva categoría"}</button></div>
@@ -2099,7 +2126,10 @@ function casaAction(a,b){
     C.cats.push({id:cid,name:n,color:pick?pick.value:$("#czCustom-"+k).value}); casaQuick[k]=false; casaNew[k]={cat:cid};}
   else if(a==="additem"){const n=$("#czItem-"+k).value.trim(); if(!n){$("#czItem-"+k).focus();return;} const amt=parseFloat(($("#czAmt-"+k).value||"0").replace(",","."))||0, cat=(document.querySelector(`input[name="cz-${k}"]:checked`)||{}).value||"";
     C.items.push({id:uid(),name:n,amt,freq:$("#czFreq-"+k).value,cat,note:"",paid:{}}); casaNew[k]={cat};}
-  else if(a==="addtask"){const el=$("#czTask-"+k), v=el.value.trim(); if(!v){el.focus();return;} C.tasks.push({id:uid(),t:v,cat:$("#czTaskCat-"+k).value,date:"",done:0});}
+  else if(a==="addtask"){const t={id:uid(),t:"",area:id,date:"",done:0}; C.tasks.push(t); save(); renderAll(true); const el=document.querySelector(`[data-aktt="${k}|${t.id}"]`); if(el) el.focus(); return;}
+  else if(a==="addarea"){C.areas.push({id:uid(),name:"Nueva área"}); save(); renderAll(true); const ins=document.querySelectorAll(`[data-czarea^="${k}|"]`); if(ins.length){ins[ins.length-1].focus();ins[ins.length-1].select();} return;}
+  else if(a==="delarea"){ if(C.areas.length<2) return; const n=C.tasks.filter(t=>t.area===id).length; if(!b.dataset.armed){b.dataset.armed="1";b.textContent=n?`¿Borrar con ${n}?`:"¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;}
+    C.areas=C.areas.filter(x=>x.id!==id); C.tasks=C.tasks.filter(t=>t.area!==id);}
   else if(a==="task"){const t=C.tasks.find(x=>x.id===id); if(t) t.done=t.done?0:1;}
   else if(a==="deltask"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} C.tasks=C.tasks.filter(x=>x.id!==id);}
   else if(a==="pay"){const it=C.items.find(x=>x.id===id), pk=periodKey(it); if(it.paid[pk]) delete it.paid[pk]; else it.paid[pk]=isoOf(new Date());}
@@ -2247,6 +2277,7 @@ document.addEventListener("change",e=>{ const t=e.target, ds=t.dataset||{};
   if(ds.shopmv){const [k,id]=ds.shopmv.split("|"), to=t.value; if(!to) return; const S=shop(), i=S.lists[k].findIndex(x=>x.id===id); if(i>=0){S.lists[to].push(S.lists[k][i]); S.lists[k].splice(i,1);} save(); renderAll(true); return;}
   if(ds.czcat){const [k,id]=ds.czcat.split("|"), c=casa(k).cats.find(x=>x.id===id); if(c){ if(ds.f==="name") c.name=t.value.trim()||c.name; else c.color=t.value; save(); renderAll(true);} return;}
   if(ds.czit){const [k,id]=ds.czit.split("|"), it=casa(k).items.find(x=>x.id===id); if(!it) return; const f=ds.f; if(f==="amt"){const v=parseFloat(t.value.replace(",","."));it.amt=isNaN(v)?0:v;} else if(f==="name") it.name=t.value.trim()||it.name; else it[f]=t.value; save(); renderAll(true); return;}
+  if(ds.czarea){const [k,id]=ds.czarea.split("|"), ar=casa(k).areas.find(x=>x.id===id); if(ar){ar.name=t.value.trim()||ar.name; save(); renderAll(true);} return;}
   if(ds.cztk){const [k,id]=ds.cztk.split("|"), tk=casa(k).tasks.find(x=>x.id===id); if(!tk) return; tk[ds.f]=ds.f==="t"?(t.value.trim()||tk.t):t.value; save(); renderAll(true); return;}
   if(ds.pcr){const r=pcare().rules.find(x=>x.id===ds.pcr); if(!r) return; if(ds.f==="days"){const d=parseDays(t.value); if(d.length) r.days=d;} else if(ds.f==="t") r.t=t.value.trim()||r.t; else r.color=t.value; save(); renderAll(true); return;}
   if(t.id&&t.id.startsWith("czCustom-")){document.querySelectorAll(`input[name="czColor-${t.id.slice(9)}"]`).forEach(r=>r.checked=false); t.style.setProperty("--c",t.value); return;}
@@ -2256,7 +2287,13 @@ document.addEventListener("keydown",e=>{ const ds=e.target.dataset||{}; if(e.key
   if(e.target.id&&e.target.id.startsWith("czItem-")){e.preventDefault(); casaAction("additem",{dataset:{k:e.target.id.slice(7)}});}
   if(e.target.id&&e.target.id.startsWith("czName-")){e.preventDefault(); casaAction("addcat",{dataset:{k:e.target.id.slice(7)}});}
   if(e.target.id==="pcNewD"){e.preventDefault(); pcAction("add");}
-  if(e.target.id&&e.target.id.startsWith("czTask-")){e.preventDefault(); casaAction("addtask",{dataset:{k:e.target.id.slice(7)}});} });
+  if(ds.aktt){e.preventDefault(); e.target.blur();} });
+document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.aktt; if(!k) return; const [h,id]=k.split("|"), t=casa(h).tasks.find(x=>x.id===id); if(t){t.t=e.target.textContent; save();} });
+document.addEventListener("focusout",e=>{ const k=e.target.dataset&&e.target.dataset.aktt; if(!k) return; const [h,id]=k.split("|"), C=casa(h), t=C.tasks.find(x=>x.id===id); if(t&&!t.t.trim()){C.tasks=C.tasks.filter(x=>x!==t); save(); setTimeout(()=>renderAll(true),0);} });
+document.addEventListener("dragstart",e=>{ const d=e.target.closest&&e.target.closest("[data-adrag]"); if(!d) return; akDrag=d.dataset.adrag; d.classList.add("dragging"); try{e.dataTransfer.setData("text/plain",akDrag);e.dataTransfer.effectAllowed="move";}catch(err){} });
+document.addEventListener("dragover",e=>{ const c=e.target.closest&&e.target.closest("[data-adrop]"); if(!c||!akDrag) return; e.preventDefault(); document.querySelectorAll(".acol.over").forEach(x=>x!==c&&x.classList.remove("over")); c.classList.add("over"); });
+document.addEventListener("drop",e=>{ const c=e.target.closest&&e.target.closest("[data-adrop]"); if(!c||!akDrag) return; e.preventDefault(); const [h,id]=akDrag.split("|"), [h2,ar]=c.dataset.adrop.split("|"); akDrag=null; if(h!==h2) return; const t=casa(h).tasks.find(x=>x.id===id); if(t){t.area=ar; save();} renderAll(true); });
+document.addEventListener("dragend",()=>{ akDrag=null; document.querySelectorAll(".acol.over").forEach(x=>x.classList.remove("over")); });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
