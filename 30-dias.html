@@ -786,6 +786,11 @@ nav.tabs button{white-space:normal;line-height:1.2}
 .mesdl li.isev{display:flex;align-items:center;gap:8px}
 .mesdl li.isev span{flex:1}
 .mesdl li.isev .cbox{width:18px;height:18px;border-radius:6px}
+.kbfold{border:0;background:var(--paper);width:26px;height:26px;border-radius:8px;font-size:13px;color:var(--ink);flex:0 0 auto}
+.kbfolded{display:flex;flex-wrap:wrap;align-items:center;gap:10px;border:1.5px dashed color-mix(in srgb,var(--cc) 45%,var(--line));background:color-mix(in srgb,var(--cc) 6%,var(--shell));border-radius:14px;padding:10px 14px;text-align:left;font-size:13px;color:var(--soft)}
+.kbfolded span b{color:var(--ink);font-size:15px}
+.kbfolded em{margin-left:auto;font-style:normal;font-weight:700;color:var(--ink)}
+.kbcolname{flex:1;font-weight:800;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -1187,6 +1192,7 @@ function renderMes(){
   </div>
   <div class="grid">
   ${mesCalendar()}
+  <div style="grid-column:span 12">${remindersCard()}</div>
   <article class="card c-white third"><div class="hd"><div style="flex:1"><h3>Hábitos clave<small>Completado en el mes</small></h3></div></div>
    <div class="rings"><svg viewBox="0 0 170 170" role="img" aria-label="Progreso de hábitos clave">${rings}</svg>
    <div class="rlist">${RC.map(([k,c])=>{const t=totals.find(x=>x[0]===k);return `<div style="--c:${c}"><span>${LABELS[k]}</span><b>${t[1]}/${t[2]}</b><span class="badge ${t[1]?"":"neutral"}">${Math.round(t[1]/t[2]*100)}%</span></div>`}).join("")}</div></div></article>
@@ -1633,7 +1639,11 @@ const CO_COL=["#4B4FE8","#1F9D55","#D9467F","#D9812E","#0E9F9A","#8B5CF6","#2F6F
 function work(){
   if(!state.work) state.work={cols:[{id:"todo",name:"Por hacer"},{id:"doing",name:"En curso"},{id:"review",name:"En revisión"},{id:"done",name:"Hecho"}],
     cos:[{id:uid(),name:"Empresa de ejemplo",color:"#4B4FE8",price:0,period:"mes",note:"Cámbiale el nombre o bórrala",tasks:[{id:uid(),t:"Reunión de arranque",col:"done"},{id:uid(),t:"Propuesta de contenidos",col:"doing"},{id:uid(),t:"Primer entregable",col:"todo"}]}]};
-  const w=state.work; w.cols=w.cols||[]; w.cos=w.cos||[]; w.cos.forEach(c=>c.tasks=c.tasks||[]); return w;
+  const w=state.work; w.cols=w.cols||[]; w.cos=w.cos||[]; w.cos.forEach(c=>c.tasks=c.tasks||[]);
+  if(!w.v3){ const lastId=w.cols.length?w.cols[w.cols.length-1].id:"done";
+    w.cos.forEach(c=>c.tasks.forEach(t=>{ t.col=t.col===lastId||t.col==="done"?"done":t.col==="ask"?"ask":"todo"; }));
+    w.cols=[{id:"todo",name:"Por hacer"},{id:"ask",name:"Por consultar"},{id:"done",name:"Hecho"}]; w.v3=1; }
+  return w;
 }
 const doneCol=()=>{const c=work().cols; return c.length?c[c.length-1].id:"";};
 let kbDrag=null;
@@ -1650,18 +1660,18 @@ function renderTrab(){
    <div class="kpi"><div class="top"><span class="ib">${ico("clock")}</span></div><span class="lb">Bloque de hoy</span><span class="v">${isWork(state.day)?"4 h":"Libre"}</span></div>
   </div>
   <article class="card c-white"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:200px"><span class="tag"><span class="ic">${ico("brief")}</span>Kanban</span><h3>Tablero por empresa<small>La última columna cuenta como «hecho»</small></h3></div>
-    <div class="row" style="margin:0"><button class="btn" data-kb="addcol">+ Columna</button><button class="btn primary" data-kb="addco">+ Empresa</button></div></div>
+    <div class="row" style="margin:0"><button class="btn" data-kb="openall">Expandir todo</button><button class="btn" data-kb="foldall">Contraer todo</button><button class="btn primary" data-kb="addco">+ Empresa</button></div></div>
    <div class="kbwrap"><div class="kb" style="--gc:${gcols}">
-    <div class="kbrow kbhead"><div class="kbcorner mini">Empresa</div>${W.cols.map((c,i)=>`<div class="kbcolh"><span class="kbdot" style="background:${i===W.cols.length-1?"var(--good)":["var(--faint)","var(--pri)","#E7A21D","#8B5CF6","#0E9F9A"][i%5]}"></span><input value="${esc(c.name)}" data-kbcol="${c.id}" aria-label="Nombre de la columna"><span class="kbcount">${all.filter(t=>t.col===c.id).length}</span>${W.cols.length>1?`<button class="xbtn" data-kb="delcol" data-id="${c.id}" aria-label="Borrar columna ${esc(c.name)}">✕</button>`:""}</div>`).join("")}</div>
+    <div class="kbrow kbhead"><div class="kbcorner mini">Empresa</div>${W.cols.map((c,i)=>`<div class="kbcolh"><span class="kbdot" style="background:${i===W.cols.length-1?"var(--good)":["var(--faint)","var(--pri)","#E7A21D","#8B5CF6","#0E9F9A"][i%5]}"></span><span class="kbcolname">${esc(c.name)}</span><span class="kbcount">${all.filter(t=>t.col===c.id).length}</span></div>`).join("")}</div>
     ${W.cos.map((co,ci)=>{const n=co.tasks.length, d=co.tasks.filter(t=>t.col===dc).length, p=n?Math.round(d/n*100):0;return `<div class="kbrow" style="--cc:${co.color}">
      <div class="kbco">
-      <div class="kbcoh"><input type="color" class="sw" value="${co.color}" data-kbco="${co.id}" data-f="color" aria-label="Color de ${esc(co.name)}" style="--c:${co.color}"><input class="kbname" value="${esc(co.name)}" data-kbco="${co.id}" data-f="name" aria-label="Nombre de la empresa"></div>
+      <div class="kbcoh"><button class="kbfold" data-kb="fold" data-id="${co.id}" aria-expanded="${!co.fold}" aria-label="${co.fold?"Expandir":"Contraer"} ${esc(co.name)}">${co.fold?"▸":"▾"}</button><input type="color" class="sw" value="${co.color}" data-kbco="${co.id}" data-f="color" aria-label="Color de ${esc(co.name)}" style="--c:${co.color}"><input class="kbname" value="${esc(co.name)}" data-kbco="${co.id}" data-f="name" aria-label="Nombre de la empresa"></div>
       <label class="kbprice"><span>${esc(cur)}</span><input type="text" inputmode="decimal" value="${+co.price||0}" data-kbco="${co.id}" data-f="price" aria-label="Precio de ${esc(co.name)}"><select data-kbco="${co.id}" data-f="period" aria-label="Periodo">${["mes","proyecto","hora","semana"].map(x=>`<option ${co.period===x?"selected":""}>${x}</option>`).join("")}</select></label>
-      <div class="kbmeter"><div class="kbm"><i style="width:${p}%"></i></div><div class="kbmt"><span><b>${n-d}</b> por hacer</span><span><b>${d}</b> hechas</span><b>${p}%</b></div></div>
+      <div class="kbmeter"><div class="kbm"><i style="width:${p}%"></i></div><div class="kbmt"><span><b>${co.tasks.filter(t=>t.col==="todo").length}</b> por hacer</span><span><b>${co.tasks.filter(t=>t.col==="ask").length}</b> por consultar</span><span><b>${d}</b> hechas</span><b>${p}%</b></div></div>
       <input class="kbnote" value="${esc(co.note||"")}" placeholder="Nota: contacto, entrega…" data-kbco="${co.id}" data-f="note" aria-label="Nota">
       <div class="kbtools"><button class="xbtn" data-kb="up" data-id="${co.id}" ${ci===0?"disabled":""} aria-label="Subir empresa">↑</button><button class="xbtn" data-kb="down" data-id="${co.id}" ${ci===W.cos.length-1?"disabled":""} aria-label="Bajar empresa">↓</button><button class="xbtn" data-kb="delco" data-id="${co.id}" aria-label="Borrar ${esc(co.name)}">✕</button></div>
      </div>
-     ${W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""}" draggable="true" data-drag="${co.id}|${t.id}">
+     ${co.fold?`<button class="kbfolded" data-kb="fold" data-id="${co.id}" style="grid-column:2 / -1">${W.cols.map(c=>`<span><b>${co.tasks.filter(t=>t.col===c.id).length}</b> ${c.name.toLowerCase()}</span>`).join("")}<em>Toca para ver las tareas ▾</em></button>`:W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""}" draggable="true" data-drag="${co.id}|${t.id}">
         <div class="kbtt" contenteditable="true" data-kbt="${co.id}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
         <div class="kbta"><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
        <button class="kbadd" data-kb="addtask" data-id="${co.id}|${c.id}">+ Tarea</button></div>`).join("")}
@@ -1679,7 +1689,9 @@ function renderTrab(){
 function kbFind(key){const [cid,tid]=key.split("|");const co=work().cos.find(c=>c.id===cid);return {co,t:co&&co.tasks.find(t=>t.id===tid)};}
 function kbAction(a,b){
   const W=work(), id=b&&b.dataset.id;
-  if(a==="addco"){W.cos.push({id:uid(),name:"Nueva empresa",color:CO_COL[W.cos.length%CO_COL.length],price:0,period:"mes",note:"",tasks:[]});}
+  if(a==="fold"){const co=W.cos.find(c=>c.id===id); if(co) co.fold=!co.fold;}
+  else if(a==="foldall"||a==="openall"){W.cos.forEach(c=>c.fold=a==="foldall");}
+  else if(a==="addco"){W.cos.push({id:uid(),name:"Nueva empresa",color:CO_COL[W.cos.length%CO_COL.length],price:0,period:"mes",note:"",tasks:[]});}
   else if(a==="addcol"){const cid=uid(); W.cols.splice(Math.max(0,W.cols.length-1),0,{id:cid,name:"Nueva columna"});}
   else if(a==="delcol"){const has=W.cos.some(c=>c.tasks.some(t=>t.col===id)); if(!b.dataset.armed){b.dataset.armed="1";b.textContent=has?"¿Borrar con tareas?":"¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;}
     const i=W.cols.findIndex(c=>c.id===id), to=W.cols[i===0?1:i-1]; W.cos.forEach(c=>c.tasks.forEach(t=>{if(t.col===id&&to) t.col=to.id;})); W.cols.splice(i,1);}
@@ -1949,7 +1961,7 @@ function renderWall(){
   const rems=f.rem.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1));
   const filled=Object.values(f.days).reduce((a,d)=>a+FW_K.filter(k=>d[k[0]]).length,0), nf=FW_K.reduce((a,[k])=>a+f.favs[k].length,0);
   $("#v-wall").innerHTML=`<h2 class="h2">Comida</h2>
-  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">Qué comemos cada día, qué hacemos juntos, nuestras recetas y lo que no hay que olvidar. Las listas de compras están en «Compras».</p>
+  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">Qué comemos cada día, qué hacemos juntos y nuestras recetas. Las listas están en «Compras» y los recordatorios en «Mes y progreso».</p>
    <div class="fnav"><button class="iconbtn" data-fw="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-fw="next" aria-label="Mes siguiente">›</button><button class="btn" data-fw="today">Hoy</button></div></div>
   <div class="fwlayout">
   <div class="fwmain">
@@ -1965,11 +1977,7 @@ function renderWall(){
     <div class="favgrid">${FW_K.map(([k,n,c,ic])=>`<div class="favcol" style="--c:${c}"><h4>${ico(ic)}${n} <span class="mini">${f.favs[k].length}</span></h4><div class="favs">${f.favs[k].map((v,i)=>`<span class="favchip"><button data-fw="usefav" data-k="${k}" data-i="${i}" title="Poner en ${esc(cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric"})))}">${esc(v)}</button><button class="favx" data-fw="unfav" data-k="${k}" data-i="${i}" aria-label="Quitar ${esc(v)} de favoritos">✕</button></span>`).join("")||'<span class="mini">Aún ninguno.</span>'}</div></div>`).join("")}</div></article>
 
    ${recipesCard()}
-   <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("alert")}</span>Recordatorios</span><h3>No olvidar<small>Los que tienen fecha también aparecen en el calendario</small></h3></div></div>
-    <div class="postits">
-     <div class="postit new" style="--pc:${PI_C[f.rem.length%PI_C.length]}"><textarea id="remIn" rows="3" placeholder="Escribe un recordatorio…" aria-label="Nuevo recordatorio"></textarea><div class="pirow"><input type="date" id="remDate" value="${fwSel}" aria-label="Fecha"><button class="btn primary" data-fw="remadd">Pegar</button></div></div>
-     ${rems.map((r,i)=>{const late=r.date&&r.date<today&&!r.done;return `<div class="postit ${r.done?"done":""}" style="--pc:${PI_C[(r.c??i)%PI_C.length]};--rot:${((i*37)%7-3)*.6}deg"><p>${esc(r.t)}</p><div class="pirow">${r.date?`<small class="${late?"neg":""}">${late?"Vencido · ":""}${cap(new Date(r.date+"T12:00:00").toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"}))}</small>`:"<small></small>"}<span><button class="check sm" data-fw="remtog" data-id="${r.id}" aria-pressed="${!!r.done}" aria-label="Marcar hecho: ${esc(r.t)}">${CHECKSVG}</button><button class="xbtn" data-fw="remdel" data-id="${r.id}" aria-label="Quitar ${esc(r.t)}">✕</button></span></div></div>`}).join("")}
-    </div></article>
+
   </div>
 
 
@@ -2168,6 +2176,14 @@ function allOfDay(iso){
   ["sc","ccs"].forEach(h=>casa(h).tasks.filter(t=>t.date===iso).forEach(t=>out.push({c:"#8A5A3C",t:`Tarea casa: ${t.t}`,done:!!t.done})));
   if(dow===6) ["sc","ccs"].forEach(h=>{ const C=casa(h); C.items.filter(i=>i.freq==="semanal").forEach(i=>out.push({c:"#B8741A",t:`Pagar ${i.name} (${C.name.replace("Casa ","")})`,done:!!i.paid[weekKey(new Date(iso+"T12:00:00"))]})); });
   return {n,items:out};
+}
+function remindersCard(){
+  const f=fam(), today=isoOf(new Date()), rems=f.rem.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1));
+  return `<article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("alert")}</span>Recordatorios</span><h3>No olvidar<small>Los que tienen fecha también aparecen en el calendario</small></h3></div></div>
+    <div class="postits">
+     <div class="postit new" style="--pc:${PI_C[f.rem.length%PI_C.length]}"><textarea id="remIn" rows="3" placeholder="Escribe un recordatorio…" aria-label="Nuevo recordatorio"></textarea><div class="pirow"><input type="date" id="remDate" value="${mesSel||isoOf(new Date())}" aria-label="Fecha"><button class="btn primary" data-fw="remadd">Pegar</button></div></div>
+     ${rems.map((r,i)=>{const late=r.date&&r.date<today&&!r.done;return `<div class="postit ${r.done?"done":""}" style="--pc:${PI_C[(r.c??i)%PI_C.length]};--rot:${((i*37)%7-3)*.6}deg"><p>${esc(r.t)}</p><div class="pirow">${r.date?`<small class="${late?"neg":""}">${late?"Vencido · ":""}${cap(new Date(r.date+"T12:00:00").toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"}))}</small>`:"<small></small>"}<span><button class="check sm" data-fw="remtog" data-id="${r.id}" aria-pressed="${!!r.done}" aria-label="Marcar hecho: ${esc(r.t)}">${CHECKSVG}</button><button class="xbtn" data-fw="remdel" data-id="${r.id}" aria-label="Quitar ${esc(r.t)}">✕</button></span></div></div>`}).join("")}
+    </div></article>`;
 }
 function mesCalendar(){
   if(!mesYM){const t=new Date();mesYM=[t.getFullYear(),t.getMonth()];}
