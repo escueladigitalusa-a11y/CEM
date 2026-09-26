@@ -566,7 +566,7 @@ dialog h3{font-size:19px;font-weight:800}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fwlist li,:root:not([data-theme="light"]) .fwadd input{background:rgba(255,255,255,.06)}}
 @media (max-width:860px){.fwc{min-height:60px;padding:6px;border-radius:12px}.fwc .fwl{display:none}.fwdots{display:flex}}
 /* family wall v2 */
-.fwlayout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+.fwlayout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
 .fwmain{display:grid;gap:16px;min-width:0}
 .fwmain>.card{grid-column:auto}
 .fwside{position:sticky;top:16px;min-width:0}
@@ -685,6 +685,81 @@ dialog h3{font-size:19px;font-weight:800}
 .fwmsg{margin-left:4px}.fwmsg.warn{color:var(--bad);font-weight:700}
 .btn:disabled{opacity:.45;cursor:default}
 nav.tabs button{white-space:normal;line-height:1.2}
+/* niños */
+.subtabs{display:inline-flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px;margin:4px 0 14px}
+.subtabs button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;border-radius:999px;padding:7px 14px;font-weight:700;font-size:13.5px;color:var(--soft)}
+.subtabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.carelist{display:grid;gap:6px}
+.carerow{display:grid;grid-template-columns:52px 1fr 70px;gap:10px;align-items:center;background:var(--shell);border-radius:14px;padding:6px 8px}
+.carerow.today{outline:2px solid var(--pri)}
+.carerow.wknd{background:color-mix(in srgb,var(--shell) 60%,transparent)}
+.carerow .cd{display:flex;flex-direction:column;align-items:center;font-size:11px;color:var(--soft);font-weight:700}
+.carerow .cd b{font-size:17px;color:var(--ink)}
+.cchips{display:flex;flex-wrap:wrap;gap:5px}
+.cchip{border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));background:var(--paper);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--ink)}
+.cchip small{color:var(--soft);font-weight:600}
+.cchip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#fff}
+.cchip[aria-pressed="true"] small{color:#fff;opacity:.85}
+.csub{text-align:right;font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
+/* compras */
+.shopgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.shopgrid .card{grid-column:auto}
+.mvsel{width:auto;margin-left:auto;font-size:11.5px;padding:3px 6px;border-radius:8px;background:rgba(255,255,255,.6);border:0;color:var(--soft)}
+/* recetas */
+.recgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:10px}
+.rec{background:var(--shell);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.reclink{display:block}
+.recimg{display:block;width:100%;aspect-ratio:16/10;max-width:100%;object-fit:cover}
+.recgen{background:linear-gradient(135deg,var(--rc),color-mix(in srgb,var(--rc) 55%,#fff));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#2B2A26}
+.recgen b{font-size:44px;font-weight:800;line-height:1}
+.recgen span{font-size:12px;font-weight:700;background:rgba(255,255,255,.7);border-radius:999px;padding:2px 10px}
+.recb{padding:10px 12px 12px;display:grid;gap:6px}
+.recb h4{font-size:15px;margin:0}
+.recing{margin:4px 0 0;padding-left:1.2em;font-size:12.5px}
+.recact{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.recact select{width:auto;flex:1;min-width:0;font-size:12.5px;padding:6px 8px}
+.recact .btn{font-size:12px;padding:6px 10px}
+/* casas */
+.cz-frm{grid-template-columns:2fr 1fr 1fr 1fr;margin-top:6px}
+.czgroups{display:grid;grid-template-columns:1fr;gap:16px}
+.czg{grid-column:auto;border-top:5px solid var(--cc)}
+.czlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.czlist li{display:grid;grid-template-columns:auto minmax(0,1fr) 110px auto auto;gap:8px;align-items:center;background:var(--shell);border-radius:14px;padding:8px}
+.czlist li.empty{display:block;background:transparent}
+.czlist li.paid{opacity:.6}
+.czlist li.paid .czname{text-decoration:line-through}
+.czmain{display:grid;min-width:0}
+.czname{border:0;background:transparent;font:inherit;font-weight:700;font-size:14px;color:var(--ink);padding:2px 4px;border-radius:6px;min-width:0}
+.czname:focus{background:var(--paper)}
+.czamt{display:flex;align-items:center;gap:2px;background:var(--paper);border-radius:10px;padding:2px 2px 2px 8px;font-weight:800}
+.czamt input{border:0;background:transparent;font:inherit;font-weight:800;width:100%;min-width:0;padding:4px;color:var(--ink);font-variant-numeric:tabular-nums}
+.cztasks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cztasks li{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;gap:8px;align-items:center;background:var(--shell);border-radius:12px;padding:7px 8px;border-left:4px solid var(--cc,var(--line))}
+.cztasks li.done .czname{text-decoration:line-through;opacity:.55}
+.cztasks input[type=date]{width:auto;padding:4px 6px;font-size:12px;background:var(--paper);border:0}
+/* mes */
+.mesgrid .mcell{min-height:130px}
+.mesgrid .mcell.offplan{background:color-mix(in srgb,var(--shell) 60%,transparent)}
+.mesgrid .mlines{max-height:170px;overflow:hidden}
+.mesday{margin-top:14px;background:var(--shell);border-radius:18px;padding:14px}
+.mesdl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px}
+.mesdl li{border-left:4px solid var(--c);background:var(--paper);border-radius:0 10px 10px 0;padding:6px 10px;font-size:13px;font-weight:600}
+.mesdl li.on{opacity:.55;text-decoration:line-through}
+/* cuidado personal */
+.pcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.pcday{background:var(--shell);border-radius:16px;padding:10px;display:grid;gap:6px;align-content:start}
+.pcday.today{outline:2px solid var(--pri)}
+.pcday.past{opacity:.8}
+.pch{display:flex;align-items:baseline;gap:6px}
+.pch b{font-size:20px;font-weight:800}.pch span{font-size:12px;color:var(--soft);font-weight:700}
+.pcitem{display:flex;align-items:center;gap:8px;text-align:left;border:0;border-left:4px solid var(--c);background:var(--paper);border-radius:0 10px 10px 0;padding:7px 8px;font-size:13px;font-weight:600;color:var(--ink)}
+.pcitem.on{opacity:.55;text-decoration:line-through}
+.pcitem .cbox{width:18px;height:18px;border-radius:6px}
+.pcrule{display:grid;grid-template-columns:32px minmax(0,2fr) minmax(0,1fr) auto;gap:8px;align-items:center;margin-bottom:6px}
+.boardh{display:flex;align-items:center;gap:10px;margin:22px 0 10px}
+.boardh h3{font-size:19px;font-weight:800}
+@media (max-width:1100px){.shopgrid{grid-template-columns:1fr}.czgroups{grid-template-columns:1fr}}
+@media (max-width:860px){.cz-frm{grid-template-columns:1fr 1fr}.czlist li{grid-template-columns:auto minmax(0,1fr) 90px auto}.czlist li .mvsel{grid-column:2/-1;margin-left:0}.cztasks li{grid-template-columns:auto minmax(0,1fr) auto}.cztasks li>input[type=date],.cztasks li>.mvsel{grid-column:2/-1;margin-left:0}.carerow{grid-template-columns:40px 1fr}.csub{grid-column:2;text-align:left}.mesgrid .mcell{min-height:60px}.pcrule{grid-template-columns:32px 1fr}.pcrule>*:nth-child(3){grid-column:2}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -744,6 +819,9 @@ nav.tabs button{white-space:normal;line-height:1.2}
   <section class="view" id="v-hoy"></section>
   <section class="view" id="v-mes"></section>
   <section class="view" id="v-wall"></section>
+  <section class="view" id="v-shop"></section>
+  <section class="view" id="v-sc"></section>
+  <section class="view" id="v-ccs"></section>
   <section class="view" id="v-mov"></section>
   <section class="view" id="v-piel"></section>
   <section class="view" id="v-ign"></section>
@@ -821,7 +899,7 @@ const PM_SHORT={
  arc:["Desmaquillar","Limpiador en gel","Mascarilla de arcilla 10 min","Enjuagar","Vitamina E (opcional)","Hidratante"],
  peel:["Desmaquillar","Limpiador en gel","Peeling Cicatricure ≤10 min","Enjuagar bien","Hidratante"]
 };
-const SKP={"Desmaquillar":"#94A3B8","Limpiador en gel":"#64748B","Tónico":"#0EA5A4","Vitamina C":"#E7A21D","Niacinamida":"#2F6FD1","Hidratante":"#1F9D55","Hidratante (si hace falta)":"#1F9D55","Protector FPS 50":"#F97316","Vitamina E (opcional)":"#B8741A","Porcelana crema gel":"#7A6CF0","Ácido salicílico 2 %":"#0E9F9A","Retinoide":"#D9467F","Mascarilla de arcilla 10 min":"#B8741A","Peeling Cicatricure ≤10 min":"#E5484D"};
+const SKP={"Desmanchador de axilas":"#A855F7","Desmanchador zona íntima":"#EC4899","Desmaquillar":"#94A3B8","Limpiador en gel":"#64748B","Tónico":"#0EA5A4","Vitamina C":"#E7A21D","Niacinamida":"#2F6FD1","Hidratante":"#1F9D55","Hidratante (si hace falta)":"#1F9D55","Protector FPS 50":"#F97316","Vitamina E (opcional)":"#B8741A","Porcelana crema gel":"#7A6CF0","Ácido salicílico 2 %":"#0E9F9A","Retinoide":"#D9467F","Mascarilla de arcilla 10 min":"#B8741A","Peeling Cicatricure ≤10 min":"#E5484D"};
 const PM_STEPS={
  base:["Desmaquillar: agua micelar o bálsamo si usaste protector o maquillaje.","Limpiador en gel, 30–60 s con agua tibia; secar a toques.","Hidratante en gel oil-free (una avellana para rostro y cuello).","Opcional si la sientes tirante: 2–3 gotas de vitamina E KIMBEAUTY antes de la hidratante."],
  gel:["Desmaquillar y limpiador en gel; secar muy bien.","Tónico Petite Maison (opcional, si no tiene alcohol ni ácidos).","Cicatricure Porcelana crema gel: capa fina en rostro o sobre manchas, según etiqueta.","Si queda tirante, una capa ligera de hidratante en gel."],
@@ -857,7 +935,10 @@ function skinOf(d){
   if(nia) am.push("Niacinamida 5–10 %: 2–3 gotas (poros, grasa y manchas).");
   am.push("Hidratante en gel oil-free: poca cantidad.","Protector FPS 50 toque seco: dos dedos de producto para rostro y cuello. Reaplicar cada 2–3 h si hay sol.");
   const amShort=["Limpiador en gel","Tónico","Vitamina C","Niacinamida","Hidratante","Protector FPS 50"].filter(x=>(x!=="Vitamina C"||vitc)&&(x!=="Niacinamida"||nia));
-  return {pm,vitc,nia,am,amShort,note:skinNote(d)};
+  const intima=(d-1)%3===0;
+  const pmShort=PM_SHORT[pm].concat(["Desmanchador de axilas"],intima?["Desmanchador zona íntima"]:[]);
+  const pmSteps=PM_STEPS[pm].concat(["Cuerpo: desmanchador de axilas en piel limpia y seca, capa fina (no justo después de depilar o afeitar)."],intima?["Cuerpo: desmanchador de zona íntima, solo en la parte externa y según su etiqueta. Suspende si arde o irrita."]:[]);
+  return {pm,vitc,nia,am,amShort,pmShort,pmSteps,intima,note:skinNote(d)};
 }
 
 </script>
@@ -965,8 +1046,8 @@ const fdr=(a,b)=>fd(a)+" – "+fd(b);
 const dd=s=>String(s).replace(/\b[Dd]ías (\d{1,2})[–-](\d{1,2})\b/g,(m,a,b)=>fdr(+a,+b)).replace(/\b[Dd]ía (\d{1,2})\b/g,(m,n)=>+n>=1&&+n<=30?fd(+n):m);
 
 /* ---------- navigation (sidebar) ---------- */
-const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["ÁREAS"],["wall","Comidas y compras","users"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Ignacio","star"],["eng","Inglés","chat"],["par","Personal","heart"],["trab","Trabajo","brief"],["fin","Finanzas","wallet"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
-const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Calendario de comidas y compras",mov:"Movimiento",piel:"Piel",ign:"Ignacio",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Personal",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["HOGAR"],["wall","Comidas y compras","users"],["shop","Compras","ok"],["sc","Casa San Cristóbal","home"],["ccs","Casa Caracas","home"],["fin","Finanzas","wallet"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Niños","star"],["eng","Inglés","chat"],["par","Personal","heart"],["trab","Trabajo","brief"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
+const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Calendario de comidas y compras",mov:"Movimiento",piel:"Piel",ign:"Niños",shop:"Compras",sc:"Casa San Cristóbal",ccs:"Casa Caracas",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Personal",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
 let tab="hoy";
 function renderTabs(){
   $("#tabs").innerHTML=TABS.map(([k,l,i])=>l?`<button role="tab" aria-selected="${k===tab}" data-tab="${k}">${ico(i)}${l}</button>`:`<div class="sec" role="presentation">${k}</div>`).join("");
@@ -1033,12 +1114,12 @@ function renderHoy(){
     ${isWork(d)?card("c-yel","brief","Trabajo","4 horas protegidas","Niños atendidos por otro adulto","work",
       `<p>Define un entregable antes de empezar.</p><input type="text" data-note="deliv" placeholder="Entregable de hoy" value="${esc(note.deliv||"")}"><div class="row"><button class="btn primary" data-timer="work">Iniciar bloque de 240 min</button></div>`,"wide"):
       card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`,"wide")}
-    ${card("c-peach","star","Ignacio · "+ignWeek(d).t,D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Pregunta</span>${esc(D.iP)}</div></div><div class="row"><button class="btn" data-goto="ign">Ver día completo</button></div>`,"third")}
+    ${card("c-peach","star","Ignacio (1 año) · "+ignWeek(d).t,D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Para decirle</span>${esc(D.iP)}</div></div><div class="row"><button class="btn" data-goto="ign">Ver día completo</button></div>`,"third")}
     ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
     ${card("c-pink","heart","Personal, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
     ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>`)}
     ${card("c-white","drop","Cuidado facial","Mañana y noche",`Esta noche: <span class="catchip" style="--c:${PT.c}">${PT.t}</span>`,"",
-      `<div class="skinline"><b>AM</b><span>${SK.am.map(x=>x.split(":")[0].replace(/\.$/,"")).join(" → ")}.</span></div><div class="skinline"><b>PM</b><span>${PM_STEPS[SK.pm].map(x=>x.split(/[:;]/)[0].replace(/\.$/,"")).join(" → ")}.</span></div>${SK.note?`<div class="note" style="background:var(--t-peach)">${SK.note}</div>`:""}
+      `<div class="skinline"><b>AM</b><span>${SK.am.map(x=>x.split(":")[0].replace(/\.$/,"")).join(" → ")}.</span></div><div class="skinline"><b>PM</b><span>${SK.pmSteps.map(x=>x.split(/[:;]/)[0].replace(/\.$/,"")).join(" → ")}.</span></div>${SK.note?`<div class="note" style="background:var(--t-peach)">${SK.note}</div>`:""}
       <div class="row" style="margin-top:8px"><button class="btn" data-goto="piel">Ver paso a paso</button></div>
       <div class="subchecks"><button data-k="skinAM" aria-pressed="${isOn(d,"skinAM")}">AM hecho</button><button data-k="skinPM" aria-pressed="${isOn(d,"skinPM")}">PM hecho</button></div>`)}
     ${card("c-lav","pen","Cierre","¿Qué me ayudó hoy y qué necesito mañana?","","close",`<textarea data-note="close" placeholder="Escribe tu cierre del día…">${esc(note.close||"")}</textarea>`,"wide")}
@@ -1079,11 +1160,7 @@ function renderMes(){
     ${statTile("c-lav","var(--ac-lav)","flame",streak,"días seguidos","con algo hecho")}
   </div>
   <div class="grid">
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Calendario del plan<small>Lo que toca cada día; ✓ lo que ya hiciste. Toca un día para abrirlo en «Hoy»</small></h3></div><span class="select">${fdr(1,30)}</span></div>
-  <div class="month">${WDs.map(x=>`<div class="wd">${x}</div>`).join("")}
-  ${Array.from({length:wdOf(1)},()=>`<div class="mcell blank"></div>`).join("")}${Array.from({length:30},(_,i)=>{const n=i+1,p=pcts[i];const t=dateOf(n);return `<button class="mcell ${p===100?"full":""} ${n===state.day?"cur":""}" data-open="${n}" aria-label="${fd(n)}, ${p}%"><b>${fdn(n)} <small class="mmon">${WDs[wdOf(n)]}${n===1||fdn(n)===1?" · "+(t?t.toLocaleDateString("es",{month:"short"}).replace(".",""):""):""}</small>${n===td?' <span class="today-dot"></span>':""}</b>
-     <span class="mlines">${dayItems(n).map(([k,c,txt])=>`<span class="ml ${isOn(n,k)?"on":""}" style="--c:${c}" title="${esc(LABELS[k]+": "+txt)}">${isOn(n,k)?"✓":"○"} ${esc(txt)}</span>`).join("")}</span>
-     <span class="pbar"><i style="width:${p}%"></i></span></button>`}).join("")}</div></article>
+  ${mesCalendar()}
   <article class="card c-white third"><div class="hd"><div style="flex:1"><h3>Hábitos clave<small>Completado en el mes</small></h3></div></div>
    <div class="rings"><svg viewBox="0 0 170 170" role="img" aria-label="Progreso de hábitos clave">${rings}</svg>
    <div class="rlist">${RC.map(([k,c])=>{const t=totals.find(x=>x[0]===k);return `<div style="--c:${c}"><span>${LABELS[k]}</span><b>${t[1]}/${t[2]}</b><span class="badge ${t[1]?"":"neutral"}">${Math.round(t[1]/t[2]*100)}%</span></div>`}).join("")}</div></div></article>
@@ -1215,6 +1292,8 @@ function renderPiel(){
    ["Peeling Cicatricure","Ya lo tienes","home",`Sábado por la noche, 1 vez por semana como indica el envase, desde el ${fd(SKD.peel1)}.`],
    ["Tónico Petite Maison","Ya lo tienes","home","Mañanas y noches de Porcelana, solo si no tiene alcohol ni ácidos. Nunca con el salicílico ni el peeling."],
    ["Vitamina E KIMBEAUTY","Ya lo tienes","home","Opcional en noches de recuperación y arcilla, 2–3 gotas en zonas secas."],
+   ["Desmanchador de axilas","Rutina PM","home","Todas las noches en piel limpia y seca. Evítalo justo después de depilar o afeitar, o si hay irritación."],
+   ["Desmanchador de zona íntima","Cada 3 noches","home",`Solo en la zona externa, según su etiqueta. Toca ${[1,4,7].map(fd).join(", ")}… y así cada 3 días.`],
    ["Brightening y Dark Spot KIMBEAUTY","En pausa","ink","No uses dos antimanchas a la vez. Si prefieres uno de estos, reemplaza a Porcelana el viernes tras leer la fórmula."]];
   const dayCols=d=>{const s=skinOf(d);return [s.vitc?"#E7A21D":"var(--line)",PM_TYPES[s.pm].c];};
   $("#v-piel").innerHTML=`${(()=>{const a=DAYS.filter((_,i)=>isOn(i+1,"skinAM")).length,b=DAYS.filter((_,i)=>isOn(i+1,"skinPM")).length;return stickBar("Piel",Math.round((a+b)/60*100),`AM ${a}/30 · PM ${b}/30`);})()}<h2 class="h2">Tu piel</h2><p class="lead">Rutina para piel grasa con líneas finas, poros abiertos y manchas. Cada activo tiene su noche para que trabajen sin irritar. Introdúcelos de uno en uno y deja que el protector solar haga la mitad del trabajo.</p>
@@ -1226,7 +1305,7 @@ function renderPiel(){
    ${steps(S.am)}
    <div class="note" style="background:var(--t-peach)">Si vas a entrenar al aire libre, aplica el protector antes y reaplícalo después de sudar.</div></article>
   <article class="card pt ${P.cls}"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("spark")}</span>Noche · ${fd(d)}</span><h3>${P.t}<small>${P.s}</small></h3></div></div>
-   ${steps(PM_STEPS[S.pm])}${S.note?`<div class="note">${S.note}</div>`:""}</article>
+   ${steps(S.pmSteps)}${S.note?`<div class="note">${S.note}</div>`:""}</article>
 
   <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Semana tipo desde el ${fd(15)}</span><h3>Rotación de noche<small>Un activo fuerte por noche; nunca ácido, retinoide y peeling juntos</small></h3></div></div>
    <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${WEEK3.map((k,i)=>{const T=PM_TYPES[k];return `<div class="tile pt ${T.cls}" style="min-height:130px;${i===wdOf(d)?"outline:2px solid var(--ink);outline-offset:-2px":""}"><div class="th"><span class="num">${WD[i]}</span>${i===wdOf(d)?'<span class="pill ink">Hoy</span>':""}</div><h4>${T.t}</h4><p>${T.s}</p></div>`}).join("")}</div>
@@ -1238,7 +1317,7 @@ function renderPiel(){
      <div class="skh"><button class="skn" data-open="${n}" aria-label="Abrir ${fd(n)} en Hoy">${fdn(n)}</button><span class="mini">${cap(fd(n))}</span><span class="catchip" style="--c:${T.c};margin-left:auto">${T.t}</span></div>
      <div class="skchk"><button data-kd="${n}:skinAM" aria-pressed="${isOn(n,"skinAM")}" aria-label="${fd(n)}: rutina AM hecha">${CHECKSVG}AM</button><button data-kd="${n}:skinPM" aria-pressed="${isOn(n,"skinPM")}" aria-label="${fd(n)}: rutina PM hecha">${CHECKSVG}PM</button></div>
      <div class="skr"><b>AM</b><ol>${s.amShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
-     <div class="skr"><b>PM</b><ol>${PM_SHORT[s.pm].map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
+     <div class="skr"><b>PM</b><ol>${s.pmShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
      ${s.note?`<p class="sknote">★ ${s.note}</p>`:""}</div>`}).join("")}</div>`).join("")}</article>
 
   <article class="card c-peach pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>${fdr(1,7)}</span><h3>Fase 1: base y parches</h3><p>Limpiar, hidratar y protector. Pruebas de parche de Porcelana, vitamina C, salicílico y peeling.${SKD.gel1?` Primera noche de Porcelana en todo el rostro: ${fd(SKD.gel1)}.`:""}</p></article>
@@ -1266,73 +1345,110 @@ function areaHead(k,cls,icon,tag,title,sub,body){
 }
 const dayList=(k,fn)=>`<ul class="list-plain">${DAYS.map((D,i)=>{const n=i+1,on=isOn(n,k);return `<li class="${on?"ok":""}" style="${n===state.day?"background:color-mix(in srgb,var(--pri) 8%,transparent);border-radius:14px":""}"><span class="n" title="${fd(n)}">${fdn(n)}</span><span>${fn(D,n)}</span><button class="check" data-kd="${n}:${k}" aria-pressed="${on}" aria-label="${fd(n)} ${LABELS[k]}">${CHECKSVG}</button></li>`}).join("")}</ul>`;
 
-/* ---------- Escuelita de Ignacio: un tema profundo por semana ---------- */
+/* ---------- Aprendizaje de Ignacio (1 año): un tema por semana ---------- */
 const IGN_WEEKS=[
- {a:1,b:7,t:"Los transportes",cls:"c-rose",ic:"run",obj:"Reconocer cómo nos movemos por tierra, aire y agua, y quién nos ayuda en el camino.",mat:"Carritos o dibujos grandes, cinta de pintor, cajas, recipiente con poca agua, hojas y ceras gruesas.",con:"Es la primera semana: todo lo que aprenda aquí vuelve en las siguientes (sonidos, animales que vuelan como aviones, cohetes al espacio)."},
- {a:8,b:14,t:"Mi cuerpo y mis sentidos",cls:"c-peach",ic:"smile",obj:"Nombrar partes del cuerpo y descubrir para qué sirve cada sentido.",mat:"Espejo, telas de texturas distintas, campanita o sonajero, frutas para oler, pelota grande.",con:"Usamos el cuerpo para viajar: manos que manejan, piernas que pedalean, oídos que escuchan la sirena."},
- {a:15,b:21,t:"Los animales",cls:"c-mint",ic:"paw",obj:"Conocer dónde viven, qué comen, cómo se mueven y cómo se cuidan los animales.",mat:"Animales de juguete o láminas, hojas verdes, cajas como casitas, peluches.",con:"Los animales tienen cuerpo como nosotros (patas, alas, aletas) y algunos se mueven como los transportes."},
- {a:22,b:30,t:"El espacio",cls:"c-lav",ic:"star",obj:"Explorar el Sol, la Luna, la Tierra y los planetas, y cómo viajan los astronautas.",mat:"Linterna, pelotas de varios tamaños, papel negro, pegatinas o ceras claras, caja grande como nave.",con:"Juntamos todo: el cohete es un transporte, el astronauta usa su cuerpo y sus sentidos, y la Tierra es la casa de los animales."}
+ {a:1,b:7,t:"Cosas que se mueven",cls:"c-rose",ic:"run",obj:"Descubrir con el cuerpo que las cosas ruedan, vuelan y flotan, y unirlas a un sonido fácil de imitar.",mat:"Carro grande sin piezas sueltas, pelota blanda, caja de cartón, bañera o tina, sonajero.",con:"Primera semana: los sonidos que aprenda aquí («brum», «uuu») vuelven con los animales y con la noche."},
+ {a:8,b:14,t:"Mi cuerpo y mis sentidos",cls:"c-peach",ic:"smile",obj:"Reconocer nariz, ojos, manos y pies, y explorar texturas, sonidos y sabores con seguridad.",mat:"Espejo irrompible, telas de texturas, bolsa sensorial bien sellada, frutas blandas, música suave.",con:"Usamos las manos para empujar el carro y los pies para seguir la pelota de la semana 1."},
+ {a:15,b:21,t:"Los animales",cls:"c-mint",ic:"paw",obj:"Asociar animales con su sonido y con gestos sencillos; empezar el juego de imitar.",mat:"Libro de cartón con animales, peluches, patito de goma, Thomas (siempre con un adulto).",con:"Los animales tienen nariz, ojos y patas como vimos en su cuerpo; el pato flota como el barco."},
+ {a:22,b:30,t:"Luz, noche y rutina",cls:"c-lav",ic:"star",obj:"Explorar la luz y la oscuridad, y convertir la rutina de la noche en un momento tranquilo y predecible.",mat:"Linterna, botella sensorial sellada, papel celofán de colores, cuentos de cartón, pijama y manta.",con:"Juntamos todo: el avión sube como el cohete, los animales duermen de noche y el cuerpo descansa."}
 ];
 const IGN=[
- // Semana 1 · Transportes
- {t:"Transportes de tierra",idea:"Carro, autobús y tren llevan personas por la tierra, sobre calles y rieles.",voc:["carro","autobús","tren","rueda"],juego:"Con cinta de pintor haz una calle y una vía en el piso. Mueve cada vehículo por su camino y nómbralo.",arte:"Dibuja ruedas redondas con ceras gruesas y pégalas a un carro de papel.",mov:"Canta «Las ruedas del autobús» haciendo girar los brazos.",con:"Empieza el viaje: hoy abrimos nuestro «libro de transportes» con una hoja por día.",preg:"¿Cuál va por los rieles?",lucas:"Que empuje un carrito grande por la calle de cinta."},
- {t:"Transportes de aire",idea:"El avión y el helicóptero vuelan por el cielo. Tienen alas o hélices.",voc:["avión","helicóptero","alas","cielo"],juego:"Vuela dibujos de avión por encima de la calle de ayer. Aterricen en una «pista» de cinta.",arte:"Avión de papel doblado muy simple (lo dobla el adulto) y lo decora él.",mov:"Brazos como alas: correr despacio y aterrizar agachados.",con:"Ayer fuimos por la tierra; hoy subimos al cielo. ¿Qué es más rápido?",preg:"¿Cuál vuela por el cielo?",lucas:"Mirar el avión de papel volar y buscarlo."},
- {t:"Transportes de agua",idea:"El barco y la lancha navegan. Flotan sobre el agua.",voc:["barco","agua","flotar","remar"],juego:"En un recipiente con poca agua, prueba qué flota: barco de juguete, tapita, piedra. Supervisión continua y vaciar al terminar.",arte:"Barco con media cáscara de nuez o tapa grande y vela de papel.",mov:"Remar sentados en el piso con los brazos.",con:"Tierra, aire y ahora agua: ya conocemos tres caminos.",preg:"¿Dónde pondrías el barco?",lucas:"Chapotear con las manos en el recipiente, siempre acompañado."},
- {t:"Vehículos que ayudan",idea:"La ambulancia cura, el camión de bomberos apaga fuegos y el de basura limpia la ciudad.",voc:["ambulancia","bomberos","sirena","ayudar"],juego:"Rescate de peluches: la ambulancia lleva al peluche «enfermo» y el camión de bomberos apaga un fuego imaginario.",arte:"Pinta una sirena roja en una caja de cartón.",mov:"Hacer el sonido de la sirena subiendo y bajando la voz mientras gatean rápido.",con:"Estos vehículos van por tierra, como los del día 1.",preg:"¿Cuál ayuda a una persona enferma?",lucas:"Imitar el «uuu-uuu» de la sirena."},
- {t:"Semáforo y seguridad",idea:"Rojo: parar. Amarillo: atención. Verde: avanzar. En la calle siempre de la mano de un adulto.",voc:["rojo","verde","parar","avanzar"],juego:"Tú muestras un círculo rojo o verde; él camina o se congela. Sin correr.",arte:"Semáforo con tres círculos de papel pegados en una tira.",mov:"«Luz roja, luz verde» por el pasillo.",con:"Los carros del día 1 y la ambulancia del día 4 también respetan el semáforo.",preg:"¿Qué hacemos cuando está rojo?",lucas:"Practicar darse la mano para cruzar."},
- {t:"¿Dónde viaja cada uno?",idea:"Clasificamos: tierra, aire o agua.",voc:["tierra","aire","agua","grupo"],juego:"Tres hojas en el piso (calle, cielo, mar). Reparte seis dibujos juntos, sin exigir que acierte solo.",arte:"Pega en su libro una página con los tres grupos.",mov:"Cuando digas «¡aire!» vuelan; «¡agua!» reman; «¡tierra!» manejan.",con:"Repasamos días 1, 2 y 3 en un solo juego.",preg:"¿Dónde viajaría este avión?",lucas:"Que ponga un vehículo en cualquier hoja y lo celebramos."},
- {t:"Gran viaje de repaso",idea:"Contamos una historia con principio, viaje y llegada.",voc:["viaje","salir","llegar","casa"],juego:"Un peluche quiere visitar a la abuela: elige tres transportes y cuenten el viaje. Sigue sus ideas.",arte:"Termina el libro de transportes con una portada.",mov:"Tren humano por la casa con Lucas como vagón.",con:"Cierre de la semana. Mañana empieza el cuerpo: ¿qué partes usamos para viajar?",preg:"¿Cómo llega el peluche a casa?",lucas:"Ser un vagón del tren."},
- // Semana 2 · Cuerpo y sentidos
- {t:"Las partes de mi cuerpo",idea:"Cabeza, brazos, manos, piernas y pies. Cada parte hace algo.",voc:["cabeza","manos","piernas","pies"],juego:"Frente al espejo, toca la parte que nombras. Luego él nombra y tú tocas.",arte:"Traza su silueta en papel grande y pinten juntos.",mov:"«Cabeza, hombros, rodillas y pies».",con:"¿Qué parte usamos para manejar el carro? ¿Y para remar el barco?",preg:"¿Qué parte usamos para caminar?",lucas:"Tocar su nariz y su barriga frente al espejo."},
- {t:"Mis ojos: ver",idea:"Con los ojos vemos colores, formas y lo que está cerca y lejos.",voc:["ojos","ver","color","lejos"],juego:"«Veo, veo» con colores básicos: rojo, azul, amarillo.",arte:"Binoculares con dos tubos de papel higiénico para mirar la casa.",mov:"Parpadear rápido y lento; abrir y cerrar los ojos al ritmo.",con:"Los semáforos del día 5 los vemos con los ojos.",preg:"¿Qué cosa azul ves?",lucas:"Seguir con la mirada una pelota de color."},
- {t:"Mis oídos: escuchar",idea:"Con los oídos oímos sonidos fuertes y suaves.",voc:["oídos","sonido","fuerte","suave"],juego:"Sonidos de transportes: tú haces tren, avión o sirena y él adivina.",arte:"Maraca con un envase bien cerrado y arroz (el adulto lo sella).",mov:"Caminar fuerte como elefante y suave como ratón.",con:"Recordamos los transportes de la semana 1 por su sonido.",preg:"¿Esto suena fuerte o suave?",lucas:"Agitar la maraca."},
- {t:"Mis manos: tocar",idea:"Con las manos sentimos si algo es suave, áspero, frío o duro.",voc:["suave","áspero","frío","duro"],juego:"Bolsa de texturas: tela, esponja, cuchara, peluche. Toca y describe.",arte:"Collage de texturas pegando telas y papeles.",mov:"Aplausos rápidos y lentos; manos arriba y abajo.",con:"Con las manos armamos los barcos del día 3.",preg:"¿Esto es suave o duro?",lucas:"Explorar las telas grandes con las manos."},
- {t:"Nariz y boca: oler y probar",idea:"La nariz huele y la boca prueba sabores: dulce, ácido, salado.",voc:["nariz","oler","dulce","ácido"],juego:"Huele naranja, canela y plátano con los ojos abiertos. Prueben un trocito de fruta y digan si es dulce.",arte:"Dibuja su fruta favorita.",mov:"Respirar oliendo una flor y soplando una vela.",con:"Los animales de la próxima semana también huelen: como Thomas con sus croquetas.",preg:"¿Cómo huele el plátano?",lucas:"Oler la fruta (sin trozos pequeños a su alcance)."},
- {t:"Mi cuerpo se mueve",idea:"El cuerpo puede estirarse grande o hacerse pequeño, ir rápido o despacio.",voc:["grande","pequeño","rápido","despacio"],juego:"Contar pasos grandes y pequeños hasta el sillón: uno, dos, tres.",arte:"Huellas de pies y manos con pintura lavable.",mov:"Crecer como árbol y encogerse como semilla.",con:"Rápido como avión, despacio como barco.",preg:"¿Cuántos pasos grandes diste?",lucas:"Gatear rápido y despacio."},
- {t:"Repaso: cuidar mi cuerpo",idea:"Comer, dormir, lavarse las manos y moverse nos mantiene sanos.",voc:["lavar","dormir","comer","sano"],juego:"El peluche doctor: revisen ojos, oídos, manos y pies del peluche, y lo cuidan.",arte:"Completa la silueta del día 8 con ojos, orejas y manos.",mov:"Rutina de lavar las manos cantando.",con:"La ambulancia del día 4 ayuda cuando el cuerpo se enferma.",preg:"¿Qué hacemos para estar sanos?",lucas:"Lavarse las manos con ayuda."},
- // Semana 3 · Animales
- {t:"Animales de casa",idea:"Perro, gato y pez viven con las familias. Necesitan comida, agua y cariño.",voc:["perro","gato","cuidar","cariño"],juego:"Observar a Thomas: qué come, dónde duerme, cómo juega. Solo mirar si está tranquilo.",arte:"Retrato de Thomas con ceras.",mov:"Caminar en cuatro patas como perrito.",con:"Thomas huele como nosotros el día 12, pero ¡mucho mejor!",preg:"¿Qué necesita Thomas para estar feliz?",lucas:"Decir «guau» y señalar a Thomas desde lejos."},
- {t:"Animales de la granja",idea:"Vaca, gallina, cerdo y caballo viven en la granja y nos dan alimentos.",voc:["vaca","gallina","caballo","granja"],juego:"Granja con cajas: cada animal a su corral. Imiten sus sonidos.",arte:"Huevo de papel con pollito que sale.",mov:"Galopar como caballo.",con:"El caballo fue un transporte antes que los carros.",preg:"¿Cuál hace muuu?",lucas:"Imitar sonidos de animales."},
- {t:"Animales de la selva y la sabana",idea:"León, elefante, jirafa y mono viven lejos, en lugares salvajes. No son mascotas.",voc:["león","elefante","jirafa","selva"],juego:"Safari por la casa con los binoculares del día 9 buscando animales escondidos a la vista.",arte:"Cuello largo de jirafa con tiras de papel.",mov:"Caminar pesado como elefante, estirarse como jirafa.",con:"Usamos los ojos (día 9) para buscar animales.",preg:"¿Quién tiene una trompa larga?",lucas:"Encontrar un peluche escondido a la vista."},
- {t:"Animales del agua",idea:"Peces, ballenas, tortugas y patos viven o nadan en el agua. Los peces tienen aletas.",voc:["pez","ballena","aletas","nadar"],juego:"Pesca con un recipiente con poca agua y figuras que flotan (supervisión continua).",arte:"Pez con escamas de papel de colores.",mov:"Nadar con los brazos acostados en el piso.",con:"Nadan en el agua, como los barcos del día 3.",preg:"¿Qué animal vive en el mar?",lucas:"Tocar el agua y los juguetes grandes."},
- {t:"Animales que vuelan",idea:"Pájaros, mariposas y abejas vuelan con alas, como los aviones.",voc:["pájaro","mariposa","alas","nido"],juego:"Mira por la ventana: ¿ves pájaros? Cuenten cuántos.",arte:"Mariposa con pintura doblando el papel a la mitad.",mov:"Aletear suave como mariposa y rápido como abeja.",con:"Alas de pájaro y alas de avión (día 2): ¿en qué se parecen?",preg:"¿Qué usa el pájaro para volar?",lucas:"Aletear los brazos."},
- {t:"¿Qué comen y cómo se mueven?",idea:"Unos animales comen plantas, otros comen carne. Unos saltan, otros reptan o corren.",voc:["comer","saltar","reptar","correr"],juego:"Dale de comer a cada animal de juguete: hojas para la vaca, pescado para el gato.",arte:"Hojas verdes recortadas para los animales que comen plantas.",mov:"Saltar como rana, reptar como serpiente, correr como perro.",con:"Nuestro cuerpo (semana 2) también salta y corre.",preg:"¿Qué come la vaca?",lucas:"Saltar tomado de las manos."},
- {t:"Repaso: el gran zoológico",idea:"Juntamos animales de casa, granja, selva, agua y cielo.",voc:["zoológico","casa","granja","cielo"],juego:"Arma un zoológico con cajas y deja que él sea el guía que presenta a cada animal.",arte:"Entrada del zoológico dibujada en una caja.",mov:"Desfile de animales con música.",con:"Llegamos al zoológico en autobús (día 1). Mañana: el espacio.",preg:"¿Qué animal te gustaría visitar?",lucas:"Ser un animal del desfile."},
- // Semana 4 · El espacio
- {t:"El Sol y el día",idea:"El Sol es una estrella que nos da luz y calor. Nunca se mira directo.",voc:["Sol","luz","calor","día"],juego:"Con una linterna y una pelota, ilumina un lado: ahí es de día. Nunca la luz a los ojos.",arte:"Sol grande con rayos de papel amarillo.",mov:"Despertar como el Sol: estirarse grande.",con:"Las plantas y los animales (semana 3) necesitan el Sol.",preg:"¿Qué nos da el Sol?",lucas:"Buscar la luz de la linterna en la pared."},
- {t:"La Luna y la noche",idea:"La Luna brilla de noche y cambia de forma: llena, media, delgadita.",voc:["Luna","noche","estrella","brillar"],juego:"Apaga la luz y con la linterna proyecta una Luna en el techo.",arte:"Luna y estrellas con cera blanca sobre papel negro.",mov:"Moverse como si pesaran poquito, como en la Luna.",con:"Los búhos (animales) despiertan de noche.",preg:"¿Cuándo vemos la Luna?",lucas:"Mirar las estrellas pegadas en el techo."},
- {t:"La Tierra, nuestra casa",idea:"La Tierra es el planeta donde vivimos. Tiene agua azul y tierra verde.",voc:["Tierra","planeta","azul","verde"],juego:"En una pelota grande, pega papel azul (agua) y verde (tierra).",arte:"Dibujar su casa dentro de un círculo grande.",mov:"Girar despacio como la Tierra.",con:"Aquí viven todos los animales de la semana 3.",preg:"¿Cómo se llama nuestro planeta?",lucas:"Rodar la pelota-Tierra."},
- {t:"Planetas cercanos",idea:"Mercurio y Venus están cerca del Sol; Marte es rojizo.",voc:["Mercurio","Venus","Marte","cerca"],juego:"Pon el Sol de papel y coloca los planetas cerca o lejos.",arte:"Marte con pintura roja y huellas de dedos.",mov:"Caminar cerca del Sol (calor) y lejos (frío).",con:"Cerca y lejos, como vimos con los ojos el día 9.",preg:"¿Cuál es rojo?",lucas:"Pintar con dedos."},
- {t:"Planetas gigantes",idea:"Júpiter es el más grande; Saturno tiene anillos.",voc:["Júpiter","Saturno","anillos","gigante"],juego:"Ordena pelotas de más pequeña a más grande.",arte:"Saturno con un plato de papel como anillo.",mov:"Hacerse gigante y pequeñito (día 13).",con:"Grande y pequeño, como en la semana del cuerpo.",preg:"¿Qué tiene Saturno alrededor?",lucas:"Encestar pelotas en una caja."},
- {t:"Cohetes: transporte al espacio",idea:"Para ir al espacio usamos cohetes. Es el transporte más rápido.",voc:["cohete","despegar","espacio","rápido"],juego:"Cuenta regresiva 3, 2, 1… ¡despegue! Salta desde agachado.",arte:"Cohete con tubo de cartón y fuego de papel.",mov:"Despegar y aterrizar suave.",con:"Otro transporte más para su libro de la semana 1: ¡por el espacio!",preg:"¿Qué transporte va al espacio?",lucas:"Contar juntos y saltar con las manos tomadas."},
- {t:"Astronautas",idea:"Los astronautas usan traje y casco. En el espacio flotan.",voc:["astronauta","casco","flotar","traje"],juego:"Nave con una caja abierta: el astronauta revisa su cuerpo (ojos, oídos, manos) antes de salir. Sin cascos cerrados ni bolsas.",arte:"Insignia de astronauta con su nombre.",mov:"Caminar lento como flotando.",con:"El astronauta usa sus sentidos (semana 2) para trabajar.",preg:"¿Qué se pone el astronauta?",lucas:"Ser copiloto dentro de la caja."},
- {t:"Un viaje por el sistema solar",idea:"Visitamos Sol, Luna, Tierra y planetas en orden, sin exigir memoria.",voc:["viaje","planetas","orden","visitar"],juego:"Pon las láminas de planetas por la casa y viajen en la nave de uno en uno.",arte:"Mapa del viaje con pegatinas.",mov:"Tren espacial por la casa (como el tren del día 7).",con:"Usamos transportes, cuerpo y ¿qué animal llevaríamos?",preg:"¿Cuál te gustaría volver a visitar?",lucas:"Ir en el tren espacial."},
- {t:"Emociones del viajero",idea:"Al viajar podemos sentir alegría, miedo o nervios, y está bien pedir compañía.",voc:["alegre","miedo","valiente","compañía"],juego:"Un peluche quiere ir al espacio pero tiene miedo. ¿Cómo lo acompañamos?",arte:"Caritas de emociones en platos de papel.",mov:"Abrazo de oso y respiración de cohete (inhalar, soplar).",con:"Como el peluche del gran viaje del día 7.",preg:"¿Qué le decimos al peluche?",lucas:"Dar un abrazo al peluche."},
- {t:"Mi gran exposición",idea:"Mostrar lo que más le gustó del mes: transportes, cuerpo, animales o espacio.",voc:["mostrar","favorito","aprendí","juntos"],juego:"Monta una mesa con tres trabajos elegidos por Ignacio e invita a la familia a escucharlo.",arte:"Diploma de «Explorador del mes».",mov:"Desfile final con música.",con:"Cierre de todo el mes: las cuatro semanas juntas.",preg:"¿Qué quieres mostrarnos primero?",lucas:"Aplaudir y entregar el diploma."}
+ {t:"El carro que rueda",idea:"Las ruedas giran y el carro avanza cuando lo empujamos.",voc:["carro","brum"],juego:"Empuja un carro grande por la alfombra y deja que lo busque. Luego ponlo a su alcance para que él lo empuje.",mov:"Gatear o caminar detrás del carro.",cancion:"«Las ruedas del autobús» girando sus manitos.",habla:"Di «brum brum» cada vez que el carro se mueva y espera a que lo intente.",con:"Empezamos con algo que ya le gusta: moverse y perseguir.",seg:"Solo juguetes grandes, sin piezas que quepan en su boca."},
+ {t:"La pelota que rueda",idea:"La pelota rueda lejos y vuelve cuando se la devolvemos.",voc:["pelota","toma"],juego:"Sentados frente a frente con las piernas abiertas, rueden una pelota blanda entre los dos.",mov:"Sentarse estable y estirar los brazos para atraparla.",cancion:"Aplaude cada vez que la pelota llega.",habla:"«¡Toma!» al dártela y «¡Ahí va!» al rodarla.",con:"Rueda como el carro de ayer.",seg:"Pelota blanda y grande; superficie libre de objetos."},
+ {t:"El avión que vuela",idea:"Algunas cosas vuelan alto por el cielo.",voc:["avión","arriba"],juego:"Mueve un avión de juguete arriba y abajo mientras lo sigue con la mirada.",mov:"Levántalo suavemente «como avión» con apoyo firme, sin sacudidas.",cancion:"«Arriba, arriba, arriba… ¡y abajo!»",habla:"Sube la voz en «arriba» y bájala en «abajo».",con:"Mañana veremos lo que va por el agua.",seg:"Nunca lanzarlo al aire; movimientos lentos."},
+ {t:"El barco en el agua",idea:"Algunas cosas flotan en el agua.",voc:["agua","barco"],juego:"En el baño, deja un barquito o tapa grande flotando y que lo empuje y lo hunda.",mov:"Chapotear con las manos.",cancion:"«Rema, rema, rema tu barquito» meciéndolo suave.",habla:"«¡Chof!» cuando salpica y «flota» cuando sube.",con:"El carro rueda, el avión vuela y el barco flota.",seg:"Supervisión constante; nunca solo con agua, ni un segundo."},
+ {t:"Sonidos fuertes y suaves",idea:"Los transportes hacen ruidos: la sirena suena fuerte.",voc:["uuu","pip"],juego:"Haz «uuu-uuu» fuerte y luego muy suave, y observa su reacción. Dale un sonajero para contestar.",mov:"Mover el sonajero rápido y lento.",cancion:"Sonajero al ritmo de una canción.",habla:"Imita cualquier sonido que haga él: ¡es una conversación!",con:"Los sonidos de esta semana son sus primeras «palabras».",seg:"Volumen bajo cerca de sus oídos."},
+ {t:"Adentro y afuera",idea:"Las cosas se guardan en una caja y se sacan.",voc:["adentro","afuera"],juego:"Una caja como garaje: meter y sacar carros y pelotas. Déjalo repetir todo lo que quiera.",mov:"Agarrar, soltar y meter con las dos manos.",cancion:"«Adentro… ¡afuera!» con sorpresa.",habla:"Nombra cada cosa al meterla.",con:"Guardamos los carros y la pelota de días anteriores.",seg:"Caja sin grapas ni cintas sueltas."},
+ {t:"Paseo de los transportes",idea:"En la calle hay carros, motos y autobuses de verdad.",voc:["mira","carro"],juego:"Paseo corto o ventana: señala carros y autobuses y haz su sonido.",mov:"Caminar de la mano o gatear hasta la ventana.",cancion:"La canción del autobús en el paseo.",habla:"Señala y di «¡mira, carro!»; espera a que él señale.",con:"Repasamos todo lo que se mueve de la semana.",seg:"En brazos o coche cerca de la calle; ventanas con protección."},
+ {t:"¿Dónde está la nariz?",idea:"Tenemos nariz, ojos y boca en la cara.",voc:["nariz","ojos"],juego:"Toca tu nariz y la suya diciendo «nariz». Repite con ojos y boca.",mov:"Llevar la mano a la cara imitándote.",cancion:"«Cabeza, hombros, rodillas y pies» muy despacio.",habla:"Pregunta «¿dónde está la nariz?» y señálala tú hasta que él lo intente.",con:"Con los ojos seguimos el avión de la semana pasada.",seg:"Uñas cortas para que no se arañe."},
+ {t:"Cucú, ¡aquí está!",idea:"Las cosas siguen ahí aunque no las veamos.",voc:["cucú","aquí"],juego:"Escóndete detrás de una manta y aparece. Luego esconde un juguete a medias bajo una tela.",mov:"Tirar de la tela para encontrarlo.",cancion:"«¿Dónde está Ignacio? ¡Aquí está!»",habla:"Pausa antes del «¡aquí está!» para crear expectativa.",con:"Como el carro que se escondía en la caja-garaje.",seg:"Telas ligeras, nunca sobre su cara por mucho rato."},
+ {t:"Manos que sienten",idea:"Las cosas pueden ser suaves, ásperas, frías o blanditas.",voc:["suave","frío"],juego:"Pasa por sus manos telas distintas, una esponja y una cuchara fría.",mov:"Agarrar, apretar y soltar.",cancion:"«Palmas, palmitas».",habla:"Nombra cómo se siente cada cosa con voz distinta.",con:"Con las manos empujaba el carro y metía cosas en la caja.",seg:"Nada que pueda llevarse a la boca y romper."},
+ {t:"Oídos que escuchan",idea:"Hay sonidos en todas partes: música, agua, voces.",voc:["escucha","música"],juego:"Toca dos instrumentos caseros (olla y cuchara de madera, sonajero) y deja que elija.",mov:"Golpear suave con la cuchara.",cancion:"Baila con él en brazos una canción que te guste.",habla:"Pon la mano en tu oreja y di «escucha».",con:"Recuerda la sirena fuerte y suave del día 5.",seg:"Sin ruidos muy fuertes cerca de su cara."},
+ {t:"Oler y probar",idea:"Las frutas huelen rico y tienen sabores distintos.",voc:["rico","ñam"],juego:"Deja que huela y pruebe trozos blandos de plátano o mango, sentado y acompañado.",mov:"Pinza con los dedos para tomar trocitos.",cancion:"«Ñam, ñam» al comer.",habla:"«¡Qué rico!» con cara de gusto.",con:"Los animales también huelen y comen; lo veremos pronto.",seg:"Trozos blandos del tamaño adecuado, siempre sentado y vigilado."},
+ {t:"Pies que caminan",idea:"Los pies sienten el suelo: blando, liso, cosquilloso.",voc:["pies","paso"],juego:"Camino de texturas en el suelo (toalla, alfombra, cojín) para pisar descalzo con tu ayuda.",mov:"Pasos con apoyo de tus manos o de un mueble.",cancion:"«Este dedito compró un huevito» con los dedos del pie.",habla:"Cuenta «un paso, dos pasos».",con:"Con los pies seguía la pelota y el carro.",seg:"Superficie firme y sin esquinas cerca."},
+ {t:"Baño de las partes del cuerpo",idea:"Nombramos el cuerpo mientras lo cuidamos.",voc:["manos","barriga"],juego:"En el baño, lava cada parte nombrándola: manos, barriga, pies.",mov:"Chapotear y patear el agua.",cancion:"Canción inventada: «Así me lavo las manos…».",habla:"Deja pausas para que él toque la parte que nombras.",con:"El agua del barco del día 4 vuelve, ahora para cuidarnos.",seg:"Supervisión constante y agua tibia."},
+ {t:"El perro: ¡guau!",idea:"Thomas es un perro y dice «guau».",voc:["perro","guau"],juego:"En tus brazos, miren a Thomas tranquilo y digan «guau». Si están calmados, una caricia suave juntos.",mov:"Señalar al perro.",cancion:"«Guau, guau, dice el perrito».",habla:"Cada vez que lo vea: «¡Mira, Thomas! Guau».",con:"Thomas tiene nariz y ojos como él (semana 2).",seg:"Siempre un adulto entre ambos; nunca solos."},
+ {t:"Los animales de la granja",idea:"Cada animal hace un sonido: vaca «muu», pollito «pío».",voc:["muu","pío"],juego:"Libro de cartón con animales: señala y haz el sonido. Déjalo pasar las páginas.",mov:"Pasar páginas gruesas.",cancion:"«En la granja de mi tío».",habla:"Pregunta «¿cómo hace la vaca?» y responde tú con alegría.",con:"Sonidos como los «brum» de la semana 1.",seg:"Libro de cartón resistente."},
+ {t:"El pato en el agua",idea:"Los patos nadan y flotan como el barco.",voc:["pato","cuac"],juego:"Patito de goma en la bañera: esconderlo bajo el agua y que salga.",mov:"Agarrar el pato que flota.",cancion:"«Los patitos en el agua».",habla:"«¡Cuac, cuac!» cada vez que aparece.",con:"Flota como el barco del día 4.",seg:"Supervisión constante."},
+ {t:"Los pájaros vuelan",idea:"Los pájaros tienen alas y vuelan como el avión.",voc:["pájaro","pío"],juego:"En la ventana o en un parque busquen pájaros. Mueve tus brazos como alas.",mov:"Imitar las alas con los brazos.",cancion:"«Pajarito que cantas».",habla:"Señala y di «¡pío, pío!».",con:"Vuelan arriba como el avión (día 3).",seg:"Ventanas con protección."},
+ {t:"Gatear como animales",idea:"Los animales se mueven de formas distintas.",voc:["corre","salta"],juego:"Gatea tú como perrito y él te persigue. Luego «saltos» de conejo con tu ayuda.",mov:"Gatear rápido y lento.",cancion:"Música alegre para moverse.",habla:"Nombra el animal que imitas.",con:"Usamos el cuerpo que exploramos la semana pasada.",seg:"Espacio despejado y suave."},
+ {t:"Dar de comer al peluche",idea:"Cuidamos a los animales dándoles comida y cariño.",voc:["come","abrazo"],juego:"Con una cuchara y un plato de juguete, «dale de comer» a un peluche y luego un abrazo.",mov:"Usar la cuchara con la mano.",cancion:"«Ñam, ñam, come el osito».",habla:"«¿Le das un abrazo?» y abrázalo tú primero.",con:"Como Thomas, que también come y recibe cariño.",seg:"Utensilios de plástico grande."},
+ {t:"La fiesta de los animales",idea:"Repasamos los animales con sus sonidos.",voc:["guau","muu"],juego:"Pon tres peluches o láminas y haz el sonido de uno; ayúdalo a señalar el correcto.",mov:"Bailar con los peluches.",cancion:"Todas las canciones de animales de la semana.",habla:"Celebra cualquier intento de sonido.",con:"Cierre de la semana de animales.",seg:"Peluches sin ojos o botones sueltos."},
+ {t:"El Sol y la luz",idea:"El Sol nos da luz de día y hace sombras.",voc:["luz","sol"],juego:"Junto a una ventana soleada, mueve tu mano para hacer sombras en el piso.",mov:"Tocar la sombra con la mano.",cancion:"«Sol, solecito, caliéntame un poquito».",habla:"«¡Mira, la luz!»",con:"Los pájaros y los animales salen de día.",seg:"Nunca mirar el Sol directo."},
+ {t:"Seguir la linterna",idea:"La luz se mueve y podemos seguirla.",voc:["luz","aquí"],juego:"En penumbra, mueve una linterna despacio por la pared y el techo para que la siga.",mov:"Gatear hacia la luz en la pared.",cancion:"Canta suave mientras la luz baila.",habla:"«¿Dónde está la luz? ¡Aquí!» como en el cucú.",con:"Buscar y encontrar como en el juego del día 9.",seg:"Nunca apuntar la luz a sus ojos."},
+ {t:"La Luna y el cuento",idea:"De noche sale la Luna y nos preparamos para dormir.",voc:["luna","noche"],juego:"Cuento de cartón sobre la noche, con voz tranquila.",mov:"Mecerse juntos.",cancion:"Canción de cuna favorita.",habla:"Di «buenas noches» a cada cosa: luna, peluche, Thomas.",con:"Los animales también duermen de noche.",seg:"Ambiente tranquilo, sin pantallas."},
+ {t:"Estrellas que brillan",idea:"Las estrellas brillan en el cielo oscuro.",voc:["brilla","estrella"],juego:"Botella sensorial bien sellada con agua y brillos: agitar y mirar cómo caen.",mov:"Agitar y rodar la botella.",cancion:"«Estrellita, ¿dónde estás?».",habla:"«¡Brilla, brilla!» con las manos abiertas.",con:"Rueda como la pelota del día 2.",seg:"Tapa sellada con pegamento y cinta; revisar siempre."},
+ {t:"Colores de luz",idea:"La luz puede verse de colores.",voc:["rojo","azul"],juego:"Pega papel celofán de colores en una ventana y mira cómo se tiñe la luz.",mov:"Tocar los colores en la ventana.",cancion:"Canción de los colores.",habla:"Nombra un color cada vez que lo toque.",con:"Luz del Sol (día 22) y colores nuevos.",seg:"Celofán bien pegado, fuera de su boca."},
+ {t:"La rutina de la noche",idea:"Cada noche hacemos lo mismo: baño, pijama, cuento, dormir.",voc:["baño","dormir"],juego:"Hazlo con calma nombrando cada paso; deja que elija entre dos pijamas.",mov:"Ayudar a meter brazos y piernas.",cancion:"La misma canción de cuna cada noche.",habla:"Anticipa: «Ahora baño, después pijama».",con:"El baño de las partes del cuerpo (día 14).",seg:"Temperatura del agua comprobada."},
+ {t:"Arriba como un cohete",idea:"Los cohetes suben muy alto, como el avión.",voc:["arriba","¡ya!"],juego:"Cuenta «tres, dos, uno… ¡arriba!» y levántalo suave, con apoyo firme.",mov:"Ponerse de pie con apoyo al decir «¡arriba!».",cancion:"Cuenta regresiva cantada.",habla:"Espera a que él diga o gesticule «¡ya!» para despegar.",con:"Sube como el avión de la semana 1.",seg:"Movimientos lentos, sin lanzarlo."},
+ {t:"Álbum del mes",idea:"Recordamos lo que hicimos con fotos.",voc:["mira","yo"],juego:"Mira con él fotos del mes en el teléfono o impresas y nómbralas.",mov:"Señalar las fotos.",cancion:"Su canción favorita del mes.",habla:"«¿Quién es? ¡Ignacio!»",con:"Repaso de las cuatro semanas.",seg:"Fotos impresas grandes o plastificadas."},
+ {t:"Fiesta en familia",idea:"Celebramos todo lo que aprendió.",voc:["bravo","otra vez"],juego:"Repite su juego favorito del mes con toda la familia mirando.",mov:"Bailar y aplaudir juntos.",cancion:"Todas las favoritas.",habla:"«¡Bravo, Ignacio!» y aplausos.",con:"Cierre del mes: carros, cuerpo, animales y luz.",seg:"Espacio despejado."}
 ];
-DAYS.forEach((D,i)=>{const g=IGN[i]; D.iT=g.t; D.iI=g.idea; D.iJ=g.juego; D.iP=g.preg;});
+DAYS.forEach((D,i)=>{const g=IGN[i]; D.iT=g.t; D.iI=g.idea; D.iJ=g.juego; D.iP=g.habla;});
 const ignWeek=n=>IGN_WEEKS.find(w=>n>=w.a&&n<=w.b);
 function ignDetail(n){
-  const g=IGN[n-1], W=ignWeek(n);
+  const g=IGN[n-1];
   return `<div class="ignd">
-   <div class="kv"><div><span class="lbl">Idea (2 min)</span>${esc(g.idea)}</div></div>
+   <div class="kv"><div><span class="lbl">Qué descubre</span>${esc(g.idea)}</div></div>
    <div class="ignvoc">${g.voc.map(v=>`<span>${esc(v)}</span>`).join("")}</div>
-   <div class="kv"><div><span class="lbl">Juego (5 min)</span>${esc(g.juego)}</div><div><span class="lbl">Arte (5 min)</span>${esc(g.arte)}</div><div><span class="lbl">Movimiento o canción (3 min)</span>${esc(g.mov)}</div>
-   <div><span class="lbl">Conecta con lo anterior</span>${esc(dd(g.con))}</div><div><span class="lbl">Pregunta para cerrar</span>${esc(g.preg)}</div><div><span class="lbl">Para Lucas</span>${esc(g.lucas)}</div></div></div>`;
+   <div class="kv"><div><span class="lbl">Juego (5 min)</span>${esc(g.juego)}</div><div><span class="lbl">Movimiento</span>${esc(g.mov)}</div><div><span class="lbl">Canción</span>${esc(g.cancion)}</div>
+   <div><span class="lbl">Para decirle</span>${esc(g.habla)}</div><div><span class="lbl">Conecta con lo anterior</span>${esc(dd(g.con))}</div><div><span class="lbl">Seguridad</span>${esc(g.seg)}</div></div></div>`;
 }
 
-/* ---------- IGNACIO ---------- */
+/* ---------- NIÑOS: aprendizaje + cuidado ---------- */
+let niTab="apr", careYM=null;
+const CARE_K=[["ei","Ignacio · Escuelita","#D9812E","",""],["et","Escuelita tarde","#B8741A","et","+"],["fm","Lucas · Fátima mañana","#2F6FD1","fm",""],["ft","Fátima tarde","#6A5AE0","ft","+"],["fb","Fátima cuida a ambos","#D9467F","fb","+"]];
+function care(){ const c=state.care||(state.care={}); c.rates=Object.assign({fm:3,ft:3,fb:5,et:5,em:70},c.rates||{}); c.days=c.days||{}; c.nofee=c.nofee||{}; return c; }
+function careMonth(){ if(!careYM){const n=new Date();careYM=[n.getFullYear(),n.getMonth()];} return careYM; }
+function careSum(ym){
+  const C=care(), R=C.rates, days=Object.entries(C.days).filter(([k])=>k.startsWith(ym));
+  const cnt=k=>days.filter(([,v])=>v[k]).length;
+  const fee=C.nofee[ym]?0:+R.em||0, esc2=cnt("et")*(+R.et||0), fat=cnt("fm")*(+R.fm||0)+cnt("ft")*(+R.ft||0)+cnt("fb")*(+R.fb||0);
+  return {fee,esc2,fat,total:fee+esc2+fat,cnt,days:days.filter(([,v])=>Object.values(v).some(Boolean)).length};
+}
+function syncCare(ym){
+  const F=fin(), s=careSum(ym), id="care-"+ym, [y,m]=ym.split("-").map(Number), last=new Date(y,m,0).getDate();
+  let cat=F.cats.find(c=>c.id==="cuidado"); if(!cat){cat={id:"cuidado",name:"Cuidado de niños",color:"#D9467F",op:"gasto"};F.cats.push(cat);}
+  F.tx=F.tx.filter(t=>t.id!==id);
+  if(s.total>0) F.tx.push({id,date:ym+"-"+pad2(last),cat:"cuidado",op:"gasto",amt:Math.round(s.total*100)/100,note:`Automático desde Niños → Cuidado (${s.days} días)`,auto:1});
+}
 function renderIgn(){
-  const d=state.day, g=IGN[d-1], W=ignWeek(d);
-  $("#v-ign").innerHTML=`${stickBar("Ignacio",Math.round(doneOf("ign")/30*100),`semana: ${W.t}`)}<h2 class="h2">Ignacio</h2><p class="lead">Un tema a fondo cada semana. Cada día trae un subtema con idea, palabras nuevas, juego, arte, movimiento y una conexión con lo que ya aprendió. Unos 15 minutos, o menos si pierde interés. Piezas grandes, materiales aptos y supervisión; nada pequeño al alcance de Lucas.</p>
+  const d=state.day;
+  const pills=`<div class="subtabs" role="tablist"><button role="tab" data-nitab="apr" aria-selected="${niTab==="apr"}">${ico("star")}Aprendizaje</button><button role="tab" data-nitab="care" aria-selected="${niTab==="care"}">${ico("ok")}Cuidado</button></div>`;
+  if(niTab==="care"){ renderCare(pills); return; }
+  const g=IGN[d-1], W=ignWeek(d);
+  $("#v-ign").innerHTML=`${stickBar("Aprendizaje",Math.round(doneOf("ign")/30*100),`semana: ${W.t}`)}<h2 class="h2">Niños</h2>${pills}
+  <p class="lead">Aprendizaje de Ignacio (1 año): un tema por semana, con juegos cortos de unos 10 minutos repartidos en el día. Todo con supervisión y objetos más grandes que su boca.</p>
   ${areaHead("ign","c-peach","star",`Semana: ${W.t}`,g.t,"",ignDetail(d))}
   ${IGN_WEEKS.map(w=>{const days=Array.from({length:w.b-w.a+1},(_,i)=>w.a+i), n=days.filter(x=>isOn(x,"ign")).length;return `<article class="course pt ${w.cls} ignweek"><div class="ch"><span class="ic">${ico(w.ic)}</span><span>${fdr(w.a,w.b)}</span><span class="score">${n}/${days.length}</span></div><h3>${w.t}</h3>
    <div class="kv"><div><span class="lbl">Objetivo</span>${w.obj}</div><div><span class="lbl">Materiales de la semana</span>${w.mat}</div><div><span class="lbl">Cómo se conecta</span>${w.con}</div></div>
-   <ul class="list-plain">${days.map(k=>{const on=isOn(k,"ign");return `<li class="${on?"ok":""}"><span class="n" title="${fd(k)}">${fdn(k)}</span><details ${k===d?"open":""}><summary><b>${esc(IGN[k-1].t)}</b><br><span class="mini">${esc(IGN[k-1].idea)}</span></summary>${ignDetail(k)}</details><button class="check" data-kd="${k}:ign" aria-pressed="${on}" aria-label="${fd(k)} Ignacio">${CHECKSVG}</button></li>`}).join("")}</ul>
+   <ul class="list-plain">${days.map(k=>{const on=isOn(k,"ign");return `<li class="${on?"ok":""}"><span class="n" title="${fd(k)}">${fdn(k)}</span><details ${k===d?"open":""}><summary><b>${esc(IGN[k-1].t)}</b><br><span class="mini">${esc(IGN[k-1].idea)}</span></summary>${ignDetail(k)}</details><button class="check" data-kd="${k}:ign" aria-pressed="${on}" aria-label="${fd(k)} aprendizaje">${CHECKSVG}</button></li>`}).join("")}</ul>
    <div class="ft"><span class="dots">${days.map(x=>`<i class="${isOn(x,"ign")?"on":""}"></i>`).join("")}</span><span>${n} de ${days.length} sesiones</span></div></article>`}).join("")}
   <article class="card c-sky pt" style="margin-top:16px"><span class="tag"><span class="ic">${ico("users")}</span>Ignacio y Lucas</span><h3>Juego libre con ambos niños</h3>
-   <ul class="list-plain" style="margin-top:6px!important">${WD.map((w,i)=>`<li style="grid-template-columns:44px 1fr;${i===wdOf(d)?"font-weight:700":""}"><span class="n">${WDs[i]}</span><span><b>${w}:</b> ${NINOS[i]}</span></li>`).join("")}</ul>
-   <p class="mini">El juego libre va aparte de la escuelita. Para atención individual, otro adulto cuida al otro niño.</p></article>`;
+   <ul class="list-plain" style="margin-top:6px!important">${WD.map((w,i)=>`<li style="grid-template-columns:44px 1fr;${i===wdOf(d)?"font-weight:700":""}"><span class="n">${WDs[i]}</span><span><b>${w}:</b> ${NINOS[i]}</span></li>`).join("")}</ul></article>`;
+}
+function renderCare(pills){
+  const C=care(), R=C.rates, cur=fin().cur, [y,m]=careMonth(), ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), S=careSum(ym), today=isoOf(new Date());
+  const price=k=>k==="ei"?"":`${cur}${NF.format(+R[k]||0)}`;
+  $("#v-ign").innerHTML=`${stickBar("Cuidado",Math.round(S.days/last*100),`${cur}${NF.format(S.total)} este mes`)}<h2 class="h2">Niños</h2>${pills}
+  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">Marca cada día quién cuidó a los niños. En un mismo día puedes marcar varias opciones. El total del mes pasa solo a Finanzas como gasto «Cuidado de niños».</p>
+   <div class="fnav"><button class="iconbtn" data-care="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-care="next" aria-label="Mes siguiente">›</button></div></div>
+  <div class="kpis">
+   <div class="kpi fill"><div class="top"><span class="ib">${ico("wallet")}</span><span class="badge">en Finanzas</span></div><span class="lb">Total del mes</span><span class="v">${cur}${NF.format(S.total)}</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("star")}</span></div><span class="lb">Escuelita</span><span class="v">${cur}${NF.format(S.fee+S.esc2)}</span><span class="lb" style="font-size:11.5px">Mensualidad ${cur}${NF.format(S.fee)} + ${S.cnt("et")} tardes</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("users")}</span></div><span class="lb">Fátima</span><span class="v">${cur}${NF.format(S.fat)}</span><span class="lb" style="font-size:11.5px">${S.cnt("fm")} mañanas · ${S.cnt("ft")} tardes · ${S.cnt("fb")} con ambos</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("cal")}</span></div><span class="lb">Días con cuidado</span><span class="v">${S.days}</span></div>
+  </div>
+  <div class="grid">
+  <article class="card c-white two"><div class="hd"><div style="flex:1"><h3>Checklist del mes<small>Toca para marcar; puedes combinar varias en el mismo día</small></h3></div></div>
+   <div class="carelist">${Array.from({length:last},(_,i)=>{const iso=ym+"-"+pad2(i+1), D=C.days[iso]||{}, t=new Date(iso+"T12:00:00"), sub=CARE_K.reduce((a,[k])=>a+(D[k]&&k!=="ei"?+R[k]||0:0),0);
+    return `<div class="carerow ${iso===today?"today":""} ${t.getDay()===0||t.getDay()===6?"wknd":""}"><span class="cd"><b>${i+1}</b>${WDs[(t.getDay()+6)%7]}</span><span class="cchips">${CARE_K.map(([k,n,c])=>`<button class="cchip" style="--c:${c}" data-carek="${iso}|${k}" aria-pressed="${!!D[k]}">${n}${k!=="ei"?` <small>${price(k)}</small>`:""}</button>`).join("")}</span><span class="csub">${sub?cur+NF.format(sub):""}</span></div>`}).join("")}</div></article>
+  <article class="card pt c-peach third" style="align-self:start"><span class="tag"><span class="ic">${ico("wallet")}</span>Tarifas</span><h3 style="margin-bottom:10px">Precios del cuidado<small>Cámbialos si suben o bajan</small></h3>
+   <div class="frm">${[["em","Escuelita · mensualidad"],["et","Escuelita · tarde extra"],["fm","Fátima · mañana"],["ft","Fátima · tarde extra"],["fb","Fátima · extra por los dos niños"]].map(([k,n])=>`<div class="full"><label class="l" for="rate-${k}">${n} (${esc(cur)})</label><input type="text" inputmode="decimal" id="rate-${k}" data-rate="${k}" value="${+R[k]||0}"></div>`).join("")}</div>
+   <label class="mini" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="careFee" ${C.nofee[ym]?"":"checked"}> Cobrar la mensualidad de la escuelita este mes</label>
+   <div class="kv" style="margin-top:12px"><div><span class="lbl">Resumen</span>Mensualidad ${cur}${NF.format(S.fee)} · Tardes escuelita ${cur}${NF.format(S.esc2)} · Fátima ${cur}${NF.format(S.fat)} · <b>Total ${cur}${NF.format(S.total)}</b></div></div>
+   <div class="row"><button class="btn" data-goto="fin">Ver en Finanzas</button></div></article>
+  </div>`;
 }
 
 /* ---------- THOMAS ---------- */
@@ -1477,8 +1593,10 @@ function renderPar(){
    ${statTile("c-mint","var(--ac-mint)","home",30-outN,"citas en casa","")}
    ${statTile("c-lav","var(--ac-lav)","star",2,"noches de cine","")}
   </div>
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Tablero de citas<small>Rosa: salida · lila: en casa</small></h3></div><span class="select">${doneN}/30</span></div>
-   <div class="tiles">${DAYS.map((D,i)=>{const n=i+1,on=isOn(n,"pair");return `<div class="tile ${D.out?"c-pink":"c-lav"} ${on?"ok":""}"><div class="th"><span class="num">${cap(fd(n))} · ${esc(D.pM)}</span><button class="check" data-kd="${n}:pair" aria-pressed="${on}" aria-label="${fd(n)} pareja">${CHECKSVG}</button></div><h4>${esc(D.pT)}</h4><p>${esc(D.p)}</p><div class="ft"><span class="pill ${D.out?"":"home"}">${D.out?"Salida":"En casa"}</span></div></div>`}).join("")}</div></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><h3>Tablero de citas<small>Rosa: salida · lila: en casa</small></h3></div><span class="select">${doneN}/30</span><button class="btn" data-ui="hideDates" aria-expanded="${!state.hideDates}">${state.hideDates?"Mostrar":"Ocultar"}</button></div>
+   ${state.hideDates?`<p class="mini" style="margin:0">Tablero oculto. Toca «Mostrar» para verlo.</p>`:`
+   <div class="tiles">${DAYS.map((D,i)=>{const n=i+1,on=isOn(n,"pair");return `<div class="tile ${D.out?"c-pink":"c-lav"} ${on?"ok":""}"><div class="th"><span class="num">${cap(fd(n))} · ${esc(D.pM)}</span><button class="check" data-kd="${n}:pair" aria-pressed="${on}" aria-label="${fd(n)} pareja">${CHECKSVG}</button></div><h4>${esc(D.pT)}</h4><p>${esc(D.p)}</p><div class="ft"><span class="pill ${D.out?"":"home"}">${D.out?"Salida":"En casa"}</span></div></div>`}).join("")}</div>`}</article>
+  ${pcBoard()}
   <article class="card c-yel pt wide" style="margin-top:16px"><span class="tag"><span class="ic">${ico("pen")}</span>Día 28</span><h3 style="margin-bottom:6px">Citas para repetir el próximo mes</h3><p class="mini">Escojan dos, sin evaluar al otro.</p><textarea data-gnote="pareja" placeholder="Nuestras dos citas favoritas…">${esc(state.notes.pareja||"")}</textarea></article>`;
 }
 
@@ -1805,7 +1923,7 @@ function renderWall(){
   const rems=f.rem.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1));
   const filled=Object.values(f.days).reduce((a,d)=>a+FW_K.filter(k=>d[k[0]]).length,0), nf=FW_K.reduce((a,[k])=>a+f.favs[k].length,0);
   $("#v-wall").innerHTML=`<h2 class="h2">Calendario de comidas y compras</h2>
-  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">El muro de la casa: qué comemos cada día, qué hacemos juntos, qué falta comprar y qué no hay que olvidar.</p>
+  <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">Qué comemos cada día, qué hacemos juntos, nuestras recetas y lo que no hay que olvidar. Las listas de compras están en «Compras».</p>
    <div class="fnav"><button class="iconbtn" data-fw="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-fw="next" aria-label="Mes siguiente">›</button><button class="btn" data-fw="today">Hoy</button></div></div>
   <div class="fwlayout">
   <div class="fwmain">
@@ -1820,6 +1938,7 @@ function renderWall(){
    <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("star")}</span>Favoritos</span><h3>Nuestros favoritos<small>${nf?"Toca uno para ponerlo en el día seleccionado":"Marca una comida con ★ para guardarla aquí"}</small></h3></div></div>
     <div class="favgrid">${FW_K.map(([k,n,c,ic])=>`<div class="favcol" style="--c:${c}"><h4>${ico(ic)}${n} <span class="mini">${f.favs[k].length}</span></h4><div class="favs">${f.favs[k].map((v,i)=>`<span class="favchip"><button data-fw="usefav" data-k="${k}" data-i="${i}" title="Poner en ${esc(cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric"})))}">${esc(v)}</button><button class="favx" data-fw="unfav" data-k="${k}" data-i="${i}" aria-label="Quitar ${esc(v)} de favoritos">✕</button></span>`).join("")||'<span class="mini">Aún ninguno.</span>'}</div></div>`).join("")}</div></article>
 
+   ${recipesCard()}
    <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("alert")}</span>Recordatorios</span><h3>No olvidar<small>Los que tienen fecha también aparecen en el calendario</small></h3></div></div>
     <div class="postits">
      <div class="postit new" style="--pc:${PI_C[f.rem.length%PI_C.length]}"><textarea id="remIn" rows="3" placeholder="Escribe un recordatorio…" aria-label="Nuevo recordatorio"></textarea><div class="pirow"><input type="date" id="remDate" value="${fwSel}" aria-label="Fecha"><button class="btn primary" data-fw="remadd">Pegar</button></div></div>
@@ -1827,10 +1946,7 @@ function renderWall(){
     </div></article>
   </div>
 
-  <aside class="fwside"><article class="card pt c-mint shopcard"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("ok")}</span>Por comprar</span><h3>Lista del súper<small>${f.shop.length} pendiente${f.shop.length===1?"":"s"} · al marcar, desaparece</small></h3></div></div>
-    <div class="fwadd"><input type="text" id="shopIn" placeholder="Leche, pañales, croquetas…" aria-label="Nuevo artículo"><button class="btn primary" data-fw="shopadd" aria-label="Añadir">+</button></div>
-    ${fwBought?`<p class="mini bought">Comprado: <b>${esc(fwBought.t)}</b> <button class="linkbtn" data-fw="undo">Deshacer</button></p>`:""}
-    <ul class="checklist">${f.shop.map(s=>`<li><button class="cbox" data-fw="buy" data-id="${s.id}" aria-label="Marcar comprado: ${esc(s.t)}"></button><span>${esc(s.t)}</span></li>`).join("")||'<li class="empty mini">Todo comprado. Añade lo que falte.</li>'}</ul></article></aside>
+
   </div>`;
 }
 function fwAction(a,b){
@@ -1853,8 +1969,206 @@ function fwAction(a,b){
   if(a==="shopadd"&&$("#shopIn")) $("#shopIn").focus();
 }
 
+/* ---------- COMPRAS: tres ciudades ---------- */
+const STORES=[["cuc","Cúcuta","c-mint","#1F9D55"],["sc","San Cristóbal","c-sky","#2F6FD1"],["ccs","Caracas","c-peach","#D9812E"]];
+let shopUndo={};
+function shop(){
+  const s=state.shop2||(state.shop2={lists:{}}); STORES.forEach(([k])=>s.lists[k]=s.lists[k]||[]);
+  const f=fam(); if(f.shop&&f.shop.length&&!s.migrated){ f.shop.forEach(x=>s.lists.cuc.push({id:x.id,t:x.t})); f.shop=[]; } s.migrated=1; return s;
+}
+function renderShop(){
+  const S=shop(), tot=STORES.reduce((a,[k])=>a+S.lists[k].length,0);
+  $("#v-shop").innerHTML=`${stickBar("Compras",0,`${tot} por comprar`).replace('<span class="stk-bar"><i style="width:0%"></i></span><b>0%</b>','')}<h2 class="h2">Compras</h2><p class="lead">Una lista por ciudad. Al marcar un artículo, desaparece (con opción de deshacer). Puedes añadir varios separados por comas; las recetas también mandan aquí sus ingredientes.</p>
+  <div class="shopgrid">${STORES.map(([k,n,cls])=>{const L=S.lists[k], u=shopUndo[k];return `<article class="card pt ${cls} shopcard"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("ok")}</span>Por comprar en</span><h3>${n}<small>${L.length} pendiente${L.length===1?"":"s"}</small></h3></div></div>
+    <div class="fwadd"><input type="text" id="shopIn-${k}" data-shopin="${k}" placeholder="Leche, pañales, croquetas…" aria-label="Nuevo artículo para ${n}"><button class="btn primary" data-shop="add" data-k="${k}" aria-label="Añadir a ${n}">+</button></div>
+    ${u?`<p class="mini bought">Comprado: <b>${esc(u.t)}</b> <button class="linkbtn" data-shop="undo" data-k="${k}">Deshacer</button></p>`:""}
+    <ul class="checklist">${L.map(s=>`<li><button class="cbox" data-shop="buy" data-k="${k}" data-id="${s.id}" aria-label="Marcar comprado: ${esc(s.t)}"></button><span>${esc(s.t)}${s.from?`<small class="mini" style="display:block">de: ${esc(s.from)}</small>`:""}</span><select class="mvsel" data-shopmv="${k}|${s.id}" aria-label="Mover a otra ciudad"><option value="">Mover…</option>${STORES.filter(x=>x[0]!==k).map(([k2,n2])=>`<option value="${k2}">${n2}</option>`).join("")}</select></li>`).join("")||'<li class="empty mini">Nada pendiente.</li>'}</ul></article>`}).join("")}</div>`;
+}
+function shopAction(a,b){
+  const S=shop(), k=b&&b.dataset.k;
+  if(a==="add"){const el=$("#shopIn-"+k), v=el.value.trim(); if(!v){el.focus();return;} v.split(/,\s*/).filter(Boolean).forEach(t=>S.lists[k].push({id:uid(),t})); save(); renderAll(true); const e2=$("#shopIn-"+k); if(e2) e2.focus(); return;}
+  if(a==="buy"){const L=S.lists[k], i=L.findIndex(x=>x.id===b.dataset.id); if(i<0) return; const li=b.closest("li"); b.classList.add("on"); if(li) li.classList.add("going"); shopUndo[k]=Object.assign({pos:i},L[i]); L.splice(i,1); save(); setTimeout(()=>renderAll(true),260); return;}
+  if(a==="undo"){const u=shopUndo[k]; if(u){S.lists[k].splice(Math.min(u.pos,S.lists[k].length),0,{id:u.id,t:u.t,from:u.from}); shopUndo[k]=null;}}
+  save(); renderAll(true);
+}
+
+/* ---------- RECETAS ---------- */
+let recDraft=null, recMsg="";
+const recs=()=>fam().recipes||(fam().recipes=[]);
+const hostOf=u=>{try{return new URL(u).hostname.replace(/^www\./,"");}catch(e){return "";}};
+const REC_C=["#F2B36B","#9FD8B8","#B7AEF5","#F7A8C4","#9CC7F2","#E8D26A"];
+function recThumb(r,i){
+  if(r.photo) return `<img class="recimg" src="${r.photo.startsWith("data:")?r.photo:"/_blob/"+r.photo}" alt="Foto de ${esc(r.name)}">`;
+  const h=hostOf(r.url), yt=/youtu/.test(h), ig=/instagram/.test(h), tk=/tiktok/.test(h);
+  return `<div class="recimg recgen" style="--rc:${REC_C[i%REC_C.length]}"><b>${esc((r.name||"?").slice(0,1).toUpperCase())}</b><span>${yt?"▶ YouTube":ig?"Instagram":tk?"TikTok":h||"Receta"}</span></div>`;
+}
+async function photoToStore(file){
+  if(assetsNs){ try{ const up=await assetsNs.upload(file); return up.id; }catch(e){} }
+  return await new Promise(res=>{ const img=new Image(), url=URL.createObjectURL(file); img.onload=()=>{ const s=Math.min(1,320/Math.max(img.width,img.height)), c=document.createElement("canvas"); c.width=Math.round(img.width*s); c.height=Math.round(img.height*s); c.getContext("2d").drawImage(img,0,0,c.width,c.height); URL.revokeObjectURL(url); res(c.toDataURL("image/jpeg",.72)); }; img.onerror=()=>res(""); img.src=url; });
+}
+function recipesCard(){
+  const R=recs(), D=recDraft, sd=new Date(fwSel+"T12:00:00"), dl=sd.toLocaleDateString("es",{weekday:"short",day:"numeric"}).replace(".","");
+  return `<article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("heart")}</span>Recetas</span><h3>Nuestras recetas<small>Guarda el link, una foto y los ingredientes; mándalos a la lista de compras de la ciudad que elijas</small></h3></div>${D?"":`<button class="btn primary" data-rec="new">+ Receta</button>`}</div>
+   ${D?`<div class="dlgsec" style="margin-top:0"><b>${D.id?"Editar receta":"Nueva receta"}</b>
+    <div class="frm" style="margin-top:8px"><div class="full"><label class="l" for="recName">Nombre</label><input type="text" id="recName" value="${esc(D.name||"")}" placeholder="Ej.: Pasta con pollo y brócoli"></div>
+     <div class="full"><label class="l" for="recUrl">Link de la receta</label><input type="text" id="recUrl" inputmode="url" value="${esc(D.url||"")}" placeholder="https://…"></div>
+     <div class="full"><label class="l" for="recIng">Ingredientes (uno por línea)</label><textarea id="recIng" rows="5" placeholder="500 g de pasta&#10;1 pechuga de pollo&#10;1 brócoli">${esc((D.ingr||[]).join("\n"))}</textarea></div>
+     <div class="full"><label class="l" for="recPhoto">Miniatura (opcional): foto o captura de la receta</label><input type="file" id="recPhoto" accept="image/jpeg,image/png,image/webp">${D.photo?`<span class="mini">Ya tiene foto; sube otra para cambiarla.</span>`:""}</div></div>
+    <div class="row"><button class="btn primary" data-rec="save">Guardar receta</button><button class="btn" data-rec="cancel">Cancelar</button>${recMsg?`<span class="mini" role="status">${esc(recMsg)}</span>`:""}</div></div>`:""}
+   <div class="recgrid">${R.map((r,i)=>`<div class="rec">${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener" class="reclink" aria-label="Abrir ${esc(r.name)}">${recThumb(r,i)}</a>`:recThumb(r,i)}
+     <div class="recb"><h4>${esc(r.name)}</h4>${r.url?`<a class="mini" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(hostOf(r.url)||"Abrir link")} ↗</a>`:""}
+      <details><summary class="mini">${r.ingr.length} ingredientes</summary><ul class="recing">${r.ingr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></details>
+      <div class="recact"><select id="recStore-${r.id}" aria-label="Ciudad para comprar">${STORES.map(([k,n])=>`<option value="${k}">${n}</option>`).join("")}</select><button class="btn primary" data-rec="toshop" data-id="${r.id}">Añadir ingredientes</button></div>
+      <div class="recact"><button class="btn" data-rec="use" data-k="l" data-id="${r.id}">Almuerzo del ${dl}</button><button class="btn" data-rec="use" data-k="d" data-id="${r.id}">Cena del ${dl}</button></div>
+      <div class="recact"><button class="linkbtn" data-rec="edit" data-id="${r.id}">Editar</button><button class="linkbtn" style="color:var(--bad)" data-rec="del" data-id="${r.id}">Borrar</button></div></div></div>`).join("")||(D?"":'<p class="mini">Aún no hay recetas. Toca «+ Receta» y pega el link.</p>')}</div></article>`;
+}
+async function recAction(a,b){
+  const R=recs(), id=b&&b.dataset.id, r=R.find(x=>x.id===id);
+  if(a==="new"){recDraft={}; recMsg=""; renderAll(true); const e=$("#recName"); if(e) e.focus(); return;}
+  if(a==="edit"){recDraft=Object.assign({},r); recMsg=""; renderAll(true); return;}
+  if(a==="cancel"){recDraft=null; recMsg=""; renderAll(true); return;}
+  if(a==="save"){const name=$("#recName").value.trim(); if(!name){$("#recName").focus();return;}
+    let url=$("#recUrl").value.trim(); if(url&&!/^https?:\/\//i.test(url)) url="https://"+url;
+    const ingr=$("#recIng").value.split("\n").map(x=>x.trim()).filter(Boolean), fileEl=$("#recPhoto"); let photo=recDraft.photo||"";
+    if(fileEl&&fileEl.files&&fileEl.files[0]){ recMsg="Subiendo foto…"; photo=await photoToStore(fileEl.files[0])||photo; }
+    if(recDraft.id){Object.assign(R.find(x=>x.id===recDraft.id),{name,url,ingr,photo});} else R.unshift({id:uid(),name,url,ingr,photo});
+    recDraft=null; recMsg=""; save(); renderAll(true); return;}
+  if(a==="del"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Seguro? Toca otra vez";return;} fam().recipes=R.filter(x=>x.id!==id); save(); renderAll(true); return;}
+  if(a==="toshop"){const k=$("#recStore-"+id).value, S=shop(); r.ingr.forEach(t=>S.lists[k].push({id:uid(),t,from:r.name})); save(); b.textContent="✓ Añadidos a "+STORES.find(x=>x[0]===k)[1]; b.disabled=true; return;}
+  if(a==="use"){const k=b.dataset.k, cur=$("#fw-"+k)?fwVals():Object.assign({},fam().days[fwSel]||{}); cur[k]=r.name; fwDraft={iso:fwSel,v:cur}; fwMsg=""; renderAll(true); return;}
+}
+
+/* ---------- CASAS (San Cristóbal y Caracas) ---------- */
+const CASA_DEF={
+ sc:{name:"Casa San Cristóbal",cats:[{id:"sem",name:"Gastos por cubrir",color:"#D9812E"},{id:"inv",name:"Inversión",color:"#4B4FE8"},{id:"cons",name:"Construcción",color:"#8A5A3C"}],
+     items:[{name:"Tío Pedro",amt:13,freq:"semanal",cat:"sem",note:"Al finalizar la semana"},{name:"Utensilios básicos",amt:120,freq:"único",cat:"inv",note:""}]},
+ ccs:{name:"Casa Caracas",cats:[{id:"per",name:"Personal de la casa",color:"#1F9D55"},{id:"serv",name:"Servicios",color:"#2F6FD1"}],
+     items:[{name:"Fina",amt:60,freq:"mensual",cat:"per",note:""},{name:"Belkis",amt:12,freq:"mensual",cat:"per",note:""}]}
+};
+const FREQ={"único":"Una vez",semanal:"Semanal",mensual:"Mensual"};
+let casaQuick={}, casaNew={};
+function casa(k){
+  const all=state.casas||(state.casas={});
+  if(!all[k]){const d=CASA_DEF[k]; all[k]={name:d.name,cats:d.cats.map(c=>Object.assign({},c)),items:d.items.map(i=>Object.assign({id:uid(),paid:{}},i))};}
+  const c=all[k]; c.cats=c.cats||[]; c.items=c.items||[]; c.tasks=c.tasks||[]; c.items.forEach(i=>i.paid=i.paid||{}); return c;
+}
+function weekKey(t){const d=new Date(t); d.setHours(12); d.setDate(d.getDate()-((d.getDay()+6)%7)); return "w"+isoOf(d);}
+const periodKey=(it,t=new Date())=>it.freq==="semanal"?weekKey(t):it.freq==="mensual"?"m"+isoOf(t).slice(0,7):"once";
+const casaCat=(C,id)=>C.cats.find(c=>c.id===id)||{id:"",name:"Sin categoría",color:"#9CA3AF"};
+function renderCasa(k){
+  const C=casa(k), cur="$", now=new Date(), sun=new Date(now); sun.setDate(sun.getDate()+(7-((now.getDay()+6)%7)-1));
+  const isPaid=it=>!!it.paid[periodKey(it)];
+  const wk=C.items.filter(i=>i.freq==="semanal"), mo=C.items.filter(i=>i.freq==="mensual"), on=C.items.filter(i=>i.freq==="único");
+  const sum=L=>L.reduce((a,i)=>a+(+i.amt||0),0), sumPend=L=>L.filter(i=>!isPaid(i)).reduce((a,i)=>a+(+i.amt||0),0);
+  const monthly=sum(mo)+sum(wk)*52/12;
+  const Q=casaQuick[k], N=casaNew[k]||{};
+  const groups=[...C.cats,{id:"",name:"Sin categoría",color:"#9CA3AF"}].map(c=>({c,items:C.items.filter(i=>(i.cat||"")===c.id||(!c.id&&!C.cats.some(x=>x.id===i.cat)))})).filter(g=>g.items.length||g.c.id);
+  $("#v-"+k).innerHTML=`${stickBar(C.name,C.items.length?Math.round(C.items.filter(isPaid).length/C.items.length*100):0,`${C.items.filter(isPaid).length}/${C.items.length} al día`)}<h2 class="h2">${esc(C.name)}</h2><p class="lead">Gastos fijos, inversiones y obra, organizados en tus propias categorías. Marca «Pagado» en cada periodo: lo semanal se reinicia cada lunes y lo mensual cada mes.</p>
+  <div class="kpis">
+   <div class="kpi fill"><div class="top"><span class="ib">${ico("wallet")}</span><span class="badge">vence ${sun.toLocaleDateString("es",{weekday:"short",day:"numeric"}).replace(".","")}</span></div><span class="lb">Por cubrir esta semana</span><span class="v">${cur}${NF.format(sumPend(wk))}</span><span class="lb" style="font-size:11.5px">de ${cur}${NF.format(sum(wk))} semanales</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("cal")}</span></div><span class="lb">Pendiente este mes</span><span class="v">${cur}${NF.format(sumPend(mo))}</span><span class="lb" style="font-size:11.5px">de ${cur}${NF.format(sum(mo))} mensuales</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("brief")}</span></div><span class="lb">Inversión y obra</span><span class="v">${cur}${NF.format(sum(on))}</span><span class="lb" style="font-size:11.5px">pendiente ${cur}${NF.format(sumPend(on))}</span></div>
+   <div class="kpi"><div class="top"><span class="ib">${ico("chart")}</span></div><span class="lb">Costo fijo al mes</span><span class="v">${cur}${NF.format(Math.round(monthly))}</span><span class="lb" style="font-size:11.5px">mensual + semanal × 4,3</span></div>
+  </div>
+  <div class="boardh"><span class="tag" style="margin:0"><span class="ic">${ico("ok")}</span>Tablero</span><h3>Tareas</h3><span class="select">${C.tasks.filter(t=>t.done).length}/${C.tasks.length} hechas</span></div>
+  <article class="card c-white" style="margin-bottom:16px">
+   <div class="fwadd"><input type="text" id="czTask-${k}" placeholder="Nueva tarea: comprar cemento, llamar al plomero…" aria-label="Nueva tarea"><select id="czTaskCat-${k}" class="mvsel" style="margin:0;background:var(--shell)" aria-label="Categoría">${C.cats.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("")}<option value="">Sin categoría</option></select><button class="btn primary" data-casa="addtask" data-k="${k}">Añadir</button></div>
+   <ul class="cztasks">${C.tasks.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1)).map(t=>{const c=casaCat(C,t.cat);return `<li class="${t.done?"done":""}" style="--cc:${c.color}"><button class="cbox ${t.done?"on":""}" data-casa="task" data-k="${k}" data-id="${t.id}" aria-pressed="${!!t.done}" aria-label="Marcar tarea: ${esc(t.t)}"></button><input class="czname" value="${esc(t.t)}" data-cztk="${k}|${t.id}" data-f="t" aria-label="Tarea"><input type="date" value="${t.date||""}" data-cztk="${k}|${t.id}" data-f="date" aria-label="Fecha límite"><select class="mvsel" data-cztk="${k}|${t.id}" data-f="cat" aria-label="Categoría">${C.cats.map(c2=>`<option value="${c2.id}" ${c2.id===t.cat?"selected":""}>${esc(c2.name)}</option>`).join("")}<option value="" ${C.cats.some(c2=>c2.id===t.cat)?"":"selected"}>Sin categoría</option></select><button class="xbtn" data-casa="deltask" data-k="${k}" data-id="${t.id}" aria-label="Borrar tarea">✕</button></li>`}).join("")||'<li class="mini" style="border:0;background:transparent;display:block">Sin tareas. Añade la primera arriba.</li>'}</ul></article>
+  <div class="boardh"><span class="tag" style="margin:0"><span class="ic">${ico("wallet")}</span>Tablero</span><h3>Inversiones y gastos</h3></div>
+  <article class="card c-white" style="margin-bottom:16px"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("pen")}</span>Nuevo gasto o inversión</span><h3>Añadir a ${esc(C.name)}</h3></div></div>
+   <div class="catpicks" role="radiogroup" aria-label="Categoría">${C.cats.map((c,i)=>`<label><input type="radio" name="cz-${k}" value="${c.id}" ${(N.cat?N.cat===c.id:i===0)?"checked":""}><span class="catchip" style="--c:${c.color}">${esc(c.name)}</span></label>`).join("")}<button class="catnew" data-casa="quick" data-k="${k}" aria-expanded="${!!Q}">${Q?"✕ Cerrar":"+ Nueva categoría"}</button></div>
+   ${Q?`<div class="quickcat"><div class="frm"><div class="full"><label class="l" for="czName-${k}">Nombre de la categoría</label><input type="text" id="czName-${k}" placeholder="Ej.: Cemento y bloques, Electricidad, Plomería…"></div>
+     <div class="full"><span class="l" style="font-size:11.5px;font-weight:700;color:var(--soft)">Color</span><div class="swatches" role="radiogroup" aria-label="Color">${SWATCH.map((s,i)=>`<label><input type="radio" name="czColor-${k}" value="${s}" ${i===C.cats.length%SWATCH.length?"checked":""}><span style="--c:${s}"></span></label>`).join("")}<label title="Otro color"><input type="color" id="czCustom-${k}" class="sw" value="#FF8A00" style="--c:#FF8A00" aria-label="Elegir otro color"></label></div></div></div>
+     <div class="row" style="margin-top:8px"><button class="btn primary" data-casa="addcat" data-k="${k}">Crear categoría</button></div></div>`:""}
+   <div class="frm cz-frm"><div><label class="l" for="czItem-${k}">Concepto</label><input type="text" id="czItem-${k}" placeholder="Ej.: Tío Pedro, 10 sacos de cemento"></div>
+    <div><label class="l" for="czAmt-${k}">Monto (${cur})</label><input type="text" inputmode="decimal" id="czAmt-${k}" placeholder="0"></div>
+    <div><label class="l" for="czFreq-${k}">Frecuencia</label><select id="czFreq-${k}">${Object.entries(FREQ).map(([f,n])=>`<option value="${f}">${n}</option>`).join("")}</select></div>
+    <div style="align-self:end"><button class="btn primary" data-casa="additem" data-k="${k}" style="width:100%">Añadir</button></div></div></article>
+  <div class="czgroups">${groups.map(({c,items})=>`<article class="card c-white czg" style="--cc:${c.color}"><div class="hd"><div style="flex:1;display:flex;align-items:center;gap:8px">${c.id?`<input type="color" class="sw" value="${c.color}" data-czcat="${k}|${c.id}" data-f="color" aria-label="Color de ${esc(c.name)}" style="--c:${c.color}">`:""}<div style="flex:1;min-width:0">${c.id?`<input class="kbname" value="${esc(c.name)}" data-czcat="${k}|${c.id}" data-f="name" aria-label="Nombre de la categoría">`:`<h3>${c.name}</h3>`}<small class="mini" style="display:block;padding-left:4px">${items.length} concepto${items.length===1?"":"s"} · ${cur}${NF.format(sum(items))}</small></div></div>${c.id?`<button class="xbtn" data-casa="delcat" data-k="${k}" data-id="${c.id}" aria-label="Borrar categoría ${esc(c.name)}">✕</button>`:""}</div>
+    <ul class="czlist">${items.map(it=>{const p=isPaid(it);return `<li class="${p?"paid":""}"><button class="cbox ${p?"on":""}" data-casa="pay" data-k="${k}" data-id="${it.id}" aria-pressed="${p}" aria-label="Marcar pagado: ${esc(it.name)}"></button>
+      <div class="czmain"><input class="czname" value="${esc(it.name)}" data-czit="${k}|${it.id}" data-f="name" aria-label="Concepto"><span class="mini">${FREQ[it.freq]}${it.freq==="semanal"?" · cubrir al final de la semana":""}${p?` · pagado ${it.freq==="único"?"":it.freq==="semanal"?"esta semana":"este mes"}`:""}</span>
+       <input class="kbnote" value="${esc(it.note||"")}" placeholder="Nota" data-czit="${k}|${it.id}" data-f="note" aria-label="Nota"></div>
+      <label class="czamt"><span>${cur}</span><input type="text" inputmode="decimal" value="${+it.amt||0}" data-czit="${k}|${it.id}" data-f="amt" aria-label="Monto"></label>
+      <select class="mvsel" data-czit="${k}|${it.id}" data-f="cat" aria-label="Categoría">${C.cats.map(c2=>`<option value="${c2.id}" ${c2.id===it.cat?"selected":""}>${esc(c2.name)}</option>`).join("")}<option value="" ${C.cats.some(c2=>c2.id===it.cat)?"":"selected"}>Sin categoría</option></select>
+      <button class="xbtn" data-casa="delitem" data-k="${k}" data-id="${it.id}" aria-label="Borrar ${esc(it.name)}">✕</button></li>`}).join("")||'<li class="empty mini">Sin conceptos todavía.</li>'}</ul></article>`).join("")}</div>`;
+}
+function casaAction(a,b){
+  const k=b.dataset.k, C=casa(k), id=b.dataset.id;
+  if(a==="quick"){casaQuick[k]=!casaQuick[k]; renderAll(true); const e=$("#czName-"+k); if(e) e.focus(); return;}
+  if(a==="addcat"){const n=$("#czName-"+k).value.trim(); if(!n){$("#czName-"+k).focus();return;} const pick=document.querySelector(`input[name="czColor-${k}"]:checked`), cid=uid();
+    C.cats.push({id:cid,name:n,color:pick?pick.value:$("#czCustom-"+k).value}); casaQuick[k]=false; casaNew[k]={cat:cid};}
+  else if(a==="additem"){const n=$("#czItem-"+k).value.trim(); if(!n){$("#czItem-"+k).focus();return;} const amt=parseFloat(($("#czAmt-"+k).value||"0").replace(",","."))||0, cat=(document.querySelector(`input[name="cz-${k}"]:checked`)||{}).value||"";
+    C.items.push({id:uid(),name:n,amt,freq:$("#czFreq-"+k).value,cat,note:"",paid:{}}); casaNew[k]={cat};}
+  else if(a==="addtask"){const el=$("#czTask-"+k), v=el.value.trim(); if(!v){el.focus();return;} C.tasks.push({id:uid(),t:v,cat:$("#czTaskCat-"+k).value,date:"",done:0});}
+  else if(a==="task"){const t=C.tasks.find(x=>x.id===id); if(t) t.done=t.done?0:1;}
+  else if(a==="deltask"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} C.tasks=C.tasks.filter(x=>x.id!==id);}
+  else if(a==="pay"){const it=C.items.find(x=>x.id===id), pk=periodKey(it); if(it.paid[pk]) delete it.paid[pk]; else it.paid[pk]=isoOf(new Date());}
+  else if(a==="delitem"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} C.items=C.items.filter(x=>x.id!==id);}
+  else if(a==="delcat"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar categoría?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} C.cats=C.cats.filter(c=>c.id!==id); C.items.forEach(i=>{if(i.cat===id) i.cat="";});}
+  save(); renderAll(true);
+}
+
+/* ---------- Mes: calendario mensual con todo lo de cada día ---------- */
+let mesYM=null, mesSel=null;
+function planDayOf(iso){ if(!state.start) return 0; const n=Math.round((new Date(iso+"T12:00:00")-new Date(state.start+"T12:00:00"))/864e5)+1; return n>=1&&n<=30?n:0; }
+function allOfDay(iso){
+  const out=[], n=planDayOf(iso), F=fam(), M=F.days[iso]||{}, Cd=(care().days[iso])||{}, dow=(new Date(iso+"T12:00:00").getDay()+6)%7;
+  if(n) dayItems(n).forEach(([k,c,t])=>out.push({c,t,done:isOn(n,k),k}));
+  FW_K.forEach(([k,nm,c])=>{ if(M[k]) out.push({c,t:(nm==="Actividad en familia"?"Actividad":nm)+": "+M[k]}); });
+  F.rem.filter(r=>r.date===iso).forEach(r=>out.push({c:"#E5484D",t:"Recordar: "+r.t,done:!!r.done}));
+  CARE_K.forEach(([k,nm,c])=>{ if(Cd[k]) out.push({c,t:"Cuidado: "+nm,done:true}); });
+  pcOfDate(iso).forEach(r=>out.push({c:r.color,t:r.t,done:!!pcare().done[iso+"|"+r.id]}));
+  ["sc","ccs"].forEach(h=>casa(h).tasks.filter(t=>t.date===iso).forEach(t=>out.push({c:"#8A5A3C",t:`Tarea casa: ${t.t}`,done:!!t.done})));
+  if(dow===6) ["sc","ccs"].forEach(h=>{ const C=casa(h); C.items.filter(i=>i.freq==="semanal").forEach(i=>out.push({c:"#B8741A",t:`Pagar ${i.name} (${C.name.replace("Casa ","")})`,done:!!i.paid[weekKey(new Date(iso+"T12:00:00"))]})); });
+  return {n,items:out};
+}
+function mesCalendar(){
+  if(!mesYM){const t=new Date();mesYM=[t.getFullYear(),t.getMonth()];}
+  const [y,m]=mesYM, ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), off=(new Date(y,m,1).getDay()+6)%7, today=isoOf(new Date());
+  if(!mesSel||!mesSel.startsWith(ym)) mesSel=today.startsWith(ym)?today:ym+"-01";
+  const sel=allOfDay(mesSel);
+  return `<article class="card c-white wide"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:220px"><h3>Calendario del mes<small>Todo lo que toca cada día: plan, comidas, recordatorios, cuidado y pagos. Toca un día para ver el detalle</small></h3></div>
+    <div class="fnav"><button class="iconbtn" data-mes="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-mes="next" aria-label="Mes siguiente">›</button><button class="btn" data-mes="today">Hoy</button></div></div>
+   <div class="month mesgrid">${WDs.map(x=>`<div class="wd">${x}</div>`).join("")}${Array.from({length:off},()=>`<div class="mcell blank"></div>`).join("")}
+   ${Array.from({length:last},(_,i)=>{const iso=ym+"-"+pad2(i+1), A=allOfDay(iso), p=A.n?pct(A.n):0, pend=A.items.filter(x=>!x.done).length;
+     return `<button class="mcell ${iso===mesSel?"cur":""} ${A.n?"":"offplan"}" data-mesd="${iso}" aria-label="${i+1}: ${A.items.length} actividades, ${pend} pendientes"><b>${i+1}${iso===today?' <span class="today-dot"></span>':""}${A.items.length?`<small class="mmon">${pend} por hacer</small>`:""}</b>
+      <span class="mlines">${A.items.map(x=>`<span class="ml ${x.done?"on":""}" style="--c:${x.c}" title="${esc(x.t)}">${x.done?"✓":"○"} ${esc(x.t)}</span>`).join("")}</span>
+      <span class="fwdots">${A.items.slice(0,8).map(x=>`<i style="--c:${x.c}"></i>`).join("")}</span>
+      ${A.n?`<span class="pbar"><i style="width:${p}%"></i></span>`:""}</button>`}).join("")}</div>
+   <div class="mesday"><div class="hd" style="margin:0 0 8px"><div style="flex:1"><h3 style="font-size:16px">${cap(new Date(mesSel+"T12:00:00").toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}<small>${sel.items.length} actividades · ${sel.items.filter(x=>!x.done).length} por hacer</small></h3></div>${sel.n?`<button class="btn primary" data-open="${sel.n}">Abrir en «Hoy»</button>`:""}</div>
+    <ul class="mesdl">${sel.items.map(x=>`<li class="${x.done?"on":""}" style="--c:${x.c}">${x.done?"✓":"○"} ${esc(x.t)}</li>`).join("")||'<li class="mini">Nada anotado para este día.</li>'}</ul></div></article>`;
+}
+
+/* ---------- CUIDADO PERSONAL: rutinas por día del mes ---------- */
+const PC_DEF=[["Oscar se afeita",[1,15],"#2F6FD1"],["Hillary: láser",[2,8,16,25],"#D9467F"],["Hillary: uñas de las manos",[3,20],"#8B5CF6"],["Hillary le hace las uñas a Oscar",[4,21],"#0E9F9A"],["Masajes",[5,10,15,20,25],"#1F9D55"],["Hillary: secar el cabello",[6,12,18,26],"#D9812E"],["Hidratación capilar",[11,29],"#B8741A"]];
+let pcYM=null, pcEdit=false;
+function pcare(){ const p=state.pc||(state.pc={}); if(!p.rules) p.rules=PC_DEF.map(([t,days,color])=>({id:uid(),t,days,color})); p.done=p.done||{}; return p; }
+const pcOfDate=iso=>{const d=+iso.slice(8,10); return pcare().rules.filter(r=>r.days.includes(d));};
+function pcBoard(){
+  const P=pcare(); if(!pcYM){const t=new Date();pcYM=[t.getFullYear(),t.getMonth()];}
+  const [y,m]=pcYM, ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), today=isoOf(new Date());
+  const days=Array.from({length:last},(_,i)=>ym+"-"+pad2(i+1)).filter(iso=>pcOfDate(iso).length);
+  const tot=days.reduce((a,iso)=>a+pcOfDate(iso).length,0), done=days.reduce((a,iso)=>a+pcOfDate(iso).filter(r=>P.done[iso+"|"+r.id]).length,0);
+  return `<article class="card c-white wide" style="margin-top:16px"><div class="hd" style="flex-wrap:wrap"><div style="flex:1;min-width:220px"><span class="tag"><span class="ic">${ico("drop")}</span>Cuidado personal</span><h3>Rutinas del mes<small>${done}/${tot} hechas · se repiten cada mes en los mismos días</small></h3></div>
+    <div class="fnav"><button class="iconbtn" data-pc="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-pc="next" aria-label="Mes siguiente">›</button><button class="btn" data-pc="edit">${pcEdit?"Listo":"Editar rutinas"}</button></div></div>
+   ${pcEdit?`<div class="dlgsec" style="margin-top:0"><b>Rutinas</b><p class="mini" style="margin:2px 0 8px">Escribe los días del mes separados por comas.</p>
+    ${P.rules.map(r=>`<div class="pcrule"><input type="color" class="sw" value="${r.color}" data-pcr="${r.id}" data-f="color" style="--c:${r.color}" aria-label="Color"><input type="text" value="${esc(r.t)}" data-pcr="${r.id}" data-f="t" aria-label="Rutina"><input type="text" value="${r.days.join(", ")}" data-pcr="${r.id}" data-f="days" aria-label="Días del mes" inputmode="numeric"><button class="xbtn" data-pc="del" data-id="${r.id}" aria-label="Borrar rutina">✕</button></div>`).join("")}
+    <div class="pcrule"><span></span><input type="text" id="pcNewT" placeholder="Nueva rutina, p. ej. Mascarilla facial"><input type="text" id="pcNewD" placeholder="Días: 7, 22" inputmode="numeric"><button class="btn primary" data-pc="add">Añadir</button></div></div>`:""}
+   <div class="pcgrid">${days.map(iso=>{const t=new Date(iso+"T12:00:00");return `<div class="pcday ${iso===today?"today":""} ${iso<today?"past":""}"><div class="pch"><b>${+iso.slice(8)}</b><span>${cap(t.toLocaleDateString("es",{weekday:"short"}).replace(".",""))}</span></div>
+     ${pcOfDate(iso).map(r=>{const on=!!P.done[iso+"|"+r.id];return `<button class="pcitem ${on?"on":""}" style="--c:${r.color}" data-pcd="${iso}|${r.id}" aria-pressed="${on}"><span class="cbox ${on?"on":""}"></span>${esc(r.t)}</button>`}).join("")}</div>`}).join("")}</div></article>`;
+}
+function pcAction(a,b){
+  const P=pcare();
+  if(a==="prev"||a==="next"){const d=new Date(pcYM[0],pcYM[1]+(a==="next"?1:-1),1);pcYM=[d.getFullYear(),d.getMonth()];}
+  else if(a==="edit"){pcEdit=!pcEdit;}
+  else if(a==="add"){const t=$("#pcNewT").value.trim(), days=parseDays($("#pcNewD").value); if(!t||!days.length){$(t?"#pcNewD":"#pcNewT").focus();return;} P.rules.push({id:uid(),t,days,color:SWATCH[P.rules.length%SWATCH.length]});}
+  else if(a==="del"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} P.rules=P.rules.filter(r=>r.id!==b.dataset.id);}
+  save(); renderAll(true);
+}
+const parseDays=s=>[...new Set(String(s).split(/[^0-9]+/).map(Number).filter(n=>n>=1&&n<=31))].sort((a,b)=>a-b);
+
 /* ---------- render ---------- */
-const R={hoy:renderHoy,mes:renderMes,wall:renderWall,mov:renderMov,piel:renderPiel,ign:renderIgn,thomas:renderThomas,mind:renderMind,eng:renderEng,par:renderPar,trab:renderTrab,fin:renderFin,guia:renderGuia};
+const R={hoy:renderHoy,mes:renderMes,wall:renderWall,shop:renderShop,sc:()=>renderCasa("sc"),ccs:()=>renderCasa("ccs"),mov:renderMov,piel:renderPiel,ign:renderIgn,thomas:renderThomas,mind:renderMind,eng:renderEng,par:renderPar,trab:renderTrab,fin:renderFin,guia:renderGuia};
 function renderAll(keepScroll){
   const y=window.scrollY; renderTabs();
   document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id==="v-"+tab));
@@ -1865,6 +2179,17 @@ function renderAll(keepScroll){
 document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
+  fb=t.closest("[data-nitab]"); if(fb){niTab=fb.dataset.nitab;renderAll(true);return;}
+  fb=t.closest("[data-carek]"); if(fb){const [iso,k]=fb.dataset.carek.split("|"), C=care(), D=C.days[iso]||(C.days[iso]={}); if(D[k]) delete D[k]; else D[k]=1; if(!Object.keys(D).length) delete C.days[iso]; syncCare(iso.slice(0,7)); save(); renderAll(true); return;}
+  fb=t.closest("[data-care]"); if(fb){const [y,m]=careMonth(), d=new Date(y,m+(fb.dataset.care==="next"?1:-1),1); careYM=[d.getFullYear(),d.getMonth()]; renderAll(true); return;}
+  fb=t.closest("[data-shop]"); if(fb){shopAction(fb.dataset.shop,fb);return;}
+  fb=t.closest("[data-rec]"); if(fb){recAction(fb.dataset.rec,fb);return;}
+  fb=t.closest("[data-casa]"); if(fb){casaAction(fb.dataset.casa,fb);return;}
+  fb=t.closest("[data-mes]"); if(fb){const a=fb.dataset.mes; if(a==="today"){mesYM=null;mesSel=isoOf(new Date());} else {const d=new Date(mesYM[0],mesYM[1]+(a==="next"?1:-1),1); mesYM=[d.getFullYear(),d.getMonth()]; mesSel=null;} renderAll(true); return;}
+  fb=t.closest("[data-mesd]"); if(fb){mesSel=fb.dataset.mesd; renderAll(true); return;}
+  fb=t.closest("[data-pcd]"); if(fb){const P=pcare(), k=fb.dataset.pcd; if(P.done[k]) delete P.done[k]; else P.done[k]=1; save(); renderAll(true); return;}
+  fb=t.closest("[data-pc]"); if(fb){pcAction(fb.dataset.pc,fb);return;}
+  fb=t.closest("[data-ui]"); if(fb){const k=fb.dataset.ui; state[k]=!state[k]; save(); renderAll(true); return;}
   fb=t.closest("[data-kb]"); if(fb){kbAction(fb.dataset.kb,fb);return;}
   fb=t.closest("[data-fwd]"); if(fb){ if(fb.dataset.fwd!==fwSel&&fwIsDirty()&&!fwWarn){fwWarn=true;renderAll(true);return;} fwSel=fb.dataset.fwd; fwDraft=null; fwWarn=false; fwMsg=""; renderAll(true); return;}
   fb=t.closest("[data-fw]"); if(fb){fwAction(fb.dataset.fw,fb);return;}
@@ -1916,6 +2241,22 @@ document.addEventListener("drop",e=>{ const c=e.target.closest&&e.target.closest
   const [toCo,toCol]=c.dataset.drop.split("|"), {co,t}=kbFind(kbDrag); kbDrag=null; if(!co||!t) return;
   t.col=toCol; if(co.id!==toCo){co.tasks=co.tasks.filter(x=>x!==t); work().cos.find(x=>x.id===toCo).tasks.push(t);} save(); renderAll(true); });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.dataset&&e.target.dataset.kbt){e.preventDefault();e.target.blur();} });
+document.addEventListener("change",e=>{ const t=e.target, ds=t.dataset||{};
+  if(ds.rate){const v=parseFloat(t.value.replace(",",".")); care().rates[ds.rate]=isNaN(v)?0:v; syncCare(careMonth()[0]+"-"+pad2(careMonth()[1]+1)); save(); renderAll(true); return;}
+  if(t.id==="careFee"){const ym=careMonth()[0]+"-"+pad2(careMonth()[1]+1); if(t.checked) delete care().nofee[ym]; else care().nofee[ym]=1; syncCare(ym); save(); renderAll(true); return;}
+  if(ds.shopmv){const [k,id]=ds.shopmv.split("|"), to=t.value; if(!to) return; const S=shop(), i=S.lists[k].findIndex(x=>x.id===id); if(i>=0){S.lists[to].push(S.lists[k][i]); S.lists[k].splice(i,1);} save(); renderAll(true); return;}
+  if(ds.czcat){const [k,id]=ds.czcat.split("|"), c=casa(k).cats.find(x=>x.id===id); if(c){ if(ds.f==="name") c.name=t.value.trim()||c.name; else c.color=t.value; save(); renderAll(true);} return;}
+  if(ds.czit){const [k,id]=ds.czit.split("|"), it=casa(k).items.find(x=>x.id===id); if(!it) return; const f=ds.f; if(f==="amt"){const v=parseFloat(t.value.replace(",","."));it.amt=isNaN(v)?0:v;} else if(f==="name") it.name=t.value.trim()||it.name; else it[f]=t.value; save(); renderAll(true); return;}
+  if(ds.cztk){const [k,id]=ds.cztk.split("|"), tk=casa(k).tasks.find(x=>x.id===id); if(!tk) return; tk[ds.f]=ds.f==="t"?(t.value.trim()||tk.t):t.value; save(); renderAll(true); return;}
+  if(ds.pcr){const r=pcare().rules.find(x=>x.id===ds.pcr); if(!r) return; if(ds.f==="days"){const d=parseDays(t.value); if(d.length) r.days=d;} else if(ds.f==="t") r.t=t.value.trim()||r.t; else r.color=t.value; save(); renderAll(true); return;}
+  if(t.id&&t.id.startsWith("czCustom-")){document.querySelectorAll(`input[name="czColor-${t.id.slice(9)}"]`).forEach(r=>r.checked=false); t.style.setProperty("--c",t.value); return;}
+});
+document.addEventListener("keydown",e=>{ const ds=e.target.dataset||{}; if(e.key!=="Enter") return;
+  if(ds.shopin){e.preventDefault(); shopAction("add",{dataset:{k:ds.shopin}});}
+  if(e.target.id&&e.target.id.startsWith("czItem-")){e.preventDefault(); casaAction("additem",{dataset:{k:e.target.id.slice(7)}});}
+  if(e.target.id&&e.target.id.startsWith("czName-")){e.preventDefault(); casaAction("addcat",{dataset:{k:e.target.id.slice(7)}});}
+  if(e.target.id==="pcNewD"){e.preventDefault(); pcAction("add");}
+  if(e.target.id&&e.target.id.startsWith("czTask-")){e.preventDefault(); casaAction("addtask",{dataset:{k:e.target.id.slice(7)}});} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
