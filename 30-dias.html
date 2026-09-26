@@ -791,6 +791,18 @@ nav.tabs button{white-space:normal;line-height:1.2}
 .kbfolded span b{color:var(--ink);font-size:15px}
 .kbfolded em{margin-left:auto;font-style:normal;font-weight:700;color:var(--ink)}
 .kbcolname{flex:1;font-weight:800;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px}
+.aggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.agg{background:var(--shell);border-radius:16px;padding:10px;display:grid;gap:5px;align-content:start}
+.agg h4{font-size:13px;margin:0 0 2px;display:flex;justify-content:space-between}
+.agi{display:flex;align-items:flex-start;gap:8px;text-align:left;border:0;border-left:4px solid var(--c);background:var(--paper);border-radius:0 10px 10px 0;padding:6px 8px;font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.35}
+button.agi{cursor:pointer}
+.agi.on{opacity:.5;text-decoration:line-through}
+.agi .cbox{width:16px;height:16px;border-radius:5px;flex:0 0 auto;margin-top:1px}
+.agdot{width:8px;height:8px;border-radius:50%;background:var(--c);flex:0 0 auto;margin-top:5px}
+.skfull{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.skfull h4{display:flex;align-items:center;gap:6px;font-size:14px;margin:0 0 6px}
+.skfull .subchecks{margin-top:8px}
+@media (max-width:860px){.skfull{grid-template-columns:1fr}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -1101,6 +1113,18 @@ const steps=arr=>`<ol class="steps">${arr.map((s,i)=>`<li data-n="${i+1}"><span>
 function segbar(parts){const tot=parts.reduce((a,p)=>a+p[1],0);return `<div class="segbar" role="img" aria-label="Estructura de la sesión">${parts.map(([c,m,t])=>`<i class="${c}" style="flex:${m}" title="${t}: ${m} min"></i>`).join("")}</div>`;}
 
 /* ---------- HOY ---------- */
+function hoyAgenda(d){
+  const iso=isoOf(dateOf(d)), A=allOfDay(iso), pend=A.items.filter(x=>!x.done).length, S=shop(), W=work();
+  const groups={}; A.items.forEach(x=>(groups[x.g||"Otros"]=groups[x.g||"Otros"]||[]).push(x));
+  const btn=x=>x.k?`data-kd="${x.n}:${x.k}"`:x.ev?`data-ev="tog" data-id="${x.ev}"`:x.pcd?`data-pcd="${x.pcd}"`:x.rid?`data-fw="remtog" data-id="${x.rid}"`:"";
+  const nShop=STORES.map(([k,n])=>[n,S.lists[k].length]).filter(x=>x[1]);
+  const wt=W.cos.flatMap(c=>c.tasks), todo=wt.filter(t=>t.col==="todo").length, ask=wt.filter(t=>t.col==="ask").length;
+  return `<article class="card c-white agenda" style="margin-bottom:16px"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Agenda completa</span><h3>Todo lo de hoy<small>${A.items.length} cosas · ${pend} por hacer. Toca para marcar</small></h3></div><button class="btn" data-goto="mes">Ver el mes</button></div>
+   <div class="aggrid">${Object.entries(groups).map(([g,L])=>`<div class="agg"><h4>${g} <span class="mini">${L.filter(x=>x.done).length}/${L.length}</span></h4>${L.map(x=>{const b=btn(x);return b?`<button class="agi ${x.done?"on":""}" style="--c:${x.c}" ${b} aria-pressed="${x.done}"><span class="cbox ${x.done?"on":""}"></span>${esc(x.t)}</button>`:`<div class="agi ${x.done?"on":""}" style="--c:${x.c}"><span class="agdot"></span>${esc(x.t)}</div>`}).join("")}</div>`).join("")}
+    <div class="agg"><h4>Pendientes generales</h4>
+     <button class="agi" style="--c:#1F9D55" data-goto="shop"><span class="agdot"></span>Compras: ${nShop.length?nShop.map(([n,c])=>`${n} ${c}`).join(" · "):"nada pendiente"}</button>
+     <button class="agi" style="--c:#64748B" data-goto="trab"><span class="agdot"></span>Trabajo: ${todo} por hacer · ${ask} por consultar</button></div></div></article>`;
+}
 function renderHoy(){
   const d=state.day, D=DAYS[d-1], w=wdOf(d), st=stageOf(d), ex=exercise(d), td=todayDay();
   const strip=Array.from({length:30},(_,i)=>{const n=i+1,p=pct(n);return `<button data-day="${n}" aria-current="${n===d}" class="${n===td?"today":""}" aria-label="${fd(n)}, ${p}% hecho"><b>${fdn(n)}</b><span class="w">${WDs[wdOf(n)]}</span><span class="ring" style="--p:${p}"></span></button>`}).join("");
@@ -1138,6 +1162,7 @@ function renderHoy(){
     <div class="kpi"><div class="top"><span class="ib">${ico("chat")}</span><span class="badge ${em>emPrev?"":"neutral"}">${em>emPrev?"+"+(em-emPrev)+" min":"Etapa "+st}</span></div><span class="lb">Inglés</span><span class="v">${em} min<small>${sp.join(" + ")}</small></span></div>
     <div class="kpi"><div class="top"><span class="ib">${ico("clock")}</span><span class="badge neutral">${isWork(d)?"Protegido":"Descanso"}</span></div><span class="lb">Trabajo</span><span class="v">${isWork(d)?"4 h":"Libre"}</span></div>
   </div>
+  ${hoyAgenda(d)}
   <div class="grid">
     ${card("c-white","run","Movimiento",ex.title,ex.sub,"move",exb)}
     ${card("c-white","chat","Inglés, "+em+" min",D.et,`${sp[0]} repaso + ${sp[1]} conversación + ${sp[2]} corrección`,"eng",
@@ -1145,14 +1170,17 @@ function renderHoy(){
     ${isWork(d)?card("c-yel","brief","Trabajo","4 horas protegidas","Niños atendidos por otro adulto","work",
       `<p>Define un entregable antes de empezar.</p><input type="text" data-note="deliv" placeholder="Entregable de hoy" value="${esc(note.deliv||"")}"><div class="row"><button class="btn primary" data-timer="work">Iniciar bloque de 240 min</button></div>`,"wide"):
       card("c-grey","brief","Trabajo","Sin bloque laboral fijo","","",`<p>Reserva el tiempo para descanso y familia; no añadas trabajo por compensación.${w===6?" Revisión semanal, 10 min: qué mantener, reducir y preparar.":""}</p>`,"wide")}
-    ${card("c-peach","star","Ignacio (1 año) · "+ignWeek(d).t,D.iT,"","ign",`<div class="kv"><div><span class="lbl">Idea</span>${esc(D.iI)}</div><div><span class="lbl">Juego</span>${esc(D.iJ)}</div><div><span class="lbl">Para decirle</span>${esc(D.iP)}</div></div><div class="row"><button class="btn" data-goto="ign">Ver día completo</button></div>`,"third")}
+    ${card("c-peach","star","Ignacio (1 año) · "+ignWeek(d).t,D.iT,"","ign",ignDetail(d)+`<div class="row"><button class="btn" data-goto="ign">Ver la semana</button></div>`)}
+    ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>${(()=>{const iso=isoOf(dateOf(d)), Cd=care().days[iso]||{};return `<p class="lbl" style="margin-top:12px">Cuidado de hoy</p><div class="cchips">${CARE_K.map(([k,nm,c])=>`<button class="cchip" style="--c:${c}" data-carek="${iso}|${k}" aria-pressed="${!!Cd[k]}">${nm}</button>`).join("")}</div>`;})()}`)}
     ${card("c-mint","paw","Thomas, 3–5 min",D.thT,"","thomas",`<p>${esc(D.th)}</p><p class="mini">Solo si está despierto y tranquilo. No lo despiertes para completar una casilla.</p>`,"third")}
     ${card("c-pink","heart","Personal, "+D.pM,D.pT,"","pair",`<p>${D.out?'<span class="pill">Salida</span>':'<span class="pill home">En casa</span>'}</p><p>${esc(D.p)}</p>${D.out?'<p class="mini">Salida: acuerden cuidado de los niños y de Thomas. Tiene alternativa casera.</p>':""}`,"third")}
-    ${card("c-sky","users","Con ambos niños","Juego compartido","","kids",`<p>${NINOS[w]}</p>`)}
-    ${card("c-white","drop","Cuidado facial","Mañana y noche",`Esta noche: <span class="catchip" style="--c:${PT.c}">${PT.t}</span>`,"",
-      `<div class="skinline"><b>AM</b><span>${SK.am.map(x=>x.split(":")[0].replace(/\.$/,"")).join(" → ")}.</span></div><div class="skinline"><b>PM</b><span>${SK.pmSteps.map(x=>x.split(/[:;]/)[0].replace(/\.$/,"")).join(" → ")}.</span></div>${SK.note?`<div class="note" style="background:var(--t-peach)">${SK.note}</div>`:""}
-      <div class="row" style="margin-top:8px"><button class="btn" data-goto="piel">Ver paso a paso</button></div>
-      <div class="subchecks"><button data-k="skinAM" aria-pressed="${isOn(d,"skinAM")}">AM hecho</button><button data-k="skinPM" aria-pressed="${isOn(d,"skinPM")}">PM hecho</button></div>`)}
+    ${(()=>{const iso=isoOf(dateOf(d)), M=fam().days[iso]||{};return card("c-yel","heart","Comida de hoy","Desayuno, almuerzo, cena y actividad","","",`<div class="kv">${FW_K.map(([k,nm,c])=>`<div style="border-left:4px solid ${c}"><span class="lbl">${nm}</span>${M[k]?esc(M[k]):'<span class="mini">Sin anotar</span>'}</div>`).join("")}</div><div class="row"><button class="btn" data-fwgo="${iso}">Anotar o cambiar</button></div>`,"third");})()}
+    ${card("c-white","drop","Cuidado facial y corporal","Rutina completa de hoy",`Esta noche: <span class="catchip" style="--c:${PT.c}">${PT.t}</span> ${PT.s}`,"",
+      `<div class="skfull"><div><h4>${ico("sun")} Mañana</h4>${steps(SK.am)}<div class="subchecks"><button data-k="skinAM" aria-pressed="${isOn(d,"skinAM")}">AM hecho</button></div></div>
+       <div><h4>${ico("spark")} Noche · ${PT.t}</h4>${steps(SK.pmSteps)}<div class="subchecks"><button data-k="skinPM" aria-pressed="${isOn(d,"skinPM")}">PM hecho</button></div></div></div>
+      ${SK.note?`<div class="note" style="background:var(--t-peach)">★ ${SK.note}</div>`:""}
+      <p class="mini" style="margin-top:8px">Productos de hoy: ${[...new Set(SK.amShort.concat(SK.pmShort))].filter(x=>!/Desmaquillar|Esperar|Enjuagar/.test(x)).join(" · ")}</p>
+      <div class="row"><button class="btn" data-goto="piel">Ver calendario de piel</button></div>`,"wide")}
     ${card("c-lav","pen","Cierre","¿Qué me ayudó hoy y qué necesito mañana?","","close",`<textarea data-note="close" placeholder="Escribe tu cierre del día…">${esc(note.close||"")}</textarea>`,"wide")}
   </div>`;
   const sEl=$("#strip"),cur=$("#strip [aria-current=true]"); if(sEl&&cur) sEl.scrollLeft=cur.offsetLeft-sEl.clientWidth/2+40;
@@ -1169,7 +1197,10 @@ function dayItems(n){
   it.push(["ign","#D9812E","Ignacio: "+IGN[n-1].t]);
   it.push(["thomas","#8A5A3C","Thomas: "+D.thT]);
   it.push(["pair","#D9467F","Personal: "+D.pT]);
-  it.push(["skinPM","#E5484D","Piel: "+PM_TYPES[skinOf(n).pm].t]);
+  it.push(["kids","#2F6FD1","Juego con ambos niños"]);
+  it.push(["skinAM","#E7A21D","Piel AM: rutina de mañana"]);
+  it.push(["skinPM","#E5484D","Piel PM: "+PM_TYPES[skinOf(n).pm].t]);
+  it.push(["close","#6A5AE0","Cierre del día"]);
   return it;
 }
 function renderMes(){
@@ -2167,14 +2198,14 @@ function evs(){ const E=state.events||(state.events=[]); if(!state.evSeed1){ E.p
 function planDayOf(iso){ if(!state.start) return 0; const n=Math.round((new Date(iso+"T12:00:00")-new Date(state.start+"T12:00:00"))/864e5)+1; return n>=1&&n<=30?n:0; }
 function allOfDay(iso){
   const out=[], n=planDayOf(iso), F=fam(), M=F.days[iso]||{}, Cd=(care().days[iso])||{}, dow=(new Date(iso+"T12:00:00").getDay()+6)%7;
-  evs().filter(e=>e.date===iso).sort((a,b)=>(a.time||"")<(b.time||"")?-1:1).forEach(e=>out.push({c:"#0EA5A4",t:"★ "+(e.time?e.time+" · ":"")+e.t,done:!!e.done,ev:e.id}));
-  if(n) dayItems(n).forEach(([k,c,t])=>out.push({c,t,done:isOn(n,k),k}));
-  FW_K.forEach(([k,nm,c])=>{ if(M[k]) out.push({c,t:(nm==="Actividad en familia"?"Actividad":nm)+": "+M[k]}); });
-  F.rem.filter(r=>r.date===iso).forEach(r=>out.push({c:"#E5484D",t:"Recordar: "+r.t,done:!!r.done}));
-  CARE_K.forEach(([k,nm,c])=>{ if(Cd[k]) out.push({c,t:"Cuidado: "+nm,done:true}); });
-  pcOfDate(iso).forEach(r=>out.push({c:r.color,t:r.t,done:!!pcare().done[iso+"|"+r.id]}));
-  ["sc","ccs"].forEach(h=>casa(h).tasks.filter(t=>t.date===iso).forEach(t=>out.push({c:"#8A5A3C",t:`Tarea casa: ${t.t}`,done:!!t.done})));
-  if(dow===6) ["sc","ccs"].forEach(h=>{ const C=casa(h); C.items.filter(i=>i.freq==="semanal").forEach(i=>out.push({c:"#B8741A",t:`Pagar ${i.name} (${C.name.replace("Casa ","")})`,done:!!i.paid[weekKey(new Date(iso+"T12:00:00"))]})); });
+  evs().filter(e=>e.date===iso).sort((a,b)=>(a.time||"")<(b.time||"")?-1:1).forEach(e=>out.push({c:"#0EA5A4",t:"★ "+(e.time?e.time+" · ":"")+e.t,done:!!e.done,ev:e.id,g:"Eventos"}));
+  if(n) dayItems(n).forEach(([k,c,t])=>out.push({c,t,done:isOn(n,k),k,n,g:"Plan del día"}));
+  FW_K.forEach(([k,nm,c])=>{ if(M[k]) out.push({c,t:(nm==="Actividad en familia"?"Actividad":nm)+": "+M[k],g:"Comidas"}); });
+  F.rem.filter(r=>r.date===iso).forEach(r=>out.push({c:"#E5484D",t:"Recordar: "+r.t,done:!!r.done,rid:r.id,g:"Recordatorios"}));
+  CARE_K.forEach(([k,nm,c])=>{ if(Cd[k]) out.push({c,t:"Cuidado: "+nm,done:true,g:"Cuidado de niños"}); });
+  pcOfDate(iso).forEach(r=>out.push({c:r.color,t:r.t,done:!!pcare().done[iso+"|"+r.id],pcd:iso+"|"+r.id,g:"Cuidado personal"}));
+  ["sc","ccs"].forEach(h=>casa(h).tasks.filter(t=>t.date===iso).forEach(t=>out.push({c:"#8A5A3C",t:`Tarea casa: ${t.t}`,done:!!t.done,g:"Casas"})));
+  if(dow===6) ["sc","ccs"].forEach(h=>{ const C=casa(h); C.items.filter(i=>i.freq==="semanal").forEach(i=>out.push({c:"#B8741A",t:`Pagar ${i.name} (${C.name.replace("Casa ","")})`,done:!!i.paid[weekKey(new Date(iso+"T12:00:00"))],g:"Pagos"})); });
   return {n,items:out};
 }
 function remindersCard(){
@@ -2258,6 +2289,7 @@ document.addEventListener("click",e=>{
     else if(a==="tog"){const e=E.find(x=>x.id===fb.dataset.id); if(e) e.done=e.done?0:1;}
     else if(a==="del"){ if(!fb.dataset.armed){fb.dataset.armed="1";fb.textContent="¿Borrar?";fb.style.width="auto";fb.style.padding="0 8px";fb.style.borderRadius="999px";return;} state.events=E.filter(x=>x.id!==fb.dataset.id);}
     save(); renderAll(true); if(a==="add"&&$("#evT")) $("#evT").focus(); return;}
+  fb=t.closest("[data-fwgo]"); if(fb){fwSel=fb.dataset.fwgo; fwYM=[+fwSel.slice(0,4),+fwSel.slice(5,7)-1]; fwDraft=null; tab="wall"; renderAll(); window.scrollTo({top:0}); return;}
   fb=t.closest("[data-mesd]"); if(fb){mesSel=fb.dataset.mesd; renderAll(true); return;}
   fb=t.closest("[data-pcd]"); if(fb){const P=pcare(), k=fb.dataset.pcd; if(P.done[k]) delete P.done[k]; else P.done[k]=1; save(); renderAll(true); return;}
   fb=t.closest("[data-pc]"); if(fb){pcAction(fb.dataset.pc,fb);return;}
