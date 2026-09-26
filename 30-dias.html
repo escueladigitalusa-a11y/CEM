@@ -1072,8 +1072,8 @@ const fdr=(a,b)=>fd(a)+" – "+fd(b);
 const dd=s=>String(s).replace(/\b[Dd]ías (\d{1,2})[–-](\d{1,2})\b/g,(m,a,b)=>fdr(+a,+b)).replace(/\b[Dd]ía (\d{1,2})\b/g,(m,n)=>+n>=1&&+n<=30?fd(+n):m);
 
 /* ---------- navigation (sidebar) ---------- */
-const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["HOGAR"],["wall","Comidas y compras","users"],["shop","Compras","ok"],["sc","Casa San Cristóbal","home"],["ccs","Casa Caracas","home"],["fin","Finanzas","wallet"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Niños","star"],["eng","Inglés","chat"],["par","Personal","heart"],["trab","Trabajo","brief"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
-const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Calendario de comidas y compras",mov:"Movimiento",piel:"Piel",ign:"Niños",shop:"Compras",sc:"Casa San Cristóbal",ccs:"Casa Caracas",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Personal",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
+const TABS=[["PLAN"],["hoy","Hoy","home"],["mes","Mes y progreso","chart"],["HOGAR"],["wall","Comida","users"],["shop","Compras","ok"],["sc","Casa San Cristóbal","home"],["ccs","Casa Caracas","home"],["fin","Finanzas","wallet"],["ÁREAS"],["mov","Movimiento","run"],["piel","Piel","drop"],["ign","Niños","star"],["eng","Inglés","chat"],["par","Personal","heart"],["trab","Trabajo","brief"],["thomas","Thomas","paw"],["mind","Mindset","spark"],["AYUDA"],["guia","Guía","book"]];
+const TITLES={hoy:"Hoy",mes:"Mes y progreso",wall:"Comida",mov:"Movimiento",piel:"Piel",ign:"Niños",shop:"Compras",sc:"Casa San Cristóbal",ccs:"Casa Caracas",thomas:"Thomas",mind:"Mindset",eng:"Inglés",par:"Personal",trab:"Trabajo",fin:"Finanzas",guia:"Guía"};
 let tab="hoy";
 function renderTabs(){
   $("#tabs").innerHTML=TABS.map(([k,l,i])=>l?`<button role="tab" aria-selected="${k===tab}" data-tab="${k}">${ico(i)}${l}</button>`:`<div class="sec" role="presentation">${k}</div>`).join("");
@@ -1948,7 +1948,7 @@ function renderWall(){
   const f=fam(), [y,m]=fwMonth(), saved=f.days[fwSel]||{}, D=fwDraft&&fwDraft.iso===fwSel?fwDraft.v:saved, sd=new Date(fwSel+"T12:00:00"), today=isoOf(new Date()), dirty=fwIsDirty();
   const rems=f.rem.slice().sort((a,b)=>(a.done-b.done)||((a.date||"9")<(b.date||"9")?-1:1));
   const filled=Object.values(f.days).reduce((a,d)=>a+FW_K.filter(k=>d[k[0]]).length,0), nf=FW_K.reduce((a,[k])=>a+f.favs[k].length,0);
-  $("#v-wall").innerHTML=`<h2 class="h2">Calendario de comidas y compras</h2>
+  $("#v-wall").innerHTML=`<h2 class="h2">Comida</h2>
   <div class="hd" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><p class="lead" style="margin:0;flex:1;min-width:240px">Qué comemos cada día, qué hacemos juntos, nuestras recetas y lo que no hay que olvidar. Las listas de compras están en «Compras».</p>
    <div class="fnav"><button class="iconbtn" data-fw="prev" aria-label="Mes anterior">‹</button><b>${cap(new Date(y,m,1).toLocaleDateString("es",{month:"long",year:"numeric"}))}</b><button class="iconbtn" data-fw="next" aria-label="Mes siguiente">›</button><button class="btn" data-fw="today">Hoy</button></div></div>
   <div class="fwlayout">
@@ -2192,6 +2192,7 @@ const PC_DEF=[["Oscar se afeita",[1,15],"#2F6FD1"],["Hillary: láser",[2,8,16,25
 let pcYM=null, pcEdit=false;
 function pcare(){ const p=state.pc||(state.pc={}); if(!p.rules) p.rules=PC_DEF.map(([t,days,color])=>({id:uid(),t,days,color})); p.done=p.done||{};
   if(!p.v2){ p.rules.push({id:uid(),t:"Hilo dental (Oscar y Hillary)",days:[1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31],color:"#0EA5A4"},{id:uid(),t:"Hillary: pestañas",days:[14],color:"#A855F7"}); p.v2=1; }
+  if(!p.v3){ const u=p.rules.find(r=>/uñas de las manos/i.test(r.t)); p.rules.push({id:uid(),t:"Hillary: bozo y cejas",days:u?u.days.slice():[3,20],color:"#E27BA4"}); p.v3=1; }
   return p; }
 const pcOfDate=iso=>{const d=+iso.slice(8,10); return pcare().rules.filter(r=>r.days.includes(d));};
 function pcBoard(){
