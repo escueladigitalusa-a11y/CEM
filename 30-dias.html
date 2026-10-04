@@ -810,6 +810,11 @@ button.agi{cursor:pointer}
 .menubtn{display:none;align-items:center;gap:8px;border:1px solid var(--line);background:var(--shell);border-radius:999px;padding:7px 12px;font-weight:700;font-size:13px;color:var(--ink)}
 .menubtn svg.i{width:18px;height:18px}
 aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.savebtn{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;flex:0 0 auto;border:0;background:var(--pri);color:var(--pri-ink);border-radius:999px;padding:9px 16px;font-weight:700;font-size:13.5px;box-shadow:0 8px 18px -10px var(--pri)}
+.savebtn svg.i{width:17px;height:17px}
+.savebtn.ok{background:var(--good);color:#fff}
+@media (max-width:860px){.savebtn{padding:8px 12px}.sync{display:none}}
+@media (max-width:480px){.savebtn span{display:none}.savebtn.ok span{display:inline}}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -865,6 +870,7 @@ aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:v
     <div><h1 id="pageTitle">Hoy</h1><div class="sub" id="pageSub">Movimiento, conexión, aprendizaje y cuidado</div></div>
     <div class="spacer"></div>
     <span class="sync" id="sync"></span>
+    <button class="savebtn" id="saveBtn" aria-label="Guardar todo"><svg class="i" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/></svg><span>Guardar</span></button>
     <button class="iconbtn" id="themeBtn" aria-label="Cambiar tema"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
     <div class="me"><span class="av">TÚ</span><div><b>Mi plan</b><span>30 días</span></div></div>
   </header>
@@ -1045,6 +1051,21 @@ function save(){
   },700);
 }
 function setSync(t){$("#sync").textContent=t;}
+async function saveNow(){
+  const b=$("#saveBtn"), lbl=b&&b.querySelector("span");
+  if(typeof fwIsDirty==="function"&&fwIsDirty()){ const v=fwDraft.v; if(Object.keys(v).length) fam().days[fwSel]=Object.assign({},v); else delete fam().days[fwSel]; fwDraft=null; fwMsg="Guardado ✓"; }
+  clearTimeout(saveT);
+  try{localStorage.setItem("plan30",JSON.stringify(state));}catch(e){}
+  if(lbl) lbl.textContent="Guardando…";
+  let ok=true;
+  if(dbDoc){ try{ await (saving=saving.then(()=>dbDoc.set(JSON.parse(JSON.stringify(state))))); }catch(e){ ok=false; } }
+  const hh=new Date().toLocaleTimeString("es",{hour:"2-digit",minute:"2-digit"});
+  if(lbl) lbl.textContent=ok?"Guardado ✓":"Solo en este equipo";
+  if(b) b.classList.add("ok");
+  setSync(ok?(dbDoc?"Sincronizado a las "+hh:"Guardado en este dispositivo a las "+hh):"No se pudo sincronizar; queda en este dispositivo");
+  setTimeout(()=>{ if(lbl) lbl.textContent="Guardar"; if(b) b.classList.remove("ok"); },2500);
+  renderAll(true);
+}
 (async()=>{
   try{
     if(!window.claude||!claude.use) return;
@@ -1109,6 +1130,7 @@ function renderTabs(){
   $("#pageTitle").textContent=TITLES[tab]; const ml=$("#menuLbl"); if(ml) ml.textContent=TITLES[tab];
   $("#pageSub").textContent=tab==="hoy"?cap(fdl(d))+(d===todayDay()?" · hoy":""):"Movimiento, conexión, aprendizaje y cuidado";
 }
+$("#saveBtn").addEventListener("click",saveNow);
 $("#menuBtn").addEventListener("click",()=>{const s=document.querySelector("aside.side"), o=!s.classList.contains("open"); s.classList.toggle("open",o); $("#menuBtn").setAttribute("aria-expanded",o);});
 $("#tabs").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"); if(!b) return; tab=b.dataset.tab; document.querySelector("aside.side").classList.remove("open"); $("#menuBtn").setAttribute("aria-expanded","false"); renderAll(); window.scrollTo({top:0});});
 
