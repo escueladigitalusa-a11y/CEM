@@ -687,7 +687,7 @@ dialog h3{font-size:19px;font-weight:800}
 .btn:disabled{opacity:.45;cursor:default}
 nav.tabs button{white-space:normal;line-height:1.2}
 /* niños */
-.subtabs{display:inline-flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px;margin:4px 0 14px}
+.subtabs{display:inline-flex;flex-wrap:wrap;max-width:100%;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px;margin:4px 0 14px}
 .subtabs button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;border-radius:999px;padding:7px 14px;font-weight:700;font-size:13.5px;color:var(--soft)}
 .subtabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
 .carelist{display:grid;gap:6px}
@@ -815,6 +815,15 @@ aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:v
 .savebtn.ok{background:var(--good);color:#fff}
 @media (max-width:860px){.savebtn{padding:8px 12px}.sync{display:none}}
 @media (max-width:480px){.savebtn span{display:none}.savebtn.ok span{display:inline}}
+.ktgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.ktgrid>.card{grid-column:auto!important}.ktl{border-top:5px solid var(--cc)}
+.ktlh{display:flex;align-items:center;gap:8px}
+.ktlh .sw{width:26px;height:26px;flex:0 0 auto}
+.ktitems{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ktitems li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;background:var(--shell);border-radius:12px;padding:6px 8px;border-left:4px solid var(--cc)}
+.ktitems li.done .czname{text-decoration:line-through;opacity:.55}
+.ktitems li.empty{display:block;background:transparent;border:0}
+.ktsave{padding:11px 22px;font-size:14.5px}
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
   .gcol{grid-column:span 12}
@@ -1509,8 +1518,9 @@ function syncCare(ym){
 }
 function renderIgn(){
   const d=state.day;
-  const pills=`<div class="subtabs" role="tablist"><button role="tab" data-nitab="apr" aria-selected="${niTab==="apr"}">${ico("star")}Aprendizaje</button><button role="tab" data-nitab="care" aria-selected="${niTab==="care"}">${ico("ok")}Cuidado</button></div>`;
+  const pills=`<div class="subtabs" role="tablist"><button role="tab" data-nitab="apr" aria-selected="${niTab==="apr"}">${ico("star")}Aprendizaje</button><button role="tab" data-nitab="care" aria-selected="${niTab==="care"}">${ico("ok")}Cuidado</button><button role="tab" data-nitab="todo" aria-selected="${niTab==="todo"}">${ico("pen")}Por hacer</button></div>`;
   if(niTab==="care"){ renderCare(pills); return; }
+  if(niTab==="todo"){ renderKidsTodo(pills); return; }
   const g=IGN[d-1], W=ignWeek(d);
   $("#v-ign").innerHTML=`${stickBar("Aprendizaje",Math.round(doneOf("ign")/30*100),`semana: ${W.t}`)}<h2 class="h2">Niños</h2>${pills}
   <p class="lead">Aprendizaje de Ignacio (1 año): un tema por semana, con juegos cortos de unos 10 minutos repartidos en el día. Todo con supervisión y objetos más grandes que su boca.</p>
@@ -1521,6 +1531,29 @@ function renderIgn(){
    <div class="ft"><span class="dots">${days.map(x=>`<i class="${isOn(x,"ign")?"on":""}"></i>`).join("")}</span><span>${n} de ${days.length} sesiones</span></div></article>`}).join("")}
   <article class="card c-sky pt" style="margin-top:16px"><span class="tag"><span class="ic">${ico("users")}</span>Ignacio y Lucas</span><h3>Juego libre con ambos niños</h3>
    <ul class="list-plain" style="margin-top:6px!important">${WD.map((w,i)=>`<li style="grid-template-columns:44px 1fr;${i===wdOf(d)?"font-weight:700":""}"><span class="n">${WDs[i]}</span><span><b>${w}:</b> ${NINOS[i]}</span></li>`).join("")}</ul></article>`;
+}
+function ktodo(){ const k=state.kidsTodo||(state.kidsTodo={}); if(!k.lists) k.lists=[["Ignacio","#D9812E"],["Lucas","#2F6FD1"],["Ambos niños","#D9467F"]].map(([n,c])=>({id:uid(),name:n,color:c,items:[]})); return k; }
+function renderKidsTodo(pills){
+  const K=ktodo(), all=K.lists.flatMap(l=>l.items), dn=all.filter(i=>i.done).length;
+  $("#v-ign").innerHTML=`${stickBar("Por hacer",all.length?Math.round(dn/all.length*100):0,`${dn}/${all.length} hechas`)}<h2 class="h2">Niños</h2>${pills}
+  <p class="lead">Listas de pendientes sin fecha: cosas por comprar, citas por pedir, papeles, ideas. Marca lo que vayas haciendo y toca «Guardar» al terminar.</p>
+  <div class="ktgrid">${K.lists.map(l=>{const d=l.items.filter(i=>i.done).length;return `<article class="card c-white ktl" style="--cc:${l.color}"><div class="ktlh"><input type="color" class="sw" value="${l.color}" data-ktl="${l.id}" data-f="color" style="--c:${l.color}" aria-label="Color de la lista"><input class="kbname" value="${esc(l.name)}" data-ktl="${l.id}" data-f="name" aria-label="Nombre de la lista"><span class="kbcount">${d}/${l.items.length}</span><button class="xbtn" data-kt="dellist" data-id="${l.id}" aria-label="Borrar lista ${esc(l.name)}">✕</button></div>
+    <div class="kbm" style="margin:6px 0 10px"><i style="width:${l.items.length?Math.round(d/l.items.length*100):0}%;background:${l.color}"></i></div>
+    <div class="fwadd"><input type="text" id="ktIn-${l.id}" data-ktin="${l.id}" placeholder="Añadir pendiente…" aria-label="Nuevo pendiente en ${esc(l.name)}"><button class="btn primary" data-kt="add" data-id="${l.id}" aria-label="Añadir">+</button></div>
+    <ul class="ktitems">${l.items.slice().sort((a,b)=>a.done-b.done).map(i=>`<li class="${i.done?"done":""}"><button class="cbox ${i.done?"on":""}" data-kt="tog" data-id="${l.id}|${i.id}" aria-pressed="${!!i.done}" aria-label="Marcar ${esc(i.t)}"></button><input class="czname" value="${esc(i.t)}" data-kti="${l.id}|${i.id}" aria-label="Pendiente"><button class="xbtn" data-kt="del" data-id="${l.id}|${i.id}" aria-label="Quitar ${esc(i.t)}">✕</button></li>`).join("")||'<li class="empty mini">Lista vacía.</li>'}</ul>
+    ${d?`<button class="linkbtn" data-kt="clear" data-id="${l.id}" style="margin-top:8px">${d===1?"Quitar la hecha":`Quitar las ${d} hechas`}</button>`:""}</article>`}).join("")}</div>
+  <div class="row" style="margin-top:16px;align-items:center"><button class="btn" data-kt="newlist">+ Nueva lista</button><span style="flex:1"></span><button class="btn primary ktsave" data-kt="save">${ico("ok")} Guardar</button></div>`;
+}
+function ktAction(a,b){
+  const K=ktodo(), [lid,iid]=(b.dataset.id||"").split("|"), L=K.lists.find(x=>x.id===lid);
+  if(a==="save"){ saveNow(); return; }
+  if(a==="newlist"){K.lists.push({id:uid(),name:"Nueva lista",color:SWATCH[K.lists.length%SWATCH.length],items:[]}); save(); renderAll(true); const ins=document.querySelectorAll(".ktl .kbname"); if(ins.length){ins[ins.length-1].focus();ins[ins.length-1].select();} return;}
+  if(a==="add"){const el=$("#ktIn-"+lid), v=el.value.trim(); if(!v){el.focus();return;} v.split(/,\s*/).filter(Boolean).forEach(t=>L.items.push({id:uid(),t,done:0})); save(); renderAll(true); const e2=$("#ktIn-"+lid); if(e2) e2.focus(); return;}
+  if(a==="tog"){const it=L.items.find(x=>x.id===iid); if(it) it.done=it.done?0:1;}
+  else if(a==="del"){L.items=L.items.filter(x=>x.id!==iid);}
+  else if(a==="clear"){L.items=L.items.filter(x=>!x.done);}
+  else if(a==="dellist"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar lista?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} K.lists=K.lists.filter(x=>x.id!==lid);}
+  save(); renderAll(true);
 }
 function renderCare(pills){
   const C=care(), R=C.rates, cur=fin().cur, [y,m]=careMonth(), ym=y+"-"+pad2(m+1), last=new Date(y,m+1,0).getDate(), S=careSum(ym), today=isoOf(new Date());
@@ -2310,6 +2343,7 @@ document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
   fb=t.closest("[data-nitab]"); if(fb){niTab=fb.dataset.nitab;renderAll(true);return;}
+  fb=t.closest("[data-kt]"); if(fb){ktAction(fb.dataset.kt,fb);return;}
   fb=t.closest("[data-carek]"); if(fb){const [iso,k]=fb.dataset.carek.split("|"), C=care(), D=C.days[iso]||(C.days[iso]={}); if(D[k]) delete D[k]; else D[k]=1; if(!Object.keys(D).length) delete C.days[iso]; syncCare(iso.slice(0,7)); save(); renderAll(true); return;}
   fb=t.closest("[data-care]"); if(fb){const [y,m]=careMonth(), d=new Date(y,m+(fb.dataset.care==="next"?1:-1),1); careYM=[d.getFullYear(),d.getMonth()]; renderAll(true); return;}
   fb=t.closest("[data-shop]"); if(fb){shopAction(fb.dataset.shop,fb);return;}
@@ -2385,11 +2419,14 @@ document.addEventListener("change",e=>{ const t=e.target, ds=t.dataset||{};
   if(ds.czit){const [k,id]=ds.czit.split("|"), it=casa(k).items.find(x=>x.id===id); if(!it) return; const f=ds.f; if(f==="amt"){const v=parseFloat(t.value.replace(",","."));it.amt=isNaN(v)?0:v;} else if(f==="name") it.name=t.value.trim()||it.name; else it[f]=t.value; save(); renderAll(true); return;}
   if(ds.czarea){const [k,id]=ds.czarea.split("|"), ar=casa(k).areas.find(x=>x.id===id); if(ar){ar.name=t.value.trim()||ar.name; save(); renderAll(true);} return;}
   if(ds.cztk){const [k,id]=ds.cztk.split("|"), tk=casa(k).tasks.find(x=>x.id===id); if(!tk) return; if(ds.f==="cost"){const v=parseFloat(t.value.replace(/[^0-9.,]/g,"").replace(",","."));tk.cost=isNaN(v)?0:v;} else tk[ds.f]=ds.f==="t"?(t.value.trim()||tk.t):t.value; save(); renderAll(true); return;}
+  if(ds.ktl){const l=ktodo().lists.find(x=>x.id===ds.ktl); if(l){ if(ds.f==="name") l.name=t.value.trim()||l.name; else l.color=t.value; save(); renderAll(true);} return;}
+  if(ds.kti){const [lid,iid]=ds.kti.split("|"), it=(ktodo().lists.find(x=>x.id===lid)||{items:[]}).items.find(x=>x.id===iid); if(it){it.t=t.value.trim()||it.t; save();} return;}
   if(ds.pcr){const r=pcare().rules.find(x=>x.id===ds.pcr); if(!r) return; if(ds.f==="days"){const d=parseDays(t.value); if(d.length) r.days=d;} else if(ds.f==="t") r.t=t.value.trim()||r.t; else r.color=t.value; save(); renderAll(true); return;}
   if(t.id&&t.id.startsWith("czCustom-")){document.querySelectorAll(`input[name="czColor-${t.id.slice(9)}"]`).forEach(r=>r.checked=false); t.style.setProperty("--c",t.value); return;}
 });
 document.addEventListener("keydown",e=>{ const ds=e.target.dataset||{}; if(e.key!=="Enter") return;
   if(ds.shopin){e.preventDefault(); shopAction("add",{dataset:{k:ds.shopin}});}
+  if(ds.ktin){e.preventDefault(); ktAction("add",{dataset:{id:ds.ktin}});}
   if(e.target.id&&e.target.id.startsWith("czItem-")){e.preventDefault(); casaAction("additem",{dataset:{k:e.target.id.slice(7)}});}
   if(e.target.id&&e.target.id.startsWith("czName-")){e.preventDefault(); casaAction("addcat",{dataset:{k:e.target.id.slice(7)}});}
   if(e.target.id==="pcNewD"){e.preventDefault(); pcAction("add");}
