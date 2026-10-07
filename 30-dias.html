@@ -979,28 +979,19 @@ const PM_STEPS={
  peel:["Desmaquillar y Renew Face Cleanser; seca muy bien.","Peeling CicatriCure según su envase, máximo 10 min, evitando ojos y labios.","Enjuaga con abundante agua.","Crema de centella Bioaqua para calmar.","Triple Action Eye Gel.","CeraVe Moisturizing Cream. Esta noche nada más en el rostro."]
 };
 // rotación por día de la semana (lunes..domingo)
-const SK_W1=["base","gel","base","mask","gel","gly","base"];
-const SK_W2=["gly","gel","ret","mask","gel","peel","base"];
-const SK_W4=["gly","gel","ret","ret","gel","peel","mask"];
+const SK_W2=["gly","mask","ret","base","gel","peel","base"];
+const SK_W4=["gly","mask","ret","ret","gel","peel","base"];
 const SKIN_START=()=>state.skinStart||"2026-10-07";
 const skinIsoOf=k=>{const t=new Date(SKIN_START()+"T12:00:00"); t.setDate(t.getDate()+k-1); return isoOf(t);};
 const skinDayOfIso=iso=>Math.round((new Date(iso+"T12:00:00")-new Date(SKIN_START()+"T12:00:00"))/864e5)+1;
 function skinPmK(k,wd){
-  let pm=(k<=7?SK_W1:k<=21?SK_W2:SK_W4)[wd];
   if(k<1) return "base";
-  if(pm==="gly"&&k<4) pm="base";
-  if((pm==="ret"||pm==="peel")&&k<8) pm="base";
-  return pm;
+  return (k<=21?SK_W2:SK_W4)[wd];
 }
 function skinKeyDays(){ const first=f=>{for(let k=1;k<=30;k++){const wd=(new Date(skinIsoOf(k)+"T12:00:00").getDay()+6)%7; if(f(skinPmK(k,wd))) return k;} return 0;};
   return {gly1:first(p=>p==="gly"), ret1:first(p=>p==="ret"), peel1:first(p=>p==="peel"), mask1:first(p=>p==="mask"), gel1:first(p=>p==="gel")}; }
 function skinNoteK(k){ if(k<1||k>30) return ""; const K=skinKeyDays(), N=[];
-  if(k===1) N.push("Prueba de parche: retinol en la mandíbula. Revisa en 48 h.");
-  if(k===2) N.push("Prueba de parche: ácido glicólico detrás de la oreja.");
-  if(k===3) N.push("Prueba de parche: peeling CicatriCure según su etiqueta (mínimo 48 h antes del primer uso).");
-  if(k===K.gly1) N.push("Primera noche de ácido glicólico, solo si el parche salió bien.");
-  if(k===K.ret1) N.push("Primera noche de retinol: cantidad de un guisante y técnica sándwich.");
-  if(k===K.peel1) N.push("Primer peeling semanal, solo si la piel está tranquila.");
+  if(k===1) N.push("Primer día de la rutina completa.");
   if(k===22) N.push("Desde hoy el retinol puede ir 2 noches por semana si la piel lo tolera.");
   if(k===30) N.push("Fin del ciclo: compara con una foto del primer día y ajusta.");
   return N.join(" "); }
@@ -1407,14 +1398,14 @@ function renderPiel(){
    ["Renew Face Cleanser · Viyant","Noche","home","Limpieza de la noche, después de desmaquillar."],
    ["Línea de centella asiática · Bioaqua","Diario","home","Tóner mañana y noche; sérum después del glicólico; mascarilla y crema en las noches de calma; el limpiador sirve para desmaquillar."],
    ["Brighten Serum (arbutina, hialurónico y colágeno) · Viyant","Mañana","home","Ilumina y unifica el tono todas las mañanas, antes de la crema."],
-   ["Anti Age Boost Facial Serum · Viyant","Noche","home","Noches de recuperación y de mascarilla: líneas finas sin irritar."],
+   ["Anti Age Boost Facial Serum · Viyant","Noche","home","Noches de recuperación y de mascarilla (martes, jueves y domingo): líneas finas sin irritar."],
    ["Triple Action Eye Gel · Viyant","Mañana y noche","home","Contorno de ojos siempre; nunca pongas ácidos ni retinol en esa zona."],
    ["Hydrate & Repair Face Cream · Viyant","Mañana","home","Hidratante ligera del día; de noche solo si la Porcelana te deja tirante."],
    ["Moisturizing Cream · CeraVe","Noche","home","Repara la barrera: noches de glicólico, retinol (sándwich), peeling y recuperación."],
-   ["CicatriCure Porcelana","Martes y viernes","home","Tu antimanchas principal, 2 noches por semana."],
-   ["Peeling CicatriCure","Sábado",'home',`Una vez por semana desde el ${K.peel1?sf(K.peel1):"día 8"}, máximo 10 minutos.`],
-   ["Ácido glicólico","Lunes",'home',`Una noche por semana desde el ${K.gly1?sf(K.gly1):"día 4"}. Nunca la misma noche que retinol o peeling.`],
-   ["Retinol","Miércoles",'home',`Desde el ${K.ret1?sf(K.ret1):"día 8"}; desde el ${sf(22)} también los jueves si no hay irritación.`],
+   ["CicatriCure Porcelana","Viernes","home","Tu antimanchas, 1 noche por semana."],
+   ["Peeling CicatriCure","Sábado",'home',`Una vez por semana desde el ${K.peel1?sf(K.peel1):"primer sábado"}, máximo 10 minutos.`],
+   ["Ácido glicólico","Lunes",'home',`Una noche por semana desde el ${K.gly1?sf(K.gly1):"primer lunes"}. Nunca la misma noche que retinol o peeling.`],
+   ["Retinol","Miércoles",'home',`Miércoles desde el ${K.ret1?sf(K.ret1):"primer miércoles"}; desde el ${sf(22)} también los jueves si no hay irritación.`],
    ["Vitamina E · KimBeauty","Opcional","home","2 gotas en zonas secas en noches de recuperación o mascarilla."],
    ["Sugar Glow (exfoliante de azúcar) · Viyant","Cuerpo","home","Miércoles y sábado en la ducha, solo en el cuerpo. El azúcar es demasiado abrasivo para el rostro si ya usas ácidos."],
    ["Jabón de cascabel · Viyant","Cuerpo","home","En la ducha para el cuerpo; no lo uses en el rostro para no resecarlo."],
@@ -1424,7 +1415,7 @@ function renderPiel(){
    ["Protector solar FPS 50","Comprar si no tienes","",'No está en tu lista y es el paso más importante: sin protector, el glicólico, el retinol y la Porcelana no aclaran las manchas y la piel se sensibiliza.'],
    ["Exfoliador facial (el otro)","En pausa","ink","Con glicólico + peeling ya exfolias suficiente. Úsalo solo si dejas el glicólico."],
    ["Tóner (el otro)","En pausa","ink","Revisa su etiqueta: si tiene ácidos o alcohol, no lo mezcles con esta rutina. La centella ocupa ese paso."]];
-  const wkG=[["Adaptación y pruebas de parche",1,7],["Entran glicólico, retinol y peeling",8,14],["Rutina completa",15,21],["Rutina completa · retinol 2 veces",22,28],["Cierre del ciclo",29,30]];
+  const wkG=[["Semana 1",1,7],["Semana 2",8,14],["Semana 3",15,21],["Semana 4 · retinol 2 veces",22,28],["Cierre del ciclo",29,30]];
   $("#v-piel").innerHTML=`${stickBar("Piel",Math.round((amN+pmN)/60*100),`AM ${amN}/30 · PM ${pmN}/30`)}<h2 class="h2">Tu piel</h2><p class="lead">Rutina de 30 días (${sfr(1,30)}) armada con tus productos: Viyant Beauty, CicatriCure, CeraVe, Bioaqua centella, retinol y ácido glicólico. Un activo fuerte por noche; las demás noches reparan.</p>
   <div class="row" style="margin:-8px 0 16px;align-items:center"><label class="lbl" for="skinStartIn">Inicio de la rutina</label><input type="date" id="skinStartIn" value="${SKIN_START()}" style="max-width:180px"><span class="mini">Cámbiala si empiezas otro día; todo el calendario se mueve.</span></div>
   <div class="grid">
@@ -1435,7 +1426,7 @@ function renderPiel(){
    ${steps(S.pmSteps)}${S.note?`<div class="note">★ ${S.note}</div>`:""}
    <div class="subchecks"><button data-skc="${iso}|skinPM" aria-pressed="${skDone(iso,"skinPM")}">PM hecho</button></div></article>
 
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Semana tipo</span><h3>Rotación de noche<small>Desde el día 8. Desde el día 22 el retinol sube a 2 noches y la mascarilla pasa al domingo</small></h3></div></div>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Semana tipo</span><h3>Rotación de noche<small>Desde el primer día. Desde el día 22 el retinol sube a 2 noches (miércoles y jueves)</small></h3></div></div>
    <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${SK_W2.map((k,i)=>{const T=PM_TYPES[k];return `<div class="tile pt ${T.cls}" style="min-height:120px"><div class="th"><span class="num">${WD[i]}</span></div><h4>${T.t}</h4><p>${T.s}</p></div>`}).join("")}</div></article>
 
   <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Rutina completa de cada día<small>Todos los pasos en orden. Marca AM y PM cada día</small></h3></div></div>
@@ -1447,9 +1438,8 @@ function renderPiel(){
      <div class="skr"><b>PM</b><ol>${s.pmShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
      ${s.note?`<p class="sknote">★ ${s.note}</p>`:""}</div>`}).join("")}</div>`).join("")}</article>
 
-  <article class="card c-peach pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>${sfr(1,7)}</span><h3>Fase 1: adaptación</h3><p>Limpieza, centella, Brighten, Anti Age y CeraVe. Porcelana 2 noches y mascarilla de centella. Pruebas de parche de retinol, glicólico y peeling; el glicólico entra al final de la semana${K.gly1?` (${sf(K.gly1)})`:""}.</p></article>
-  <article class="card c-sky pt third"><span class="tag"><span class="ic">${ico("drop")}</span>${sfr(8,21)}</span><h3>Fase 2: rutina completa</h3><p>Glicólico los lunes, Porcelana martes y viernes, retinol los miércoles${K.ret1?` (primero: ${sf(K.ret1)})`:""}, centella los jueves, peeling los sábados${K.peel1?` (primero: ${sf(K.peel1)})`:""} y domingo de descanso.</p></article>
-  <article class="card c-pink pt third"><span class="tag"><span class="ic">${ico("star")}</span>${sfr(22,30)}</span><h3>Fase 3: intensificar</h3><p>Si no hubo irritación, el retinol sube a miércoles y jueves y la mascarilla de centella pasa al domingo. Después del día 30, repite esta fase como mantenimiento.</p></article>
+  <article class="card c-sky pt"><span class="tag"><span class="ic">${ico("drop")}</span>${sfr(1,21)}</span><h3>Días 1–21: rutina completa</h3><p>Glicólico los lunes, centella los martes, retinol los miércoles, recuperación los jueves, Porcelana los viernes, peeling los sábados y domingo de descanso.</p></article>
+  <article class="card c-pink pt"><span class="tag"><span class="ic">${ico("star")}</span>${sfr(22,30)}</span><h3>Días 22–30: intensificar</h3><p>Si no hubo irritación, el retinol sube a miércoles y jueves. Después del día 30, repite esta semana como mantenimiento.</p></article>
 
   <article class="card c-white wide"><h3 style="margin-bottom:8px">Tus productos<small>Dónde entra cada uno en la rutina</small></h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Producto</th><th>Cuándo</th><th>Para qué y cómo</th></tr></thead><tbody>
    ${prods.map(([n,s,c,u],i)=>`<tr><td class="n">${String(i+1).padStart(2,"0")}</td><td><b>${n}</b></td><td><span class="pill ${c}">${s}</span></td><td class="mini" style="color:var(--ink)">${u}</td></tr>`).join("")}</tbody></table></div></article>
@@ -1457,7 +1447,7 @@ function renderPiel(){
   <article class="card c-white"><h3 style="margin-bottom:10px">Qué no mezclar</h3><div class="kv">
    <div style="background:var(--shell)">Glicólico, retinol y peeling: cada uno en su noche, nunca juntos.</div>
    <div style="background:var(--shell)">Después del peeling, 24–48 h sin glicólico ni retinol.</div>
-   <div style="background:var(--shell)">Porcelana es tu único antimanchas de noche; el Brighten Serum va de mañana.</div>
+   <div style="background:var(--shell)">Porcelana 1 noche por semana y sola; el Brighten Serum va de mañana.</div>
    <div style="background:var(--shell)">Nada de exfoliantes de azúcar o granulados en el rostro mientras uses ácidos.</div>
    <div style="background:var(--shell)">Ácidos y retinol nunca en el contorno de ojos: ahí solo el Eye Gel.</div></div></article>
   <article class="card c-white"><h3 style="margin-bottom:10px">Señales para frenar</h3><div class="warn">Ardor que dura más de unos minutos, descamación, enrojecimiento o granitos nuevos: haz 3–4 noches de recuperación y reintroduce ese activo más espaciado. No uses activos sobre piel irritada o quemada por el sol. Si estás embarazada o lactando, no uses retinol y consulta el glicólico y los antimanchas antes. Si las manchas no mejoran en 8–12 semanas, consulta a dermatología.</div></article>
