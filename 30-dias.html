@@ -949,64 +949,77 @@ const DAYS=[
 {t:"Diseñar continuidad",mu:"Preludio en do mayor, BWV 846, J. S. Bach",mq:"¿Qué tres hábitos quiero sostener el próximo mes? Define su versión habitual y su versión mínima.",et:"Mi mes",eq:["What changed this month?","What was your favorite activity?","What would you like to improve?"],emT:"Mi tarjeta de calma",em:"Escribe tres señales de sobrecarga, dos herramientas que te funcionaron y una persona de apoyo. Deja la tarjeta accesible.",iT:"Emociones de un viajero",iI:"Podemos sentir alegría, miedo o tristeza y pedir compañía.",iJ:"Un peluche quiere viajar pero tiene miedo. Nombra la emoción y pregunta cómo acompañarlo, sin obligarlo a «ser valiente».",iP:"¿Qué le diríamos al peluche?",thT:"Mini circuito olfativo",th:"Haz tres estaciones cercanas: croqueta visible, juguete parcialmente visible y recipiente abierto con una croqueta. Sin obstáculos ni saltos.",pT:"Agradecimiento concreto",pM:"30 min",p:"Cada uno menciona tres acciones del otro que agradeció y por qué. Después, pide una cosa concreta que le gustaría compartir más."},
 {t:"Cerrar y elegir",mu:"Träumerei, op. 15 n.º 7, Robert Schumann",mq:"¿Qué aprendí sobre mí, mis hijos y mis vínculos? Anota tres aprendizajes y una intención concreta para los siguientes 30 días.",et:"Conversación integrada",eq:["Introduce yourself, explain your work and tell a recent story.","Ask about my interests.","Describe your next-month goals."],emT:"Integrar",em:"Compara cómo reconoces tus emociones ahora con el día 1. Elige una herramienta para practicar a diario y otra para momentos de tensión.",iT:"Mi pequeña exposición",iI:"Contar lo que más le interesó del mes.",iJ:"Dispón tres trabajos elegidos por Ignacio. Invita a un adulto a escucharlo y deja que señale, juegue o explique a su manera.",iP:"¿Qué quieres mostrarnos primero?",thT:"Celebración tranquila",th:"Prepara su snack con alimento habitual y repite dos minutos de su juego favorito. Anota qué lo relaja y qué lo sobreexcita.",pT:"Cita de cierre",pM:"60–90 min",out:1,p:"Elijan su actividad favorita del mes: café, paseo, cena o película. Hablen de un recuerdo del mes y de su próxima cita."}
 ];
-// piel: rutina para piel grasa con arrugas, poros abiertos y manchas
+// piel: rutina de 30 días con los productos reales de Hillary
 const PM_TYPES={
- base:{t:"Recuperación",c:"#1F9D55",cls:"c-mint",s:"Solo limpiar e hidratar: la piel descansa y repara."},
- gel:{t:"Antimanchas",c:"#7A6CF0",cls:"c-lav",s:"Cicatricure Porcelana crema gel para manchas."},
- bha:{t:"Ácido salicílico",c:"#0E9F9A",cls:"c-sky",s:"BHA 2 %: destapa poros, controla grasa y afina textura."},
- ret:{t:"Retinoide",c:"#D9467F",cls:"c-pink",s:"Retinol o adapaleno: arrugas, poros y textura."},
- arc:{t:"Arcilla + calma",c:"#B8741A",cls:"c-peach",s:"Mascarilla de arcilla en zona T y luego hidratar."},
- peel:{t:"Peeling semanal",c:"#E5484D",cls:"c-rose",s:"Peeling Cicatricure 1 vez por semana, como indica el envase."}
+ base:{t:"Recuperación",c:"#1F9D55",cls:"c-mint",s:"Sin activos fuertes: limpiar, anti-edad suave e hidratar."},
+ gel:{t:"Antimanchas",c:"#7A6CF0",cls:"c-lav",s:"CicatriCure Porcelana para las manchas."},
+ gly:{t:"Ácido glicólico",c:"#0E9F9A",cls:"c-sky",s:"Textura, brillo y manchas superficiales."},
+ ret:{t:"Retinol",c:"#D9467F",cls:"c-pink",s:"Líneas finas, poros y renovación."},
+ mask:{t:"Centella + calma",c:"#B8741A",cls:"c-peach",s:"Mascarilla Bioaqua de centella para calmar y reparar."},
+ peel:{t:"Peeling semanal",c:"#E5484D",cls:"c-rose",s:"Peeling CicatriCure, 1 vez por semana."}
 };
 const PM_SHORT={
- base:["Desmaquillar","Limpiador en gel","Vitamina E (opcional)","Hidratante"],
- gel:["Desmaquillar","Limpiador en gel","Tónico","Porcelana crema gel","Hidratante (si hace falta)"],
- bha:["Desmaquillar","Limpiador en gel","Ácido salicílico 2 %","Esperar 10 min","Hidratante"],
- ret:["Desmaquillar","Limpiador en gel","Esperar 10 min","Hidratante","Retinoide","Hidratante"],
- arc:["Desmaquillar","Limpiador en gel","Mascarilla de arcilla 10 min","Enjuagar","Vitamina E (opcional)","Hidratante"],
- peel:["Desmaquillar","Limpiador en gel","Peeling Cicatricure ≤10 min","Enjuagar bien","Hidratante"]
+ base:["Desmaquillar","Renew Face Cleanser","Tóner centella","Anti Age Boost","Eye gel","CeraVe crema","Vitamina E (opcional)"],
+ gel:["Desmaquillar","Renew Face Cleanser","Tóner centella","Porcelana","Eye gel","Hydrate & Repair (si hace falta)"],
+ gly:["Desmaquillar","Renew Face Cleanser","Ácido glicólico","Esperar 10 min","Sérum centella","Eye gel","CeraVe crema"],
+ ret:["Desmaquillar","Renew Face Cleanser","Esperar 10 min","CeraVe crema","Retinol","CeraVe crema","Eye gel"],
+ mask:["Desmaquillar","Renew Face Cleanser","Tóner centella","Mascarilla centella","Anti Age Boost","Eye gel","Crema centella","Vitamina E (opcional)"],
+ peel:["Desmaquillar","Renew Face Cleanser","Peeling CicatriCure ≤10 min","Enjuagar bien","Crema centella","Eye gel","CeraVe crema"]
 };
-const SKP={"Desmanchador de axilas":"#A855F7","Desmanchador zona íntima":"#EC4899","Desmaquillar":"#94A3B8","Limpiador en gel":"#64748B","Tónico":"#0EA5A4","Vitamina C":"#E7A21D","Niacinamida":"#2F6FD1","Hidratante":"#1F9D55","Hidratante (si hace falta)":"#1F9D55","Protector FPS 50":"#F97316","Vitamina E (opcional)":"#B8741A","Porcelana crema gel":"#7A6CF0","Ácido salicílico 2 %":"#0E9F9A","Retinoide":"#D9467F","Mascarilla de arcilla 10 min":"#B8741A","Peeling Cicatricure ≤10 min":"#E5484D"};
+const SKP={"Everyday Face Wash":"#64748B","Tóner centella":"#0EA5A4","Brighten serum":"#E7A21D","Eye gel":"#2F6FD1","Hydrate & Repair":"#1F9D55","Hydrate & Repair (si hace falta)":"#1F9D55","Protector FPS 50":"#F97316",
+ "Desmaquillar":"#94A3B8","Renew Face Cleanser":"#64748B","Anti Age Boost":"#8B5CF6","CeraVe crema":"#2F6FD1","Vitamina E (opcional)":"#B8741A","Porcelana":"#7A6CF0","Ácido glicólico":"#0E9F9A","Esperar 10 min":"#94A3B8","Sérum centella":"#1F9D55",
+ "Retinol":"#D9467F","Mascarilla centella":"#B8741A","Crema centella":"#1F9D55","Peeling CicatriCure ≤10 min":"#E5484D","Enjuagar bien":"#94A3B8",
+ "Jabón de cascabel (cuerpo)":"#A16207","Ultra Moist Body Serum":"#0EA5A4","Sugar Glow (cuerpo)":"#F472B6","Whip It Body Butter":"#C2410C","Desmanchador de axilas":"#A855F7","Desmanchador zona íntima":"#EC4899"};
 const PM_STEPS={
- base:["Desmaquillar: agua micelar o bálsamo si usaste protector o maquillaje.","Limpiador en gel, 30–60 s con agua tibia; secar a toques.","Hidratante en gel oil-free (una avellana para rostro y cuello).","Opcional si la sientes tirante: 2–3 gotas de vitamina E KIMBEAUTY antes de la hidratante."],
- gel:["Desmaquillar y limpiador en gel; secar muy bien.","Tónico Petite Maison (opcional, si no tiene alcohol ni ácidos).","Cicatricure Porcelana crema gel: capa fina en rostro o sobre manchas, según etiqueta.","Si queda tirante, una capa ligera de hidratante en gel."],
- bha:["Desmaquillar y limpiador en gel; secar muy bien.","Ácido salicílico 2 %: 3–4 gotas (o un algodón) en zona T, nariz, mentón y poros. Sin tónico esa noche.","Esperar 10 min.","Hidratante en gel oil-free."],
- ret:["Desmaquillar y limpiador en gel; esperar 10 min con la piel totalmente seca.","Capa fina de hidratante.","Retinoide: cantidad de un guisante en 5 puntitos (frente, mejillas, mentón). Evita ojos, alas de la nariz y comisuras.","Otra capa de hidratante encima (técnica sándwich)."],
- arc:["Desmaquillar y limpiador en gel.","Mascarilla de arcilla en zona T 8–10 min; retírala antes de que se cuartee del todo.","Enjuagar con agua tibia.","Hidratante en gel; opcional 2–3 gotas de vitamina E en zonas secas."],
- peel:["Desmaquillar y limpiador en gel; secar muy bien.","Peeling Cicatricure según el envase, máximo 10 min, evitando ojos y labios.","Enjuagar con abundante agua.","Solo hidratante sencilla. Esta noche nada más: ni ácidos, ni retinoide, ni antimanchas."]
+ base:["Desmaquillar: agua micelar o el limpiador de centella Bioaqua si usaste protector o maquillaje.","Renew Face Cleanser (Viyant): masajea 30–60 s y enjuaga con agua tibia; seca a toques.","Tóner de centella Bioaqua: con las manos, a palmaditas.","Anti Age Boost Facial Serum (Viyant): 2–3 gotas en rostro y cuello.","Triple Action Eye Gel: un punto en cada contorno, con el dedo anular.","CeraVe Moisturizing Cream: capa fina en rostro y cuello.","Opcional: 2 gotas de vitamina E KimBeauty en zonas secas, encima de la crema."],
+ gel:["Desmaquillar y Renew Face Cleanser; seca muy bien la piel.","Tóner de centella Bioaqua a palmaditas.","CicatriCure Porcelana: capa fina en rostro o sobre las manchas, según su etiqueta. No en el contorno de ojos.","Triple Action Eye Gel en el contorno.","Si queda tirante, una capa ligera de Hydrate & Repair Face Cream."],
+ gly:["Desmaquillar y Renew Face Cleanser; seca muy bien.","Ácido glicólico: capa fina evitando ojos, alas de la nariz y labios. Si es de enjuague, déjalo el tiempo de la etiqueta y enjuaga.","Espera 10 minutos.","Sérum de centella Bioaqua para calmar.","Triple Action Eye Gel en el contorno.","CeraVe Moisturizing Cream. Esa noche sin tóner extra, sin retinol ni Porcelana."],
+ ret:["Desmaquillar y Renew Face Cleanser; espera 10 min con la piel totalmente seca.","Capa fina de CeraVe Moisturizing Cream.","Retinol: cantidad de un guisante en 5 puntitos (frente, mejillas, mentón). Evita ojos, alas de la nariz y comisuras.","Otra capa de CeraVe encima (técnica sándwich).","Triple Action Eye Gel solo en el contorno."],
+ mask:["Desmaquillar y Renew Face Cleanser.","Tóner de centella Bioaqua.","Mascarilla de centella Bioaqua 15–20 min (la de tela o la de crema).","Retira y da palmaditas para absorber el resto.","Anti Age Boost Facial Serum.","Triple Action Eye Gel.","Crema de centella Bioaqua (o CeraVe si la sientes seca).","Opcional: 2 gotas de vitamina E en zonas secas."],
+ peel:["Desmaquillar y Renew Face Cleanser; seca muy bien.","Peeling CicatriCure según su envase, máximo 10 min, evitando ojos y labios.","Enjuaga con abundante agua.","Crema de centella Bioaqua para calmar.","Triple Action Eye Gel.","CeraVe Moisturizing Cream. Esta noche nada más en el rostro."]
 };
-// semana tipo (lunes..domingo)
-const WEEK2=["bha","gel","base","arc","gel","peel","base"];
-const WEEK3=["bha","gel","ret","arc","gel","peel","base"];
-const WEEK1=["base","base","base","base","gel","base","base"];
-const PATCH={1:"Prueba de parche: Porcelana crema gel detrás de la oreja o en el cuello. Revisa en 24–48 h.",2:"Prueba de parche: vitamina C KIMBEAUTY en otra zona pequeña.",3:"Prueba de parche: ácido salicílico 2 % en la mandíbula.",4:"Prueba de parche del peeling según su etiqueta (mínimo 48 h antes del primer uso).",5:"Primera noche de Porcelana en todo el rostro si el parche salió bien.",8:"Empieza el ácido salicílico: hoy es su primera noche.",10:"Prueba de parche del retinoide en la mandíbula.",13:"Primer peeling semanal, solo si la piel está tranquila.",15:"Desde hoy vitamina C diaria y, si la compraste, niacinamida.",17:"Primera noche de retinoide: 1 vez por semana este mes."};
-function skinPm(d){ const st=stageOf(d), w=wdOf(d); const pm=(st===1?WEEK1:st===2?WEEK2:WEEK3)[w]; return (st===1&&pm==="gel"&&d<5)||(pm==="peel"&&d<11)?"base":pm; }
-function skinKeyDays(){ const first=(f)=>{for(let n=1;n<=30;n++) if(f(n)) return n; return 0;};
-  const bha1=first(n=>stageOf(n)===2&&skinPm(n)==="bha")||8, peel1=first(n=>stageOf(n)>=2&&skinPm(n)==="peel")||13;
-  return {gel1:first(n=>stageOf(n)===1&&skinPm(n)==="gel"), bha1, peel1, retp:first(n=>stageOf(n)===2&&skinPm(n)==="base"&&n>bha1)||first(n=>stageOf(n)===2&&skinPm(n)==="base")||10, ret1:first(n=>stageOf(n)>=3&&skinPm(n)==="ret")||17}; }
-function skinNote(d){ const K=skinKeyDays(), N=[];
-  if(PATCH[d]&&d<=4) N.push(PATCH[d]);
-  if(d===K.gel1) N.push("Primera noche de Porcelana en todo el rostro si el parche salió bien.");
-  if(d===K.bha1) N.push("Empieza el ácido salicílico: hoy es su primera noche.");
-  if(d===K.retp) N.push("Prueba de parche del retinoide en la mandíbula.");
-  if(d===K.peel1) N.push("Primer peeling semanal, solo si la piel está tranquila.");
-  if(d===15) N.push("Desde hoy vitamina C diaria y, si la compraste, niacinamida.");
-  if(d===K.ret1) N.push("Primera noche de retinoide: 1 vez por semana este mes.");
-  return N.join(" "); }
-function skinOf(d){
-  const w=wdOf(d), st=stageOf(d);
-  const pm=skinPm(d);
-  const vitc=st>=3||(st===2&&d%2===0), nia=st>=3, afterPeel=w===6&&st>=2;
-  const am=["Limpiador en gel suave, 30 s (o solo agua si la piel está tranquila).","Tónico Petite Maison, si no tiene alcohol ni ácidos."];
-  if(vitc) am.push("Vitamina C KIMBEAUTY: 3–4 gotas; esperar 1 min."+(afterPeel?" Si arde tras el peeling, omítela hoy.":""));
-  if(nia) am.push("Niacinamida 5–10 %: 2–3 gotas (poros, grasa y manchas).");
-  am.push("Hidratante en gel oil-free: poca cantidad.","Protector FPS 50 toque seco: dos dedos de producto para rostro y cuello. Reaplicar cada 2–3 h si hay sol.");
-  const amShort=["Limpiador en gel","Tónico","Vitamina C","Niacinamida","Hidratante","Protector FPS 50"].filter(x=>(x!=="Vitamina C"||vitc)&&(x!=="Niacinamida"||nia));
-  const intima=(d-1)%3===0;
-  const pmShort=PM_SHORT[pm].concat(["Desmanchador de axilas"],intima?["Desmanchador zona íntima"]:[]);
-  const pmSteps=PM_STEPS[pm].concat(["Cuerpo: desmanchador de axilas en piel limpia y seca, capa fina (no justo después de depilar o afeitar)."],intima?["Cuerpo: desmanchador de zona íntima, solo en la parte externa y según su etiqueta. Suspende si arde o irrita."]:[]);
-  return {pm,vitc,nia,am,amShort,pmShort,pmSteps,intima,note:skinNote(d)};
+// rotación por día de la semana (lunes..domingo)
+const SK_W1=["base","gel","base","mask","gel","gly","base"];
+const SK_W2=["gly","gel","ret","mask","gel","peel","base"];
+const SK_W4=["gly","gel","ret","ret","gel","peel","mask"];
+const SKIN_START=()=>state.skinStart||"2026-10-07";
+const skinIsoOf=k=>{const t=new Date(SKIN_START()+"T12:00:00"); t.setDate(t.getDate()+k-1); return isoOf(t);};
+const skinDayOfIso=iso=>Math.round((new Date(iso+"T12:00:00")-new Date(SKIN_START()+"T12:00:00"))/864e5)+1;
+function skinPmK(k,wd){
+  let pm=(k<=7?SK_W1:k<=21?SK_W2:SK_W4)[wd];
+  if(k<1) return "base";
+  if(pm==="gly"&&k<4) pm="base";
+  if((pm==="ret"||pm==="peel")&&k<8) pm="base";
+  return pm;
 }
+function skinKeyDays(){ const first=f=>{for(let k=1;k<=30;k++){const wd=(new Date(skinIsoOf(k)+"T12:00:00").getDay()+6)%7; if(f(skinPmK(k,wd))) return k;} return 0;};
+  return {gly1:first(p=>p==="gly"), ret1:first(p=>p==="ret"), peel1:first(p=>p==="peel"), mask1:first(p=>p==="mask"), gel1:first(p=>p==="gel")}; }
+function skinNoteK(k){ if(k<1||k>30) return ""; const K=skinKeyDays(), N=[];
+  if(k===1) N.push("Prueba de parche: retinol en la mandíbula. Revisa en 48 h.");
+  if(k===2) N.push("Prueba de parche: ácido glicólico detrás de la oreja.");
+  if(k===3) N.push("Prueba de parche: peeling CicatriCure según su etiqueta (mínimo 48 h antes del primer uso).");
+  if(k===K.gly1) N.push("Primera noche de ácido glicólico, solo si el parche salió bien.");
+  if(k===K.ret1) N.push("Primera noche de retinol: cantidad de un guisante y técnica sándwich.");
+  if(k===K.peel1) N.push("Primer peeling semanal, solo si la piel está tranquila.");
+  if(k===22) N.push("Desde hoy el retinol puede ir 2 noches por semana si la piel lo tolera.");
+  if(k===30) N.push("Fin del ciclo: compara con una foto del primer día y ajusta.");
+  return N.join(" "); }
+function skinOfIso(iso){
+  const k=skinDayOfIso(iso), wd=(new Date(iso+"T12:00:00").getDay()+6)%7, pm=skinPmK(k,wd);
+  const scrub=wd===2||wd===5, intima=k>=1&&(k-1)%3===0, afterPeel=k>1&&skinPmK(k-1,(wd+6)%7)==="peel";
+  const am=["Everyday Face Wash (Viyant): 30 s con agua tibia; seca a toques.","Tóner de centella Bioaqua a palmaditas.",
+    "Brighten Serum (arbutina, ácido hialurónico y colágeno): 2–3 gotas en rostro y cuello."+(afterPeel?" Si arde tras el peeling de anoche, sáltalo hoy.":""),
+    "Triple Action Eye Gel: un punto en cada contorno, con el anular.","Hydrate & Repair Face Cream: capa fina.",
+    "Protector solar FPS 50: dos dedos de producto para rostro y cuello. Reaplica cada 2–3 h si hay sol. Imprescindible con ácidos y retinol.",
+    "Cuerpo: ducha con el jabón de cascabel Viyant (solo cuerpo, no rostro)"+(scrub?"; hoy exfolia el cuerpo con Sugar Glow, 1–2 min en círculos, sin axilas ni zona íntima":"")+".",
+    "Cuerpo: Ultra Moist Body Serum con la piel aún húmeda."];
+  const amShort=["Everyday Face Wash","Tóner centella","Brighten serum","Eye gel","Hydrate & Repair","Protector FPS 50","Jabón de cascabel (cuerpo)"].concat(scrub?["Sugar Glow (cuerpo)"]:[],["Ultra Moist Body Serum"]);
+  const pmShort=PM_SHORT[pm].concat(["Whip It Body Butter","Desmanchador de axilas"],intima?["Desmanchador zona íntima"]:[]);
+  const pmSteps=PM_STEPS[pm].concat(["Cuerpo: Whip It Body Butter en codos, rodillas, piernas y pies.","Cuerpo: desmanchador de axilas en piel limpia y seca, capa fina (no justo después de depilar o afeitar)."],intima?["Cuerpo: desmanchador de zona íntima, solo en la parte externa y según su etiqueta. Suspende si arde o irrita."]:[]);
+  return {k,pm,am,amShort,pmShort,pmSteps,intima,scrub,note:skinNoteK(k)};
+}
+function skinOf(d){ return skinOfIso(isoOf(dateOf(d))); }
+const skDone=(iso,k)=>!!(state.skinChk||{})[iso+"|"+k];
 
 </script>
 <script>
@@ -1048,6 +1061,10 @@ const ico=(k,cls="i")=>`<svg class="${cls}" viewBox="0 0 24 24">${IC[k]||""}</sv
 /* ---------- state ---------- */
 let state={day:1,start:"",checks:{},notes:{},theme:""};
 try{const s=JSON.parse(localStorage.getItem("plan30")||"null"); if(s) state=Object.assign(state,s);}catch(e){}
+function migrateSkin(){ if(state.skinV2) return; const c=state.skinChk||(state.skinChk={});
+  Object.keys(state.checks||{}).forEach(key=>{const [n,k]=key.split(":"); if(k==="skinAM"||k==="skinPM"){ const t=dateOf(+n); if(t) c[isoOf(t)+"|"+k]=1; }});
+  if(!state.skinStart) state.skinStart="2026-10-07";
+  state.skinV2=1; }
 function ensureStart(){ if(!state.startSet){ const n=new Date(); state.start=n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0"); state.startSet=1; state.day=1; try{localStorage.setItem("plan30",JSON.stringify(state));}catch(e){} return true;} return false; }
 ensureStart();
 let dbDoc=null, saving=Promise.resolve(), saveT=null;
@@ -1083,7 +1100,7 @@ async function saveNow(){
     const uid=await user.id(); if(!uid) return;
     const ref=db.doc("data/users/"+uid+"/progreso");
     const snap=await ref.get();
-    if(snap.exists){ const r=snap.data(); const fix=!r.startSet; if(fix){delete r.start;delete r.day;delete r.startSet;} state=Object.assign(state,r); if(fix) setTimeout(save,800); try{localStorage.setItem("plan30",JSON.stringify(state));}catch(e){} applyTheme(); renderAll(); }
+    if(snap.exists){ const r=snap.data(); const fix=!r.startSet; if(fix){delete r.start;delete r.day;delete r.startSet;} state=Object.assign(state,r); if(fix) setTimeout(save,800); if(!r.skinV2){state.skinV2=0; migrateSkin(); setTimeout(save,900);} try{localStorage.setItem("plan30",JSON.stringify(state));}catch(e){} applyTheme(); renderAll(); }
     dbDoc=ref; setSync("Sincronizado");
   }catch(e){}
 })();
@@ -1112,9 +1129,10 @@ function itemsOf(d){
   it.push("ign","thomas","pair","kids","skinAM","skinPM","close"); return it;
 }
 const LABELS={mind:"Mindset",move:"Ejercicio",eng:"Inglés",work:"Trabajo",ign:"Ignacio",thomas:"Thomas",pair:"Personal",kids:"Ambos niños",skinAM:"Piel AM",skinPM:"Piel PM",close:"Cierre"};
-const isOn=(d,k)=>!!state.checks[d+":"+k];
+const isOn=(d,k)=>(k==="skinAM"||k==="skinPM")?skDone(isoOf(dateOf(d)),k):!!state.checks[d+":"+k];
 function pct(d){const it=itemsOf(d);return Math.round(it.filter(k=>isOn(d,k)).length/it.length*100);}
-function toggle(d,k){const key=d+":"+k; if(state.checks[key]) delete state.checks[key]; else state.checks[key]=1; save(); renderAll(true);}
+function skToggle(iso,k){const c=state.skinChk||(state.skinChk={}), key=iso+"|"+k; if(c[key]) delete c[key]; else c[key]=1; save(); renderAll(true);}
+function toggle(d,k){ if(k==="skinAM"||k==="skinPM"){skToggle(isoOf(dateOf(d)),k);return;} const key=d+":"+k; if(state.checks[key]) delete state.checks[key]; else state.checks[key]=1; save(); renderAll(true);}
 function monthTotals(){return Object.keys(LABELS).map(k=>{let n=0,t=0;for(let d=1;d<=30;d++){if(itemsOf(d).includes(k)){t++;if(isOn(d,k))n++;}}return [k,n,t];});}
 function monthPct(){const t=monthTotals();return Math.round(t.reduce((a,x)=>a+x[1],0)/t.reduce((a,x)=>a+x[2],0)*100);}
 
@@ -1380,63 +1398,69 @@ function renderMov(){
 
 /* ---------- PIEL ---------- */
 function renderPiel(){
-  const SKD=skinKeyDays();
-  const d=state.day, S=skinOf(d), P=PM_TYPES[S.pm];
-  const GOALS=[["Grasa y brillo","c-sky","drop","Limpiador en gel, niacinamida, ácido salicílico, arcilla y protector de toque seco."],["Poros abiertos","c-mint","spark","Ácido salicílico 2 veces por semana, niacinamida diaria y retinoide."],["Manchas","c-lav","sun","Protector diario (lo más importante), vitamina C, Porcelana 2 noches y peeling semanal."],["Arrugas","c-pink","star","Retinoide, vitamina C, hidratación y protector todos los días."],["Textura","c-peach","leaf","Peeling semanal más ácido salicílico y retinoide en noches separadas."]];
+  const K=skinKeyDays(), iso=isoOf(dateOf(state.day)), S=skinOfIso(iso), P=PM_TYPES[S.pm];
+  const sd=k=>skinIsoOf(k), sf=k=>cap(new Date(sd(k)+"T12:00:00").toLocaleDateString("es",{weekday:"short",day:"numeric",month:"short"}).replace(/\./g,""));
+  const sfr=(a,b)=>sf(a)+" – "+sf(b);
+  const amN=Array.from({length:30},(_,i)=>skDone(sd(i+1),"skinAM")).filter(Boolean).length, pmN=Array.from({length:30},(_,i)=>skDone(sd(i+1),"skinPM")).filter(Boolean).length;
   const prods=[
-   ["Limpiador en gel suave para piel grasa","Comprar","","Mañana y noche. Sin exfoliantes ni partículas."],
-   ["Hidratante en gel oil-free no comedogénica","Comprar","","Mañana y noche. La piel grasa también se deshidrata, sobre todo con ácidos."],
-   ["Protector solar FPS 50 toque seco","Comprar","","Todas las mañanas, aunque no salgas. Sin él, las manchas vuelven y los ácidos sensibilizan."],
-   ["Ácido salicílico 2 % (BHA)","Comprar","",`Lunes por la noche desde el ${fd(SKD.bha1)}. Es el ácido que entra al poro.`],
-   ["Retinol 0,2–0,5 % o adapaleno 0,1 % gel","Comprar","",`Miércoles por la noche desde el ${fd(SKD.ret1)}. Es el activo con más respaldo para arrugas.`],
-   ["Niacinamida 5–10 %","Opcional","",`Mañanas desde el ${fd(15)}: grasa, poros y manchas. Si no la compras, sáltala.`],
-   ["Mascarilla de arcilla","Opcional","","Jueves por la noche, 8–10 min en zona T."],
-   ["Cicatricure Porcelana crema gel","Ya lo tienes","home","Martes y viernes por la noche. Es tu antimanchas principal."],
-   ["Vitamina C KIMBEAUTY","Ya lo tienes","home",`Mañanas: días alternos entre ${fdr(8,14)} y diaria desde el ${fd(15)}.`],
-   ["Peeling Cicatricure","Ya lo tienes","home",`Sábado por la noche, 1 vez por semana como indica el envase, desde el ${fd(SKD.peel1)}.`],
-   ["Tónico Petite Maison","Ya lo tienes","home","Mañanas y noches de Porcelana, solo si no tiene alcohol ni ácidos. Nunca con el salicílico ni el peeling."],
-   ["Vitamina E KIMBEAUTY","Ya lo tienes","home","Opcional en noches de recuperación y arcilla, 2–3 gotas en zonas secas."],
-   ["Desmanchador de axilas","Rutina PM","home","Todas las noches en piel limpia y seca. Evítalo justo después de depilar o afeitar, o si hay irritación."],
-   ["Desmanchador de zona íntima","Cada 3 noches","home",`Solo en la zona externa, según su etiqueta. Toca ${[1,4,7].map(fd).join(", ")}… y así cada 3 días.`],
-   ["Brightening y Dark Spot KIMBEAUTY","En pausa","ink","No uses dos antimanchas a la vez. Si prefieres uno de estos, reemplaza a Porcelana el viernes tras leer la fórmula."]];
-  const dayCols=d=>{const s=skinOf(d);return [s.vitc?"#E7A21D":"var(--line)",PM_TYPES[s.pm].c];};
-  $("#v-piel").innerHTML=`${(()=>{const a=DAYS.filter((_,i)=>isOn(i+1,"skinAM")).length,b=DAYS.filter((_,i)=>isOn(i+1,"skinPM")).length;return stickBar("Piel",Math.round((a+b)/60*100),`AM ${a}/30 · PM ${b}/30`);})()}<h2 class="h2">Tu piel</h2><p class="lead">Rutina para piel grasa con líneas finas, poros abiertos y manchas. Cada activo tiene su noche para que trabajen sin irritar. Introdúcelos de uno en uno y deja que el protector solar haga la mitad del trabajo.</p>
-  <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(170px,1fr));margin-bottom:16px">
-   ${GOALS.map(([t,c,i,x])=>`<div class="tile pt ${c}" style="min-height:0"><div class="th"><h4>${t}</h4><span class="tag" style="margin:0;padding:3px"><span class="ic">${ico(i)}</span></span></div><p>${x}</p></div>`).join("")}
-  </div>
+   ["Everyday Face Wash · Viyant","Mañana","home","Limpieza suave de la mañana, todos los días."],
+   ["Renew Face Cleanser · Viyant","Noche","home","Limpieza de la noche, después de desmaquillar."],
+   ["Línea de centella asiática · Bioaqua","Diario","home","Tóner mañana y noche; sérum después del glicólico; mascarilla y crema en las noches de calma; el limpiador sirve para desmaquillar."],
+   ["Brighten Serum (arbutina, hialurónico y colágeno) · Viyant","Mañana","home","Ilumina y unifica el tono todas las mañanas, antes de la crema."],
+   ["Anti Age Boost Facial Serum · Viyant","Noche","home","Noches de recuperación y de mascarilla: líneas finas sin irritar."],
+   ["Triple Action Eye Gel · Viyant","Mañana y noche","home","Contorno de ojos siempre; nunca pongas ácidos ni retinol en esa zona."],
+   ["Hydrate & Repair Face Cream · Viyant","Mañana","home","Hidratante ligera del día; de noche solo si la Porcelana te deja tirante."],
+   ["Moisturizing Cream · CeraVe","Noche","home","Repara la barrera: noches de glicólico, retinol (sándwich), peeling y recuperación."],
+   ["CicatriCure Porcelana","Martes y viernes","home","Tu antimanchas principal, 2 noches por semana."],
+   ["Peeling CicatriCure","Sábado",'home',`Una vez por semana desde el ${K.peel1?sf(K.peel1):"día 8"}, máximo 10 minutos.`],
+   ["Ácido glicólico","Lunes",'home',`Una noche por semana desde el ${K.gly1?sf(K.gly1):"día 4"}. Nunca la misma noche que retinol o peeling.`],
+   ["Retinol","Miércoles",'home',`Desde el ${K.ret1?sf(K.ret1):"día 8"}; desde el ${sf(22)} también los jueves si no hay irritación.`],
+   ["Vitamina E · KimBeauty","Opcional","home","2 gotas en zonas secas en noches de recuperación o mascarilla."],
+   ["Sugar Glow (exfoliante de azúcar) · Viyant","Cuerpo","home","Miércoles y sábado en la ducha, solo en el cuerpo. El azúcar es demasiado abrasivo para el rostro si ya usas ácidos."],
+   ["Jabón de cascabel · Viyant","Cuerpo","home","En la ducha para el cuerpo; no lo uses en el rostro para no resecarlo."],
+   ["Ultra Moist Body Serum · Viyant","Cuerpo","home","Cada mañana con la piel húmeda."],
+   ["Whip It Body Butter · Viyant","Cuerpo","home","Cada noche en codos, rodillas, piernas y pies."],
+   ["Desmanchador de axilas y de zona íntima","Noche","home","Axilas todas las noches; zona íntima cada 3 días, solo externo."],
+   ["Protector solar FPS 50","Comprar si no tienes","",'No está en tu lista y es el paso más importante: sin protector, el glicólico, el retinol y la Porcelana no aclaran las manchas y la piel se sensibiliza.'],
+   ["Exfoliador facial (el otro)","En pausa","ink","Con glicólico + peeling ya exfolias suficiente. Úsalo solo si dejas el glicólico."],
+   ["Tóner (el otro)","En pausa","ink","Revisa su etiqueta: si tiene ácidos o alcohol, no lo mezcles con esta rutina. La centella ocupa ese paso."]];
+  const wkG=[["Adaptación y pruebas de parche",1,7],["Entran glicólico, retinol y peeling",8,14],["Rutina completa",15,21],["Rutina completa · retinol 2 veces",22,28],["Cierre del ciclo",29,30]];
+  $("#v-piel").innerHTML=`${stickBar("Piel",Math.round((amN+pmN)/60*100),`AM ${amN}/30 · PM ${pmN}/30`)}<h2 class="h2">Tu piel</h2><p class="lead">Rutina de 30 días (${sfr(1,30)}) armada con tus productos: Viyant Beauty, CicatriCure, CeraVe, Bioaqua centella, retinol y ácido glicólico. Un activo fuerte por noche; las demás noches reparan.</p>
+  <div class="row" style="margin:-8px 0 16px;align-items:center"><label class="lbl" for="skinStartIn">Inicio de la rutina</label><input type="date" id="skinStartIn" value="${SKIN_START()}" style="max-width:180px"><span class="mini">Cámbiala si empiezas otro día; todo el calendario se mueve.</span></div>
   <div class="grid">
-  <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("sun")}</span>Mañana · ${fd(d)}</span><h3>Rutina AM<small>Siempre en este orden, de lo más líquido a lo más denso</small></h3></div></div>
+  <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("sun")}</span>Mañana · ${S.k>=1&&S.k<=30?"día "+S.k+" · ":""}${cap(fd(state.day))}</span><h3>Rutina AM<small>De lo más ligero a lo más denso</small></h3></div></div>
    ${steps(S.am)}
-   <div class="note" style="background:var(--t-peach)">Si vas a entrenar al aire libre, aplica el protector antes y reaplícalo después de sudar.</div></article>
-  <article class="card pt ${P.cls}"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("spark")}</span>Noche · ${fd(d)}</span><h3>${P.t}<small>${P.s}</small></h3></div></div>
-   ${steps(S.pmSteps)}${S.note?`<div class="note">${S.note}</div>`:""}</article>
+   <div class="subchecks"><button data-skc="${iso}|skinAM" aria-pressed="${skDone(iso,"skinAM")}">AM hecho</button></div></article>
+  <article class="card pt ${P.cls}"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("spark")}</span>Noche · ${cap(fd(state.day))}</span><h3>${P.t}<small>${P.s}</small></h3></div></div>
+   ${steps(S.pmSteps)}${S.note?`<div class="note">★ ${S.note}</div>`:""}
+   <div class="subchecks"><button data-skc="${iso}|skinPM" aria-pressed="${skDone(iso,"skinPM")}">PM hecho</button></div></article>
 
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Semana tipo desde el ${fd(15)}</span><h3>Rotación de noche<small>Un activo fuerte por noche; nunca ácido, retinoide y peeling juntos</small></h3></div></div>
-   <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${WEEK3.map((k,i)=>{const T=PM_TYPES[k];return `<div class="tile pt ${T.cls}" style="min-height:130px;${i===wdOf(d)?"outline:2px solid var(--ink);outline-offset:-2px":""}"><div class="th"><span class="num">${WD[i]}</span>${i===wdOf(d)?'<span class="pill ink">Hoy</span>':""}</div><h4>${T.t}</h4><p>${T.s}</p></div>`}).join("")}</div>
-   <p class="mini" style="margin-top:10px">El domingo, después del peeling del sábado, la piel solo descansa. El retinoide queda en 1 noche por semana este mes; el mes siguiente, si no hay irritación, puedes subir a 2 (miércoles y domingo).</p></article>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Semana tipo</span><h3>Rotación de noche<small>Desde el día 8. Desde el día 22 el retinol sube a 2 noches y la mascarilla pasa al domingo</small></h3></div></div>
+   <div class="tiles" style="grid-template-columns:repeat(auto-fill,minmax(140px,1fr))">${SK_W2.map((k,i)=>{const T=PM_TYPES[k];return `<div class="tile pt ${T.cls}" style="min-height:120px"><div class="th"><span class="num">${WD[i]}</span></div><h4>${T.t}</h4><p>${T.s}</p></div>`}).join("")}</div></article>
 
-  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Rutina completa de cada día<small>Todos los pasos en orden, de la limpieza al protector. Toca el número del día para abrirlo en «Hoy»</small></h3></div></div>
+  <article class="card c-white wide"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>Calendario de 30 días</span><h3>Rutina completa de cada día<small>Todos los pasos en orden. Marca AM y PM cada día</small></h3></div></div>
    <div class="legend" style="margin-bottom:6px">${Object.values(PM_TYPES).map(T=>`<span style="--c:${T.c}">${T.t}</span>`).join("")}</div>
-   ${[["Base y pruebas de parche",1,7],["Entran los ácidos",8,14],["Rutina completa",15,21],["Rutina completa",22,28],["Cierre del ciclo",29,30]].map(([g,a,b])=>`<h4 class="skwk">${g} · ${fdr(a,b)}</h4><div class="skdays">${Array.from({length:b-a+1},(_,i)=>{const n=a+i,s=skinOf(n),T=PM_TYPES[s.pm];return `<div class="skday ${n===d?"cur":""}" style="--c:${T.c}">
-     <div class="skh"><button class="skn" data-open="${n}" aria-label="Abrir ${fd(n)} en Hoy">${fdn(n)}</button><span class="mini">${cap(fd(n))}</span><span class="catchip" style="--c:${T.c};margin-left:auto">${T.t}</span></div>
-     <div class="skchk"><button data-kd="${n}:skinAM" aria-pressed="${isOn(n,"skinAM")}" aria-label="${fd(n)}: rutina AM hecha">${CHECKSVG}AM</button><button data-kd="${n}:skinPM" aria-pressed="${isOn(n,"skinPM")}" aria-label="${fd(n)}: rutina PM hecha">${CHECKSVG}PM</button></div>
+   ${wkG.map(([g,a,b])=>`<h4 class="skwk">${g} · ${sfr(a,b)}</h4><div class="skdays">${Array.from({length:b-a+1},(_,i)=>{const k=a+i, di=sd(k), s=skinOfIso(di), T=PM_TYPES[s.pm], pd=planDayOf(di);return `<div class="skday ${di===iso?"cur":""}" style="--c:${T.c}">
+     <div class="skh">${pd?`<button class="skn" data-open="${pd}" aria-label="Abrir ${sf(k)} en Hoy">${k}</button>`:`<span class="skn" style="display:grid;place-items:center">${k}</span>`}<span class="mini">${sf(k)}</span><span class="catchip" style="--c:${T.c};margin-left:auto">${T.t}</span></div>
+     <div class="skchk"><button data-skc="${di}|skinAM" aria-pressed="${skDone(di,"skinAM")}">${CHECKSVG}AM</button><button data-skc="${di}|skinPM" aria-pressed="${skDone(di,"skinPM")}">${CHECKSVG}PM</button></div>
      <div class="skr"><b>AM</b><ol>${s.amShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
      <div class="skr"><b>PM</b><ol>${s.pmShort.map(x=>`<li style="--c:${SKP[x]||"var(--faint)"}">${x}</li>`).join("")}</ol></div>
      ${s.note?`<p class="sknote">★ ${s.note}</p>`:""}</div>`}).join("")}</div>`).join("")}</article>
 
-  <article class="card c-peach pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>${fdr(1,7)}</span><h3>Fase 1: base y parches</h3><p>Limpiar, hidratar y protector. Pruebas de parche de Porcelana, vitamina C, salicílico y peeling.${SKD.gel1?` Primera noche de Porcelana en todo el rostro: ${fd(SKD.gel1)}.`:""}</p></article>
-  <article class="card c-sky pt third"><span class="tag"><span class="ic">${ico("drop")}</span>${fdr(8,14)}</span><h3>Fase 2: entran los ácidos</h3><p>Salicílico los lunes (empieza ${fd(SKD.bha1)}), Porcelana martes y viernes, arcilla los jueves y primer peeling el ${fd(SKD.peel1)}. Vitamina C en días alternos. Parche del retinoide: ${fd(SKD.retp)}.</p></article>
-  <article class="card c-pink pt third"><span class="tag"><span class="ic">${ico("star")}</span>${fdr(15,30)}</span><h3>Fase 3: rutina completa</h3><p>Vitamina C y niacinamida cada mañana desde el ${fd(15)}. Se suma el retinoide los miércoles (primera noche: ${fd(SKD.ret1)}). Así queda la rotación completa de la semana tipo.</p></article>
+  <article class="card c-peach pt third"><span class="tag"><span class="ic">${ico("leaf")}</span>${sfr(1,7)}</span><h3>Fase 1: adaptación</h3><p>Limpieza, centella, Brighten, Anti Age y CeraVe. Porcelana 2 noches y mascarilla de centella. Pruebas de parche de retinol, glicólico y peeling; el glicólico entra al final de la semana${K.gly1?` (${sf(K.gly1)})`:""}.</p></article>
+  <article class="card c-sky pt third"><span class="tag"><span class="ic">${ico("drop")}</span>${sfr(8,21)}</span><h3>Fase 2: rutina completa</h3><p>Glicólico los lunes, Porcelana martes y viernes, retinol los miércoles${K.ret1?` (primero: ${sf(K.ret1)})`:""}, centella los jueves, peeling los sábados${K.peel1?` (primero: ${sf(K.peel1)})`:""} y domingo de descanso.</p></article>
+  <article class="card c-pink pt third"><span class="tag"><span class="ic">${ico("star")}</span>${sfr(22,30)}</span><h3>Fase 3: intensificar</h3><p>Si no hubo irritación, el retinol sube a miércoles y jueves y la mascarilla de centella pasa al domingo. Después del día 30, repite esta fase como mantenimiento.</p></article>
 
-  <article class="card c-white wide"><h3 style="margin-bottom:8px">Tus productos<small>Qué tienes, qué falta y cuándo se usa cada uno</small></h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Producto</th><th>Estado</th><th>Cuándo y para qué</th></tr></thead><tbody>
+  <article class="card c-white wide"><h3 style="margin-bottom:8px">Tus productos<small>Dónde entra cada uno en la rutina</small></h3><div class="scroll"><table class="tp"><thead><tr><th>#</th><th>Producto</th><th>Cuándo</th><th>Para qué y cómo</th></tr></thead><tbody>
    ${prods.map(([n,s,c,u],i)=>`<tr><td class="n">${String(i+1).padStart(2,"0")}</td><td><b>${n}</b></td><td><span class="pill ${c}">${s}</span></td><td class="mini" style="color:var(--ink)">${u}</td></tr>`).join("")}</tbody></table></div></article>
 
   <article class="card c-white"><h3 style="margin-bottom:10px">Qué no mezclar</h3><div class="kv">
-   <div style="background:var(--shell)">Retinoide, salicílico y peeling: cada uno en su noche, nunca juntos.</div>
-   <div style="background:var(--shell)">Tras el peeling: 48 h sin ácidos ni retinoide.</div>
-   <div style="background:var(--shell)">Un solo antimanchas de noche (Porcelana). Los KIMBEAUTY de manchas quedan en pausa.</div>
-   <div style="background:var(--shell)">Vitamina C de mañana; retinoide y ácidos de noche.</div></div></article>
-  <article class="card c-white"><h3 style="margin-bottom:10px">Señales para frenar</h3><div class="warn">Ardor que dura más de unos minutos, descamación, enrojecimiento o granitos nuevos: vuelve a la noche de recuperación 3–4 días y reintroduce ese activo más espaciado. No uses activos sobre piel irritada o quemada por el sol. Si estás embarazada o lactando, no uses retinoide y consulta el salicílico y los antimanchas antes. Si las manchas no mejoran en 8–12 semanas, consulta a dermatología: podría ser melasma y hay tratamientos específicos.</div></article>
+   <div style="background:var(--shell)">Glicólico, retinol y peeling: cada uno en su noche, nunca juntos.</div>
+   <div style="background:var(--shell)">Después del peeling, 24–48 h sin glicólico ni retinol.</div>
+   <div style="background:var(--shell)">Porcelana es tu único antimanchas de noche; el Brighten Serum va de mañana.</div>
+   <div style="background:var(--shell)">Nada de exfoliantes de azúcar o granulados en el rostro mientras uses ácidos.</div>
+   <div style="background:var(--shell)">Ácidos y retinol nunca en el contorno de ojos: ahí solo el Eye Gel.</div></div></article>
+  <article class="card c-white"><h3 style="margin-bottom:10px">Señales para frenar</h3><div class="warn">Ardor que dura más de unos minutos, descamación, enrojecimiento o granitos nuevos: haz 3–4 noches de recuperación y reintroduce ese activo más espaciado. No uses activos sobre piel irritada o quemada por el sol. Si estás embarazada o lactando, no uses retinol y consulta el glicólico y los antimanchas antes. Si las manchas no mejoran en 8–12 semanas, consulta a dermatología.</div></article>
   </div>`;
 }
 
@@ -2343,6 +2367,7 @@ document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
   fb=t.closest("[data-nitab]"); if(fb){niTab=fb.dataset.nitab;renderAll(true);return;}
+  fb=t.closest("[data-skc]"); if(fb){const [iso,k]=fb.dataset.skc.split("|"); skToggle(iso,k); return;}
   fb=t.closest("[data-kt]"); if(fb){ktAction(fb.dataset.kt,fb);return;}
   fb=t.closest("[data-carek]"); if(fb){const [iso,k]=fb.dataset.carek.split("|"), C=care(), D=C.days[iso]||(C.days[iso]={}); if(D[k]) delete D[k]; else D[k]=1; if(!Object.keys(D).length) delete C.days[iso]; syncCare(iso.slice(0,7)); save(); renderAll(true); return;}
   fb=t.closest("[data-care]"); if(fb){const [y,m]=careMonth(), d=new Date(y,m+(fb.dataset.care==="next"?1:-1),1); careYM=[d.getFullYear(),d.getMonth()]; renderAll(true); return;}
@@ -2441,6 +2466,7 @@ document.addEventListener("dragend",()=>{ akDrag=null; document.querySelectorAll
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
+document.addEventListener("change",e=>{ if(e.target.id==="skinStartIn"&&e.target.value){state.skinStart=e.target.value; save(); renderAll(true);} });
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; state.startSet=1; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
 
 /* ---------- theme ---------- */
@@ -2479,6 +2505,7 @@ $("#tmSkip").onclick=()=>{ if(!T||T.done) return; nextSeg(); T.last=Date.now(); 
 $("#tmStop").onclick=()=>{ T=null; $("#timer").classList.remove("on"); };
 
 applyTheme();
+migrateSkin();
 {const td=todayDay(); if(td) state.day=td;}
 renderAll();
 </script>
