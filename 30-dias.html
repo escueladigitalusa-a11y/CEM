@@ -573,6 +573,7 @@ dialog h3{font-size:19px;font-weight:800}
 .fwside{position:sticky;top:16px;min-width:0}
 .fwside .card{grid-column:auto;max-height:calc(100vh - 40px);overflow:auto}
 .fwform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fwform .fwf:last-child{grid-column:1/-1}
 .fwf label{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;margin-bottom:4px}
 .fwf label svg.i{width:15px;height:15px;color:var(--c)}
 .fwin{position:relative}
@@ -580,7 +581,7 @@ dialog h3{font-size:19px;font-weight:800}
 .star{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:0;background:transparent;font-size:19px;line-height:1;color:color-mix(in srgb,var(--ink) 25%,transparent)}
 .star[aria-pressed="true"]{color:#E7A21D}
 .star:disabled{opacity:.3;cursor:default}
-.favgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.favgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
 .favcol{background:color-mix(in srgb,var(--c) 8%,var(--paper));border-radius:16px;padding:10px;border-top:4px solid var(--c);min-width:0}
 .favcol h4{display:flex;align-items:center;gap:6px;font-size:13px;margin:0 0 8px}
 .favcol h4 svg.i{width:15px;height:15px;color:var(--c)}
@@ -680,8 +681,9 @@ dialog h3{font-size:19px;font-weight:800}
 .ml.on{opacity:.45;text-decoration:line-through}
 .mcell.cur .ml{color:var(--paper)}
 @media (max-width:860px){.mlines{display:none}.mcell{min-height:60px}}
-.fwl{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:10.5px;font-weight:500}
-.fwl b{display:block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--c)}
+.fwl{white-space:normal;display:block;font-size:10.5px;font-weight:500}
+.fwl>span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fwl b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--c)}
 .fwc{min-height:150px}
 .fwmsg{margin-left:4px}.fwmsg.warn{color:var(--bad);font-weight:700}
 .btn:disabled{opacity:.45;cursor:default}
@@ -2048,7 +2050,7 @@ function logAction(a,b){
 }
 
 /* ---------- FAMILY WALL ---------- */
-const FW_K=[["b","Desayuno","#D9812E","sun"],["l","Almuerzo","#1F9D55","leaf"],["d","Cena","#6A5AE0","heart"],["a","Actividad en familia","#D9467F","users"]];
+const FW_K=[["b","Desayuno · adultos","#D9812E","sun"],["bk","Desayuno · bebés","#F2A65A","star"],["l","Almuerzo · adultos","#1F9D55","leaf"],["lk","Almuerzo · bebés","#4CC38A","star"],["d","Cena · adultos","#6A5AE0","heart"],["dk","Cena · bebés","#9A8CF0","star"],["a","Actividad en familia","#D9467F","users"]];
 const PI_C=["#FFE58A","#FFC6D9","#BFE3FF","#C9F2C7","#FFD6A5"];
 let fwYM=null, fwSel=isoOf(new Date()), fwBought=null, fwDraft=null, fwMsg="", fwWarn=false;
 function fam(){ const f=state.fam||(state.fam={}); f.days=f.days||{}; f.shop=f.shop||[]; f.rem=f.rem||[]; f.favs=f.favs||{b:[],l:[],d:[],a:[]}; FW_K.forEach(([k])=>f.favs[k]=f.favs[k]||[]); return f; }
@@ -2059,7 +2061,7 @@ function fwGrid(){
     const iso=ym+"-"+pad2(i+1), D=f.days[iso]||{}, R=f.rem.filter(r=>r.date===iso&&!r.done);
     return `<button class="fwc ${iso===fwSel?"sel":""} ${iso===today?"today":""}" data-fwd="${iso}" aria-label="${i+1}: ${FW_K.filter(k=>D[k[0]]).length} de 4 anotados">
       <span class="dn"><b>${i+1}</b>${R.length?`<span class="fwbell" title="${esc(R.map(r=>r.t).join(" · "))}">${ico("alert")}${R.length}</span>`:""}</span>
-      ${FW_K.map(([k,n,c])=>D[k]?`<span class="fwl" style="--c:${c}"><b>${n==="Actividad en familia"?"Actividad":n}</b>${esc(D[k])}</span>`:"").join("")}
+      ${FW_K.map(([k,n,c])=>D[k]?`<span class="fwl" style="--c:${c}"><b>${n==="Actividad en familia"?"Actividad":n.replace(" · adultos","").replace(" · bebés"," bebés")}</b><span>${esc(D[k])}</span></span>`:"").join("")}
       <span class="fwdots">${FW_K.map(([k,,c])=>D[k]?`<i style="--c:${c}"></i>`:"").join("")}</span></button>`}).join("");
 }
 const isFav=(k,v)=>!!v&&fam().favs[k].some(x=>x.toLowerCase()===v.trim().toLowerCase());
@@ -2080,7 +2082,7 @@ function renderWall(){
     <div class="legend" style="margin-top:12px">${FW_K.map(([,n,c])=>`<span style="--c:${c}">${n}</span>`).join("")}<span style="--c:var(--bad)">Recordatorio</span></div></article>
 
    <article class="card pt c-peach fwday"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("cal")}</span>${fwSel===today?"Hoy":"Día seleccionado"}</span><h3>${cap(sd.toLocaleDateString("es",{weekday:"long",day:"numeric",month:"long"}))}<small>Escribe y toca «Guardar». La estrella guarda la comida en favoritos</small></h3></div></div>
-    <div class="fwform">${FW_K.map(([k,n,c,ic])=>`<div class="fwf" style="--c:${c}"><label for="fw-${k}">${ico(ic)}${n}</label><div class="fwin"><textarea id="fw-${k}" data-fwk="${k}" rows="2" placeholder="${({b:"Ej.: avena con fruta",l:"Ej.: pollo con arroz",d:"Ej.: sopa y pan",a:"Ej.: parque, cuento, película…"})[k]}">${esc(D[k]||"")}</textarea><button class="star" id="fwstar-${k}" data-fw="fav" data-k="${k}" aria-pressed="${isFav(k,D[k]||"")}" ${(D[k]||"").trim()?"":"disabled"} aria-label="Guardar ${n.toLowerCase()} en favoritos">★</button></div></div>`).join("")}</div>
+    <div class="fwform">${FW_K.map(([k,n,c,ic])=>`<div class="fwf" style="--c:${c}"><label for="fw-${k}">${ico(ic)}${n}</label><div class="fwin"><textarea id="fw-${k}" data-fwk="${k}" rows="2" placeholder="${({b:"Ej.: huevos con arepa",bk:"Ej.: avena con plátano machacado",l:"Ej.: pollo con arroz",lk:"Ej.: puré de pollo con calabaza",d:"Ej.: sopa y pan",dk:"Ej.: crema de verduras",a:"Ej.: parque, cuento, película…"})[k]}">${esc(D[k]||"")}</textarea><button class="star" id="fwstar-${k}" data-fw="fav" data-k="${k}" aria-pressed="${isFav(k,D[k]||"")}" ${(D[k]||"").trim()?"":"disabled"} aria-label="Guardar ${n.toLowerCase()} en favoritos">★</button></div></div>`).join("")}</div>
     <div class="row" style="align-items:center"><button class="btn primary" data-fw="saveday" ${dirty?"":"disabled"}>Guardar</button><button class="btn" data-fw="copyprev">Copiar del día anterior</button>${FW_K.some(k=>saved[k[0]])?`<button class="btn" data-fw="clearday">Vaciar día</button>`:""}<span class="mini fwmsg ${dirty?"warn":""}" id="fwMsg" role="status">${dirty?(fwWarn?"Tienes cambios sin guardar. Guarda, o toca otro día de nuevo para descartarlos.":"Cambios sin guardar"):esc(fwMsg)}</span></div></article>
 
    <article class="card c-white"><div class="hd"><div style="flex:1"><span class="tag"><span class="ic">${ico("star")}</span>Favoritos</span><h3>Nuestros favoritos<small>${nf?"Toca uno para ponerlo en el día seleccionado":"Marca una comida con ★ para guardarla aquí"}</small></h3></div></div>
