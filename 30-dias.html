@@ -942,6 +942,52 @@ aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:v
 .budsec{margin:6px 0 12px;font-size:18px}
 .budfab{position:fixed;right:22px;bottom:22px;width:60px;height:60px;border-radius:50%;border:0;background:linear-gradient(135deg,#6D5BF5,#F472B6);color:#fff;font-size:32px;font-weight:700;box-shadow:0 10px 24px rgba(109,91,245,.4);cursor:pointer;z-index:40}
 @media (max-width:560px){.budleft{font-size:36px}.budhero{padding:18px}}
+
+/* detalle de tarea */
+.tklabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px}
+.tklabs span{background:var(--c);color:#fff;font-size:10.5px;font-weight:800;border-radius:6px;padding:2px 7px;letter-spacing:.02em}
+.tkbadges{display:flex;align-items:center;flex-wrap:wrap;gap:5px;width:100%;border:0;background:transparent;padding:0;margin-top:6px;cursor:pointer;font:inherit}
+.tkb{font-size:11px;font-weight:700;color:var(--soft);background:var(--shell);border-radius:6px;padding:2px 6px}
+.tkb.due.late{background:var(--bad);color:#fff}.tkb.due.soon{background:#F7C948;color:#3A2A00}.tkb.ok{background:var(--good);color:#fff}
+.tkav{width:24px;height:24px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;font-size:11px;font-weight:900;flex:none}
+.tkav.big{width:34px;height:34px;font-size:14px;border:3px solid transparent;cursor:pointer;opacity:.45}
+.tkav.big.on{opacity:1;border-color:var(--paper);box-shadow:0 0 0 2px var(--ink)}
+.kbta button[data-tk]{font-size:13px}
+.tkdlg{width:min(720px,calc(100% - 20px));padding:22px 24px}
+.tkhead{display:flex;gap:12px;align-items:flex-start}
+.tkic{width:24px;flex:none;text-align:center;color:var(--soft);font-size:18px;font-weight:700}
+.tkhead .tkic{margin-top:6px;color:var(--cc)}
+.tktitle{min-height:0!important;width:100%;border:2px solid transparent;background:transparent;font:inherit;font-size:21px;font-weight:800;color:var(--ink);resize:none;padding:2px 6px;margin-left:-6px;border-radius:10px;overflow:hidden;line-height:1.3}
+.tktitle:focus{border-color:var(--pri);background:var(--paper)}
+.tkcol{width:auto;display:inline-block;padding:3px 8px;font-size:12.5px;border-radius:8px}
+.tkmeta{display:flex;flex-wrap:wrap;gap:16px 24px;margin:16px 0 4px 36px}
+.tklbl{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.tkchips{display:flex;flex-wrap:wrap;gap:6px}
+.tkmem{display:inline-flex;align-items:center;gap:6px;border:2px solid transparent;background:var(--shell);border-radius:999px;padding:3px 12px 3px 3px;font:inherit;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;opacity:.6}
+.tkmem.on{opacity:1;border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--paper))}
+.tklab{border:0;border-radius:8px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;background:color-mix(in srgb,var(--c) 16%,var(--paper));color:var(--c)}
+.tklab.on{background:var(--c);color:#fff}
+.tkdue{display:flex;align-items:center;gap:8px;background:var(--shell);border-radius:10px;padding:4px 10px;flex-wrap:wrap}
+.tkdue input[type=datetime-local]{width:auto;border:0;background:transparent;padding:6px 2px}
+.tkdue input[type=checkbox]{width:18px;height:18px;accent-color:var(--good)}
+.tkst{font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px}
+.tkdue.late .tkst{background:var(--bad);color:#fff}.tkdue.soon .tkst{background:#F7C948;color:#3A2A00}.tkdue.ok .tkst{background:var(--good);color:#fff}
+.tksec{margin-top:20px}
+.tksec h4{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:800;margin:0 0 8px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.tksec>*:not(h4){margin-left:36px}
+.tkdesc{width:calc(100% - 36px);min-height:90px;background:var(--shell);border-color:transparent}
+.tkdesc:focus{background:var(--paper);border-color:var(--pri)}
+.tkcl{list-style:none;padding:0;margin-top:0;margin-bottom:0;display:flex;flex-direction:column;gap:4px}
+.tkcl li{display:flex;align-items:center;gap:8px}
+.tkcl li.done .czname{text-decoration:line-through;color:var(--soft)}
+.tkcom{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.tkwho{display:flex;gap:4px}
+.tkcom textarea{flex:1;min-width:180px;min-height:44px}
+.tkacts{list-style:none;padding:0;margin-top:12px;margin-bottom:0;display:flex;flex-direction:column;gap:12px}
+.tkacts li{display:flex;gap:10px;align-items:flex-start}
+.tkacts p{margin:4px 0 0;background:var(--shell);border-radius:10px;padding:8px 12px;font-size:14px;white-space:pre-wrap;word-break:break-word}
+.tkacts .tksys{padding-left:2px}
+@media (max-width:560px){.tkdlg{padding:16px}.tkmeta,.tksec>*:not(h4){margin-left:0}.tkdesc{width:100%}.tktitle{font-size:18px}}
 </style>
 </head>
 <body>
@@ -980,6 +1026,8 @@ aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:v
   <section class="view" id="v-guia"></section>
 </main>
 </div>
+
+<dialog id="tkDlg" class="tkdlg" aria-labelledby="tkTitle"><div id="tkBody"></div></dialog>
 
 <dialog id="catDlg" aria-labelledby="catTitle">
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><h3 id="catTitle" style="flex:1">Categorías</h3><button class="xbtn" data-fin="catclose" aria-label="Cerrar">✕</button></div>
@@ -1940,8 +1988,9 @@ function renderTrab(){
       <div class="kbtools"><button class="xbtn" data-kb="up" data-id="${co.id}" ${ci===0?"disabled":""} aria-label="Subir empresa">↑</button><button class="xbtn" data-kb="down" data-id="${co.id}" ${ci===W.cos.length-1?"disabled":""} aria-label="Bajar empresa">↓</button><button class="xbtn" data-kb="delco" data-id="${co.id}" aria-label="Borrar ${esc(co.name)}">✕</button></div>
      </div>
      ${co.fold?`<button class="kbfolded" data-kb="fold" data-id="${co.id}" style="grid-column:2 / -1">${W.cols.map(c=>`<span><b>${co.tasks.filter(t=>t.col===c.id).length}</b> ${c.name.toLowerCase()}</span>`).join("")}<em>Toca para ver las tareas ▾</em></button>`:W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""}" draggable="true" data-drag="${co.id}|${t.id}">
-        <div class="kbtt" contenteditable="true" data-kbt="${co.id}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
-        <div class="kbta"><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
+        ${tkLabelsHTML(t)}<div class="kbtt" contenteditable="true" data-kbt="${co.id}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
+        ${tkBadges(t,c.id===dc,co.id+"|"+t.id)}
+        <div class="kbta"><button data-tk="open" data-id="${co.id}|${t.id}" aria-label="Abrir tarea ${esc(t.t)}" title="Abrir">⤢</button><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
        <button class="kbadd" data-kb="addtask" data-id="${co.id}|${c.id}">+ Tarea</button></div>`).join("")}
     </div>`}).join("")||`<p class="mini" style="padding:12px">No hay empresas. Toca «+ Empresa» para empezar.</p>`}
    </div></div></article>
@@ -1955,6 +2004,72 @@ function renderTrab(){
   </div>`;
 }
 function kbFind(key){const [cid,tid]=key.split("|");const co=work().cos.find(c=>c.id===cid);return {co,t:co&&co.tasks.find(t=>t.id===tid)};}
+
+/* ---------- detalle de tarea (tipo tarjeta) ---------- */
+const TK_MEM=[["h","Hillary","#EC4899"],["o","Oscar","#14B8A6"]];
+const TK_LAB=[["pri","Prioritario","#E5484D"],["urg","Urgente","#F97316"],["esp","En espera","#E7A21D"],["cli","Cliente","#3B82F6"],["idea","Idea","#8B5CF6"],["rev","Revisión","#10B981"]];
+let tkKey=null, tkAuthor="h";
+const tkLab=id=>TK_LAB.find(l=>l[0]===id);
+const tkLabelsHTML=t=>(t.labels&&t.labels.length)?`<div class="tklabs">${t.labels.map(id=>{const l=tkLab(id);return l?`<span style="--c:${l[2]}" title="${l[1]}">${l[1]}</span>`:""}).join("")}</div>`:"";
+function tkDueTxt(due){ if(!due) return ""; const d=new Date(due.length>10?due:due+"T12:00:00"); return d.toLocaleDateString("es",{day:"numeric",month:"short"}).replace(".","")+(due.length>10?" a las "+due.slice(11,16):""); }
+function tkDueState(t,isDone){ if(!t.due) return ""; if(t.dueDone||isDone) return "ok"; const now=new Date(), d=new Date(t.due.length>10?t.due:t.due+"T23:59:59"); if(d<now) return "late"; if(d-now<864e5*2) return "soon"; return ""; }
+function tkBadges(t,isDone,key){
+  const cl=t.check||[], cd=cl.filter(x=>x.done).length, cm=(t.comments||[]).length, st=tkDueState(t,isDone);
+  const parts=[];
+  if(t.due) parts.push(`<span class="tkb due ${st}" title="Vencimiento">🕑 ${tkDueTxt(t.due)}</span>`);
+  if(t.desc&&t.desc.trim()) parts.push(`<span class="tkb" title="Tiene descripción">≡</span>`);
+  if(cl.length) parts.push(`<span class="tkb ${cd===cl.length?"ok":""}" title="Checklist">☑ ${cd}/${cl.length}</span>`);
+  if(cm) parts.push(`<span class="tkb" title="Comentarios">💬 ${cm}</span>`);
+  const mem=(t.members||[]).map(m=>{const x=TK_MEM.find(y=>y[0]===m);return x?`<span class="tkav" style="background:${x[2]}" title="${x[1]}">${x[1][0]}</span>`:""}).join("");
+  if(!parts.length&&!mem) return "";
+  return `<button class="tkbadges" data-tk="open" data-id="${key}" aria-label="Abrir detalle">${parts.join("")}<span style="flex:1"></span>${mem}</button>`;
+}
+function renderTkDlg(){
+  const {co,t}=kbFind(tkKey||""); const d=$("#tkDlg"); if(!co||!t){ if(d.open) d.close(); return; }
+  const W=work(), dc=doneCol(), cl=t.check||[], cd=cl.filter(x=>x.done).length, st=tkDueState(t,t.col===dc);
+  const fmtC=c=>new Date(c.at).toLocaleString("es",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+  $("#tkBody").innerHTML=`<div class="tkhead" style="--cc:${co.color}"><span class="tkic">▤</span><div style="flex:1;min-width:0">
+     <textarea id="tkTitle" class="tktitle" rows="1" data-tkf="t" aria-label="Título de la tarea">${esc(t.t)}</textarea>
+     <p class="mini" style="margin:2px 0 0">en <b style="color:${co.color}">${esc(co.name)}</b> · lista <select class="tkcol" data-tkf="col" aria-label="Lista">${W.cols.map(c=>`<option value="${c.id}" ${c.id===t.col?"selected":""}>${esc(c.name)}</option>`).join("")}</select></p></div>
+     <button class="xbtn" data-tk="close" aria-label="Cerrar">✕</button></div>
+   <div class="tkmeta">
+    <div><span class="tklbl">Miembros</span><div class="tkchips">${TK_MEM.map(([k,n,c])=>{const on=(t.members||[]).includes(k);return `<button class="tkmem ${on?"on":""}" style="--c:${c}" data-tk="mem" data-v="${k}" aria-pressed="${on}"><span class="tkav" style="background:${c}">${n[0]}</span>${n}</button>`}).join("")}</div></div>
+    <div><span class="tklbl">Etiquetas</span><div class="tkchips">${TK_LAB.map(([k,n,c])=>{const on=(t.labels||[]).includes(k);return `<button class="tklab ${on?"on":""}" style="--c:${c}" data-tk="lab" data-v="${k}" aria-pressed="${on}">${on?"✓ ":""}${n}</button>`}).join("")}</div></div>
+    <div><span class="tklbl">Vencimiento</span><div class="tkdue ${st}"><input type="checkbox" id="tkDueDone" data-tkf="dueDone" ${t.dueDone?"checked":""} ${t.due?"":"disabled"} aria-label="Vencimiento cumplido"><input type="datetime-local" data-tkf="due" value="${t.due?(t.due.length>10?t.due:t.due+"T12:00"):""}" aria-label="Fecha y hora de vencimiento">${t.due?`<span class="tkst">${st==="late"?"Vencida":st==="soon"?"Pronto":st==="ok"?"Completada":""}</span><button class="linkbtn" data-tk="nodue">Quitar</button>`:""}</div></div>
+   </div>
+   <section class="tksec"><h4><span class="tkic">≡</span>Descripción</h4>
+    <textarea id="tkDesc" class="tkdesc" data-tkf="desc" rows="4" placeholder="Añadir una descripción más detallada…">${esc(t.desc||"")}</textarea></section>
+   <section class="tksec"><h4><span class="tkic">☑</span>Checklist ${cl.length?`<span class="mini">${cd}/${cl.length}</span>`:""}</h4>
+    ${cl.length?`<div class="kbm" style="--cc:${co.color};margin-bottom:8px"><i style="width:${Math.round(cd/cl.length*100)}%"></i></div>`:""}
+    <ul class="tkcl">${cl.map(x=>`<li class="${x.done?"done":""}"><button class="cbox ${x.done?"on":""}" data-tk="cltog" data-v="${x.id}" aria-pressed="${!!x.done}" aria-label="Marcar ${esc(x.t)}"></button><input class="czname" value="${esc(x.t)}" data-tkcl="${x.id}" aria-label="Elemento"><button class="xbtn" data-tk="cldel" data-v="${x.id}" aria-label="Quitar">✕</button></li>`).join("")}</ul>
+    <div class="fwadd" style="margin-top:6px;margin-bottom:0"><input type="text" id="tkClIn" placeholder="Añadir un elemento…" aria-label="Nuevo elemento"><button class="btn" data-tk="cladd">Añadir</button></div></section>
+   <section class="tksec"><h4><span class="tkic">☰</span>Actividad</h4>
+    <div class="tkcom"><div class="tkwho" role="radiogroup" aria-label="Quién escribe">${TK_MEM.map(([k,n,c])=>`<button class="tkav big ${tkAuthor===k?"on":""}" style="background:${c}" data-tk="who" data-v="${k}" aria-pressed="${tkAuthor===k}" title="Escribe ${n}">${n[0]}</button>`).join("")}</div>
+     <textarea id="tkComIn" rows="2" placeholder="Escriba un comentario…" aria-label="Comentario"></textarea><button class="btn primary" data-tk="comadd">Comentar</button></div>
+    <ul class="tkacts">${(t.comments||[]).slice().reverse().map(c=>{const m=TK_MEM.find(y=>y[0]===c.by)||TK_MEM[0];return `<li><span class="tkav" style="background:${m[2]}">${m[1][0]}</span><div style="flex:1;min-width:0"><b>${m[1]}</b> <span class="mini">${fmtC(c)}</span><p>${esc(c.t)}</p></div><button class="xbtn" data-tk="comdel" data-v="${c.id}" aria-label="Borrar comentario">✕</button></li>`}).join("")}
+     ${t.created?`<li class="mini tksys">Creada el ${new Date(t.created).toLocaleDateString("es",{day:"numeric",month:"long"})}</li>`:""}</ul></section>
+   <div class="row" style="margin-top:16px;justify-content:space-between"><button class="btn" data-tk="del" style="color:var(--bad)">Borrar tarea</button><button class="btn primary" data-tk="close">Listo</button></div>`;
+  tkFit();
+}
+function tkFit(){const ta=$("#tkTitle"); if(ta){ta.style.height="auto"; ta.style.height=ta.scrollHeight+"px";}}
+function tkOpen(key){ tkKey=key; renderTkDlg(); const d=$("#tkDlg"); if(!d.open) d.showModal(); tkFit(); }
+function tkAction(a,b){
+  if(a==="open"){tkOpen(b.dataset.id);return;}
+  if(a==="close"){$("#tkDlg").close();return;}
+  const {co,t}=kbFind(tkKey||""); if(!t) return; const v=b.dataset.v;
+  if(a==="mem"){t.members=t.members||[]; t.members=t.members.includes(v)?t.members.filter(x=>x!==v):[...t.members,v];}
+  else if(a==="lab"){t.labels=t.labels||[]; t.labels=t.labels.includes(v)?t.labels.filter(x=>x!==v):[...t.labels,v];}
+  else if(a==="nodue"){delete t.due; delete t.dueDone;}
+  else if(a==="cladd"){const el=$("#tkClIn"), x=el.value.trim(); if(!x){el.focus();return;} (t.check=t.check||[]).push({id:uid(),t:x,done:0});}
+  else if(a==="cltog"){const x=(t.check||[]).find(y=>y.id===v); if(x) x.done=x.done?0:1;}
+  else if(a==="cldel"){t.check=(t.check||[]).filter(y=>y.id!==v);}
+  else if(a==="who"){tkAuthor=v; renderTkDlg(); return;}
+  else if(a==="comadd"){const el=$("#tkComIn"), x=el.value.trim(); if(!x){el.focus();return;} (t.comments=t.comments||[]).push({id:uid(),by:tkAuthor,t:x,at:Date.now()});}
+  else if(a==="comdel"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} t.comments=(t.comments||[]).filter(y=>y.id!==v);}
+  else if(a==="del"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Seguro? Toca otra vez";return;} co.tasks=co.tasks.filter(x=>x!==t); save(); $("#tkDlg").close(); renderAll(true); return;}
+  save(); renderAll(true); renderTkDlg();
+  if(a==="cladd") $("#tkClIn").focus();
+}
 function kbAction(a,b){
   const W=work(), id=b&&b.dataset.id;
   if(a==="fold"){const co=W.cos.find(c=>c.id===id); if(co) co.fold=!co.fold;}
@@ -1965,7 +2080,7 @@ function kbAction(a,b){
     const i=W.cols.findIndex(c=>c.id===id), to=W.cols[i===0?1:i-1]; W.cos.forEach(c=>c.tasks.forEach(t=>{if(t.col===id&&to) t.col=to.id;})); W.cols.splice(i,1);}
   else if(a==="delco"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar empresa?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} W.cos=W.cos.filter(c=>c.id!==id);}
   else if(a==="up"||a==="down"){const i=W.cos.findIndex(c=>c.id===id), j=a==="up"?i-1:i+1; if(j<0||j>=W.cos.length) return; [W.cos[i],W.cos[j]]=[W.cos[j],W.cos[i]];}
-  else if(a==="addtask"){const [cid,col]=id.split("|"); const co=W.cos.find(c=>c.id===cid); const t={id:uid(),t:"",col}; co.tasks.push(t); save(); renderAll(true);
+  else if(a==="addtask"){const [cid,col]=id.split("|"); const co=W.cos.find(c=>c.id===cid); const t={id:uid(),t:"",col,created:Date.now()}; co.tasks.push(t); save(); renderAll(true);
     const el=document.querySelector(`[data-kbt="${cid}|${t.id}"]`); if(el) el.focus(); return;}
   else if(a==="left"||a==="right"){const {t}=kbFind(id); const i=W.cols.findIndex(c=>c.id===t.col), j=a==="left"?i-1:i+1; if(W.cols[j]) t.col=W.cols[j].id;}
   else if(a==="deltask"){const {co,t}=kbFind(id); co.tasks=co.tasks.filter(x=>x!==t);}
@@ -2457,6 +2572,7 @@ function allOfDay(iso){
   CARE_K.forEach(([k,nm,c])=>{ if(Cd[k]) out.push({c,t:"Cuidado: "+nm,done:true,g:"Cuidado de niños"}); });
   pcOfDate(iso).forEach(r=>out.push({c:r.color,t:r.t,done:!!pcare().done[iso+"|"+r.id],pcd:iso+"|"+r.id,g:"Cuidado personal"}));
   ["sc","ccs"].forEach(h=>casa(h).tasks.filter(t=>t.date===iso).forEach(t=>out.push({c:"#8A5A3C",t:`Tarea casa: ${t.t}`,done:!!t.done,g:"Casas"})));
+  work().cos.forEach(co=>co.tasks.filter(t=>t.due&&t.due.slice(0,10)===iso).forEach(t=>out.push({c:co.color,t:`Vence: ${t.t} (${co.name})${t.due.length>10?" "+t.due.slice(11,16):""}`,done:!!t.dueDone||t.col===doneCol(),g:"Trabajo"})));
   if(dow===6) ["sc","ccs"].forEach(h=>{ const C=casa(h); C.items.filter(i=>i.freq==="semanal").forEach(i=>out.push({c:"#B8741A",t:`Pagar ${i.name} (${C.name.replace("Casa ","")})`,done:!!i.paid[weekKey(new Date(iso+"T12:00:00"))],g:"Pagos"})); });
   return {n,items:out};
 }
@@ -2530,6 +2646,7 @@ document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-trtab]"); if(fb){trTab=fb.dataset.trtab;renderAll(true);return;}
   fb=t.closest("[data-td]"); if(fb){tdAction(fb.dataset.td,fb);return;}
+  fb=t.closest("[data-tk]"); if(fb){tkAction(fb.dataset.tk,fb);return;}
   fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
   fb=t.closest("[data-nitab]"); if(fb){niTab=fb.dataset.nitab;renderAll(true);return;}
   fb=t.closest("[data-skc]"); if(fb){const [iso,k]=fb.dataset.skc.split("|"); skToggle(iso,k); return;}
@@ -2593,6 +2710,20 @@ document.addEventListener("keydown",e=>{ if(e.key!=="Enter") return; const ds=e.
   if(ds.tdin){e.preventDefault(); tdAction("add",{dataset:{id:ds.tdin}}); return;}
   if(ds.tdf&&ds.f==="t"){e.preventDefault(); e.target.blur(); return;}
   if(e.target.id==="qAmt"||e.target.id==="qNote"){e.preventDefault(); finAction("qadd");} });
+document.addEventListener("input",e=>{ const ds=e.target.dataset||{}; if(!ds.tkf&&!ds.tkcl) return; const {t}=kbFind(tkKey||""); if(!t) return;
+  if(ds.tkcl){const x=(t.check||[]).find(y=>y.id===ds.tkcl); if(x){x.t=e.target.value; save();} return;}
+  if(ds.tkf==="t"){t.t=e.target.value.replace(/\n/g," "); e.target.style.height="auto"; e.target.style.height=e.target.scrollHeight+"px"; save();}
+  else if(ds.tkf==="desc"){t.desc=e.target.value; save();} });
+document.addEventListener("change",e=>{ const ds=e.target.dataset||{}; if(!ds.tkf&&!ds.tkcl) return; const {t}=kbFind(tkKey||""); if(!t) return;
+  if(ds.tkf==="col") t.col=e.target.value;
+  else if(ds.tkf==="due"){ if(e.target.value) t.due=e.target.value; else {delete t.due; delete t.dueDone;} }
+  else if(ds.tkf==="dueDone") t.dueDone=e.target.checked?1:0;
+  else if(ds.tkf==="t"&&!t.t.trim()){ t.t="Tarea sin título"; }
+  save(); renderAll(true); if(ds.tkf!=="desc"&&ds.tkf!=="t") renderTkDlg(); });
+document.addEventListener("keydown",e=>{ if(e.key!=="Enter") return;
+  if(e.target.id==="tkTitle"){e.preventDefault(); e.target.blur(); return;}
+  if(e.target.id==="tkClIn"){e.preventDefault(); tkAction("cladd",{dataset:{}}); return;}
+  if(e.target.id==="tkComIn"&&!e.shiftKey){e.preventDefault(); tkAction("comadd",{dataset:{}});} });
 document.addEventListener("change",e=>{ if(e.target.id==="logFile"&&e.target.files&&e.target.files.length){readLogPhotos(e.target.files);} });
 document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.target.value; state.kg=v>=30&&v<=200?v:65; save(); renderAll(true);} });
 document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.fwk; if(!k) return;
@@ -2640,6 +2771,7 @@ document.addEventListener("dragend",()=>{ akDrag=null; document.querySelectorAll
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
+$("#tkDlg").addEventListener("close",()=>{tkKey=null; renderAll(true);});
 document.addEventListener("change",e=>{ if(e.target.id==="skinStartIn"&&e.target.value){state.skinStart=e.target.value; save(); renderAll(true);} });
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; state.startSet=1; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
 
