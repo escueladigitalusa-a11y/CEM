@@ -988,6 +988,28 @@ aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:v
 .tkacts p{margin:4px 0 0;background:var(--shell);border-radius:10px;padding:8px 12px;font-size:14px;white-space:pre-wrap;word-break:break-word}
 .tkacts .tksys{padding-left:2px}
 @media (max-width:560px){.tkdlg{padding:16px}.tkmeta,.tksec>*:not(h4){margin-left:0}.tkdesc{width:100%}.tktitle{font-size:18px}}
+
+/* panel interno */
+.ip{margin-top:8px;background:color-mix(in srgb,var(--ic) 7%,var(--paper));border:1px solid color-mix(in srgb,var(--ic) 22%,transparent);border-radius:12px;padding:10px;cursor:default}
+.ipl{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);margin:2px 0 6px}
+.ipl span{margin-left:auto;color:var(--ic)}
+.ipdesc{width:100%;min-height:64px!important;font-size:13px;background:var(--paper);border-color:transparent;margin-bottom:10px;resize:vertical}
+.ipbar{height:5px;border-radius:5px;background:color-mix(in srgb,var(--ink) 9%,transparent);overflow:hidden;margin-bottom:6px}
+.ipbar i{display:block;height:100%;background:var(--ic);border-radius:5px}
+.ipcl{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.ipcl li{display:flex;align-items:center;gap:6px}
+.ipcl input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:13px;color:var(--ink);padding:5px 2px}
+.ipcl li.done input{text-decoration:line-through;color:var(--soft)}
+.ipchk{width:20px;height:20px;flex:none;border-radius:6px;border:2px solid var(--ic);background:transparent;color:transparent;padding:2px;display:grid;place-items:center;cursor:pointer}
+.ipchk.on{background:var(--ic);color:#fff}.ipchk svg{width:100%;height:100%}
+.ipx{border:0;background:transparent;color:var(--faint);cursor:pointer;font-size:12px;width:22px;height:22px;flex:none}
+.ipadd{display:flex;gap:4px;margin-top:6px}
+.ipadd input{flex:1;min-width:0;font-size:13px;padding:7px 10px;background:var(--paper);border-color:transparent}
+.ipadd button{border:0;border-radius:8px;background:var(--ic);color:#fff;font-weight:800;width:32px;cursor:pointer}
+.ipmini{font-size:11px;font-weight:800;color:var(--tc);background:color-mix(in srgb,var(--tc) 12%,transparent);border-radius:6px;padding:2px 6px;flex:none}
+.ipmini.ok{background:var(--good);color:#fff}
+.kbta .kbexp{background:color-mix(in srgb,var(--cc) 16%,var(--shell));color:var(--cc);font-weight:900}
+.kbt .ip{cursor:auto}
 </style>
 </head>
 <body>
@@ -1884,6 +1906,25 @@ function work(){
 }
 const doneCol=()=>{const c=work().cols; return c.length?c[c.length-1].id:"";};
 let kbDrag=null;
+
+/* ---------- panel interno expandible (descripción + checklist) ---------- */
+function ipFind(ref){ const [kind,a,b]=ref.split("|");
+  if(kind==="td"){const T=todos()[a], it=T&&T.items.find(x=>x.id===b); return {o:it,dk:"note"};}
+  const {t}=kbFind(a+"|"+b); return {o:t,dk:"desc"}; }
+function ipPanel(ref,o,dk,color){ const cl=o.check||[], cd=cl.filter(x=>x.done).length, uidp=ref.replace(/\|/g,"-");
+  return `<div class="ip" style="--ic:${color}">
+   <label class="ipl" for="ipd-${uidp}">≡ Descripción</label>
+   <textarea id="ipd-${uidp}" class="ipdesc" data-ipd="${ref}" rows="3" placeholder="Añadir una descripción más detallada…">${esc(o[dk]||"")}</textarea>
+   <div class="ipl">☑ Checklist ${cl.length?`<span>${cd}/${cl.length}</span>`:""}</div>
+   ${cl.length?`<div class="ipbar"><i style="width:${Math.round(cd/cl.length*100)}%"></i></div>`:""}
+   <ul class="ipcl">${cl.map(x=>`<li class="${x.done?"done":""}"><button class="ipchk ${x.done?"on":""}" data-ip="tog" data-ref="${ref}" data-v="${x.id}" aria-pressed="${!!x.done}" aria-label="Marcar ${esc(x.t)}">${CHECKSVG}</button><input value="${esc(x.t)}" data-ipcl="${ref}|${x.id}" aria-label="Elemento"><button class="ipx" data-ip="del" data-ref="${ref}" data-v="${x.id}" aria-label="Quitar ${esc(x.t)}">✕</button></li>`).join("")}</ul>
+   <div class="ipadd"><input type="text" id="ipn-${uidp}" data-ipin="${ref}" placeholder="+ Añadir elemento…" aria-label="Nuevo elemento del checklist"><button data-ip="add" data-ref="${ref}" aria-label="Añadir">+</button></div></div>`; }
+const ipMini=o=>{const cl=o.check||[]; return cl.length?`<span class="ipmini ${cl.every(x=>x.done)?"ok":""}">☑ ${cl.filter(x=>x.done).length}/${cl.length}</span>`:"";};
+function ipAction(a,b){ const ref=b.dataset.ref, {o}=ipFind(ref); if(!o) return; const v=b.dataset.v, uidp=ref.replace(/\|/g,"-");
+  if(a==="add"){const el=$("#ipn-"+uidp), x=el.value.trim(); if(!x){el.focus();return;} (o.check=o.check||[]).push({id:uid(),t:x,done:0});}
+  else if(a==="tog"){const x=(o.check||[]).find(y=>y.id===v); if(x) x.done=x.done?0:1;}
+  else if(a==="del"){o.check=(o.check||[]).filter(y=>y.id!==v);}
+  save(); renderAll(true); if(tkKey) renderTkDlg(); if(a==="add"){const e2=$("#ipn-"+uidp); if(e2) e2.focus();} }
 /* ---------- TRABAJO: to-do de Hillary y Oscar ---------- */
 let trTab="todo";
 const TD_PEOPLE=[["h","Hillary",["#EC4899","#F472B6","#DB2777","#F9A8D4","#BE185D"],"#FDF2F8"],["o","Oscar",["#14B8A6","#2DD4BF","#0D9488","#5EEAD4","#0F766E"],"#F0FDFA"]];
@@ -1896,9 +1937,9 @@ function renderTodo(){
   <div class="tdgrid">${TD_PEOPLE.map(([k,name,tones,bg])=>{const L=T[k].items, pend=L.filter(i=>!i.done), done=L.filter(i=>i.done), p=L.length?Math.round(done.length/L.length*100):0;
    const row=i=>{const tone=i.tone||tones[0];return `<li class="tdi ${i.done?"done":""} ${i.open?"open":""}" style="--tc:${tone}">
      <div class="tdrow"><button class="tdchk ${i.done?"on":""}" data-td="tog" data-id="${k}|${i.id}" aria-pressed="${!!i.done}" aria-label="Marcar ${esc(i.t)}">${CHECKSVG}</button>
-      <input class="tdt" value="${esc(i.t)}" data-tdf="${k}|${i.id}" data-f="t" aria-label="Tarea">${i.note?`<span class="tdnote" title="Tiene descripción">${ico("pen")}</span>`:""}
+      <input class="tdt" value="${esc(i.t)}" data-tdf="${k}|${i.id}" data-f="t" aria-label="Tarea">${ipMini(i)}${i.note?`<span class="tdnote" title="Tiene descripción">${ico("pen")}</span>`:""}
       <button class="tdexp" data-td="open" data-id="${k}|${i.id}" aria-expanded="${!!i.open}" aria-label="${i.open?"Cerrar":"Abrir"} ${esc(i.t)}">${i.open?"▾":"▸"}</button></div>
-     ${i.open?`<div class="tdbody"><label class="l" for="tdn-${i.id}">Descripción</label><textarea id="tdn-${i.id}" data-tdf="${k}|${i.id}" data-f="note" rows="3" placeholder="Detalles, links, a quién llamar, pasos…">${esc(i.note||"")}</textarea>
+     ${i.open?`<div class="tdbody">${ipPanel("td|"+k+"|"+i.id,i,"note",tone)}
       <div class="tdtools"><span class="mini">Tono</span>${tones.map(c=>`<button class="tdtone ${c===tone?"on":""}" style="--c:${c}" data-td="tone" data-id="${k}|${i.id}" data-c="${c}" aria-label="Tono ${c}"></button>`).join("")}<span style="flex:1"></span><button class="linkbtn" style="color:var(--bad)" data-td="del" data-id="${k}|${i.id}">Borrar</button></div></div>`:""}</li>`;};
    return `<article class="card tdcard" style="--pc:${tones[0]};--pc2:${tones[1]};--pbg:${bg}">
     <div class="tdhead"><span class="tdav" style="background:linear-gradient(135deg,${tones[0]},${tones[3]})">${name[0]}</span><div style="flex:1"><h3>${name}</h3><span class="mini">${pend.length} por hacer · ${done.length} hechas</span></div><b class="tdpct">${p}%</b></div>
@@ -1987,10 +2028,11 @@ function renderTrab(){
       <input class="kbnote" value="${esc(co.note||"")}" placeholder="Nota: contacto, entrega…" data-kbco="${co.id}" data-f="note" aria-label="Nota">
       <div class="kbtools"><button class="xbtn" data-kb="up" data-id="${co.id}" ${ci===0?"disabled":""} aria-label="Subir empresa">↑</button><button class="xbtn" data-kb="down" data-id="${co.id}" ${ci===W.cos.length-1?"disabled":""} aria-label="Bajar empresa">↓</button><button class="xbtn" data-kb="delco" data-id="${co.id}" aria-label="Borrar ${esc(co.name)}">✕</button></div>
      </div>
-     ${co.fold?`<button class="kbfolded" data-kb="fold" data-id="${co.id}" style="grid-column:2 / -1">${W.cols.map(c=>`<span><b>${co.tasks.filter(t=>t.col===c.id).length}</b> ${c.name.toLowerCase()}</span>`).join("")}<em>Toca para ver las tareas ▾</em></button>`:W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""}" draggable="true" data-drag="${co.id}|${t.id}">
+     ${co.fold?`<button class="kbfolded" data-kb="fold" data-id="${co.id}" style="grid-column:2 / -1">${W.cols.map(c=>`<span><b>${co.tasks.filter(t=>t.col===c.id).length}</b> ${c.name.toLowerCase()}</span>`).join("")}<em>Toca para ver las tareas ▾</em></button>`:W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""} ${t.open?"isopen":""}" draggable="${t.open?"false":"true"}" data-drag="${co.id}|${t.id}">
         ${tkLabelsHTML(t)}<div class="kbtt" contenteditable="true" data-kbt="${co.id}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
         ${tkBadges(t,c.id===dc,co.id+"|"+t.id)}
-        <div class="kbta"><button data-tk="open" data-id="${co.id}|${t.id}" aria-label="Abrir tarea ${esc(t.t)}" title="Abrir">⤢</button><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
+        ${t.open?ipPanel("kb|"+co.id+"|"+t.id,t,"desc",co.color):""}
+        <div class="kbta"><button class="kbexp" data-kb="exp" data-id="${co.id}|${t.id}" aria-expanded="${!!t.open}" aria-label="${t.open?"Cerrar":"Expandir"} panel de ${esc(t.t)}" title="${t.open?"Cerrar panel":"Expandir: descripción y checklist"}">${t.open?"▴":"▾"}</button><button data-tk="open" data-id="${co.id}|${t.id}" aria-label="Abrir tarea ${esc(t.t)}" title="Abrir">⤢</button><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
        <button class="kbadd" data-kb="addtask" data-id="${co.id}|${c.id}">+ Tarea</button></div>`).join("")}
     </div>`}).join("")||`<p class="mini" style="padding:12px">No hay empresas. Toca «+ Empresa» para empezar.</p>`}
    </div></div></article>
@@ -2084,6 +2126,7 @@ function kbAction(a,b){
     const el=document.querySelector(`[data-kbt="${cid}|${t.id}"]`); if(el) el.focus(); return;}
   else if(a==="left"||a==="right"){const {t}=kbFind(id); const i=W.cols.findIndex(c=>c.id===t.col), j=a==="left"?i-1:i+1; if(W.cols[j]) t.col=W.cols[j].id;}
   else if(a==="deltask"){const {co,t}=kbFind(id); co.tasks=co.tasks.filter(x=>x!==t);}
+  else if(a==="exp"){const {t}=kbFind(id); if(t) t.open=!t.open;}
   save(); renderAll(true);
 }
 
@@ -2647,6 +2690,7 @@ document.addEventListener("click",e=>{
   let fb=t.closest("[data-trtab]"); if(fb){trTab=fb.dataset.trtab;renderAll(true);return;}
   fb=t.closest("[data-td]"); if(fb){tdAction(fb.dataset.td,fb);return;}
   fb=t.closest("[data-tk]"); if(fb){tkAction(fb.dataset.tk,fb);return;}
+  fb=t.closest("[data-ip]"); if(fb){ipAction(fb.dataset.ip,fb);return;}
   fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
   fb=t.closest("[data-nitab]"); if(fb){niTab=fb.dataset.nitab;renderAll(true);return;}
   fb=t.closest("[data-skc]"); if(fb){const [iso,k]=fb.dataset.skc.split("|"); skToggle(iso,k); return;}
@@ -2724,6 +2768,11 @@ document.addEventListener("keydown",e=>{ if(e.key!=="Enter") return;
   if(e.target.id==="tkTitle"){e.preventDefault(); e.target.blur(); return;}
   if(e.target.id==="tkClIn"){e.preventDefault(); tkAction("cladd",{dataset:{}}); return;}
   if(e.target.id==="tkComIn"&&!e.shiftKey){e.preventDefault(); tkAction("comadd",{dataset:{}});} });
+document.addEventListener("input",e=>{ const ds=e.target.dataset||{};
+  if(ds.ipd){const {o,dk}=ipFind(ds.ipd); if(o){o[dk]=e.target.value; save();} return;}
+  if(ds.ipcl){const p=ds.ipcl.split("|"), id=p.pop(), {o}=ipFind(p.join("|")), x=o&&(o.check||[]).find(y=>y.id===id); if(x){x.t=e.target.value; save();}} });
+document.addEventListener("keydown",e=>{ const ds=e.target.dataset||{}; if(e.key!=="Enter") return;
+  if(ds.ipin){e.preventDefault(); ipAction("add",{dataset:{ref:ds.ipin}});} else if(ds.ipcl){e.preventDefault(); e.target.blur();} });
 document.addEventListener("change",e=>{ if(e.target.id==="logFile"&&e.target.files&&e.target.files.length){readLogPhotos(e.target.files);} });
 document.addEventListener("change",e=>{ if(e.target.id==="moveKg"){const v=+e.target.value; state.kg=v>=30&&v<=200?v:65; save(); renderAll(true);} });
 document.addEventListener("input",e=>{ const k=e.target.dataset&&e.target.dataset.fwk; if(!k) return;
