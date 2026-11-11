@@ -1010,6 +1010,15 @@ aside.side.open .menubtn{background:var(--ink);color:var(--paper);border-color:v
 .ipmini.ok{background:var(--good);color:#fff}
 .kbta .kbexp{background:color-mix(in srgb,var(--cc) 16%,var(--shell));color:var(--cc);font-weight:900}
 .kbt .ip{cursor:auto}
+
+.kbcard{cursor:pointer;transition:box-shadow .15s,transform .15s}
+.kbcard:hover{box-shadow:0 8px 18px -10px rgba(0,0,0,.45);transform:translateY(-1px)}
+.kbcard:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
+.kbcard .kbtt{cursor:pointer}
+.kbopen{font-size:11px;font-weight:800;color:var(--cc);opacity:0;transition:opacity .15s}
+.kbcard:hover .kbopen,.kbcard:focus .kbopen{opacity:1}
+@media (hover:none){.kbopen{opacity:.8}}
+.kbta{align-items:center}
 </style>
 </head>
 <body>
@@ -2028,11 +2037,10 @@ function renderTrab(){
       <input class="kbnote" value="${esc(co.note||"")}" placeholder="Nota: contacto, entrega…" data-kbco="${co.id}" data-f="note" aria-label="Nota">
       <div class="kbtools"><button class="xbtn" data-kb="up" data-id="${co.id}" ${ci===0?"disabled":""} aria-label="Subir empresa">↑</button><button class="xbtn" data-kb="down" data-id="${co.id}" ${ci===W.cos.length-1?"disabled":""} aria-label="Bajar empresa">↓</button><button class="xbtn" data-kb="delco" data-id="${co.id}" aria-label="Borrar ${esc(co.name)}">✕</button></div>
      </div>
-     ${co.fold?`<button class="kbfolded" data-kb="fold" data-id="${co.id}" style="grid-column:2 / -1">${W.cols.map(c=>`<span><b>${co.tasks.filter(t=>t.col===c.id).length}</b> ${c.name.toLowerCase()}</span>`).join("")}<em>Toca para ver las tareas ▾</em></button>`:W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt ${c.id===dc?"isdone":""} ${t.open?"isopen":""}" draggable="${t.open?"false":"true"}" data-drag="${co.id}|${t.id}">
-        ${tkLabelsHTML(t)}<div class="kbtt" contenteditable="true" data-kbt="${co.id}|${t.id}" role="textbox" aria-label="Tarea">${esc(t.t)}</div>
+     ${co.fold?`<button class="kbfolded" data-kb="fold" data-id="${co.id}" style="grid-column:2 / -1">${W.cols.map(c=>`<span><b>${co.tasks.filter(t=>t.col===c.id).length}</b> ${c.name.toLowerCase()}</span>`).join("")}<em>Toca para ver las tareas ▾</em></button>`:W.cols.map((c,k)=>`<div class="kbcell" data-drop="${co.id}|${c.id}">${co.tasks.filter(t=>t.col===c.id).map(t=>`<div class="kbt kbcard ${c.id===dc?"isdone":""}" draggable="true" data-drag="${co.id}|${t.id}" data-tk="open" data-id="${co.id}|${t.id}" tabindex="0" role="button" aria-label="Abrir tarjeta: ${esc(t.t)}">
+        ${tkLabelsHTML(t)}<div class="kbtt">${esc(t.t)||'<span class="mini">Sin título</span>'}</div>
         ${tkBadges(t,c.id===dc,co.id+"|"+t.id)}
-        ${t.open?ipPanel("kb|"+co.id+"|"+t.id,t,"desc",co.color):""}
-        <div class="kbta"><button class="kbexp" data-kb="exp" data-id="${co.id}|${t.id}" aria-expanded="${!!t.open}" aria-label="${t.open?"Cerrar":"Expandir"} panel de ${esc(t.t)}" title="${t.open?"Cerrar panel":"Expandir: descripción y checklist"}">${t.open?"▴":"▾"}</button><button data-tk="open" data-id="${co.id}|${t.id}" aria-label="Abrir tarea ${esc(t.t)}" title="Abrir">⤢</button><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
+        <div class="kbta"><span class="kbopen">⤢ Abrir</span><span style="flex:1"></span><button data-kb="left" data-id="${co.id}|${t.id}" ${k===0?"disabled":""} aria-label="Mover a la izquierda">‹</button><button data-kb="right" data-id="${co.id}|${t.id}" ${k===W.cols.length-1?"disabled":""} aria-label="Mover a la derecha">›</button><button data-kb="deltask" data-id="${co.id}|${t.id}" aria-label="Borrar tarea">✕</button></div></div>`).join("")}
        <button class="kbadd" data-kb="addtask" data-id="${co.id}|${c.id}">+ Tarea</button></div>`).join("")}
     </div>`}).join("")||`<p class="mini" style="padding:12px">No hay empresas. Toca «+ Empresa» para empezar.</p>`}
    </div></div></article>
@@ -2064,7 +2072,7 @@ function tkBadges(t,isDone,key){
   if(cm) parts.push(`<span class="tkb" title="Comentarios">💬 ${cm}</span>`);
   const mem=(t.members||[]).map(m=>{const x=TK_MEM.find(y=>y[0]===m);return x?`<span class="tkav" style="background:${x[2]}" title="${x[1]}">${x[1][0]}</span>`:""}).join("");
   if(!parts.length&&!mem) return "";
-  return `<button class="tkbadges" data-tk="open" data-id="${key}" aria-label="Abrir detalle">${parts.join("")}<span style="flex:1"></span>${mem}</button>`;
+  return `<div class="tkbadges">${parts.join("")}<span style="flex:1"></span>${mem}</div>`;
 }
 function renderTkDlg(){
   const {co,t}=kbFind(tkKey||""); const d=$("#tkDlg"); if(!co||!t){ if(d.open) d.close(); return; }
@@ -2122,8 +2130,7 @@ function kbAction(a,b){
     const i=W.cols.findIndex(c=>c.id===id), to=W.cols[i===0?1:i-1]; W.cos.forEach(c=>c.tasks.forEach(t=>{if(t.col===id&&to) t.col=to.id;})); W.cols.splice(i,1);}
   else if(a==="delco"){ if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Borrar empresa?";b.style.width="auto";b.style.padding="0 8px";b.style.borderRadius="999px";return;} W.cos=W.cos.filter(c=>c.id!==id);}
   else if(a==="up"||a==="down"){const i=W.cos.findIndex(c=>c.id===id), j=a==="up"?i-1:i+1; if(j<0||j>=W.cos.length) return; [W.cos[i],W.cos[j]]=[W.cos[j],W.cos[i]];}
-  else if(a==="addtask"){const [cid,col]=id.split("|"); const co=W.cos.find(c=>c.id===cid); const t={id:uid(),t:"",col,created:Date.now()}; co.tasks.push(t); save(); renderAll(true);
-    const el=document.querySelector(`[data-kbt="${cid}|${t.id}"]`); if(el) el.focus(); return;}
+  else if(a==="addtask"){const [cid,col]=id.split("|"); const co=W.cos.find(c=>c.id===cid); const t={id:uid(),t:"",col,created:Date.now()}; co.tasks.push(t); save(); renderAll(true); tkOpen(cid+"|"+t.id); const ti=$("#tkTitle"); if(ti) ti.focus(); return;}
   else if(a==="left"||a==="right"){const {t}=kbFind(id); const i=W.cols.findIndex(c=>c.id===t.col), j=a==="left"?i-1:i+1; if(W.cols[j]) t.col=W.cols[j].id;}
   else if(a==="deltask"){const {co,t}=kbFind(id); co.tasks=co.tasks.filter(x=>x!==t);}
   else if(a==="exp"){const {t}=kbFind(id); if(t) t.open=!t.open;}
@@ -2689,6 +2696,7 @@ document.addEventListener("click",e=>{
   const t=e.target;
   let fb=t.closest("[data-trtab]"); if(fb){trTab=fb.dataset.trtab;renderAll(true);return;}
   fb=t.closest("[data-td]"); if(fb){tdAction(fb.dataset.td,fb);return;}
+  fb=t.closest("button[data-kb]"); if(fb&&fb.closest(".kbcard")){kbAction(fb.dataset.kb,fb);return;}
   fb=t.closest("[data-tk]"); if(fb){tkAction(fb.dataset.tk,fb);return;}
   fb=t.closest("[data-ip]"); if(fb){ipAction(fb.dataset.ip,fb);return;}
   fb=t.closest("[data-fd]"); if(fb){finSel=fb.dataset.fd;renderAll(true);return;}
@@ -2762,7 +2770,6 @@ document.addEventListener("change",e=>{ const ds=e.target.dataset||{}; if(!ds.tk
   if(ds.tkf==="col") t.col=e.target.value;
   else if(ds.tkf==="due"){ if(e.target.value) t.due=e.target.value; else {delete t.due; delete t.dueDone;} }
   else if(ds.tkf==="dueDone") t.dueDone=e.target.checked?1:0;
-  else if(ds.tkf==="t"&&!t.t.trim()){ t.t="Tarea sin título"; }
   save(); renderAll(true); if(ds.tkf!=="desc"&&ds.tkf!=="t") renderTkDlg(); });
 document.addEventListener("keydown",e=>{ if(e.key!=="Enter") return;
   if(e.target.id==="tkTitle"){e.preventDefault(); e.target.blur(); return;}
@@ -2820,7 +2827,8 @@ document.addEventListener("dragend",()=>{ akDrag=null; document.querySelectorAll
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&e.target.id==="shopIn"){e.preventDefault();fwAction("shopadd");} if(e.key==="Enter"&&!e.shiftKey&&e.target.id==="remIn"){e.preventDefault();fwAction("remadd");} });
 document.addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.target.id==="fAmt"||e.target.id==="fNote")){e.preventDefault();finAction("add");} if(e.key==="Enter"&&e.target.id==="qcName"){e.preventDefault();finAction("quickadd");} if(e.key==="Enter"&&e.target.id==="ncName"){e.preventDefault();finAction("catadd");} });
 $("#catDlg").addEventListener("close",()=>{catOpen=false;});
-$("#tkDlg").addEventListener("close",()=>{tkKey=null; renderAll(true);});
+$("#tkDlg").addEventListener("close",()=>{ const {co,t}=kbFind(tkKey||""); if(co&&t&&!t.t.trim()){co.tasks=co.tasks.filter(x=>x!==t); save();} tkKey=null; renderAll(true);});
+document.addEventListener("keydown",e=>{ if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("kbcard")){e.preventDefault(); tkOpen(e.target.dataset.id);} });
 document.addEventListener("change",e=>{ if(e.target.id==="skinStartIn"&&e.target.value){state.skinStart=e.target.value; save(); renderAll(true);} });
 document.addEventListener("change",e=>{ if(e.target.id==="startD"){state.start=e.target.value; state.startSet=1; const td=todayDay(); if(td) state.day=td; save(); renderAll();} });
 
